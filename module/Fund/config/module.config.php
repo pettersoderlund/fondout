@@ -1,5 +1,31 @@
 <?php
 return array(
+    'controllers' => array(
+        'invokables' => array(
+            'Fund\Controller\Fund' => 'Fund\Controller\FundController',
+        ),
+    ),
+    'router' => array(
+        'routes' => array(
+            'fund' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/funds[/:id]',
+                    'constraints' => array(
+                        'id' => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund'
+                    ),
+                ),
+            ),
+        ),
+    ),
+    'view_manager' => array(
+        'template_path_stack' => array(
+            'Fund' => __DIR__ . '/../view',
+        ),
+    ),
     'doctrine' => array(
         'driver' => array(
             // defines an annotation driver with two paths, and names it `my_annotation_driver`
