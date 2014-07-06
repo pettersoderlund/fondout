@@ -14,8 +14,7 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineORM',
         'Application',
-        'Fund',
-        'User'
+        'Fund'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
