@@ -21,7 +21,8 @@ $settings = array(
      * instead of the default one provided. Default is ZfcUser\Entity\User.
      * The entity class should implement ZfcUser\Entity\UserInterface
      */
-    //'user_entity_class' => 'ZfcUser\Entity\User',
+    'user_entity_class' => 'User\Entity\User',
+    'enable_default_entities' => false,
 
     /**
      * Enable registration
@@ -215,7 +216,7 @@ $settings = array(
     /**
      * User table name
      */
-     'table_name' => 'user',
+     //'table_name' => 'user',
 
     /**
      * End of ZfcUser configuration
