@@ -7,7 +7,7 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'fund' => array(
+            'funds' => array(
                 'type'    => 'Segment',
                 'options' => array(
                     'route'    => '/funds[/:id]',

@@ -1,3 +1,14 @@
-<strong>Module:</strong>        Fund &raquo;
-<strong>Controller:</strong>    Fund &raquo;
-<strong>Action:</strong>        getList
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th><?php echo $this->translate('Name') ?></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($funds as $fund): ?>
+		<tr>
+			<td><?php echo $this->translate($fund->name) ?></td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
+</table>
