@@ -5,6 +5,8 @@ namespace Fund\Repository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
 
+use Fund\Entity\Fund;
+
 /**
 * FundRepository
 */
@@ -21,7 +23,7 @@ class FundRepository extends EntityRepository
     public function searchByName($keyword)
     {
         // Create querybuilder
-        $qb = $this->_em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
         return $qb
             ->select('f.name', 'f.url')
@@ -44,38 +46,39 @@ class FundRepository extends EntityRepository
            ->getResult();
     }
 
-    public function findBlacklistedShareholdings($fund, $categories, $organizations) {
-        $qb = $this->_em->createQueryBuilder();
+    public function findControversialCompanies(Fund $fund, $criteria = array())
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
 
-        $qb->select('sh')
-            ->from('Fund\Entity\Shareholding', 'sh')
-            ->join('sh.share', 's')
-            ->join('s.shareCompany', 'sc')
+        $qb->select('sc')
+            ->from('Fund\Entity\ShareCompany', 'sc')
             ->join('sc.blacklists', 'b')
+            ->join('sc.shares', 's')
+            ->join('s.shareholdings', 'sh')
             ->join('sh.fundInstance', 'fi')
             ->join('fi.fund', 'f')
             ->where('f.name = ?1')
-            ->setParameter(1, $fund->getName());
-        // echo var_dump($organizations);
-        if($organizations) {
-            $qb->andWhere($qb->expr()->in('b.sourceOrganization', '?2'))
-                ->setParameter(2, $organizations);
-        }
-        if($categories) {
-            $qb->andWhere($qb->expr()->in('b.category', '?3'))
-                ->setParameter(3, $categories);
-        }
+            ->setParameter(1, $fund->name)
+            ->distinct();
+
+
+        // if($organizations) {
+        //     $qb->andWhere($qb->expr()->in('b.sourceOrganization', '?2'))
+        //         ->setParameter(2, $organizations);
+        // }
+        // if($categories) {
+        //     $qb->andWhere($qb->expr()->in('b.category', '?3'))
+        //         ->setParameter(3, $categories);
+        // }
+
         $qb->orderBy('sc.name', 'ASC');
 
-        $query= $qb->getQuery();
-        $result = $query->getResult();
-
-        return $result;
+        return $qb->getQuery()->getResult();
     }
 
-    public function findSimilarFunds(\Fund\Entity\Fund $fund, $categories, $organizations)
+    public function findSimilarFunds(Fund $fund, $categories, $organizations)
     {
-        $qb = $this->_em->createQueryBuilder();
+        $qb = $this->getEntityManager()->createQueryBuilder();
         $rsm = new ResultSetMapping;
         $rsm->addEntityResult('\Fund\Entity\SimilarFundScore', 'f1');
         $rsm->addFieldResult('f1', 'id', 'id');
@@ -103,7 +106,7 @@ class FundRepository extends EntityRepository
             "WHERE mainCategory = ? " .
             "ORDER BY blacklistMarketValue ASC LIMIT 3";
 
-        $query = $this->_em->createNativeQuery($sql, $rsm);
+        $query = $this->getEntityManager()->createNativeQuery($sql, $rsm);
         $query->setParameter(1, $fund->getMainCategory());
         $query->setParameter(2, $categories);
         $query->setParameter(3, $organizations);
@@ -114,5 +117,4 @@ class FundRepository extends EntityRepository
 
         return $result;
     }
-
 }

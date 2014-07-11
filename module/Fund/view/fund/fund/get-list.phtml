@@ -7,7 +7,7 @@
 	<tbody>
 	<?php foreach ($funds as $fund): ?>
 		<tr>
-			<td><?php echo $this->translate($fund->name) ?></td>
+			<td><a href="<?php echo $this->url('funds', array('id' => $fund->id)) ?>" title=""><?php echo $this->translate($fund->name) ?></td>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>

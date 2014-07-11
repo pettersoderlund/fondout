@@ -10,30 +10,42 @@ use Zend\Paginator\Paginator;
 
 class FundController extends AbstractRestfulController
 {
+    protected $fundService;
+
     public function getList()
     {
         $objectManager = $this
             ->getServiceLocator()
             ->get('Doctrine\ORM\EntityManager');
 
-        $view = new ViewModel();
-
         $repository = $objectManager->getRepository('Fund\Entity\Fund');
         $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('fund')));
 
         $paginator = new Paginator($adapter);
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
-        
+
         // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
-        $view->setVariable('funds', $paginator);
 
-        return $view;
+        return new ViewModel(
+            array(
+                'funds' => $paginator
+            )
+        );
     }
 
     public function get($id)
     {
-        # code...
+        $service = $this->getFundService();
+        $fund = $service->getFundById($id);
+        $controversialCompanies = $service->findControversialCompanies($fund);
+
+        return new ViewModel(
+            array(
+                'fund' => $fund,
+                'controversialCompanies' => $controversialCompanies
+            )
+        );
     }
 
     public function create($data)
@@ -49,5 +61,14 @@ class FundController extends AbstractRestfulController
     public function delete($id)
     {
         # code...
+    }
+
+    public function getFundService()
+    {
+        if (!$this->fundService) {
+            $this->fundService = $this->getServiceLocator()->get('FundService');
+        }
+
+        return $this->fundService;
     }
 }
