@@ -69,6 +69,12 @@ class FundService
         return $fundRepository->findControversialCompanies($fund);
     }
 
+    public function findControversialValue(Fund $fund)
+    {
+        $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        return $fundRepository->findControversialValue($fund);
+    }
+
     /**
      * Similar funds sorted by blacklisted shares ratio
      *

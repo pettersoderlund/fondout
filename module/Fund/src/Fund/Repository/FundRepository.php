@@ -76,6 +76,24 @@ class FundRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+
+    public function findControversialValue(Fund $fund)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        $qb->select('SUM(sh.marketValue) as controversialValue')
+            ->from('Fund\Entity\ShareCompany', 'sc')
+            ->join('sc.blacklists', 'b')
+            ->join('sc.shares', 's')
+            ->join('s.shareholdings', 'sh')
+            ->join('sh.fundInstance', 'fi')
+            ->join('fi.fund', 'f')
+            ->where('f.name = ?1')
+            ->setParameter(1, $fund->name);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     public function findSimilarFunds(Fund $fund, $categories, $organizations)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

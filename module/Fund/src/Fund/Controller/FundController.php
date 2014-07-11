@@ -39,11 +39,13 @@ class FundController extends AbstractRestfulController
         $service = $this->getFundService();
         $fund = $service->getFundById($id);
         $controversialCompanies = $service->findControversialCompanies($fund);
+        $controversialValue = $service->findControversialValue($fund);
 
         return new ViewModel(
             array(
                 'fund' => $fund,
-                'controversialCompanies' => $controversialCompanies
+                'controversialCompanies' => $controversialCompanies,
+                'controversialValue' => $controversialValue
             )
         );
     }
