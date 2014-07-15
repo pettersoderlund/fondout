@@ -13,7 +13,8 @@
         "doctrine/doctrine-orm-module": "0.*",
         "zf-commons/zfc-user-doctrine-orm": "*",
         "zf-commons/zfc-base": "*",
-        "zf-commons/zfc-user": "*"
+        "zf-commons/zfc-user": "*",
+        "aws/aws-sdk-php": "2.*"
     },
     "require-dev": {
         "zendframework/zend-developer-tools": "dev-master",

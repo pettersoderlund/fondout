@@ -1,3 +1,5 @@
+
+
 <div class="container">
   <div class="page-header">
     <h1>Om fondout</h1>
@@ -5,7 +7,7 @@
       Fondout är en internettjänst där vi granskar hur fonderna (alltså dina sparpengar) jobbar med hållbarhet, för det tycker vi är viktigt.</p>
     <p>
       Hållberhet betyder olika för alla. Kanske handlar det om oljebolag (CO2), barnarbete, miljöförstöring eller djurförsök, vad tycker du är viktigt? Det ska vara enkelt att jämföra fonder. Vi vill att alla ska kunna förstå själva vad de väljer. Det behövs fler mätvärden än avgifter och avkastning för att kunna spara hållbart.
-      Vi kan inte föra detta själva. Men, med hjälp och samarbete från eldsjälar, intresseorganisationer, banker, forskare, pensionbolag och från dig kan vi föra mer hållbara fondval för en grön ekonomi och en bättre värld.
+      Vi kan inte göra detta själva. Men, med hjälp och samarbete från eldsjälar, intresseorganisationer, banker, forskare, pensionsbolag och från dig kan vi föra mer hållbara fondval för en grön ekonomi och en bättre värld.
     </p>
   </div>
 
@@ -13,6 +15,23 @@
 
   <section class="row">
     <div class="col-md-6" >
+
+      <?php
+        $form = $this->form;
+        $form->setAttribute('action', $this->url('contact', array('action' => 'submit')));
+        $form->prepare();
+
+        echo $this->form()->openTag($form);
+        /*echo $this->formHidden($form->get('id'));
+        echo $this->formRow($form->get('name'));
+        echo $this->formRow($form->get('email'));
+        echo $this->formSubmit($form->get('submit'));*/
+        echo $this->formCollection($form);
+        echo $this->form()->closeTag();
+
+        ?>
+
+<!--
       <form action="#" role="form" id="contact">
         <div class="form-group">
           <label for="name">Namn <span class="required">*</span></label>
@@ -32,6 +51,7 @@
         </div>
         <button type="submit" name="submit" class="btn btn-primary">Skicka</button>
       </form>
+    -->
     </div>
     <div class="row">
       <address class="vcard">
