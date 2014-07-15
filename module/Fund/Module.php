@@ -5,6 +5,8 @@ use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
+use Fund\Service\FundService;
+
 class Module implements AutoloaderProviderInterface
 {
     public function getAutoloaderConfig()
@@ -18,6 +20,25 @@ class Module implements AutoloaderProviderInterface
                     __NAMESPACE__ => __DIR__ . '/src/' . str_replace('\\', '/', __NAMESPACE__),
                 ),
             ),
+        );
+    }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'abstract_factories' => array(),
+            'aliases' => array(),
+            'factories' => array(
+                'FundService' => function ($serviceLocator) {
+                    $service = new FundService();
+                    $service->setEntityManager($serviceLocator->get('Doctrine\ORM\EntityManager'));
+
+                    return $service;
+                }
+            ),
+            'invokables' => array(),
+            'services' => array(),
+            'shared' => array(),
         );
     }
 
