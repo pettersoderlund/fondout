@@ -14,12 +14,17 @@ class FundController extends AbstractRestfulController
 
     public function getList()
     {
+        $order_by = $this->params()->fromQuery('order_by', 'name');
+        $order = $this->params()->fromQuery('order', 'ASC');
+
         $objectManager = $this
             ->getServiceLocator()
             ->get('Doctrine\ORM\EntityManager');
 
         $repository = $objectManager->getRepository('Fund\Entity\Fund');
-        $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('fund')));
+        $adapter = new DoctrineAdapter(new ORMPaginator(
+          $repository->createQueryBuilder('fund')
+          ->orderBy('fund.' . $order_by, $order)));
 
         $paginator = new Paginator($adapter);
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
@@ -27,11 +32,12 @@ class FundController extends AbstractRestfulController
         // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
 
-        return new ViewModel(
-            array(
-                'funds' => $paginator
-            )
-        );
+        return new ViewModel(array(
+                              'funds' => $paginator,
+                              'queryParameters' => array(
+                                  'order_by' => $order_by,
+                                  'order' => $order,
+                            )));
     }
 
     public function get($id)
