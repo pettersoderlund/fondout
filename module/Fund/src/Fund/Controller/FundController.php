@@ -14,12 +14,23 @@ class FundController extends AbstractRestfulController
 
     public function getList()
     {
+
+        $order_by = $this->params()->fromRoute('order_by') ?
+        $this->params()->fromRoute('order_by') : 'id';
+
+        $order = $this->params()->fromRoute('order') ?
+        $this->params()->fromRoute('order') : "ASC";
+
+
+
         $objectManager = $this
             ->getServiceLocator()
             ->get('Doctrine\ORM\EntityManager');
 
         $repository = $objectManager->getRepository('Fund\Entity\Fund');
-        $adapter = new DoctrineAdapter(new ORMPaginator($repository->createQueryBuilder('fund')));
+        $adapter = new DoctrineAdapter(new ORMPaginator(
+          $repository->createQueryBuilder('fund')
+          ->orderBy('fund.' . $order_by, $order)));
 
         $paginator = new Paginator($adapter);
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
