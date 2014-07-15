@@ -10,12 +10,9 @@ return array(
             'funds' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/funds[/:id][/order_by/:order_by][/:order]',
+                    'route'    => '/funds[/:id]',
                     'constraints' => array(
-                        'action' => '(?!\border_by\b)[a-zA-Z][a-zA-Z0-9_-]*',
                         'id' => '[0-9]+',
-                        'order_by' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'order' => 'ASC|DESC',
                     ),
                     'defaults' => array(
                         'controller' => 'Fund\Controller\Fund'

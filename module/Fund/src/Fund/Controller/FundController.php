@@ -14,14 +14,8 @@ class FundController extends AbstractRestfulController
 
     public function getList()
     {
-
-        $order_by = $this->params()->fromRoute('order_by') ?
-        $this->params()->fromRoute('order_by') : 'id';
-
-        $order = $this->params()->fromRoute('order') ?
-        $this->params()->fromRoute('order') : "ASC";
-
-
+        $order_by = $this->params()->fromQuery('order_by', 'name');
+        $order = $this->params()->fromQuery('order', 'ASC');
 
         $objectManager = $this
             ->getServiceLocator()
@@ -38,11 +32,12 @@ class FundController extends AbstractRestfulController
         // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
 
-        return new ViewModel(
-            array(
-                'funds' => $paginator
-            )
-        );
+        return new ViewModel(array(
+                              'funds' => $paginator,
+                              'queryParameters' => array(
+                                  'order_by' => $order_by,
+                                  'order' => $order,
+                            )));
     }
 
     public function get($id)
