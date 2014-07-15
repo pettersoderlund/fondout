@@ -11,6 +11,7 @@ namespace Application;
 
 use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
+use Aws\Common\Aws;
 
 class Module
 {
@@ -24,6 +25,23 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/config/module.config.php';
+    }
+
+    public function getServiceConfig()
+    {
+        return array(
+            'abstract_factories' => array(),
+            'aliases' => array(),
+            'factories' => array(
+              'AWS' => function ($serviceLocator) {
+                  $config = $serviceLocator->get('Config');
+                  return Aws::factory($config['aws']['params']);
+                }
+            ),
+            'invokables' => array(),
+            'services' => array(),
+            'shared' => array(),
+        );
     }
 
     public function getAutoloaderConfig()
