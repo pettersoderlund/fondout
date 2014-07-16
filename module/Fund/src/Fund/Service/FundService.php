@@ -3,6 +3,9 @@
 namespace Fund\Service;
 
 use Doctrine\ORM\EntityManager;
+use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
+use Zend\Paginator\Paginator;
 
 use Fund\Entity\Fund;
 
@@ -98,5 +101,43 @@ class FundService
     public function getEntityManager()
     {
         return $this->entityManager;
+    }
+
+    /**
+     * Get a list of funds, in a paginator with the specified order and filters.
+     *
+     * @param string[] $params
+     * @return Zend\Paginator\Paginator
+     */
+    public function findFunds($parameters)
+    {
+        // Check if order by is set, defaults to column fund name
+        $orderBy = (isset($parameters['orderBy'])) ?
+            $parameters['orderBy'] : 'name';
+
+        // Check if order is set, defaults to ascending
+        $order = (isset($parameters['order'])) ? $parameters['order'] : 'ASC';
+
+        $repository =
+            $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+
+        $adapter = new DoctrineAdapter(
+            new ORMPaginator(
+                $repository->createQueryBuilder('fund')
+                  ->orderBy('fund.' . $orderBy, $order)
+            )
+        );
+
+        $paginator = new Paginator($adapter);
+
+        // Check if page is set, defaults to page 1
+        $currentPage = (isset($parameters['page'])) ? $parameters['page'] : 1;
+
+        $paginator->setCurrentPageNumber((int)$currentPage);
+
+        // set the number of items per page to 10
+        $paginator->setItemCountPerPage(10);
+
+        return $paginator;
     }
 }
