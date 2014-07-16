@@ -22,9 +22,12 @@ class FundController extends AbstractRestfulController
             ->get('Doctrine\ORM\EntityManager');
 
         $repository = $objectManager->getRepository('Fund\Entity\Fund');
-        $adapter = new DoctrineAdapter(new ORMPaginator(
-          $repository->createQueryBuilder('fund')
-          ->orderBy('fund.' . $order_by, $order)));
+        $adapter = new DoctrineAdapter(
+            new ORMPaginator(
+                $repository->createQueryBuilder('fund')
+                  ->orderBy('fund.' . $order_by, $order)
+            )
+        );
 
         $paginator = new Paginator($adapter);
         $paginator->setCurrentPageNumber((int)$this->params()->fromQuery('page', 1));
