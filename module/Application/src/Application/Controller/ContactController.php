@@ -62,8 +62,9 @@ class ContactController extends AbstractActionController
                 'ReplyToAddresses' => array($data['email'])
                 )
                 );
-
+    
                 echo json_encode($result->toArray());
+
 
             } catch (Aws\Ses\Exception\MessageRejectedException $e) {
                 // Unable to send mail

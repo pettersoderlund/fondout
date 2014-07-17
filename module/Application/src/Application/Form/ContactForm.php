@@ -1,6 +1,7 @@
 <?php
 namespace Application\Form;
 
+use Zend\Form\Element;
 use Zend\Form\Form;
 
 class ContactForm extends Form
@@ -16,33 +17,40 @@ class ContactForm extends Form
                 'type'  => 'hidden',
             ),
         ));
+
         $this->add(array(
             'name' => 'name',
-            'attributes' => array(
-                'type'  => 'text',
-            ),
+            'type'  => 'Text',
             'options' => array(
-                'label' => 'Namn',
+                'label' => 'Ditt namn',
+            ),
+            'attributes' => array(
+                'required' => 'required',
             ),
         ));
         $this->add(array(
+            'type' => 'Zend\Form\Element\Email',
             'name' => 'email',
-            'attributes' => array(
-                'type'  => 'text',
-            ),
             'options' => array(
-                'label' => 'E-postadress',
+                'label' => 'Din epost',
+            ),
+            'attributes' => array(
+                'required' => 'required',
             ),
         ));
+
         $this->add(array(
+            'type' => 'Zend\Form\Element\Textarea',
             'name' => 'message',
-            'attributes' => array(
-                'type'  => 'textarea',
-            ),
             'options' => array(
                 'label' => 'Meddelande',
             ),
+            'attributes' => array(
+                'required' => 'required',
+            ),
         ));
+
+
         $this->add(array(
             'name' => 'submit',
             'attributes' => array(
