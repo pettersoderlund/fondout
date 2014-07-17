@@ -1,6 +1,4 @@
 <?php
-
-
 namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
@@ -12,36 +10,32 @@ class ContactController extends AbstractActionController
     public function indexAction()
     {
         $form = new ContactForm();
-        $form->get('submit')->setValue('Skicka');
+
         $request = $this->getRequest();
+        if ($request->isPost()) {
+              //Set inputfilter...?
 
-        if($request->isPost()) {
-          //Set inputfilter...?
+              //$form->setInputFilter();
 
-          // if you wanna fill the form in the same way it was filled...
-          $form->setData($request->getPost());
+              // if you wanna fill the form in the same way it was filled...
+              $form->setData($request->getPost());
+              $data = $request->getPost();
+              //$form->isValid();
 
-          $data = $request->getPost();
+            try {
+                $today = new \DateTime();
 
-          //Do stuff..
-          //Send email w/ SES
+                $body  = "Name: \n" . $data['name'] . "\n";
+                $body .= "Email: \n" . $data['email'] . "\n";
+                //$body .= "Subject: \n" . $data['subject'] . "\n";
+                $body .= "Message: \n" . $data['message'] . "\n";
 
+                // Get the client from the builder by namespace
+                $aws = $this->getServiceLocator()->get('AWS');
+                $client  = $aws->get('ses');
 
-          try {
-            $today = new \DateTime();
-
-
-            $body  = "Name: \n" . $data['name'] . "\n";
-            $body .= "Email: \n" . $data['email'] . "\n";
-            //$body .= "Subject: \n" . $data['subject'] . "\n";
-            $body .= "Message: \n" . $data['message'] . "\n";
-
-            // Get the client from the builder by namespace
-            $aws = $this->getServiceLocator()->get('AWS');
-            $client  = $aws->get('ses');
-
-            $result = $client->sendEmail(
-                array(
+                $result = $client->sendEmail(
+                    array(
                 // Source is required
                 'Source' => 'no-reply@fondout.se',
                 // Destination is required
@@ -67,25 +61,26 @@ class ContactController extends AbstractActionController
                 ),
                 'ReplyToAddresses' => array($data['email'])
                 )
-            );
+                );
+    
+                echo json_encode($result->toArray());
 
-            echo json_encode($result->toArray());
 
-        } catch (Aws\Ses\Exception\MessageRejectedException $e) {
-            // Unable to send mail
-            $message = $e->getMessage();
+            } catch (Aws\Ses\Exception\MessageRejectedException $e) {
+                // Unable to send mail
+                $message = $e->getMessage();
 
-            /*$app->log->addError($message);
-            $app->response()->status(400);
-            $app->response()->header('X-Status-Reason', $message);*/
-            echo json_encode(['error' => $message]);
-        } catch (Exception $e) {
+                /*$app->log->addError($message);
+                $app->response()->status(400);
+                $app->response()->header('X-Status-Reason', $message);*/
+                echo json_encode(['error' => $message]);
+            } catch (Exception $e) {
             /*
             $app->log->addError($e->getMessage());
             $app->response()->status(500);
             */
 
-        }
+            }
         }
 
         return new ViewModel(array('form' => $form));
