@@ -17,11 +17,11 @@
 						<th><?php echo $this->translate('Category') ?></th>
 						<th><?php echo $this->translate('Source') ?></th>
 					</tr>
-					<?php foreach ($company->blacklists as $info): ?>
+					<?php foreach ($company->accusations as $accusation): ?>
 					<tr>
-						<td><?php echo $this->escapeHtml($info->accusation) ?></td>
-						<td><?php echo $this->escapeHtml($info->category) ?></td>
-						<td><?php echo $this->escapeHtml($info->sourceOrganization) ?></td>
+						<td><?php echo $this->escapeHtml($accusation) ?></td>
+						<td><?php echo $this->escapeHtml($accusation->category) ?></td>
+						<td><?php echo $this->escapeHtml($accusation->source->name) ?></td>
 					</tr>
 					<?php endforeach ?>
 				</table>

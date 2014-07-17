@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Share
  *
  * @ORM\Table(
- *     name="shares",
+ *     name="share",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(
  *             name="name",
@@ -185,19 +185,6 @@ class Share extends Entity
     public function getShareholdings()
     {
         return $this->shareholdings;
-    }
-
-    /**
-     * Add blacklists
-     *
-     * @param \Fund\Entity\Blacklist $blacklists
-     * @return Share
-     */
-    public function addBlacklist(\Fund\Entity\Blacklist $blacklists)
-    {
-        $this->blacklists[] = $blacklists;
-
-        return $this;
     }
 
     /**

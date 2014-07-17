@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Shareholding
  *
  * @ORM\Table(
- *     name="shareholdings",
+ *     name="shareholding",
  *     indexes={
  *         @ORM\Index(
  *             name="fund_instance",

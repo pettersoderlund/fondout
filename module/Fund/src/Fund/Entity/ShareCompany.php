@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * ShareCompanies
  *
  * @ORM\Table(
- *     name="share_companies",
+ *     name="share_company",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(name="id", columns={"id"}),
  *         @ORM\UniqueConstraint(name="name", columns={"name"})
@@ -45,15 +45,15 @@ class ShareCompany extends Entity
     /**
      * @var FundInstance[]
      *
-     * @ORM\OneToMany(targetEntity="\Fund\Entity\Blacklist", mappedBy="shareCompany")
+     * @ORM\OneToMany(targetEntity="\Fund\Entity\Accusation", mappedBy="shareCompany")
      **/
-    protected $blacklists = null;
+    protected $accusations = null;
 
 
     public function __construct($options = null)
     {
         parent::__construct($options);
-        $this->blacklists = new ArrayCollection();
+        $this->accusations = new ArrayCollection();
         $this->shares = new ArrayCollection();
     }
 
@@ -124,35 +124,35 @@ class ShareCompany extends Entity
     }
 
     /**
-     * Add blacklists
+     * Add accusations
      *
-     * @param \Fund\Entity\Blacklist $blacklists
+     * @param \Fund\Entity\Accusation $accusations
      * @return ShareCompany
      */
-    public function addBlacklist(\Fund\Entity\Blacklist $blacklists)
+    public function addAccusation(\Fund\Entity\Accusation $accusations)
     {
-        $this->blacklists[] = $blacklists;
+        $this->accusations[] = $accusations;
 
         return $this;
     }
 
     /**
-     * Remove blacklists
+     * Remove accusations
      *
-     * @param \Fund\Entity\Blacklist $blacklists
+     * @param \Fund\Entity\Accusation $accusations
      */
-    public function removeBlacklist(\Fund\Entity\Blacklist $blacklists)
+    public function removeAccusation(\Fund\Entity\Accusation $accusations)
     {
-        $this->blacklists->removeElement($blacklists);
+        $this->accusations->removeElement($accusations);
     }
 
     /**
-     * Get blacklists
+     * Get accusations
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getBlacklists()
+    public function getAccusations()
     {
-        return $this->blacklists;
+        return $this->accusations;
     }
 }

@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * FundInstance
  *
  * @ORM\Table(
- *     name="fund_instances",
+ *     name="fund_instance",
  *     indexes={@ORM\Index(name="fund", columns={"fund"})},
  *     uniqueConstraints={@ORM\UniqueConstraint(name="fund_instance", columns={"fund", "date"})}
  * )

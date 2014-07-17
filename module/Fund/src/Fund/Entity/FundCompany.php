@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * FundCompany
  *
  * @ORM\Table(
- *     name="fund_companies",
+ *     name="fund_company",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(
  *             name="fcin",

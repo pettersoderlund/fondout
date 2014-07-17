@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Fund
  *
  * @ORM\Table(
- *     name="funds",
+ *     name="fund",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(
  *             name="institution_number",
@@ -87,25 +87,11 @@ class Fund extends Entity
     protected $company;
 
     /**
-     * @var Bank[]
-     *
-     * @ORM\OneToMany(targetEntity="\Fund\Entity\Bank", mappedBy="fund")
-     **/
-    protected $banks = null;
-
-    /**
      * @var FundInstance[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\FundInstance", mappedBy="fund")
      **/
     protected $fundInstances = null;
-
-    /**
-     * @var \Fund\Entity\Swesif
-     *
-     * @ORM\OneToOne(targetEntity="\Fund\Entity\Swesif", mappedBy="fund")
-     */
-    protected $swesif;
 
     public function __construct($options = null)
     {
@@ -305,19 +291,6 @@ class Fund extends Entity
         return $this->fundInstances;
     }
 
-    /**
-     * Get Swesif
-     *
-     * @return \Fund\Entity\Swesif
-     */
-    public function getSwesif()
-    {
-        if ($this->swesif == null) {
-            return new \Fund\Entity\Swesif();
-        }
-
-        return $this->swesif;
-    }
 
     /**
      * Create net asset value over time graph data
@@ -346,51 +319,5 @@ class Fund extends Entity
     public function removeFundInstance(\Fund\Entity\FundInstance $fundInstances)
     {
         $this->fundInstances->removeElement($fundInstances);
-    }
-
-    /**
-     * Set swesif
-     *
-     * @param \Fund\Entity\Swesif $swesif
-     * @return Fund
-     */
-    public function setSwesif(\Fund\Entity\Swesif $swesif)
-    {
-        $this->swesif = $swesif;
-
-        return $this;
-    }
-
-    /**
-     * Add banks
-     *
-     * @param \Fund\Entity\Bank $banks
-     * @return Fund
-     */
-    public function addBank(\Fund\Entity\Bank $banks)
-    {
-        $this->banks[] = $banks;
-
-        return $this;
-    }
-
-    /**
-     * Remove banks
-     *
-     * @param \Fund\Entity\Bank $banks
-     */
-    public function removeBank(\Fund\Entity\Bank $banks)
-    {
-        $this->banks->removeElement($banks);
-    }
-
-    /**
-     * Get banks
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBanks()
-    {
-        return $this->banks;
     }
 }
