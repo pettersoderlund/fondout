@@ -112,21 +112,20 @@ class FundService
     public function findFunds($parameters)
     {
         // Check if order by is set, defaults to column fund name
-        $orderBy = (isset($parameters['orderBy'])) ?
-            $parameters['orderBy'] : 'name';
+        $orderBy = (isset($parameters['orderBy'])) ? $parameters['orderBy'] : 'name';
 
         // Check if order is set, defaults to ascending
         $order = (isset($parameters['order'])) ? $parameters['order'] : 'ASC';
 
-        $repository =
-            $this->getEntityManager()->getRepository('Fund\Entity\Fund');
 
-        $adapter = new DoctrineAdapter(
-            new ORMPaginator(
-                $repository->createQueryBuilder('fund')
-                  ->orderBy('fund.' . $orderBy, $order)
-            )
-        );
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+
+        $query = $repository->createQueryBuilder('fund')
+        ->orderBy('fund.' . $orderBy, $order);
+
+
+
+        $adapter = new DoctrineAdapter(new ORMPaginator($query));
 
         $paginator = new Paginator($adapter);
 
@@ -138,6 +137,6 @@ class FundService
         // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
 
-        return $paginator;
+        return $repository->mapControversialMarketValues($paginator);
     }
 }

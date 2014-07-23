@@ -86,6 +86,8 @@ class Fund extends Entity
      */
     protected $company;
 
+    protected $controversialValue;
+
     /**
      * @var FundInstance[]
      *
@@ -97,7 +99,6 @@ class Fund extends Entity
     {
         parent::__construct($options);
         $this->fundInstances = new ArrayCollection();
-        $this->banks = new ArrayCollection();
     }
 
     /**
@@ -319,5 +320,43 @@ class Fund extends Entity
     public function removeFundInstance(\Fund\Entity\FundInstance $fundInstances)
     {
         $this->fundInstances->removeElement($fundInstances);
+    }
+
+    /**
+     * Gets the value of controversialValue.
+     *
+     * @return mixed
+     */
+    public function getControversialValue()
+    {
+        return $this->controversialValue;
+    }
+
+    public function getSustainableInvestmentsPercentage()
+    {
+        // NOTE: breaks with more then one fund instance
+        foreach ($this->getFundInstances() as $fi) {
+            $totalMarketValue = $fi->totalMarketValue;
+        }
+
+        $controversialValue = isset($this->controversialValue)
+                            ? $this->controversialValue->value
+                            : 0;
+
+        return (($totalMarketValue - $controversialValue) / $totalMarketValue);
+    }
+
+    /**
+     * Sets the value of controversialValue.
+     *
+     * @param mixed $controversialValue the controversial value
+     *
+     * @return self
+     */
+    public function setControversialValue($controversialValue)
+    {
+        $this->controversialValue = $controversialValue;
+
+        return $this;
     }
 }
