@@ -12,13 +12,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  *     name="share",
  *     uniqueConstraints={
  *         @ORM\UniqueConstraint(
- *             name="name",
- *             columns={"name"}
- *         ),
- *         @ORM\UniqueConstraint(
  *             name="isin",
  *             columns={"isin"}
- *         )
+ *         ),
+ *         @ORM\UniqueConstraint(name="nameIsin", columns={"isin", "name"})
  *     }
  * )
  * @ORM\Entity
