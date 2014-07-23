@@ -1,0 +1,18 @@
+#!/usr/bin/php
+<?php
+
+$helpCommands = array('--help', '-help', '-h', '-?');
+$script = basename($argv[0]);
+
+$helpMessage = <<<EOF
+usage: php $script <filename> [--help]
+
+EOF;
+
+if ($argc != 2 || in_array($argv[1], $helpCommands)) {
+
+    print $helpMessage;
+    exit;
+}
+
+require_once 'fi_data_import.php';
