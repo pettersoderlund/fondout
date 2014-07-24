@@ -18,6 +18,7 @@ use Fund\Entity\Fund;
 class FundService
 {
     protected $entityManager;
+
     /**
      * Get fund by url relative to /funds
      *
@@ -35,7 +36,6 @@ class FundService
 
         return $fund;
     }
-
 
     public function getFundById($id)
     {
@@ -64,15 +64,35 @@ class FundService
             throw new \InvalidArgumentException();
         }
         // get funds from repository
-        $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        $fundRepository = $this->getEntityManager()
+            ->getRepository('Fund\Entity\Fund');
         return $fundRepository->searchByName($params['q']);
     }
 
-
-    public function findControversialCompanies(Fund $fund)
+    /**
+     * Get a list of all controversial companies connected to the fund
+     * in a paginator
+     *
+     * TODO: Filter controversial companies from parameters
+     * @param Fund $fund, string[] $parameters
+     * @return Zend\Paginator\Paginator
+     */
+    public function findControversialCompanies(Fund $fund, $parameters)
     {
-        $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return $fundRepository->findControversialCompanies($fund);
+        $fundRepository = $this->getEntityManager()
+            ->getRepository('Fund\Entity\Fund');
+
+        $adapter = new DoctrineAdapter(
+            new ORMPaginator($fundRepository->findControversialCompanies($fund))
+        );
+
+        $paginator = new Paginator($adapter);
+        // Check if page is set, defaults to page 1
+        $currentPage = (isset($parameters['page'])) ? $parameters['page'] : 1;
+        $paginator->setCurrentPageNumber((int)$currentPage);
+        $paginator->setItemCountPerPage(10);
+
+        return $paginator;
     }
 
     public function findControversialValue(Fund $fund)
@@ -109,7 +129,7 @@ class FundService
     /**
      * Get a list of funds, in a paginator with the specified order and filters.
      *
-     * @param string[] $params
+     * @param string[] $parameters
      * @return Zend\Paginator\Paginator
      */
     public function findFunds($params)

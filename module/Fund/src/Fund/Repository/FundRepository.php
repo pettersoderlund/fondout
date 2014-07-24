@@ -60,9 +60,7 @@ class FundRepository extends EntityRepository
             ->orderBy('sc.name', 'ASC')
             ->where('f.name = ?1')
             ->setParameter(1, $fund->name)
-            ->distinct()
-            ->getQuery()
-            ->getResult();
+            ->distinct();
     }
 
 

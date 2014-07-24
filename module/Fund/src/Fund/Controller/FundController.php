@@ -30,15 +30,20 @@ class FundController extends AbstractRestfulController
     public function get($id)
     {
         $service = $this->getFundService();
+        $parameters = $this->params()->fromQuery();
         $fund = $service->getFundById($id);
-        $controversialCompanies = $service->findControversialCompanies($fund);
+        $controversialCompaniesPaginator = $service->findControversialCompanies(
+            $fund,
+            $parameters
+        );
         $controversialValue = $service->findControversialValue($fund);
 
         return new ViewModel(
             array(
                 'fund' => $fund,
-                'controversialCompanies' => $controversialCompanies,
-                'controversialValue' => $controversialValue
+                'controversialCompanies' => $controversialCompaniesPaginator,
+                'controversialValue' => $controversialValue,
+                'queryParameters' => $parameters
             )
         );
     }
