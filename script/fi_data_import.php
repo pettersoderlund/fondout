@@ -1,5 +1,9 @@
 <?php
 
+require_once __DIR__ . '/../cli-config.php';
+
+$config = $container['config'];
+
 // Utility function
 $createFundUrl = function ($fundName) {
     // replace non letter or digits by -
@@ -27,14 +31,17 @@ $file->setCsvControl("\t");
 $fileIterator = new LimitIterator($file, 1);
 
 // Create db connection
-$dsn  = 'mysql:host=' . '127.0.0.1' . ';';
-$dsn .= 'dbname=' . 'fondout' . ';';
-$dsn .= 'charset=' . 'utf8' . ';';
+$dsn  = 'mysql:host=' .
+    $config['doctrine']['connection']['orm_default']['params'] . ';';
+$dsn .= 'dbname=' .
+    $config['doctrine']['connection']['orm_default']['dbname'] . ';';
+$dsn .= 'charset=' .
+    $config['doctrine']['connection']['orm_default']['charset'] . ';';
 $db = new \PDO(
     $dsn,
-    'root',
-    'root',
-    array(\PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
+    $config['doctrine']['connection']['orm_default']['user'],
+    $config['doctrine']['connection']['orm_default']['password'],
+    $config['doctrine']['connection']['orm_default']['driverOptions']
 );
 $db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 $db->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
