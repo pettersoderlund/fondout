@@ -109,34 +109,25 @@ class FundService
      * @param string[] $params
      * @return Zend\Paginator\Paginator
      */
-    public function findFunds($parameters)
+    public function findFunds($criteria)
     {
         // Check if order by is set, defaults to column fund name
-        $orderBy = (isset($parameters['orderBy'])) ? $parameters['orderBy'] : 'name';
+        $orderBy = (isset($criteria['orderBy'])) ? $criteria['orderBy'] : 'name';
 
         // Check if order is set, defaults to ascending
-        $order = (isset($parameters['order'])) ? $parameters['order'] : 'ASC';
+        $order = (isset($criteria['order'])) ? $criteria['order'] : 'ASC';
 
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-
-        $query = $repository->createQueryBuilder('fund')
-        ->orderBy('fund.' . $orderBy, $order);
-
-
-
-        $adapter = new DoctrineAdapter(new ORMPaginator($query));
-
-        $paginator = new Paginator($adapter);
+        $query = $repository->createQueryBuilder('fund')->orderBy('fund.' . $orderBy, $order);
+        $paginator = new Paginator(new DoctrineAdapter(new ORMPaginator($query)));
 
         // Check if page is set, defaults to page 1
-        $currentPage = (isset($parameters['page'])) ? $parameters['page'] : 1;
+        $currentPage = (isset($criteria['page'])) ? $criteria['page'] : 1;
 
         $paginator->setCurrentPageNumber((int)$currentPage);
-
-        // set the number of items per page to 10
         $paginator->setItemCountPerPage(10);
 
-        return $repository->mapControversialMarketValues($paginator);
+        return $repository->mapControversialMarketValues($paginator, $criteria);
     }
 }
