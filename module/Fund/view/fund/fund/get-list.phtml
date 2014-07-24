@@ -5,6 +5,10 @@ if(isset($queryParameters['orderBy'])) {
         $url_order = $queryParameters['order']  == 'ASC' ? 'DESC' : 'ASC';
     }
 }
+
+ $form->setAttribute('method', 'GET');
+ // $form->prepare();
+
 /*elseif ($orderBy == 'artist')
     $url_order = $order == 'ASC' ? 'DESC' : 'ASC';*/
 
@@ -14,92 +18,111 @@ $url_queryParameters = $queryParameters;
 $url_queryParameters['order'] = $url_order;
 ?>
 
-<table class="table table-bordered table-hover">
+<div class="row">
+  <div class="col-md-8">
+  <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<th>
 				<a href="<?php
-                 $url_queryParameters['orderBy']  = 'name';
-                 /* Start at first page when changing order and sorting */
-                 $url_queryParameters['page']  = 1;
-                 echo $this->url('funds', array(),
+                   $url_queryParameters['orderBy']  = 'name';
+                   /* Start at first page when changing order and sorting */
+                   $url_queryParameters['page']  = 1;
+                   echo $this->url('funds', array(),
 					array('query' => $url_queryParameters)); ?>">
 					 <?php echo $this->translate('Name') ?>
 				</a>
 			</th>
+        <th><?php echo $this->translate('Sustainable investments') ?></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($funds as $fund): ?>
 		<tr>
 			<td><a href="<?php echo $this->url('funds', array('id' => $fund->id)) ?>" title=""><?php echo $this->translate($fund->name) ?></td>
+        <td>
+          <?php
+            echo $this->numberFormat(
+              $fund->getSustainableInvestmentsPercentage(),
+              NumberFormatter::PERCENT,
+              NumberFormatter::TYPE_DEFAULT,
+              "en_US"
+            );
+          ?>
+        </td>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
-</table>
+  </table>
 
-<?php if ($funds->getPages()->pageCount): ?>
+  <?php if ($funds->getPages()->pageCount): ?>
 
-  <div>
-      <ul class="pagination pagination-centered">
-          <!-- Previous page link -->
-          <?php if (isset($funds->getPages()->previous)): ?>
-              <li>
-                  <a href="
-                  <?php
-                  $queryParameters['page'] = $funds->getPages()->previous;
-                  echo $this->url('funds', array(), array(
-                      'query' => $queryParameters)); ?>">
-                      <<
-                  </a>
-              </li>
-          <?php
-          else: ?>
-              <li class="disabled">
-                  <a href="#">
-                      <<
-                  </a>
-              </li>
-          <?php endif; ?>
-          <!-- Numbered page links -->
-          <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
-              <?php if ($page != $funds->getPages()->current): ?>
-                  <li>
-                      <a href="
-                      <?php
-                      $queryParameters['page'] = $page;
-                      echo $this->url('funds', array(), array(
-                          'query' => $queryParameters));
-                          ?>">
-                          <?php echo $page; ?>
-                      </a>
-                  </li>
-              <?php else: ?>
-                  <li class="active">
-                      <a href="#"><?php echo $page; ?></a>
-                  </li>
-              <?php endif; ?>
-          <?php endforeach; ?>
+    <div>
+        <ul class="pagination pagination-centered">
+            <!-- Previous page link -->
+            <?php if (isset($funds->getPages()->previous)): ?>
+                <li>
+                    <a href="
+                    <?php
+                    $queryParameters['page'] = $funds->getPages()->previous;
+                    echo $this->url('funds', array(), array(
+                        'query' => $queryParameters)); ?>">
+                        <<
+                    </a>
+                </li>
+            <?php
+            else: ?>
+                <li class="disabled">
+                    <a href="#">
+                        <<
+                    </a>
+                </li>
+            <?php endif; ?>
+            <!-- Numbered page links -->
+            <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
+                <?php if ($page != $funds->getPages()->current): ?>
+                    <li>
+                        <a href="
+                        <?php
+                        $queryParameters['page'] = $page;
+                        echo $this->url('funds', array(), array(
+                            'query' => $queryParameters));
+                            ?>">
+                            <?php echo $page; ?>
+                        </a>
+                    </li>
+                <?php else: ?>
+                    <li class="active">
+                        <a href="#"><?php echo $page; ?></a>
+                    </li>
+                <?php endif; ?>
+            <?php endforeach; ?>
 
-          <!-- Next page link -->
-          <?php if (isset($funds->getPages()->next)): ?>
-              <li>
-                  <a href="
-                  <?php
-                  $queryParameters['page'] = $funds->getPages()->next;
-                  echo $this->url('funds', array(), array(
-                      'query' => $queryParameters));
-                      ?>">
-                      >>
-                  </a>
-              </li>
-          <?php else: ?>
-              <li class="disabled">
-                  <a href="#">
-                      >>
-                  </a>
-              </li>
-          <?php endif; ?>
-      </ul>
+            <!-- Next page link -->
+            <?php if (isset($funds->getPages()->next)): ?>
+                <li>
+                    <a href="
+                    <?php
+                    $queryParameters['page'] = $funds->getPages()->next;
+                    echo $this->url('funds', array(), array(
+                        'query' => $queryParameters));
+                        ?>">
+                        >>
+                    </a>
+                </li>
+            <?php else: ?>
+                <li class="disabled">
+                    <a href="#">
+                        >>
+                    </a>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </div>
+  <?php endif; ?>
   </div>
-<?php endif; ?>
+  <div class="col-md-4 well">
+    <h2><?php echo $this->translate('Category') ?></h2>
+    <?php echo $this->form($form); ?>
+  </div>
+</div>

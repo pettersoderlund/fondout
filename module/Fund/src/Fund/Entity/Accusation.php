@@ -29,9 +29,12 @@ class Accusation extends Entity
     private $accusation;
 
     /**
-     * @var string
+     * @var \AccusationCategory
      *
-     * @ORM\Column(name="category", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Fund\Entity\AccusationCategory", inversedBy="accusations")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="accusation_category_id", referencedColumnName="id")
+     * })
      */
     private $category;
 
@@ -91,10 +94,10 @@ class Accusation extends Entity
     /**
      * Set category
      *
-     * @param string $category
+     * @param AccusationCategory $category
      * @return Accusation
      */
-    public function setCategory($category)
+    public function setCategory(AccusationCategory $category)
     {
         $this->category = $category;
 
@@ -104,7 +107,7 @@ class Accusation extends Entity
     /**
      * Get category
      *
-     * @return string
+     * @return AccusationCategory
      */
     public function getCategory()
     {
