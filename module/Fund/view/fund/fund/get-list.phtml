@@ -5,6 +5,7 @@ $order = isset($query['order']) ? $query['order'] : 'ASC';
 $order = ($order == 'ASC') ? 'DESC' : 'ASC';
 
 $form->setAttribute('method', 'GET');
+$form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 ?>
 
 <div class="row">
@@ -18,7 +19,7 @@ $form->setAttribute('method', 'GET');
         </a>
       </th>
         <th>
-				  <a href="<?php echo $this->url('funds', array(), array('query' => array('sort' => 'score', 'order' => $order)  + $query)); ?>">
+				  <a href="<?php echo $this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query)); ?>">
             <?php echo $this->translate('Sustainable investments') ?>
           </a>
         </th>
@@ -31,7 +32,7 @@ $form->setAttribute('method', 'GET');
         <td>
           <?php
             echo $this->numberFormat(
-              $fund->getSustainableInvestmentsPercentage(),
+              $fund->getSustainability(),
               NumberFormatter::PERCENT,
               NumberFormatter::TYPE_DEFAULT,
               "en_US"

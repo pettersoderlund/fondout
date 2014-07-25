@@ -3,9 +3,12 @@
 namespace Fund\Service;
 
 use Doctrine\ORM\EntityManager;
-use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
+use DoctrineModule\Paginator\Adapter\Collection as CollectionAdapter;
 use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
+use Zend\Paginator\Adapter\ArrayAdapter;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ArrayCollection;
 
 use Fund\Entity\Fund;
 
@@ -109,25 +112,23 @@ class FundService
      * @param string[] $params
      * @return Zend\Paginator\Paginator
      */
-    public function findFunds($criteria)
+    public function findFunds($params)
     {
-        // Check if order by is set, defaults to column fund name
-        $sort = (isset($criteria['sort'])) ? $criteria['sort'] : 'name';
-
-        // Check if order is set, defaults to ascending
-        $order = (isset($criteria['order'])) ? $criteria['order'] : 'ASC';
-
+        $sort        = $params->fromQuery('sort', 'name');
+        $order       = $params->fromQuery('order', 'ASC');
+        $currentPage = $params->fromQuery('page', 1);
+        $category    = $params->fromQuery('category', array());
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $query = $repository->createQueryBuilder('fund')->select('fund, fi')->join('fund.fundInstances', 'fi')->orderBy('fund.' . $sort, $order);
-        $paginator = new Paginator(new DoctrineAdapter(new ORMPaginator($query)));
 
-        // Check if page is set, defaults to page 1
-        $currentPage = (isset($criteria['page'])) ? $criteria['page'] : 1;
+        $criteria     = Criteria::create()->orderBy(array($sort => $order));
+        $funds        = new ArrayCollection($repository->findAllFunds($category));
+        $orderedfunds = $funds->matching($criteria);
+        $paginator    = new Paginator(new CollectionAdapter($orderedfunds));
 
         $paginator->setCurrentPageNumber((int)$currentPage);
         $paginator->setItemCountPerPage(10);
 
-        return $repository->mapControversialMarketValues($paginator, $criteria);
+        return $paginator;
     }
 }

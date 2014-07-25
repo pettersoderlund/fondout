@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityRepository;
 
 use Fund\Entity\Fund;
 use Fund\Entity\ControversialValue;
-use Zend\Paginator\Paginator;
 
 /**
 * FundRepository
@@ -84,7 +83,20 @@ class FundRepository extends EntityRepository
             ->getSingleScalarResult();
     }
 
-    public function mapControversialMarketValues(Paginator $funds, array $criteria)
+    public function findAllFunds($category = array())
+    {
+        $funds = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('f, fi')
+            ->from('Fund\Entity\Fund', 'f')
+            ->join('f.fundInstances', 'fi')
+            ->getQuery()
+            ->getResult();
+
+        return $this->mapControversialMarketValues($funds, $category);
+    }
+
+    protected function mapControversialMarketValues(array $funds, $category = array())
     {
         $queryBuilder    = $this->getEntityManager()->createQueryBuilder();
         $subQueryBuilder = clone $queryBuilder;
@@ -101,12 +113,12 @@ class FundRepository extends EntityRepository
             ->join('a.category', 'c')
             ->where('a.shareCompany = sc.id');
 
-        if (isset($criteria['category']) && is_array($criteria['category'])) {
-            $subQueryBuilder->andWhere($subQueryBuilder->expr()->in('c.id', $criteria['category']));
+        if (count($category) > 0) {
+            $subQueryBuilder->andWhere($subQueryBuilder->expr()->in('c.id', $category));
         }
 
         // query: aggregate all market values for all controversial shareholdings per fund
-        $queryBuilder->select('NEW ControversialValue(f.id, SUM(sh.marketValue))')
+        $queryBuilder->select('f.id, SUM(sh.marketValue) AS score')
             ->from('Fund\Entity\Fund', 'f')
             ->join('f.fundInstances', 'fi')
             ->join('fi.shareholdings', 'sh')
@@ -121,40 +133,11 @@ class FundRepository extends EntityRepository
 
         // map the ControversialValue DTO to the related fund
         foreach ($queryBuilder->getQuery()->getResult() as $cv) {
-            if (isset($fundMap[$cv->fundId])) {
-                $fundMap[$cv->fundId]->setControversialValue($cv);
+            if (isset($fundMap[$cv['id']])) {
+                $fundMap[$cv['id']]->calculateSustainability($cv['score']);
             }
         }
 
         return $funds;
     }
-
-    // public function findAllFunds()
-    // {
-    //     $queryBuilder    = $this->getEntityManager()->createQueryBuilder();
-    //     $subQueryBuilder = clone $queryBuilder;
-
-    //     // subquery: select all distinct accusations that match the category criteria
-    //     // and the share company ID
-    //     $subQueryBuilder->select('DISTINCT a.accusation')
-    //         ->from('Fund\Entity\Accusation', 'a')
-    //         ->join('a.category', 'c')
-    //         ->where('a.shareCompany = sc.id');
-
-    //     if (isset($criteria['category']) && is_array($criteria['category'])) {
-    //         $subQueryBuilder->andWhere($subQueryBuilder->expr()->in('c.id', $criteria['category']));
-    //     }
-
-    //     // query: aggregate all market values for all controversial shareholdings per fund
-    //     $queryBuilder->select('NEW ControversialValue(f.id, SUM(sh.marketValue))')
-    //         ->from('Fund\Entity\Fund', 'f')
-    //         ->join('f.fundInstances', 'fi')
-    //         ->join('fi.shareholdings', 'sh')
-    //         ->join('sh.share', 's')
-    //         ->join('s.shareCompany', 'sc')
-    //         ->where(
-    //                 $queryBuilder->expr()->exists($subQueryBuilder->getDql()),
-    //             )
-    //         )->groupBy('f.id');
-    // }
 }
