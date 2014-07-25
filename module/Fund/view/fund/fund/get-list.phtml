@@ -14,12 +14,12 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
 	<thead>
 		<tr>
 			<th>
-        <a href="<?php echo $this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query)); ?>">
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
            <?php echo $this->translate('Name') ?>
         </a>
       </th>
         <th>
-				  <a href="<?php echo $this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query)); ?>">
+				  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
             <?php echo $this->translate('Sustainable investments') ?>
           </a>
         </th>
@@ -28,17 +28,21 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
 	<tbody>
 	<?php foreach ($funds as $fund): ?>
 		<tr>
-			<td><a href="<?php echo $this->url('funds', array('id' => $fund->id)) ?>" title=""><?php echo $this->translate($fund->name) ?></td>
-        <td>
-          <?php
-            echo $this->numberFormat(
-              $fund->getSustainability(),
-              NumberFormatter::PERCENT,
-              NumberFormatter::TYPE_DEFAULT,
-              "en_US"
-            );
-          ?>
-        </td>
+			<td>
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+          <?php echo $this->translate($fund->name) ?>
+        </a>
+      </td>
+      <td>
+        <?php
+          echo $this->numberFormat(
+            $fund->getSustainability(),
+            NumberFormatter::PERCENT,
+            NumberFormatter::TYPE_DEFAULT,
+            "en_US"
+          );
+        ?>
+      </td>
 		</tr>
 	<?php endforeach; ?>
 	</tbody>
@@ -51,7 +55,7 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
             <!-- Previous page link -->
             <?php if (isset($funds->getPages()->previous)): ?>
                 <li>
-                    <a href="<?php echo $this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query)); ?>">
+                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
                       &laquo;
                     </a>
                 </li>
@@ -67,7 +71,7 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
             <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
                 <?php if ($page != $funds->getPages()->current): ?>
                     <li>
-                        <a href="<?php echo $this->url('funds', array(), array('query' => array('page' => $page)  + $query)); ?>">
+                        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
                             <?php echo $page; ?>
                         </a>
                     </li>
@@ -81,7 +85,7 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
             <!-- Next page link -->
             <?php if (isset($funds->getPages()->next)): ?>
                 <li>
-                    <a href="<?php echo $this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query)); ?>">
+                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
                         &raquo;
                     </a>
                 </li>

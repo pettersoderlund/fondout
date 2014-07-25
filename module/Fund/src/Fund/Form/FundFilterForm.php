@@ -25,6 +25,7 @@ class FundFilterForm extends Form
                 'options' => array(
                     'target_class'   => 'Fund\Entity\AccusationCategory',
                     'property'       => 'name',
+                    'label_attributes' => array('class' => 'checkbox')
                 ),
             )
         );
@@ -37,12 +38,26 @@ class FundFilterForm extends Form
         //     ),
         // ));
 
+
+
+        // echo '<pre>';
+        // \Doctrine\Common\Util\Debug::dump($this->get('category'));
+        // echo '</pre>';
+        // die;
+//         $element->setValueOptions(array(
+//     1 => array(
+//         'label' => 'First Option',
+//         'label_attributes' => array('class' => 'checkbox'),
+//     ),
+// ));
+
         $this->add(
             array(
                 'name' => 'submit',
                 'type' => 'Submit',
                 'attributes' => array(
-                    'value' => 'Filter'
+                    'value' => 'Filter',
+                    'class' => 'btn btn-success'
                 )
             )
         );
