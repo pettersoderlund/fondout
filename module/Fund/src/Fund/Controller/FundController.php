@@ -11,17 +11,17 @@ class FundController extends AbstractRestfulController
     public function getList()
     {
         $service = $this->getFundService();
-        $parameters = $this->params()->fromQuery();
+        $parameters = $this->params();
         $fundsPaginator = $service->findFunds($parameters);
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('\Fund\Form\FundFilterForm');
-        $form->setData($parameters);
+        $form->setData($parameters->fromQuery());
 
         return new ViewModel(
             array(
               'funds' => $fundsPaginator,
-              'queryParameters' => $parameters,
+              'query' => $parameters->fromQuery(),
               'form' => $form
             )
         );

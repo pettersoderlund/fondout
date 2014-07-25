@@ -1,21 +1,11 @@
 <?php
-$url_order = 'DESC';  // set the opposite direction for the url
-if(isset($queryParameters['orderBy'])) {
-    if ($queryParameters['orderBy']  == 'name') {
-        $url_order = $queryParameters['order']  == 'ASC' ? 'DESC' : 'ASC';
-    }
-}
 
- $form->setAttribute('method', 'GET');
- // $form->prepare();
+// set default order if not set and inverse the order based on the previous value
+$order = isset($query['order']) ? $query['order'] : 'ASC';
+$order = ($order == 'ASC') ? 'DESC' : 'ASC';
 
-/*elseif ($orderBy == 'artist')
-    $url_order = $order == 'ASC' ? 'DESC' : 'ASC';*/
-
-//Use url_queryparameters for the sort buttons and filter buttons
-//Use queryParameters for the pagination buttons
-$url_queryParameters = $queryParameters;
-$url_queryParameters['order'] = $url_order;
+$form->setAttribute('method', 'GET');
+$form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 ?>
 
 <div class="row">
@@ -24,16 +14,15 @@ $url_queryParameters['order'] = $url_order;
 	<thead>
 		<tr>
 			<th>
-				<a href="<?php
-                   $url_queryParameters['orderBy']  = 'name';
-                   /* Start at first page when changing order and sorting */
-                   $url_queryParameters['page']  = 1;
-                   echo $this->url('funds', array(),
-					array('query' => $url_queryParameters)); ?>">
-					 <?php echo $this->translate('Name') ?>
-				</a>
-			</th>
-        <th><?php echo $this->translate('Sustainable investments') ?></th>
+        <a href="<?php echo $this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query)); ?>">
+           <?php echo $this->translate('Name') ?>
+        </a>
+      </th>
+        <th>
+				  <a href="<?php echo $this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query)); ?>">
+            <?php echo $this->translate('Sustainable investments') ?>
+          </a>
+        </th>
 		</tr>
 	</thead>
 	<tbody>
@@ -43,7 +32,7 @@ $url_queryParameters['order'] = $url_order;
         <td>
           <?php
             echo $this->numberFormat(
-              $fund->getSustainableInvestmentsPercentage(),
+              $fund->getSustainability(),
               NumberFormatter::PERCENT,
               NumberFormatter::TYPE_DEFAULT,
               "en_US"
@@ -62,19 +51,15 @@ $url_queryParameters['order'] = $url_order;
             <!-- Previous page link -->
             <?php if (isset($funds->getPages()->previous)): ?>
                 <li>
-                    <a href="
-                    <?php
-                    $queryParameters['page'] = $funds->getPages()->previous;
-                    echo $this->url('funds', array(), array(
-                        'query' => $queryParameters)); ?>">
-                        <<
+                    <a href="<?php echo $this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query)); ?>">
+                      &laquo;
                     </a>
                 </li>
             <?php
             else: ?>
                 <li class="disabled">
                     <a href="#">
-                        <<
+                      &laquo;
                     </a>
                 </li>
             <?php endif; ?>
@@ -82,12 +67,7 @@ $url_queryParameters['order'] = $url_order;
             <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
                 <?php if ($page != $funds->getPages()->current): ?>
                     <li>
-                        <a href="
-                        <?php
-                        $queryParameters['page'] = $page;
-                        echo $this->url('funds', array(), array(
-                            'query' => $queryParameters));
-                            ?>">
+                        <a href="<?php echo $this->url('funds', array(), array('query' => array('page' => $page)  + $query)); ?>">
                             <?php echo $page; ?>
                         </a>
                     </li>
@@ -101,19 +81,14 @@ $url_queryParameters['order'] = $url_order;
             <!-- Next page link -->
             <?php if (isset($funds->getPages()->next)): ?>
                 <li>
-                    <a href="
-                    <?php
-                    $queryParameters['page'] = $funds->getPages()->next;
-                    echo $this->url('funds', array(), array(
-                        'query' => $queryParameters));
-                        ?>">
-                        >>
+                    <a href="<?php echo $this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query)); ?>">
+                        &raquo;
                     </a>
                 </li>
             <?php else: ?>
                 <li class="disabled">
                     <a href="#">
-                        >>
+                        &raquo;
                     </a>
                 </li>
             <?php endif; ?>

@@ -86,14 +86,14 @@ class Fund extends Entity
      */
     protected $company;
 
-    protected $controversialValue;
-
     /**
      * @var FundInstance[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\FundInstance", mappedBy="fund")
      **/
     protected $fundInstances = null;
+
+    protected $sustainability = 1;
 
     public function __construct($options = null)
     {
@@ -292,26 +292,6 @@ class Fund extends Entity
         return $this->fundInstances;
     }
 
-
-    /**
-     * Create net asset value over time graph data
-     *
-     * @return array
-     */
-    public function createNavOverTimeGraphData()
-    {
-        $rows = array();
-
-        foreach ($this->getFundInstances()->toArray() as $row) {
-            $rows[] = array(
-                'x' => (double) $row->getDate()->format('U'),
-                'y' => (double) $row->getNetAssetValue()
-            );
-        }
-
-        return $rows;
-    }
-
     /**
      * Remove fundInstances
      *
@@ -323,39 +303,27 @@ class Fund extends Entity
     }
 
     /**
-     * Gets the value of controversialValue.
+     * Gets the value of sustainability.
      *
      * @return mixed
      */
-    public function getControversialValue()
+    public function getSustainability()
     {
-        return $this->controversialValue;
-    }
-
-    public function getSustainableInvestmentsPercentage()
-    {
-        // NOTE: breaks with more then one fund instance
-        foreach ($this->getFundInstances() as $fi) {
-            $totalMarketValue = $fi->totalMarketValue;
-        }
-
-        $controversialValue = isset($this->controversialValue)
-                            ? $this->controversialValue->value
-                            : 0;
-
-        return (($totalMarketValue - $controversialValue) / $totalMarketValue);
+        return $this->sustainability;
     }
 
     /**
-     * Sets the value of controversialValue.
+     * Sets the value of sustainability.
      *
-     * @param mixed $controversialValue the controversial value
+     * @param mixed $sustainability the sustainability
      *
      * @return self
      */
-    public function setControversialValue($controversialValue)
+    public function calculateSustainability($controversialValue)
     {
-        $this->controversialValue = $controversialValue;
+        // NOTE: ugly hack, breaks if we have more then one fund instance.
+        $totalMarketValue     = current($this->getFundInstances()->toArray())->totalMarketValue;
+        $this->sustainability = ($totalMarketValue - $controversialValue) / $totalMarketValue;
 
         return $this;
     }
