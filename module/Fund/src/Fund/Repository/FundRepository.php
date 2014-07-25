@@ -128,4 +128,33 @@ class FundRepository extends EntityRepository
 
         return $funds;
     }
+
+    // public function findAllFunds()
+    // {
+    //     $queryBuilder    = $this->getEntityManager()->createQueryBuilder();
+    //     $subQueryBuilder = clone $queryBuilder;
+
+    //     // subquery: select all distinct accusations that match the category criteria
+    //     // and the share company ID
+    //     $subQueryBuilder->select('DISTINCT a.accusation')
+    //         ->from('Fund\Entity\Accusation', 'a')
+    //         ->join('a.category', 'c')
+    //         ->where('a.shareCompany = sc.id');
+
+    //     if (isset($criteria['category']) && is_array($criteria['category'])) {
+    //         $subQueryBuilder->andWhere($subQueryBuilder->expr()->in('c.id', $criteria['category']));
+    //     }
+
+    //     // query: aggregate all market values for all controversial shareholdings per fund
+    //     $queryBuilder->select('NEW ControversialValue(f.id, SUM(sh.marketValue))')
+    //         ->from('Fund\Entity\Fund', 'f')
+    //         ->join('f.fundInstances', 'fi')
+    //         ->join('fi.shareholdings', 'sh')
+    //         ->join('sh.share', 's')
+    //         ->join('s.shareCompany', 'sc')
+    //         ->where(
+    //                 $queryBuilder->expr()->exists($subQueryBuilder->getDql()),
+    //             )
+    //         )->groupBy('f.id');
+    // }
 }

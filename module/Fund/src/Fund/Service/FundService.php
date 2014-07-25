@@ -112,14 +112,14 @@ class FundService
     public function findFunds($criteria)
     {
         // Check if order by is set, defaults to column fund name
-        $orderBy = (isset($criteria['orderBy'])) ? $criteria['orderBy'] : 'name';
+        $sort = (isset($criteria['sort'])) ? $criteria['sort'] : 'name';
 
         // Check if order is set, defaults to ascending
         $order = (isset($criteria['order'])) ? $criteria['order'] : 'ASC';
 
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $query = $repository->createQueryBuilder('fund')->orderBy('fund.' . $orderBy, $order);
+        $query = $repository->createQueryBuilder('fund')->select('fund, fi')->join('fund.fundInstances', 'fi')->orderBy('fund.' . $sort, $order);
         $paginator = new Paginator(new DoctrineAdapter(new ORMPaginator($query)));
 
         // Check if page is set, defaults to page 1

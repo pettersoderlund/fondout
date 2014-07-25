@@ -21,7 +21,7 @@ class FundController extends AbstractRestfulController
         return new ViewModel(
             array(
               'funds' => $fundsPaginator,
-              'queryParameters' => $parameters,
+              'query' => $parameters,
               'form' => $form
             )
         );
