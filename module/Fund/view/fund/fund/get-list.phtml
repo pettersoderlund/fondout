@@ -6,6 +6,7 @@ $order = ($order == 'ASC') ? 'DESC' : 'ASC';
 
 $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
+$form->prepare();
 ?>
 
 <div class="row">
@@ -13,10 +14,13 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
   <table class="table table-bordered table-hover">
 	<thead>
 		<tr>
-			<th>
+      <th>
         <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
            <?php echo $this->translate('Name') ?>
         </a>
+      </th>
+			<th>
+        <?php echo $this->translate('Company') ?>
       </th>
         <th>
 				  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
@@ -28,9 +32,14 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
 	<tbody>
 	<?php foreach ($funds as $fund): ?>
 		<tr>
-			<td>
+      <td>
         <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
           <?php echo $this->translate($fund->name) ?>
+        </a>
+      </td>
+			<td>
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+          <?php echo $this->translate($fund->company->name) ?>
         </a>
       </td>
       <td>
@@ -49,59 +58,76 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
   </table>
 
   <?php if ($funds->getPages()->pageCount): ?>
+    <ul class="pagination pagination-centered">
+      <!-- Previous page link -->
+      <?php if (isset($funds->getPages()->previous)): ?>
+        <li>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
+            &laquo;
+          </a>
+        </li>
+        <?php
+        else: ?>
+        <li class="disabled">
+          <a href="#">
+            &laquo;
+          </a>
+        </li>
+      <?php endif; ?>
+      <!-- Numbered page links -->
+      <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
+        <?php if ($page != $funds->getPages()->current): ?>
+          <li>
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
+              <?php echo $page; ?>
+            </a>
+          </li>
+        <?php else: ?>
+          <li class="active">
+            <a href="#"><?php echo $page; ?></a>
+          </li>
+        <?php endif; ?>
+      <?php endforeach; ?>
 
-    <div>
-        <ul class="pagination pagination-centered">
-            <!-- Previous page link -->
-            <?php if (isset($funds->getPages()->previous)): ?>
-                <li>
-                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
-                      &laquo;
-                    </a>
-                </li>
-            <?php
-            else: ?>
-                <li class="disabled">
-                    <a href="#">
-                      &laquo;
-                    </a>
-                </li>
-            <?php endif; ?>
-            <!-- Numbered page links -->
-            <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
-                <?php if ($page != $funds->getPages()->current): ?>
-                    <li>
-                        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
-                            <?php echo $page; ?>
-                        </a>
-                    </li>
-                <?php else: ?>
-                    <li class="active">
-                        <a href="#"><?php echo $page; ?></a>
-                    </li>
-                <?php endif; ?>
-            <?php endforeach; ?>
-
-            <!-- Next page link -->
-            <?php if (isset($funds->getPages()->next)): ?>
-                <li>
-                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
-                        &raquo;
-                    </a>
-                </li>
-            <?php else: ?>
-                <li class="disabled">
-                    <a href="#">
-                        &raquo;
-                    </a>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </div>
+      <!-- Next page link -->
+      <?php if (isset($funds->getPages()->next)): ?>
+        <li>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
+            &raquo;
+          </a>
+        </li>
+      <?php else: ?>
+        <li class="disabled">
+          <a href="#">
+            &raquo;
+          </a>
+        </li>
+      <?php endif; ?>
+    </ul>
   <?php endif; ?>
   </div>
-  <div class="col-md-4 well">
-    <h2><?php echo $this->translate('Category') ?></h2>
-    <?php echo $this->form($form); ?>
+  <div class="col-md-4">
+    <?php echo $this->form()->openTag($form) ?>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><?php echo $this->translate('Category') ?></h3>
+        </div>
+        <div class="panel-body">
+          <?php echo $this->formMultiCheckbox($form->get('category')) ?>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><?php echo $this->translate('Company') ?></h3>
+        </div>
+        <div class="panel-body">
+          <?php echo $this->formSelect($form->get('company')) ?>
+        </div>
+      </div>
+
+      <?php echo $this->formSubmit($form->get('submit')) ?>
+    <?php echo $this->form()->closeTag() ?>
   </div>
 </div>
