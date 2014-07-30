@@ -27,23 +27,36 @@ class FundController extends AbstractRestfulController
         );
     }
 
+    /*
+    * Get the individual fund page.
+    * TODO: Count controversial companies/securities and total number of securit
+    *
+    */
     public function get($id)
     {
         $service = $this->getFundService();
-        $parameters = $this->params()->fromQuery();
+        $parameters = $this->params();
         $fund = $service->getFundById($id);
-        $controversialCompaniesPaginator = $service->findControversialCompanies(
-            $fund,
-            $parameters
-        );
+        list ($controversialCompaniesPaginator, $cCategoriesCount)
+            = $service->findControversialCompanies(
+                $fund,
+                $parameters
+            );
         $controversialValue = $service->findControversialValue($fund);
+
+        $form = $this->getServiceLocator()
+            ->get('FormElementManager')
+            ->get('\Fund\Form\FundPageFilterForm');
+        $form->setData($parameters->fromQuery());
 
         return new ViewModel(
             array(
                 'fund' => $fund,
                 'controversialCompanies' => $controversialCompaniesPaginator,
                 'controversialValue' => $controversialValue,
-                'queryParameters' => $parameters
+                'cCategoriesCount' => $cCategoriesCount,
+                'queryParameters' => $parameters->fromQuery(),
+                'form' => $form
             )
         );
     }

@@ -79,20 +79,47 @@ class FundService
      */
     public function findControversialCompanies(Fund $fund, $parameters)
     {
+        $category    = $parameters->fromQuery('category_visible', array());
+        $currentPage = $parameters->fromQuery('page', 1);
+
         $fundRepository = $this->getEntityManager()
             ->getRepository('Fund\Entity\Fund');
 
-        $adapter = new DoctrineAdapter(
+
+        $controversialCompanies =
+         $fundRepository->findControversialCompanies($fund, $category);
+        /*echo "<pre>";
+        \Doctrine\Common\Util\Debug::dump($controversialCompanies);
+        die;*/
+        // Count the number of occurances for each category
+        $controversialCategoriesCount = array();
+        foreach ($controversialCompanies as $company) {
+            foreach ($company->accusations as $accusation) {
+                $accusationName = $accusation->category->name;
+                if (array_key_exists($accusationName, $controversialCategoriesCount)) {
+                    $controversialCategoriesCount[$accusationName]++;
+                } else {
+                    $controversialCategoriesCount[$accusationName] = 1;
+                }
+
+            }
+        }
+        //echo var_dump($controversialCategoriesCount);
+
+        /*$adapter = new DoctrineAdapter(
             new ORMPaginator($fundRepository->findControversialCompanies($fund))
         );
 
-        $paginator = new Paginator($adapter);
-        // Check if page is set, defaults to page 1
-        $currentPage = (isset($parameters['page'])) ? $parameters['page'] : 1;
+        $paginator = new Paginator($adapter);*/
+
+        $paginator = new \Zend\Paginator\Paginator(
+            new \Zend\Paginator\Adapter\ArrayAdapter($controversialCompanies)
+        );
+
         $paginator->setCurrentPageNumber((int)$currentPage);
         $paginator->setItemCountPerPage(10);
 
-        return $paginator;
+        return array($paginator, $controversialCategoriesCount);
     }
 
     public function findControversialValue(Fund $fund)

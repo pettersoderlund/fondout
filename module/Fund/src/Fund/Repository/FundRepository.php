@@ -46,21 +46,32 @@ class FundRepository extends EntityRepository
            ->getResult();
     }
 
-    public function findControversialCompanies(Fund $fund)
+    public function findControversialCompanies(Fund $fund, array $category = array())
     {
-        return $this->getEntityManager()
+        $qb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('sc')
+            ->select('sc, b, accusation_category')
             ->from('Fund\Entity\ShareCompany', 'sc')
             ->join('sc.accusations', 'b')
             ->join('sc.shares', 's')
             ->join('s.shareholdings', 'sh')
             ->join('sh.fundInstance', 'fi')
             ->join('fi.fund', 'f')
+            ->join('b.category', 'accusation_category')
             ->orderBy('sc.name', 'ASC')
             ->where('f.name = ?1')
             ->setParameter(1, $fund->name)
             ->distinct();
+
+        if (count($category) > 0) {
+            $qb->andWhere(
+                $qb->expr()->in('accusation_category.id', $category)
+            );
+        }
+
+        return $qb
+            ->getQuery()
+            ->getResult();
     }
 
 

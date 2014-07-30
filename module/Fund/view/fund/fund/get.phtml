@@ -4,6 +4,16 @@
 <div class="row">
 	<div class="col-md-8">
 		<h2>Kontroversiella bolag</h2>
+		<?php
+		$form = $this->form;
+		$form->setAttribute('method', 'GET');
+
+		$form->prepare();
+		echo $this->form()->openTag($form);
+		echo $this->formCollection($form);
+		echo $this->form()->closeTag();
+		?>
+		</ul>
 		<div class="panel-group" id="accordion">
 			<?php foreach ($controversialCompanies as $company): ?>
 			<div class="panel panel-default">
@@ -11,6 +21,11 @@
 					<h4 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $this->escapeHtml($company->id) ?>">
 							<?php echo $this->escapeHtml($company->name) ?>
+							<?php foreach ($company->accusations as $accusation): ?>
+								<span class="label label-primary pull-right">
+									<?php echo $this->escapeHtml($accusation->category) ?>
+								</span>
+							<?php endforeach ?>
 						</a>
 					</h4>
 				</div>
@@ -22,7 +37,7 @@
 								<th><?php echo $this->translate('Category') ?></th>
 								<th><?php echo $this->translate('Source') ?></th>
 							</tr>
-							<!-- <?php /* ?>
+
 							<?php foreach ($company->accusations as $accusation): ?>
 							<tr>
 								<td><?php echo $this->escapeHtml($accusation) ?></td>
@@ -30,80 +45,80 @@
 								<td><?php echo $this->escapeHtml($accusation->source->name) ?></td>
 							</tr>
 							<?php endforeach ?>
-							<?php */ ?>-->
+
 						</table>
 					</div>
 				</div>
 			</div>
 			<?php endforeach; ?>
-<?php if ($controversialCompanies->getPages()->pageCount): ?>
-<div>
-	<ul class="pagination pagination-centered">
-		<!-- Previous page link -->
-		<?php if (isset($controversialCompanies->getPages()->previous)): ?>
-			<li>
-				<a href="
-				<?php
-				$queryParameters['page'] = $controversialCompanies->getPages()->previous;
-				echo $this->url($this->route, array('id' => $fund->id), array(
-					'query' => $queryParameters)); ?>">
-					<<
-				</a>
-			</li>
-		<?php
-		else: ?>
-			<li class="disabled">
-				<a href="#">
-					<<
-				</a>
-			</li>
-		<?php endif; ?>
-		<!-- Numbered page links -->
-		<?php foreach ($controversialCompanies->getPages()->pagesInRange as $page): ?>
-			<?php if ($page != $controversialCompanies->getPages()->current): ?>
-				<li>
-					<a href="
-					<?php
-					$queryParameters['page'] = $page;
-					echo $this->url($this->route, array('id' => $fund->id), array(
-						'query' => $queryParameters));
-						?>">
-						<?php echo $page; ?>
-					</a>
-				</li>
-			<?php else: ?>
-				<li class="active">
-					<a href="#"><?php echo $page; ?></a>
-				</li>
-			<?php endif; ?>
-		<?php endforeach; ?>
-
-		<!-- Next page link -->
-		<?php if (isset($controversialCompanies->getPages()->next)): ?>
-			<li>
-				<a href="
-				<?php
-				$queryParameters['page'] = $controversialCompanies->getPages()->next;
-				echo $this->url($this->route, array('id' => $fund->id), array(
-					'query' => $queryParameters));
-					?>">
-					>>
-				</a>
-			</li>
-		<?php else: ?>
-			<li class="disabled">
-				<a href="#">
-					>>
-				</a>
-			</li>
-		<?php endif; ?>
-	</ul>
-</div>
-<?php endif; ?>
 
 		</div>
 
 
+		<?php if ($controversialCompanies->getPages()->pageCount): ?>
+		<div>
+			<ul class="pagination pagination-centered">
+				<!-- Previous page link -->
+				<?php if (isset($controversialCompanies->getPages()->previous)): ?>
+					<li>
+						<a href="
+						<?php
+						$queryParameters['page'] = $controversialCompanies->getPages()->previous;
+						echo $this->url($this->route, array('id' => $fund->id), array(
+							'query' => $queryParameters)); ?>">
+							<<
+						</a>
+					</li>
+				<?php
+				else: ?>
+					<li class="disabled">
+						<a href="#">
+							<<
+						</a>
+					</li>
+				<?php endif; ?>
+				<!-- Numbered page links -->
+				<?php foreach ($controversialCompanies->getPages()->pagesInRange as $page): ?>
+					<?php if ($page != $controversialCompanies->getPages()->current): ?>
+						<li>
+							<a href="
+							<?php
+							$queryParameters['page'] = $page;
+							echo $this->url($this->route, array('id' => $fund->id), array(
+								'query' => $queryParameters));
+								?>">
+								<?php echo $page; ?>
+							</a>
+						</li>
+					<?php else: ?>
+						<li class="active">
+							<a href="#"><?php echo $page; ?></a>
+						</li>
+					<?php endif; ?>
+				<?php endforeach; ?>
+
+				<!-- Next page link -->
+				<?php if (isset($controversialCompanies->getPages()->next)): ?>
+					<li>
+						<a href="
+						<?php
+						$queryParameters['page'] = $controversialCompanies->getPages()->next;
+						echo $this->url($this->route, array('id' => $fund->id), array(
+							'query' => $queryParameters));
+							?>">
+							>>
+						</a>
+					</li>
+				<?php else: ?>
+					<li class="disabled">
+						<a href="#">
+							>>
+						</a>
+					</li>
+				<?php endif; ?>
+			</ul>
+		</div>
+		<?php endif; ?>
 
 	</div>
 
