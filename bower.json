@@ -1,0 +1,21 @@
+{
+  "name": "fondout",
+  "version": "0.0.0",
+  "authors": [
+    "Marcus Lindfeldt <marcus@fondout.se>",
+    "Petter Söderlund <petter@fondout.se>"
+  ],
+  "main": "public/index.php",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/bower_components"
+  ],
+  "dependencies": {
+    "bootstrap": "*",
+    "respond": "~1.4.2",
+    "html5shiv": "~3.7.2"
+  },
+  "devDependencies": {}
+}

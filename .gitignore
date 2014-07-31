@@ -14,3 +14,4 @@ public/vendor
 data/DoctrineORMModule/
 data/cache/*
 !data/cache/.gitkeep
+node_modules/
