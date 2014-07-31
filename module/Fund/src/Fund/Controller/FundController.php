@@ -47,6 +47,8 @@ class FundController extends AbstractRestfulController
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('\Fund\Form\FundPageFilterForm');
+
+        $form->setCategories($cCategoriesCount);
         $form->setData($parameters->fromQuery());
 
         return new ViewModel(

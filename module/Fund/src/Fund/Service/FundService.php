@@ -70,47 +70,52 @@ class FundService
     }
 
     /**
-     * Get a list of all controversial companies connected to the fund
-     * in a paginator
+     * Get a list of all controversial companies filtered to be visible on the
+     * fund page connected to the fund in a paginator as well as a count for
+     * how many companies per category. 
      *
      * TODO: Filter controversial companies from parameters
      * @param Fund $fund, string[] $parameters
-     * @return Zend\Paginator\Paginator
+     * @return Zend\Paginator\Paginator, controversialcategoriesCount
      */
     public function findControversialCompanies(Fund $fund, $parameters)
     {
-        $category    = $parameters->fromQuery('category_visible', array());
-        $currentPage = $parameters->fromQuery('page', 1);
+        // Controversial companies listed on fundpage
+        $category_visible    = $parameters->fromQuery('category_visible', array());
+        // Controversial companies included to be listed on fundpage
+        $category            = $parameters->fromQuery('category', array());
+        $currentPage         = $parameters->fromQuery('page', 1);
 
         $fundRepository = $this->getEntityManager()
             ->getRepository('Fund\Entity\Fund');
 
-
-        $controversialCompanies =
+        // $allControversialCompanies is for counting categories
+        $allControversialCompanies =
          $fundRepository->findControversialCompanies($fund, $category);
-        /*echo "<pre>";
-        \Doctrine\Common\Util\Debug::dump($controversialCompanies);
-        die;*/
-        // Count the number of occurances for each category
-        $controversialCategoriesCount = array();
-        foreach ($controversialCompanies as $company) {
-            foreach ($company->accusations as $accusation) {
-                $accusationName = $accusation->category->name;
-                if (array_key_exists($accusationName, $controversialCategoriesCount)) {
-                    $controversialCategoriesCount[$accusationName]++;
-                } else {
-                    $controversialCategoriesCount[$accusationName] = 1;
-                }
 
+        // $controversialCompanies is for listing companies.
+        if (count($category_visible) > 0) {
+            $controversialCompanies =
+             $fundRepository->findControversialCompanies($fund, $category_visible);
+        } else {
+            $controversialCompanies = $allControversialCompanies;
+        }
+
+        // Count the number of occurances for each category
+        // $controversialCategoriesCount[categoryId] = array(categoryName, categoryCount)
+
+        $controversialCategoriesCount = array();
+        foreach ($allControversialCompanies as $company) {
+            foreach ($company->accusations as $accusation) {
+                $accusationId = $accusation->category->id;
+                if (array_key_exists($accusationId, $controversialCategoriesCount)) {
+                    $controversialCategoriesCount[$accusationId][1]++;
+                } else {
+                    $accusationName = $accusation->category->name;
+                    $controversialCategoriesCount[$accusationId] = array($accusationName, 1);
+                }
             }
         }
-        //echo var_dump($controversialCategoriesCount);
-
-        /*$adapter = new DoctrineAdapter(
-            new ORMPaginator($fundRepository->findControversialCompanies($fund))
-        );
-
-        $paginator = new Paginator($adapter);*/
 
         $paginator = new \Zend\Paginator\Paginator(
             new \Zend\Paginator\Adapter\ArrayAdapter($controversialCompanies)

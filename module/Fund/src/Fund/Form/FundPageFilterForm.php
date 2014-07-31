@@ -14,12 +14,11 @@ class FundPageFilterForm extends Form implements ObjectManagerAwareInterface
     {
         $this->add(
             array(
-                'type' => 'DoctrineModule\Form\Element\ObjectSelect',
+                'type' => 'Zend\Form\Element\Select',
                 'name' => 'category_visible',
                 'options' => array(
+                    'label' => "Välj kategorier",
                     'object_manager' => $this->getObjectManager(),
-                    'target_class'   => 'Fund\Entity\AccusationCategory',
-                    'property'       => 'name',
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
@@ -33,7 +32,7 @@ class FundPageFilterForm extends Form implements ObjectManagerAwareInterface
                 'name' => 'submit',
                 'type' => 'Submit',
                 'attributes' => array(
-                    'value' => 'Visa vald kategori',
+                    'value' => 'Visa',
                     'class' => 'btn btn-xs'
                 )
             )
@@ -48,5 +47,16 @@ class FundPageFilterForm extends Form implements ObjectManagerAwareInterface
     public function getObjectManager()
     {
         return $this->objectManager;
+    }
+
+    public function setCategories(array $category)
+    {
+        $cat = array();
+        // Format text CATEGORY (COUNT)
+        foreach ($category as $categoryId => $categoryAttributes) {
+            $cat[$categoryId] = $categoryAttributes[0] . ' ('
+                . $categoryAttributes[1] . ')';
+        }
+        $this->get('category_visible')->setValueOptions($cat);
     }
 }
