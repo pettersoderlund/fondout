@@ -33,7 +33,7 @@ class FundPageFilterForm extends Form implements ObjectManagerAwareInterface
                 'type' => 'Submit',
                 'attributes' => array(
                     'value' => 'Visa',
-                    'class' => 'btn btn-xs'
+                    'class' => 'btn btn-primary btn-xs'
                 )
             )
         );
