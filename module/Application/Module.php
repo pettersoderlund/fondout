@@ -33,9 +33,9 @@ class Module
             'abstract_factories' => array(),
             'aliases' => array(),
             'factories' => array(
-              'AWS' => function ($serviceLocator) {
-                  $config = $serviceLocator->get('Config');
-                  return Aws::factory($config['aws']['params']);
+                'AWS' => function ($serviceLocator) {
+                    $config = $serviceLocator->get('Config');
+                    return Aws::factory($config['aws']['params']);
                 }
             ),
             'invokables' => array(),
