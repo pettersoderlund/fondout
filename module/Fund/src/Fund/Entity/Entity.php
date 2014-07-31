@@ -29,7 +29,7 @@ abstract class Entity
     {
         $method = 'set' . ucfirst($name);
         if (!method_exists($this, $method)) {
-            throw new \BadMethodCallException('Invalid user property');
+            throw new \BadMethodCallException('Invalid user property: ' . $name);
         }
         $this->$method($value);
     }
@@ -44,7 +44,7 @@ abstract class Entity
     {
         $method = 'get' . ucfirst($name);
         if (!method_exists($this, $method)) {
-            throw new \BadMethodCallException('Invalid user property');
+            throw new \BadMethodCallException('Invalid user property: ' . $name);
         }
 
         return $this->$method();

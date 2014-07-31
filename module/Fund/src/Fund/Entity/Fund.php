@@ -272,6 +272,16 @@ class Fund extends Entity
         return $this->company;
     }
 
+    public function getCompanyId()
+    {
+        return $this->company->id;
+    }
+
+    public function getCompanyName()
+    {
+        return $this->company->name;
+    }
+
     /**
      * Add fund instance
      *

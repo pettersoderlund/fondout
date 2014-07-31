@@ -142,4 +142,14 @@ class FundCompany extends Entity
     {
         return $this->funds;
     }
+
+    /**
+     * return the company name
+     *
+     * @return string the name
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

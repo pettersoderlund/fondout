@@ -118,10 +118,17 @@ class FundService
         $order       = $params->fromQuery('order', 'ASC');
         $currentPage = $params->fromQuery('page', 1);
         $category    = $params->fromQuery('category', array());
+        $company     = $params->fromQuery('company', array());
+
+        $sort = ($sort == 'company') ? 'companyName' : $sort;
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        $criteria = Criteria::create()->orderBy(array($sort => $order));
 
-        $criteria     = Criteria::create()->orderBy(array($sort => $order));
+        if (count($company) > 0) {
+            $criteria->where(Criteria::expr()->in('companyId', $company));
+        }
+
         $funds        = new ArrayCollection($repository->findAllFunds($category));
         $orderedfunds = $funds->matching($criteria);
         $paginator    = new Paginator(new CollectionAdapter($orderedfunds));

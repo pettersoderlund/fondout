@@ -29,6 +29,21 @@ class FundFilterForm extends Form
                 ),
             )
         );
+
+        $this->add(
+            array(
+                'type' => 'objectselect',
+                'name' => 'company',
+                'options' => array(
+                    'target_class'   => 'Fund\Entity\FundCompany',
+                    'property'       => 'name',
+                ),
+                'attributes' => array(
+                    'multiple' => 'multiple',
+                    'class' => 'form-control'
+                )
+            )
+        );
         // $this->add(new Element\Csrf('security'));
         // $this->add(array(
         //     'name' => 'send',
