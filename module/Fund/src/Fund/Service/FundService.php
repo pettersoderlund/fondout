@@ -118,7 +118,9 @@ class FundService
         $order       = $params->fromQuery('order', 'ASC');
         $currentPage = $params->fromQuery('page', 1);
         $category    = $params->fromQuery('category', array());
-        $company    = $params->fromQuery('company', array());
+        $company     = $params->fromQuery('company', array());
+
+        $sort = ($sort == 'company') ? 'companyName' : $sort;
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(array($sort => $order));

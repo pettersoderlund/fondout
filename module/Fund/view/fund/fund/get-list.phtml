@@ -20,7 +20,9 @@ $form->prepare();
         </a>
       </th>
 			<th>
-        <?php echo $this->translate('Company') ?>
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
+           <?php echo $this->translate('Company') ?>
+        </a>
       </th>
         <th>
 				  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
