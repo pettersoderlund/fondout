@@ -1,5 +1,9 @@
 <?php
 
+$this->headScript()
+     ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
+     ->appendFile($this->basePath() . '/js/funds.js');
+
 // set default order if not set and inverse the order based on the previous value
 $order = isset($query['order']) ? $query['order'] : 'ASC';
 $order = ($order == 'ASC') ? 'DESC' : 'ASC';

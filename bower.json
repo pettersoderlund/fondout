@@ -15,7 +15,8 @@
   "dependencies": {
     "bootstrap": "*",
     "respond": "~1.4.2",
-    "html5shiv": "~3.7.2"
+    "html5shiv": "~3.7.2",
+    "selectize": "~0.10.1"
   },
   "devDependencies": {}
 }
