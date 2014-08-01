@@ -13,6 +13,13 @@
 
 return array(
     'doctrine' => array(
+        'eventmanager' => array(
+            'orm_default' => array(
+                'subscribers' => array(
+                    'Gedmo\Tree\TreeListener',
+                ),
+            ),
+        ),
         'connection' => array(
             // default connection name
             'orm_default' => array(
