@@ -1,0 +1,25 @@
+{
+  "name": "fondout",
+  "version": "0.0.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-imagemin": "*",
+    "grunt-contrib-jshint": "*",
+    "load-grunt-tasks": "*",
+    "time-grunt": "*",
+    "grunt-phpcs": "*",
+    "grunt-phpunit": "*",
+    "grunt-phplint": "*",
+    "jshint-stylish": "*"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}

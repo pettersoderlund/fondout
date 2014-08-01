@@ -10,126 +10,131 @@ $form->prepare();
 ?>
 
 <div class="row">
-  <div class="col-md-8">
-  <table class="table table-bordered table-hover">
-	<thead>
-		<tr>
-      <th>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
-           <?php echo $this->translate('Name') ?>
-        </a>
-      </th>
-			<th>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
-           <?php echo $this->translate('Company') ?>
-        </a>
-      </th>
-        <th>
-				  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
-            <?php echo $this->translate('Sustainable investments') ?>
-          </a>
-        </th>
-		</tr>
-	</thead>
-	<tbody>
-	<?php foreach ($funds as $fund): ?>
-		<tr>
-      <td>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
-          <?php echo $this->translate($fund->name) ?>
-        </a>
-      </td>
-			<td>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
-          <?php echo $this->translate($fund->company->name) ?>
-        </a>
-      </td>
-      <td>
-        <?php
-          echo $this->numberFormat(
-            $fund->getSustainability(),
-            NumberFormatter::PERCENT,
-            NumberFormatter::TYPE_DEFAULT,
-            "en_US"
-          );
-        ?>
-      </td>
-		</tr>
-	<?php endforeach; ?>
-	</tbody>
-  </table>
+    <div class="col-md-4 col-md-push-8">
+        <?php echo $this->form()->openTag($form) ?>
 
-  <?php if ($funds->getPages()->pageCount): ?>
-    <ul class="pagination pagination-centered">
-      <!-- Previous page link -->
-      <?php if (isset($funds->getPages()->previous)): ?>
-        <li>
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
-            &laquo;
-          </a>
-        </li>
-        <?php
-        else: ?>
-        <li class="disabled">
-          <a href="#">
-            &laquo;
-          </a>
-        </li>
-      <?php endif; ?>
-      <!-- Numbered page links -->
-      <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
-        <?php if ($page != $funds->getPages()->current): ?>
-          <li>
-            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
-              <?php echo $page; ?>
-            </a>
-          </li>
-        <?php else: ?>
-          <li class="active">
-            <a href="#"><?php echo $page; ?></a>
-          </li>
-        <?php endif; ?>
-      <?php endforeach; ?>
-
-      <!-- Next page link -->
-      <?php if (isset($funds->getPages()->next)): ?>
-        <li>
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
-            &raquo;
-          </a>
-        </li>
-      <?php else: ?>
-        <li class="disabled">
-          <a href="#">
-            &raquo;
-          </a>
-        </li>
-      <?php endif; ?>
-    </ul>
-  <?php endif; ?>
-  </div>
-  <div class="col-md-4">
-    <?php echo $this->form()->openTag($form) ?>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><?php echo $this->translate('Category') ?></h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Category') ?></h3>
+            </div>
+            <div class="panel-body">
+                <div class="checkbox">
+                    <?php
+                        $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
+                        echo $this->formMultiCheckbox($form->get('category'));
+                    ?>
+                </div>
+            </div>
         </div>
-        <div class="panel-body">
-          <?php echo $this->formMultiCheckbox($form->get('category')) ?>
-        </div>
-      </div>
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title"><?php echo $this->translate('Company') ?></h3>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?php echo $this->translate('Company') ?></h3>
+            </div>
+            <div class="panel-body">
+                <?php echo $this->formSelect($form->get('company')) ?>
+            </div>
         </div>
-        <div class="panel-body">
-          <?php echo $this->formSelect($form->get('company')) ?>
-        </div>
-      </div>
 
-      <?php echo $this->formSubmit($form->get('submit')) ?>
-    <?php echo $this->form()->closeTag() ?>
-  </div>
-</div>
+        <?php echo $this->formSubmit($form->get('submit')) ?>
+        <?php echo $this->form()->closeTag() ?>
+    </div>
+    <div class="col-md-8 col-md-pull-4">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
+                            <?php echo $this->translate('Name') ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
+                            <?php echo $this->translate('Company') ?>
+                        </a>
+                    </th>
+                    <th>
+                        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
+                            <?php echo $this->translate('Sustainable investments') ?>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($funds as $fund): ?>
+                    <tr>
+                        <td>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+                                <?php echo $this->translate($fund->name) ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+                                <?php echo $this->translate($fund->company->name) ?>
+                            </a>
+                        </td>
+                        <td>
+                            <?php
+                            echo $this->numberFormat(
+                                $fund->getSustainability(),
+                                NumberFormatter::PERCENT,
+                                NumberFormatter::TYPE_DEFAULT,
+                                "en_US"
+                                );
+                                ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <?php if ($funds->getPages()->pageCount): ?>
+                <ul class="pagination pagination-centered">
+                    <!-- Previous page link -->
+                    <?php if (isset($funds->getPages()->previous)): ?>
+                        <li>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
+                                &laquo;
+                            </a>
+                        </li>
+                        <?php
+                        else: ?>
+                        <li class="disabled">
+                            <a href="#">
+                                &laquo;
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <!-- Numbered page links -->
+                    <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
+                        <?php if ($page != $funds->getPages()->current): ?>
+                            <li>
+                                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
+                                    <?php echo $page; ?>
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="active">
+                                <a href="#"><?php echo $page; ?></a>
+                            </li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+
+                    <!-- Next page link -->
+                    <?php if (isset($funds->getPages()->next)): ?>
+                        <li>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
+                                &raquo;
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="disabled">
+                            <a href="#">
+                                &raquo;
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            <?php endif; ?>
+        </div>
+    </div>
