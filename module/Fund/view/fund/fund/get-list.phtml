@@ -17,9 +17,9 @@ $form->prepare();
     <div class="col-md-4 col-md-push-8">
         <?php echo $this->form()->openTag($form) ?>
 
-        <div class="panel panel-default">
+        <div class="panel panel-success">
             <div class="panel-heading">
-                <h3 class="panel-title"><?php echo $this->translate('Category') ?></h3>
+                <h3 class="panel-title"><?php echo $this->translate('Sustainability') ?></h3>
             </div>
             <div class="panel-body">
                 <div class="checkbox">
@@ -58,6 +58,9 @@ $form->prepare();
                         </a>
                     </th>
                     <th>
+                        <?php echo $this->translate('Category') ?>
+                    </th>
+                    <th>
                         <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
                             <?php echo $this->translate('Sustainable investments') ?>
                         </a>
@@ -73,9 +76,10 @@ $form->prepare();
                             </a>
                         </td>
                         <td>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
-                                <?php echo $this->translate($fund->company->name) ?>
-                            </a>
+                            <?php echo $this->translate($fund->company->name) ?>
+                        </td>
+                        <td>
+                            <?php echo $this->translate($fund->category->title) ?>
                         </td>
                         <td>
                             <?php

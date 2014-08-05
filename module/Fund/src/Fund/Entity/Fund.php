@@ -295,7 +295,7 @@ class Fund extends Entity
      */
     public function getCategory()
     {
-        return $this->category;
+        return $this->category ? $this->category : new FundCategory();
     }
 
     /**

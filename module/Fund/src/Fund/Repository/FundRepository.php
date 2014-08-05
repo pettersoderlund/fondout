@@ -96,10 +96,11 @@ class FundRepository extends EntityRepository
     {
         $funds = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('f, c, fi')
+            ->select('f, c, fi, fc')
             ->from('Fund\Entity\Fund', 'f')
             ->join('f.fundInstances', 'fi')
             ->join('f.company', 'c')
+            ->join('f.category', 'fc')
             ->orderBy('c.name', 'DESC')
             ->getQuery()
             ->getResult();
