@@ -333,6 +333,26 @@ class Fund extends Entity
     }
 
     /**
+     * Gets the fondout category title.
+     *
+     * @return string
+     */
+    public function getFondoutCategoryTitle()
+    {
+        return $this->getFondoutCategory()->getTitle();
+    }
+
+    /**
+     * Gets the fondout category id.
+     *
+     * @return string
+     */
+    public function getFondoutCategoryId()
+    {
+        return $this->getFondoutCategory()->getId();
+    }
+
+    /**
      * Sets the fondout category.
      *
      * @param \Fund\Entity\FundCategory $category the category

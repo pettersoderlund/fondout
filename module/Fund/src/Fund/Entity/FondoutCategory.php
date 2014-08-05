@@ -86,4 +86,9 @@ class FondoutCategory extends Entity
     {
         return $this->parent;
     }
+
+    public function __toString()
+    {
+        return $this->getTitle();
+    }
 }

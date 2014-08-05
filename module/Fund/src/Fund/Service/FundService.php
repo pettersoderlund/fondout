@@ -72,7 +72,7 @@ class FundService
     /**
      * Get a list of all controversial companies filtered to be visible on the
      * fund page connected to the fund in a paginator as well as a count for
-     * how many companies per category. 
+     * how many companies per category.
      *
      * TODO: Filter controversial companies from parameters
      * @param Fund $fund, string[] $parameters
@@ -171,8 +171,16 @@ class FundService
         $currentPage = $params->fromQuery('page', 1);
         $category    = $params->fromQuery('category', array());
         $company     = $params->fromQuery('company', array());
+        $fondoutcategory = $params->fromQuery('fondoutcategory', array());
 
-        $sort = ($sort == 'company') ? 'companyName' : $sort;
+        switch ($sort) {
+            case 'company':
+                $sort = 'companyName';
+                break;
+            case 'fondoutcategory':
+                $sort = 'fondoutCategoryTitle';
+                break;
+        }
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(array($sort => $order));
@@ -181,12 +189,16 @@ class FundService
             $criteria->where(Criteria::expr()->in('companyId', $company));
         }
 
+        if (count($fondoutcategory) > 0) {
+            $criteria->where(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
+        }
+
         $funds        = new ArrayCollection($repository->findAllFunds($category));
         $orderedfunds = $funds->matching($criteria);
         $paginator    = new Paginator(new CollectionAdapter($orderedfunds));
 
         $paginator->setCurrentPageNumber((int)$currentPage);
-        $paginator->setItemCountPerPage(10);
+        $paginator->setItemCountPerPage(20);
 
         return $paginator;
     }
