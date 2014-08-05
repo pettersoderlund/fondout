@@ -32,6 +32,29 @@ class FundFilterForm extends Form
 
         $this->add(
             array(
+                'type' => 'objectmulticheckbox',
+                'name' => 'fondoutcategory',
+                'options' => array(
+                    'target_class'   => 'Fund\Entity\FondoutCategory',
+                    'property'       => 'title',
+                    'find_method'    => array(
+                        'name'   => 'getRootNodes',
+                        'params' => array(
+                            'sortByField' => 'title'
+                            // 'criteria' => array('active' => 1),
+                            // Use key 'orderBy' if using ORM
+                            // 'orderBy'  => array('lastname' => 'ASC'),
+                            // Use key 'sort' if using ODM
+                            // 'sort'  => array('lastname' => 'ASC')
+                        ),
+                    ),
+                    'label_attributes' => array('class' => 'checkbox')
+                ),
+            )
+        );
+
+        $this->add(
+            array(
                 'type' => 'objectselect',
                 'name' => 'company',
                 'options' => array(

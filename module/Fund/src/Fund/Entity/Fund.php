@@ -63,18 +63,24 @@ class Fund extends Entity
     protected $isin;
 
     /**
-     * @var string
+     * @var \Fund\Entity\FundCategory
      *
-     * @ORM\Column(name="mainCategory", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Fund\Entity\FundCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category", referencedColumnName="id")
+     * })
      */
-    protected $mainCategory;
+    protected $category;
 
     /**
-     * @var string
+     * @var \Fund\Entity\FondoutCategory
      *
-     * @ORM\Column(name="subCategory", type="string", length=255, nullable=true)
+     * @ORM\ManyToOne(targetEntity="\Fund\Entity\FondoutCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fondoutcategory", referencedColumnName="id")
+     * })
      */
-    protected $subCategory;
+    protected $fondoutcategory;
 
     /**
      * @var \Fund\Entity\FundCompany
@@ -204,52 +210,6 @@ class Fund extends Entity
     }
 
     /**
-     * Set mainCategory
-     *
-     * @param string $mainCategory
-     * @return Fund
-     */
-    public function setMainCategory($mainCategory)
-    {
-        $this->mainCategory = $mainCategory;
-
-        return $this;
-    }
-
-    /**
-     * Get mainCategory
-     *
-     * @return string
-     */
-    public function getMainCategory()
-    {
-        return $this->mainCategory;
-    }
-
-        /**
-     * Set subCategory
-     *
-     * @param string $subCategory
-     * @return Fund
-     */
-    public function setSubCategory($subCategory)
-    {
-        $this->subCategory = $subCategory;
-
-        return $this;
-    }
-
-    /**
-     * Get subCategory
-     *
-     * @return string
-     */
-    public function getSubCategory()
-    {
-        return $this->subCategory;
-    }
-
-    /**
      * Set company
      *
      * @param \Fund\Entity\FundCompany $company
@@ -334,6 +294,74 @@ class Fund extends Entity
         // NOTE: ugly hack, breaks if we have more then one fund instance.
         $totalMarketValue     = current($this->getFundInstances()->toArray())->totalMarketValue;
         $this->sustainability = ($totalMarketValue - $controversialValue) / $totalMarketValue;
+
+        return $this;
+    }
+
+    /**
+     * Gets the category.
+     *
+     * @return \Fund\Entity\FundCategory
+     */
+    public function getCategory()
+    {
+        return $this->category ? $this->category : new FundCategory();
+    }
+
+    /**
+     * Sets the category.
+     *
+     * @param \Fund\Entity\FundCategory $category the category
+     *
+     * @return self
+     */
+    public function setCategory(\Fund\Entity\FundCategory $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Gets the fondout category.
+     *
+     * @return \Fund\Entity\FundCategory
+     */
+    public function getFondoutCategory()
+    {
+        return $this->fondoutcategory ? $this->fondoutcategory : new FondoutCategory();
+    }
+
+    /**
+     * Gets the fondout category title.
+     *
+     * @return string
+     */
+    public function getFondoutCategoryTitle()
+    {
+        return $this->getFondoutCategory()->getTitle();
+    }
+
+    /**
+     * Gets the fondout category id.
+     *
+     * @return string
+     */
+    public function getFondoutCategoryId()
+    {
+        return $this->getFondoutCategory()->getId();
+    }
+
+    /**
+     * Sets the fondout category.
+     *
+     * @param \Fund\Entity\FundCategory $category the category
+     *
+     * @return self
+     */
+    public function setFondoutCategory(\Fund\Entity\FondoutCategory $category)
+    {
+        $this->fondoutcategory = $category;
 
         return $this;
     }
