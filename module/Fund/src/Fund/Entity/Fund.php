@@ -73,6 +73,16 @@ class Fund extends Entity
     protected $category;
 
     /**
+     * @var \Fund\Entity\FondoutCategory
+     *
+     * @ORM\ManyToOne(targetEntity="\Fund\Entity\FondoutCategory")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="fondoutcategory", referencedColumnName="id")
+     * })
+     */
+    protected $fondoutcategory;
+
+    /**
      * @var \Fund\Entity\FundCompany
      *
      * @ORM\ManyToOne(targetEntity="\Fund\Entity\FundCompany", inversedBy="funds")
@@ -308,6 +318,30 @@ class Fund extends Entity
     public function setCategory(\Fund\Entity\FundCategory $category)
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Gets the fondout category.
+     *
+     * @return \Fund\Entity\FundCategory
+     */
+    public function getFondoutCategory()
+    {
+        return $this->fondoutcategory ? $this->fondoutcategory : new FondoutCategory();
+    }
+
+    /**
+     * Sets the fondout category.
+     *
+     * @param \Fund\Entity\FundCategory $category the category
+     *
+     * @return self
+     */
+    public function setFondoutCategory(\Fund\Entity\FondoutCategory $category)
+    {
+        $this->fondoutcategory = $category;
 
         return $this;
     }
