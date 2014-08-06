@@ -16,6 +16,15 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-        return new ViewModel();
+        $form = $this->getServiceLocator()
+            ->get('FormElementManager')
+            ->get('\Fund\Form\SustainabilityForm');
+
+        $form->get('category')->setValue(true);
+        return new ViewModel(
+            array(
+                'form' => $form
+            )
+        );
     }
 }
