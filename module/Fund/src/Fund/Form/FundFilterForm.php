@@ -17,19 +17,6 @@ class FundFilterForm extends Form
 
     public function init()
     {
-
-        $this->add(
-            array(
-                'type' => 'objectmulticheckbox',
-                'name' => 'category',
-                'options' => array(
-                    'target_class'   => 'Fund\Entity\AccusationCategory',
-                    'property'       => 'name',
-                    'label_attributes' => array('class' => 'checkbox')
-                ),
-            )
-        );
-
         $this->add(
             array(
                 'type' => 'objectmulticheckbox',
