@@ -6,6 +6,7 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 
 use Fund\Service\FundService;
+use Fund\Service\ConsoleService;
 
 class Module implements AutoloaderProviderInterface
 {
@@ -31,6 +32,12 @@ class Module implements AutoloaderProviderInterface
             'factories' => array(
                 'FundService' => function ($serviceLocator) {
                     $service = new FundService();
+                    $service->setEntityManager($serviceLocator->get('Doctrine\ORM\EntityManager'));
+
+                    return $service;
+                },
+                'ConsoleService' => function ($serviceLocator) {
+                    $service = new ConsoleService();
                     $service->setEntityManager($serviceLocator->get('Doctrine\ORM\EntityManager'));
 
                     return $service;

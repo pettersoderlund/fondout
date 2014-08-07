@@ -16,3 +16,4 @@ data/cache/*
 !data/cache/.gitkeep
 node_modules/
 public/css
+*.tsv

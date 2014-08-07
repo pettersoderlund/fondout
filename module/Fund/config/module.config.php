@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Fund\Controller\Fund' => 'Fund\Controller\FundController',
+            'Fund\Controller\Console' => 'Fund\Controller\ConsoleController',
         ),
     ),
     'router' => array(
@@ -44,5 +45,22 @@ return array(
                 )
             )
         )
-    )
+    ),
+    // Placeholder for console routes
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'add-share-company' => array(
+                    'options' => array(
+                        'route'    =>
+                         'map sharecompanies [--verbose|-v] <csvfileIsinToSharecompany>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addsharecompany'
+                        )
+                    )
+                )
+            ),
+        ),
+    ),
 );
