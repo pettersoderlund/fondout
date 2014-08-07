@@ -60,6 +60,26 @@ return array(
                         )
                     )
                 ),
+                'add-company-accusations' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add companyaccusations [--verbose|-v] <companyAccusations>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addcompanyaccusations'
+                        )
+                    )
+                ),
+                'add-source' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add sources [--verbose|-v] <sources>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addsource'
+                        )
+                    )
+                )
             ),
         ),
     ),

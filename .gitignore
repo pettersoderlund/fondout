@@ -17,3 +17,4 @@ data/cache/*
 node_modules/
 public/css
 *.tsv
+*.csv
