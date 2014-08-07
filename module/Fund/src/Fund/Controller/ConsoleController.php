@@ -13,7 +13,7 @@ class ConsoleController extends AbstractActionController
     protected $consoleService;
     protected $em;
 
-    public function addsharecompanyAction ()
+    public function mapsharecompaniesAction ()
     {
         $request = $this->getRequest();
 

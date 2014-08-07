@@ -50,16 +50,16 @@ return array(
     'console' => array(
         'router' => array(
             'routes' => array(
-                'add-share-company' => array(
+                'map-share-companies' => array(
                     'options' => array(
                         'route'    =>
                          'map sharecompanies [--verbose|-v] <csvfileIsinToSharecompany>',
                         'defaults' => array(
                             'controller' => 'Fund\Controller\Console',
-                            'action'     => 'addsharecompany'
+                            'action'     => 'mapsharecompanies'
                         )
                     )
-                )
+                ),
             ),
         ),
     ),
