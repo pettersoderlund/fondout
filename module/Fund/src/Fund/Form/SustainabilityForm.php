@@ -19,7 +19,7 @@ class SustainabilityForm extends Form
         $this->add(
             array(
                 'type' => 'objectmulticheckbox',
-                'name' => 'category',
+                'name' => 'sustainability',
                 'options' => array(
                     'target_class'   => 'Fund\Entity\AccusationCategory',
                     'property'       => 'name',

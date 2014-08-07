@@ -57,38 +57,25 @@ class FundFilterForm extends Form
                 )
             )
         );
-        // $this->add(new Element\Csrf('security'));
-        // $this->add(array(
-        //     'name' => 'send',
-        //     'type'  => 'Submit',
-        //     'attributes' => array(
-        //         'value' => 'Submit',
-        //     ),
-        // ));
 
-
-
-        // echo '<pre>';
-        // \Doctrine\Common\Util\Debug::dump($this->get('category'));
-        // echo '</pre>';
-        // die;
-//         $element->setValueOptions(array(
-//     1 => array(
-//         'label' => 'First Option',
-//         'label_attributes' => array('class' => 'checkbox'),
-//     ),
-// ));
+        $this->add(
+            array(
+                'name' => 'category',
+                'type' => 'hidden'
+            )
+        );
 
         $this->add(
             array(
                 'name' => 'submit',
                 'type' => 'Submit',
                 'attributes' => array(
-                    'value' => 'Filter',
+                    'value' => 'Filtrera',
                     'class' => 'btn btn-success'
                 )
             )
         );
+
 
         // We could also define the input filter here, or
         // lazy-create it in the getInputFilter() method.

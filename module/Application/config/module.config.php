@@ -19,8 +19,20 @@ return array(
                         'action'     => 'index',
                     ),
                 ),
+                'may_terminate' => true,
+                'child_routes' => array(
+                    'save' => array(
+                        'type'    => 'Zend\Mvc\Router\Http\Literal',
+                        'options' => array(
+                            'route'    => 'save',
+                            'defaults' => array(
+                                'controller' => 'Application\Controller\Index',
+                                'action'     => 'save',
+                            ),
+                        ),
+                    ),
+                ),
             ),
-
             'contact'=> array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

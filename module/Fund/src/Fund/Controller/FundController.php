@@ -3,6 +3,7 @@ namespace Fund\Controller;
 
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 class FundController extends AbstractRestfulController
 {
@@ -10,19 +11,27 @@ class FundController extends AbstractRestfulController
 
     public function getList()
     {
-        $service = $this->getFundService();
-        $parameters = $this->params();
-        $fundsPaginator = $service->findFunds($parameters);
+        $container      = new Container('fund');
+        $service        = $this->getFundService();
+        $parameters     = $this->params();
+        $sustainability = $container->sustainability;
+        $fundsPaginator = $service->findFunds($parameters, $sustainability);
+        $names = $service->getSustainabilityCategories($sustainability);
+
+
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('\Fund\Form\FundFilterForm');
+
         $form->setData($parameters->fromQuery());
+
 
         return new ViewModel(
             array(
-              'funds' => $fundsPaginator,
-              'query' => $parameters->fromQuery(),
-              'form' => $form
+                'sustainability' => $names,
+                'query' => $parameters->fromQuery(),
+                'funds' => $fundsPaginator,
+                'form' => $form
             )
         );
     }
