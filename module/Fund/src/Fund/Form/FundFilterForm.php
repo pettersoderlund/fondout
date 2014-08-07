@@ -48,7 +48,7 @@ class FundFilterForm extends Form
                     'target_class'   => 'Fund\Entity\FundCompany',
                     'property'       => 'name',
                     'display_empty_item' => true,
-                    'empty_item_label'   => 'Select a company...'
+                    'empty_item_label'   => 'Välj fondbolag...'
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
