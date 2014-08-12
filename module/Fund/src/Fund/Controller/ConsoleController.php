@@ -10,6 +10,7 @@ use Fund\Entity\ShareCompany;
 use Fund\Entity\Source;
 use Fund\Entity\AccusationCategory;
 use Fund\Entity\Accusation;
+use Fund\Entity\CarbonTracker;
 
 class ConsoleController extends AbstractActionController
 {
@@ -274,6 +275,75 @@ class ConsoleController extends AbstractActionController
         }
         echo "$j source(s) already exist(s).\n";
         echo "Imported $i new source(s).";
+    }
+
+    public function addcarbontrackerAction()
+    {
+
+        $service = $this->getConsoleService();
+        // Get the entity manager straight up
+        $entityManager = $service->getEM();
+
+        $request = $this->getRequest();
+        // Make sure that we are running in a console and the user has not tricked our
+        // application into running this action from a public web server.
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl("\t");
+
+        // Start on second row
+        $fileIterator = new \LimitIterator($file, 1);
+
+        $i = 0;
+        $batchSize = 20;
+
+        foreach ($fileIterator as $row) {
+            $companyName = $row[0];
+            $coal = $row[1];
+            $oil = $row[2];
+            $gas = $row[3];
+
+            $shareCompany = $entityManager->getRepository('Fund\Entity\ShareCompany')
+                ->findOneByName($companyName);
+            $carbonTracker = $entityManager->getRepository('Fund\Entity\CarbonTracker')
+                ->findOneByShareCompany($shareCompany);
+
+            if (is_null($carbonTracker)) {
+                $carbonTrackerEntry = new CarbonTracker();
+            } else {
+                $carbonTrackerEntry = $carbonTracker;
+            }
+
+            $carbonTrackerEntry->setCoal($coal);
+            $carbonTrackerEntry->setGas($gas);
+            $carbonTrackerEntry->setOil($oil);
+
+
+            if (!is_null($shareCompany)) {
+                $carbonTrackerEntry->setShareCompany($shareCompany);
+            }
+
+            $entityManager->persist($carbonTrackerEntry);
+
+            if (($i++ % $batchSize) == 0) {
+                $entityManager->flush();
+                $entityManager->clear(); // Detaches all objects from Doctrine!
+            }
+
+        }
+        $entityManager->flush();
+        $entityManager->clear();
     }
 
     public function getConsoleService()

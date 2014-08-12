@@ -22,14 +22,6 @@ class CarbonTracker extends Entity
     private $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="company", type="string", length=255, nullable=true)
-     */
-    private $company;
-
-
-    /**
      * @var decimal
      *
      * @ORM\Column(name="coal", type="decimal", precision=8, scale=2, nullable=true)
@@ -49,13 +41,6 @@ class CarbonTracker extends Entity
      * @ORM\Column(name="gas", type="decimal", precision=8, scale=2, nullable=true)
      */
     private $gas;
-
-    /**
-     * @var decimal
-     *
-     * @ORM\Column(name="totalgtco2", type="decimal", precision=8, scale=2, nullable=true)
-     */
-    private $totalgtco2;
 
     /**
      * @var \ShareCompanies

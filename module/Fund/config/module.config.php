@@ -79,6 +79,16 @@ return array(
                             'action'     => 'addsource'
                         )
                     )
+                ),
+                'add-carbon-tracker' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add carbontracker [--verbose|-v] <file>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addcarbontracker'
+                        )
+                    )
                 )
             ),
         ),
