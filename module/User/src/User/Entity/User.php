@@ -9,7 +9,7 @@ use ZfcUser\Entity\User as ZfcUser;
  * User
  *
  * @ORM\Entity
- * @ORM\Table(name="users")
+ * @ORM\Table(name="user")
  */
 
 class User extends ZfcUser
