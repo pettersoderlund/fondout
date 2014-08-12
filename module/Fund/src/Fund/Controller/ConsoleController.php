@@ -8,6 +8,8 @@ use Zend\View\Model\ViewModel;
 use Zend\Console\Request as ConsoleRequest;
 use Fund\Entity\ShareCompany;
 use Fund\Entity\Source;
+use Fund\Entity\AccusationCategory;
+use Fund\Entity\Accusation;
 
 class ConsoleController extends AbstractActionController
 {
@@ -113,6 +115,11 @@ class ConsoleController extends AbstractActionController
 
     public function addcompanyaccusationsAction()
     {
+        $service = $this->getConsoleService();
+        // Get the entity manager straight up
+        $em = $service->getEM();
+
+        $request = $this->getRequest();
         // Make sure that we are running in a console and the user has not tricked our
         // application into running this action from a public web server.
         if (!$request instanceof ConsoleRequest) {
@@ -122,7 +129,7 @@ class ConsoleController extends AbstractActionController
         // Open file passed through argument
         // Open CSV file
         $file = new SplFileObject(
-            $this->getRequest()->getParam('companyAccusations')
+            $request->getParam('companyAccusations')
         );
 
         $file->setFlags(
@@ -135,18 +142,63 @@ class ConsoleController extends AbstractActionController
         // Skip header row
         $fileIterator = new \LimitIterator($file, 1);
 
+        $sourceRepo = $em->getRepository('Fund\Entity\Source');
+        $scRepo = $em->getRepository('Fund\Entity\ShareCompany');
+        $categoryRepo = $em->getRepository('Fund\Entity\AccusationCategory');
+
+        $i = 0;
+        $j = 0;
         foreach ($fileIterator as $row) {
-            $shareCompanyName = $row[0];
+            $shareCompany = $row[0];
             $accusation = $row[1];
             $category = $row[2];
             $source = $row[3];
+            //echo var_dump($row) . "\n";
 
-            // Check source
-            // Check sharecompany
-            // Check category - create if not already existing
-            // Create accusation
-            // Fin
+            $name = $source;
+            $source = $sourceRepo->findOneBy(['name' => $source]);
+            // Check if source exists
+            if (is_null($source)) {
+                echo "Source not found: $source $name\n";
+                $j++;
+                continue;
+            }
+
+            // Check if sharecompany exists
+            $name = $shareCompany;
+            $shareCompany = $scRepo->findOneBy(['name' => $shareCompany]);
+            if (is_null($shareCompany)) {
+                echo "Share company not found: $shareCompany $name\n";
+                $j++;
+                continue;
+            }
+
+            // Check category
+            $name = $category;
+            $category = $categoryRepo->findOneBy(['name' => $category]);
+            if (is_null($category)) {
+                echo "Category not found: $category $name\n";
+                echo "Create this category manually if you'd like.\n";
+                $j++;
+                continue;
+            }
+
+            // Create share company accusation
+            $scAccusation = new Accusation();
+            $scAccusation->setSource($source);
+            $scAccusation->setShareCompany($shareCompany);
+            $scAccusation->setCategory($category);
+            $scAccusation->setAccusation($accusation);
+
+
+            $em->persist($scAccusation);
+            $i++;
         }
+        echo "$i accusation(s) successfully added.\n";
+        echo "$j accusation(s) missed.\n";
+        $em->flush();
+        $em->clear();
+
     }
 
     public function addsourceAction()
@@ -172,9 +224,11 @@ class ConsoleController extends AbstractActionController
             SplFileObject::READ_AHEAD |
             SplFileObject::SKIP_EMPTY
         );
-        $file->setCsvControl(",");
+        $file->setCsvControl("\t");
         // Skip header row
         $fileIterator = new \LimitIterator($file, 1);
+        $i = 0;
+        $j = 0;
 
         foreach ($fileIterator as $row) {
             $name    = $row[0]; // Source name
@@ -188,19 +242,26 @@ class ConsoleController extends AbstractActionController
                 $date,
                 new \DateTimeZone($timezone)
             );
+            // Set hours minutes seconds to 0/midnight
+            $datetimev->setTime(0, 0, 0);
 
-            $source = $em->getRepository('Fund\Entity\Source')
-                ->findOneBy(['name' => $name]);
+            $source = $em->getRepository('Fund\Entity\Source')->findOneByName($name);
 
             // Create or update source
             // Create source if it does not already exist
             if (is_null($source)) {
                 // Create the sharecompany missing
                 $source = new Source();
+                $i++;
 
             } elseif ($source->releaseDate != $datetimev) {
                 // If the date differs, create new source entry
                 $source = new Source();
+                $i++;
+            } else {
+                echo "Source: $name $date already exists\n";
+                $j++;
+                continue;
             }
 
             $source->setName($name);
@@ -211,6 +272,8 @@ class ConsoleController extends AbstractActionController
             $em->flush();
             $em->clear();
         }
+        echo "$j source(s) already exist(s).\n";
+        echo "Imported $i new source(s).";
     }
 
     public function getConsoleService()
