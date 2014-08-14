@@ -11,6 +11,11 @@ use Fund\Entity\Source;
 use Fund\Entity\AccusationCategory;
 use Fund\Entity\Accusation;
 use Fund\Entity\CarbonTracker;
+use Fund\Entity\Fund;
+use Fund\Entity\FundInstance;
+use Fund\Entity\FundCompany;
+use Fund\Entity\Shareholding;
+use Fund\Entity\Share;
 
 class ConsoleController extends AbstractActionController
 {
@@ -329,7 +334,6 @@ class ConsoleController extends AbstractActionController
             $carbonTrackerEntry->setGas($gas);
             $carbonTrackerEntry->setOil($oil);
 
-
             if (!is_null($shareCompany)) {
                 $carbonTrackerEntry->setShareCompany($shareCompany);
             }
@@ -340,10 +344,229 @@ class ConsoleController extends AbstractActionController
                 $entityManager->flush();
                 $entityManager->clear(); // Detaches all objects from Doctrine!
             }
-
         }
         $entityManager->flush();
         $entityManager->clear();
+    }
+
+
+    public function addfundAction()
+    {
+        $service = $this->getConsoleService();
+        // Get the entity manager straight up
+        $entityManager = $service->getEM();
+
+        $request = $this->getRequest();
+        // Make sure that we are running in a console and the user has not tricked our
+        // application into running this action from a public web server.
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl("\t");
+
+        // Fund fundamental information
+        $fundamentalInfo = new \LimitIterator($file, 1, 5);
+
+        $fundInfo = array();
+        $i = 0;
+        // Get fund. Should get info in the order:
+        // [Name, ISIN, Fund company, Total AuM, Currency]
+        foreach ($fundamentalInfo as $row) {
+            $fundInfo[$i] = $row[1];
+            $i++;
+        }
+        $fundName         = $fundInfo[0];
+        $fundIsin         = $fundInfo[1];
+        $fundCompanyName  = $fundInfo[2];
+        $fundAuM          = $fundInfo[3];
+        $fundCurrency     = $fundInfo[4];
+
+        $fundAuM = str_replace(array(" ", ","), "", $fundAuM);
+
+        echo $fundAuM . "\n";
+
+        $exchangeRate = $request->getParam('exchangerate');
+        $date = $request->getParam('date');
+
+        echo var_dump($fundInfo);
+        echo "\n";
+        echo "xrate: $exchangeRate\n";
+        echo "date: $date\n";
+
+        // Fund company
+        $fundCompany = $entityManager->getRepository('Fund\Entity\FundCompany')
+            ->findOneByName($fundCompanyName);
+        if (is_null($fundCompany)) {
+            // Probably trouble
+            // Fund company not found...
+            // create a new one?
+            $option = \readline(
+                "No fund company found on $fundCompanyName \n" .
+                "Please choose one from following options:\n" .
+                "\t[1] Create new fundcompany:\t $fundCompanyName  \n" .
+                "\t[2] Skip fund:\t\t\t " . $fundName . "\n"
+            );
+
+            switch ($option)
+            {
+                case 1:
+                    echo "Creating new fund company: $fundCompanyName ...\n";
+                    //Create new fund Company
+                    $fundCompany = new FundCompany();
+                    $fundCompany->setName($fundCompanyName);
+                    $entityManager->persist($fundCompany);
+                    break;
+
+                case 2:
+                    return "Skipped fund import of $fundName\n";
+                    break;
+            }
+
+        }
+
+        $fundInstance = null;
+
+        // SEK / EUR?
+        if ($fundCurrency  == "SEK") {
+            $exchangeRate = 1;
+        } else {
+            if (is_null($exchangeRate)) {
+                $exchangeRate = \readline(
+                    "The currency for this fund is $fundCurrency \n" .
+                    "Please enter the exchange rate to SEK for the correct date. \n" .
+                    "Use . as a separation for decimals. (eg. 213.123)\n"
+                );
+            }
+
+        }
+
+        // Fund
+        $fund = $entityManager->getRepository('Fund\Entity\Fund')
+            ->findOneByIsin($fundIsin);
+
+        // Is the fund already added?
+        if (is_null($fund)) {
+            // Create fund
+            $fund = new Fund();
+            // Create fund instance
+            $fundInstance = new FundInstance();
+        } else {
+            // Fund obviously exists, fetch the instance
+            $fundInstance = $entityManager
+                ->getRepository('Fund\Entity\FundInstance')
+                ->findOneByFund($fund);
+        }
+
+        // name, ISIN, \Fund\Entity\FundCompany
+        $fund->setName($fundName);
+        $fund->setUrl($this->createFundUrl($fundName));
+        $fund->setIsin($fundIsin);
+        $fund->setCompany($fundCompany);
+        $entityManager->persist($fund);
+
+        // Market value/AuM, Date, \Fund\Entity\Fund
+        $fundInstance->setTotalMarketValue($fundAuM*$exchangeRate);
+        $fundInstance->setFund($fund);
+
+        // Check date
+        $timezone = "Europe/Stockholm";
+        if (is_null($date)) {
+            $date = \readline(
+                "Please enter date for the fund m/d/Y\n"
+            );
+        }
+
+        $datetimev = \DateTime::createFromFormat(
+            'm/d/Y',
+            $date,
+            new \DateTimeZone($timezone)
+        );
+        // Set hours minutes seconds to 0/midnight
+        $datetimev->setTime(0, 0, 0);
+        $fundInstance->setDate($datetimev);
+        $entityManager->persist($fundInstance);
+
+        // Shares
+        // isin, name, Exchange rate, market_value
+        $shares = new \LimitIterator($file, 9);
+
+        $i = 0;
+        $batchSize = 20;
+        foreach ($shares as $row) {
+            $isin = $row[0];
+            $market_value = $row[1];
+            $market_value = str_replace(array(" ", ","), "", $market_value);
+            $name = $row[2];
+
+            // Share exists?
+            if (strlen($isin) > 10) {
+                $share = $entityManager->getRepository('Fund\Entity\Share')
+                    ->findOneByIsin($isin);
+            } else {
+                $share = $entityManager->getRepository('Fund\Entity\Share')
+                    ->findOneByName($name);
+            }
+
+            if (is_null($share)) {
+                $share = new Share();
+                $share->setName($name);
+                if (strlen($isin) > 5) {
+                    $share->setIsin($isin);
+                }
+                $entityManager->persist($share);
+            }
+
+
+            // Shareholding exists?
+            $shareHolding = $entityManager
+                ->getRepository('Fund\Entity\Shareholding')->findOneBy(
+                    array("fundInstance" => $fundInstance, "share" => $share)
+                );
+
+            if (is_null($shareHolding)) {
+                $shareHolding = new ShareHolding();
+                $shareHolding->setFundInstance($fundInstance);
+                $shareHolding->setShare($share);
+            }
+
+            $shareHolding->setExchangeRate($exchangeRate);
+            $shareHolding->setMarketValue($market_value*$exchangeRate);
+
+            $entityManager->persist($shareHolding);
+
+            if (($i++ % $batchSize) == 0) {
+                $entityManager->flush();
+                echo ".";
+            }
+        }
+
+        $entityManager->flush();
+        $entityManager->clear();  // Detaches all objects from Doctrine!
+        echo " Success!\n";
+    }
+
+    private function createFundUrl ($fundName)
+    {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\\pL\d]+~u', '-', $fundName);
+        // trim
+        $text = trim($text, '-');
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        // lowercase
+        $text = strtolower($text);
+        // remove unwanted characters
+        return preg_replace('~[^-\w]+~', '', $text);
     }
 
     public function getConsoleService()

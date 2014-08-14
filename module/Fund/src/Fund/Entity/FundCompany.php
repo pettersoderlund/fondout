@@ -33,7 +33,7 @@ class FundCompany extends Entity
     /**
      * @var integer
      *
-     * @ORM\Column(name="institution_number", type="integer", nullable=false)
+     * @ORM\Column(name="institution_number", type="integer", nullable=true)
      */
     protected $institutionNumber;
 

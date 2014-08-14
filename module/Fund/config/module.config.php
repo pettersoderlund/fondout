@@ -89,7 +89,17 @@ return array(
                             'action'     => 'addcarbontracker'
                         )
                     )
-                )
+                ),
+                'add-fund' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add fund [--date=] [--exchangerate=] <file>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addfund'
+                        )
+                    )
+                ),
             ),
         ),
     ),
