@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Fund\Controller\Fund' => 'Fund\Controller\FundController',
+            'Fund\Controller\Console' => 'Fund\Controller\ConsoleController',
         ),
     ),
     'router' => array(
@@ -44,5 +45,62 @@ return array(
                 )
             )
         )
-    )
+    ),
+    // Placeholder for console routes
+    'console' => array(
+        'router' => array(
+            'routes' => array(
+                'map-share-companies' => array(
+                    'options' => array(
+                        'route'    =>
+                         'map sharecompanies [--verbose|-v] <csvfileIsinToSharecompany>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'mapsharecompanies'
+                        )
+                    )
+                ),
+                'add-company-accusations' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add companyaccusations [--verbose|-v] <companyAccusations>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addcompanyaccusations'
+                        )
+                    )
+                ),
+                'add-source' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add sources [--verbose|-v] <sources>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addsource'
+                        )
+                    )
+                ),
+                'add-carbon-tracker' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add carbontracker [--verbose|-v] <file>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addcarbontracker'
+                        )
+                    )
+                ),
+                'add-fund' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add fund [--date=] [--exchangerate=] <file>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addfund'
+                        )
+                    )
+                ),
+            ),
+        ),
+    ),
 );

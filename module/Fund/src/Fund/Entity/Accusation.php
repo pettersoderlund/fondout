@@ -117,7 +117,7 @@ class Accusation extends Entity
     /**
      * Gets the source.
      *
-     * @return \Source
+     * @return \Fund\Entity\Source
      */
     public function getSource()
     {
@@ -127,11 +127,11 @@ class Accusation extends Entity
     /**
      * Sets the source.
      *
-     * @param \Source $source the source
+     * @param \Fund\Entity\Source $source the source
      *
      * @return self
      */
-    public function setSource(\Source $source)
+    public function setSource(\Fund\Entity\Source $source)
     {
         $this->source = $source;
 

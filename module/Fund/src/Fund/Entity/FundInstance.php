@@ -238,4 +238,9 @@ class FundInstance extends Entity
     {
         return $this->shareholdings;
     }
+
+    public function __toString()
+    {
+        return $this->getFund()->getName();
+    }
 }

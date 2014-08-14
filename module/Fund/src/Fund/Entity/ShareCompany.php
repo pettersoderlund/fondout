@@ -50,6 +50,20 @@ class ShareCompany extends Entity
     protected $accusations = null;
 
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="market_value_sek", type="bigint", nullable=true)
+     */
+    private $marketValueSEK;
+
+    /**
+     * @var \Fund\Entity\CarbonTracker
+     *
+     * @ORM\OneToOne(targetEntity="\Fund\Entity\CarbonTracker", mappedBy="shareCompany")
+     **/
+    protected $carbonTracker = null;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
