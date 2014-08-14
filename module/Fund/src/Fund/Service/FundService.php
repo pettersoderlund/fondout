@@ -158,19 +158,26 @@ class FundService
         return $this->entityManager;
     }
 
+    public function getSustainabilityCategories($sustainability = array())
+    {
+        return $this->getEntityManager()
+            ->getRepository('Fund\Entity\AccusationCategory')
+            ->findBy(array('id' => $sustainability));
+    }
+
     /**
      * Get a list of funds, in a paginator with the specified order and filters.
      *
      * @param string[] $parameters
      * @return Zend\Paginator\Paginator
      */
-    public function findFunds($params)
+    public function findFunds($params, $sustainability = array())
     {
         $sort        = $params->fromQuery('sort', 'name');
         $order       = $params->fromQuery('order', 'ASC');
         $currentPage = $params->fromQuery('page', 1);
-        $category    = $params->fromQuery('category', array());
         $company     = $params->fromQuery('company', array());
+
         $fondoutcategory = $params->fromQuery('fondoutcategory', array());
 
         switch ($sort) {
@@ -193,7 +200,7 @@ class FundService
             $criteria->where(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
         }
 
-        $funds        = new ArrayCollection($repository->findAllFunds($category));
+        $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
         $orderedfunds = $funds->matching($criteria);
         $paginator    = new Paginator(new CollectionAdapter($orderedfunds));
 

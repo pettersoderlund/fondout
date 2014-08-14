@@ -11,20 +11,33 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Session\Container;
 
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+        $container = new Container('fund');
+
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('\Fund\Form\SustainabilityForm');
 
-        $form->get('category')->setValue(true);
+        $value = isset($container->sustainability) ? $container->sustainability : true;
+        $form->get('sustainability')->setValue($value);
+
         return new ViewModel(
             array(
                 'form' => $form
             )
         );
+    }
+
+    public function saveAction()
+    {
+        $container = new Container('fund');
+
+        $container->sustainability = $this->params()->fromPost('sustainability', array());
+        $this->redirect()->toRoute('funds');
     }
 }
