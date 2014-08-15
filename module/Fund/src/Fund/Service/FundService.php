@@ -188,6 +188,9 @@ class FundService
             case 'fondoutcategory':
                 $sort = 'fondoutCategoryTitle';
                 break;
+            case 'size':
+                $sort = 'totalMarketValue';
+                break;
         }
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
