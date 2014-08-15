@@ -177,6 +177,7 @@ class FundService
         $order       = $params->fromQuery('order', 'ASC');
         $currentPage = $params->fromQuery('page', 1);
         $company     = $params->fromQuery('company', array());
+        $size        = $params->fromQuery('size', array());
 
         $fondoutcategory = $params->fromQuery('fondoutcategory', array());
 
@@ -193,11 +194,33 @@ class FundService
         $criteria = Criteria::create()->orderBy(array($sort => $order));
 
         if (count($company) > 0) {
-            $criteria->where(Criteria::expr()->in('companyId', $company));
+            $criteria->andWhere(Criteria::expr()->in('companyId', $company));
         }
 
         if (count($fondoutcategory) > 0) {
-            $criteria->where(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
+            $criteria->andWhere(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
+        }
+
+        if (count($size) > 0) {
+            $sizeCriteria = array();
+            foreach ($size as $s) {
+                switch ($s) {
+                    case "small":
+                        $sizeCriteria[] = Criteria::expr()->lte('totalMarketValue', 600000000);
+                        break;
+                    case "medium":
+                        $sizeCriteria[] = Criteria::expr()->andx(
+                            Criteria::expr()->gt('totalMarketValue', 600000000),
+                            Criteria::expr()->lt('totalMarketValue', 2500000000)
+                        );
+                        break;
+                    case "large":
+                        $sizeCriteria[] = Criteria::expr()->gte('totalMarketValue', 2500000000);
+                        break;
+                    default:
+                }
+            }
+            $criteria->andWhere(call_user_func_array(array(Criteria::expr(), "orx"), $sizeCriteria));
         }
 
         $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
