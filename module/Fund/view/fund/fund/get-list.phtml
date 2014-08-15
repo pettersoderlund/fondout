@@ -119,7 +119,16 @@ $form->prepare();
                                 ?>
                             </td>
                             <td>
-                                <?php echo $this->numberFormat($fund->fundInstances[0]->totalMarketValue) ?> SEK
+                                <?php
+                                    if ($fund->totalMarketValue <= 600000000) {
+                                        echo $this->translate('Liten');
+                                    } elseif ($fund->totalMarketValue >= 2500000000) {
+                                        echo $this->translate('Stor');
+                                    } else {
+                                        echo $this->translate('Mellan');
+                                    }
+
+                                //echo $this->numberFormat($fund->totalMarketValue) ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
