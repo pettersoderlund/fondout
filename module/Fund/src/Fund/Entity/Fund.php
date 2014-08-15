@@ -101,6 +101,8 @@ class Fund extends Entity
 
     protected $sustainability = 1;
 
+    protected $totalMarketValue = 0;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
@@ -280,6 +282,30 @@ class Fund extends Entity
     public function getSustainability()
     {
         return $this->sustainability;
+    }
+
+    /**
+     * Sets the total market value.
+     *
+     * @return self
+     */
+    public function setTotalMarketValue()
+    {
+        // NOTE: ugly hack, breaks if we have more then one fund instance.
+
+        $this->totalMarketValue = current($this->getFundInstances()->toArray())->totalMarketValue;
+
+        return $this;
+    }
+
+    /**
+     * Gets the total market value of the fund.
+     *
+     * @return String
+     */
+    public function getTotalMarketValue()
+    {
+        return $this->totalMarketValue;
     }
 
     /**

@@ -115,6 +115,7 @@ class FundRepository extends EntityRepository
         $fundMap         = array();
 
         foreach ($funds as $fund) {
+            $fund->setTotalMarketValue();
             $fundMap[$fund->id] = $fund;
         }
 
@@ -149,6 +150,7 @@ class FundRepository extends EntityRepository
                 $fundMap[$cv['id']]->calculateSustainability($cv['score']);
             }
         }
+        //echo \Doctrine\Common\Util\Debug::dump($funds);
 
         return $funds;
     }

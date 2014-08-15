@@ -58,6 +58,19 @@ class FundFilterForm extends Form
             )
         );
 
+        $this->add(array(
+            'name' => 'size',
+            'type' => 'Zend\Form\Element\MultiCheckbox',
+            'options' => array(
+                'label' => 'Type',
+                'value_options' => array(
+                    'small' => 'Liten',
+                    'medium' => 'Mellan',
+                    'large' => 'Stor',
+                ),
+            )
+        ));
+
         $this->add(
             array(
                 'name' => 'category',

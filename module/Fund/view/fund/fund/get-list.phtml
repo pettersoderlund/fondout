@@ -47,6 +47,20 @@ $form->prepare();
                 </div>
             </div>
 
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo $this->translate('Fondstorlek') ?></h3>
+                </div>
+                <div class="panel-body">
+                    <div class="checkbox">
+                        <?php
+                            $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
+                            echo $this->formMultiCheckbox($form->get('size'));
+                        ?>
+                    </div>
+                </div>
+            </div>
+
             <?php echo $this->formHidden($form->get('category')) ?>
             <?php echo $this->formSubmit($form->get('submit')) ?>
             <?php echo $this->form()->closeTag() ?>
@@ -75,6 +89,11 @@ $form->prepare();
                                 <?php echo $this->translate('Hållbarhetspoäng') ?>
                             </a>
                         </th>
+                        <th>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'size', 'order' => $order)  + $query))); ?>">
+                                <?php echo $this->translate('Storlek') ?>
+                            </a>
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -99,61 +118,72 @@ $form->prepare();
                                     NumberFormatter::TYPE_DEFAULT,
                                     "en_US"
                                     );
-                                    ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
+                                ?>
+                            </td>
+                            <td>
+                                <?php
+                                    if ($fund->totalMarketValue <= 600000000) {
+                                        echo $this->translate('Liten');
+                                    } elseif ($fund->totalMarketValue >= 2500000000) {
+                                        echo $this->translate('Stor');
+                                    } else {
+                                        echo $this->translate('Mellan');
+                                    }
+                                ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
 
-                <?php if ($funds->getPages()->pageCount): ?>
-                    <ul class="pagination pagination-centered">
-                        <!-- Previous page link -->
-                        <?php if (isset($funds->getPages()->previous)): ?>
+            <?php if ($funds->getPages()->pageCount): ?>
+                <ul class="pagination pagination-centered">
+                    <!-- Previous page link -->
+                    <?php if (isset($funds->getPages()->previous)): ?>
+                        <li>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
+                                &laquo;
+                            </a>
+                        </li>
+                        <?php
+                        else: ?>
+                        <li class="disabled">
+                            <a href="#">
+                                &laquo;
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                    <!-- Numbered page links -->
+                    <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
+                        <?php if ($page != $funds->getPages()->current): ?>
                             <li>
-                                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
-                                    &laquo;
-                                </a>
-                            </li>
-                            <?php
-                            else: ?>
-                            <li class="disabled">
-                                <a href="#">
-                                    &laquo;
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                        <!-- Numbered page links -->
-                        <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
-                            <?php if ($page != $funds->getPages()->current): ?>
-                                <li>
-                                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
-                                        <?php echo $page; ?>
-                                    </a>
-                                </li>
-                            <?php else: ?>
-                                <li class="active">
-                                    <a href="#"><?php echo $page; ?></a>
-                                </li>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-
-                        <!-- Next page link -->
-                        <?php if (isset($funds->getPages()->next)): ?>
-                            <li>
-                                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
-                                    &raquo;
+                                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
+                                    <?php echo $page; ?>
                                 </a>
                             </li>
                         <?php else: ?>
-                            <li class="disabled">
-                                <a href="#">
-                                    &raquo;
-                                </a>
+                            <li class="active">
+                                <a href="#"><?php echo $page; ?></a>
                             </li>
                         <?php endif; ?>
-                    </ul>
-                <?php endif; ?>
-            </div>
+                    <?php endforeach; ?>
+
+                    <!-- Next page link -->
+                    <?php if (isset($funds->getPages()->next)): ?>
+                        <li>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
+                                &raquo;
+                            </a>
+                        </li>
+                    <?php else: ?>
+                        <li class="disabled">
+                            <a href="#">
+                                &raquo;
+                            </a>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            <?php endif; ?>
         </div>
+    </div>
 </div>
