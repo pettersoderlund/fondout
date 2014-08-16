@@ -133,21 +133,6 @@ class FundService
         return $fundRepository->findControversialValue($fund);
     }
 
-    /**
-     * Similar funds sorted by blacklisted shares ratio
-     *
-     * This method returns a list of the funds with the lowest marketvalue
-     * of blacklisted funds from the same category of funds as the fund given.
-     *
-     * @param  \Fund\Entity\Fund $fund, string[] $categories, string[] $organizations
-     * @return \Fund\Entity\Fund[]
-     */
-    public function getSimilarFunds(\Fund\Entity\Fund $fund, $categories, $organizations)
-    {
-        $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return $fundRepository->findSimilarFunds($fund, $categories, $organizations);
-    }
-
     public function setEntityManager(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -234,5 +219,24 @@ class FundService
         $paginator->setItemCountPerPage(20);
 
         return $paginator;
+    }
+
+    /**
+     * Get a list of funds, in a paginator with the specified order and filters.
+     *
+     * @param \Fund\Entity\Fund, string[] $sustainability
+     * @return Fund collection
+     */
+    public function findSameCategoryFunds($fund, $sustainability = array())
+    {
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        $criteria = Criteria::create()->orderBy(array('sustainability' => 'DESC'));
+        $criteria->andWhere(Criteria::expr()->eq('fondoutcategoryId', $fund->fondoutcategory->id));
+        $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
+        $criteria->setMaxResults(10);
+        $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
+        $orderedfunds = $funds->matching($criteria);
+
+        return $orderedfunds;
     }
 }
