@@ -24,7 +24,7 @@
 
     </head>
     <body>
-        <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <header class="navbar navbar-inverse navbar-static-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -32,17 +32,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('fondout') ?></a>
+                    <a class="navbar-brand fondout-logo" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('fondout') ?></a>
                 </div>
-                <div class="collapse navbar-collapse">
+                <nav class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Hem') ?></a></li>
                         <li><a href="<?php echo $this->url('funds') ?>"><?php echo $this->translate('Fondsök') ?></a></li>
                         <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate('Om oss') ?></a></li>
                     </ul>
-                </div><!--/.nav-collapse -->
+                </nav><!--/.nav-collapse -->
             </div>
-        </nav>
+        </header>
             <?php echo $this->content; ?>
             <footer>
                 <div class="container">

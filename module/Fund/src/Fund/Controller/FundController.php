@@ -25,13 +25,22 @@ class FundController extends AbstractRestfulController
 
         $form->setData($parameters->fromQuery());
 
+        $container = new Container('fund');
+
+        $sform = $this->getServiceLocator()
+            ->get('FormElementManager')
+            ->get('\Fund\Form\SustainabilityForm');
+
+        $value = isset($container->sustainability) ? $container->sustainability : true;
+        $sform->get('sustainability')->setValue($value);
 
         return new ViewModel(
             array(
                 'sustainability' => $names,
                 'query' => $parameters->fromQuery(),
                 'funds' => $fundsPaginator,
-                'form' => $form
+                'form' => $form,
+                'sform' => $sform
             )
         );
     }

@@ -37,7 +37,7 @@ class SustainabilityForm extends Form
                 'type' => 'Submit',
                 'attributes' => array(
                     'value' => 'Filter',
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-lg btn-primary'
                 )
             )
         );

@@ -12,13 +12,42 @@ $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 $form->prepare();
 
+$sform->setAttribute('method', 'POST');
+$sform->setAttribute('action', $this->url('home/save'));
+$sform->prepare();
+$submit = $sform->get('submit');
+$submit->setValue('Välj kategorier');
+
 ?>
 
-<div class="container">
-    <div class="alert alert-info" role="alert">
-        <?php echo $this->translate('Valda hållbarhetskategorier') ?>:
-        <?php echo implode(', ', $sustainability) ?>
+<section class="jumbotron">
+    <div class="container">
+        <h1><?php echo $this->translate('Fondlistan') ?></h1>
+        <p>Bläddra bland över tusen svenska och internationella fonder.</p>
     </div>
+</section>
+
+<section class="sustainability-categories">
+    <div class="container">
+        <strong><?php echo $this->translate('Valda hållbarhetskategorier') ?></strong>
+        <?php echo implode(', ', $sustainability) ?>
+        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#sustainability-form"><?php echo $this->translate('Ändra') ?></button>
+
+        <div id="sustainability-form" class="collapse">
+            <?php echo $this->form()->openTag($sform) ?>
+            <div class="checkbox">
+                <?php
+                    $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
+                    echo $this->formMultiCheckbox($sform->get('sustainability'));
+                ?>
+            </div>
+            <?php echo $this->formSubmit($submit) ?>
+            <?php echo $this->form()->closeTag() ?>
+        </div>
+    </div>
+</section>
+
+<section class="container">
     <div class="row">
         <div class="col-md-4 col-md-push-8">
 
@@ -191,5 +220,5 @@ $form->prepare();
                 </ul>
             <?php endif; ?>
         </div>
-    </div>
-</div>
+</section>
+
