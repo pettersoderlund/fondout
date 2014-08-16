@@ -78,12 +78,11 @@ class FundService
      * @param Fund $fund, string[] $parameters
      * @return Zend\Paginator\Paginator, controversialcategoriesCount
      */
-    public function findControversialCompanies(Fund $fund, $parameters)
+    public function findControversialCompanies(Fund $fund, $parameters, $sustainability = array())
     {
         // Controversial companies listed on fundpage
+        // Chosen through a form
         $category_visible    = $parameters->fromQuery('category_visible', array());
-        // Controversial companies included to be listed on fundpage
-        $category            = $parameters->fromQuery('category', array());
         $currentPage         = $parameters->fromQuery('page', 1);
 
         $fundRepository = $this->getEntityManager()
@@ -91,7 +90,7 @@ class FundService
 
         // $allControversialCompanies is for counting categories
         $allControversialCompanies =
-         $fundRepository->findControversialCompanies($fund, $category);
+         $fundRepository->findControversialCompanies($fund, $sustainability);
 
         // $controversialCompanies is for listing companies.
         if (count($category_visible) > 0) {
@@ -103,7 +102,6 @@ class FundService
 
         // Count the number of occurances for each category
         // $controversialCategoriesCount[categoryId] = array(categoryName, categoryCount)
-
         $controversialCategoriesCount = array();
         foreach ($allControversialCompanies as $company) {
             foreach ($company->accusations as $accusation) {

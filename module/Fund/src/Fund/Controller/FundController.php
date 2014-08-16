@@ -53,7 +53,8 @@ class FundController extends AbstractRestfulController
         list ($controversialCompaniesPaginator, $cCategoriesCount)
             = $service->findControversialCompanies(
                 $fund,
-                $parameters
+                $parameters,
+                $sustainability
             );
         $controversialValue = $service->findControversialValue($fund);
 
