@@ -152,6 +152,7 @@ class FundRepository extends EntityRepository
             ->join('f.company', 'c')
             ->join('f.fondoutcategory', 'fc')
             ->orderBy('c.name', 'DESC')
+            ->where('f.active = 1')
             ->getQuery()
             ->getResult();
 
