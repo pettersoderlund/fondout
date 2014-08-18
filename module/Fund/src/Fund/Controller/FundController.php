@@ -49,6 +49,7 @@ class FundController extends AbstractRestfulController
         $sustainability = $container->sustainability;
         $fund = $service->getFundById($id);
         $funds = $service->findSameCategoryFunds($fund, $sustainability);
+        $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
 
         list ($controversialCompaniesPaginator, $cCategoriesCount)
             = $service->findControversialCompanies(
@@ -56,7 +57,7 @@ class FundController extends AbstractRestfulController
                 $parameters,
                 $sustainability
             );
-            
+
         $controversialValue = $service->findControversialValue($fund, $sustainability);
         $cSharesCount = $service->getCountControverisalShares($fund, $sustainability);
         $sharesCount = $service->getCountShares($fund);
@@ -72,6 +73,7 @@ class FundController extends AbstractRestfulController
             array(
                 'fund'                   => $fund,
                 'funds'                  => $funds,
+                'sustainability'         => $sustainabilityNames,
                 'controversialCompanies' => $controversialCompaniesPaginator,
                 'controversialValue'     => $controversialValue,
                 'cCategoriesCount'       => $cCategoriesCount,

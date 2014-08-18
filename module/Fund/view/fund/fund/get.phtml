@@ -8,6 +8,10 @@
 		<div class="col-md-8">
 			<h2>Kontroversiella bolag</h2>
 			<?php
+				if ($controversialValue != 0):
+			?>
+
+			<?php
 			$form = $this->form;
 			$form->setAttribute('method', 'GET');
 
@@ -16,7 +20,7 @@
 			echo $this->formCollection($form);
 			echo $this->form()->closeTag();
 			?>
-			</ul>
+
 			<div class="panel-group" id="accordion">
 				<?php foreach ($controversialCompanies as $company): ?>
 				<div class="panel panel-default">
@@ -122,6 +126,9 @@
 				</ul>
 			</div>
 			<?php endif; ?>
+		<?php else: ?>
+			<p>Fonden har inga innehav från dina valda hållbarhetskategorier: <?php echo implode(', ', $sustainability) ?>.</p>
+		<?php endif; ?>
 
 		</div>
 
