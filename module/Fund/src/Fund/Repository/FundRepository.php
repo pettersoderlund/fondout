@@ -60,6 +60,7 @@ class FundRepository extends EntityRepository
             ->join('b.category', 'accusation_category')
             ->orderBy('sc.name', 'ASC')
             ->where('f.name = ?1')
+            ->andWhere('sh.marketValue > 0')
             ->setParameter(1, $fund->name)
             ->distinct();
 
@@ -75,21 +76,70 @@ class FundRepository extends EntityRepository
     }
 
 
-    public function findControversialValue(Fund $fund)
+    public function countControversialShares(Fund $fund, $category = array())
     {
-        return $this->getEntityManager()
+         $qb=  $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('SUM(sh.marketValue) as controversialValue')
+            ->select('COUNT(DISTINCT s.isin)')
             ->from('Fund\Entity\ShareCompany', 'sc')
             ->join('sc.accusations', 'b')
+            ->join('b.category', 'c')
             ->join('sc.shares', 's')
             ->join('s.shareholdings', 'sh')
             ->join('sh.fundInstance', 'fi')
             ->join('fi.fund', 'f')
             ->where('f.name = ?1')
+            ->andWhere('sh.marketValue > 0');
+
+        if (count($category) > 0) {
+            $qb->andWhere($qb->expr()->in('c.id', $category));
+        }
+
+        $qb->setParameter(1, $fund->name);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function countShares(Fund $fund)
+    {
+         $qb=  $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('COUNT(DISTINCT s.isin)')
+            ->from('Fund\Entity\Fund', 'f')
+            ->join('f.fundInstances', 'fi')
+            ->join('fi.shareholdings', 'sh')
+            ->join('sh.share', 's')
+            ->where('f.name = ?1')
+            ->andWhere('sh.marketValue > 0');
+
+        $qb->setParameter(1, $fund->name);
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
+
+    public function findControversialValue(Fund $fund, $category = array())
+    {
+
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('SUM(sh.marketValue) as controversialValue')
+            ->from('Fund\Entity\ShareCompany', 'sc')
+            ->join('sc.accusations', 'b')
+            ->join('b.category', 'c')
+            ->join('sc.shares', 's')
+            ->join('s.shareholdings', 'sh')
+            ->join('sh.fundInstance', 'fi')
+            ->join('fi.fund', 'f')
+            ->where('f.name = ?1');
+
+        if (count($category) > 0) {
+            $qb->andWhere($qb->expr()->in('c.id', $category));
+        }
+
+        return $qb
             ->setParameter(1, $fund->name)
             ->getQuery()
             ->getSingleScalarResult();
+
     }
 
     public function findAllFunds($category = array())

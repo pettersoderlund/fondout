@@ -43,15 +43,23 @@ class FundController extends AbstractRestfulController
     */
     public function get($id)
     {
+        $container      = new Container('fund');
         $service = $this->getFundService();
         $parameters = $this->params();
+        $sustainability = $container->sustainability;
         $fund = $service->getFundById($id);
+        $funds = $service->findSameCategoryFunds($fund, $sustainability);
+
         list ($controversialCompaniesPaginator, $cCategoriesCount)
             = $service->findControversialCompanies(
                 $fund,
-                $parameters
+                $parameters,
+                $sustainability
             );
-        $controversialValue = $service->findControversialValue($fund);
+            
+        $controversialValue = $service->findControversialValue($fund, $sustainability);
+        $cSharesCount = $service->getCountControverisalShares($fund, $sustainability);
+        $sharesCount = $service->getCountShares($fund);
 
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
@@ -62,12 +70,15 @@ class FundController extends AbstractRestfulController
 
         return new ViewModel(
             array(
-                'fund' => $fund,
+                'fund'                   => $fund,
+                'funds'                  => $funds,
                 'controversialCompanies' => $controversialCompaniesPaginator,
-                'controversialValue' => $controversialValue,
-                'cCategoriesCount' => $cCategoriesCount,
-                'queryParameters' => $parameters->fromQuery(),
-                'form' => $form
+                'controversialValue'     => $controversialValue,
+                'cCategoriesCount'       => $cCategoriesCount,
+                'cSharesCount'           => $cSharesCount,
+                'sharesCount'            => $sharesCount,
+                'queryParameters'        => $parameters->fromQuery(),
+                'form'                   => $form
             )
         );
     }

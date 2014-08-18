@@ -1,131 +1,174 @@
-<h1><?php echo $this->escapeHtml($fund->name) ?></h1>
-<h2>Fondkategori</h2>
+<div class="container">
+	<h1><?php echo $this->escapeHtml($fund->name) ?></h1>
+	<h3>Fondkategori: <?php echo $this->escapeHtml($fund->fondoutcategory) ?></h3>
+	<h3><?php echo $this->escapeHtml($fund->company) ?></h3>
 
-<div class="row">
-	<div class="col-md-8">
-		<h2>Kontroversiella bolag</h2>
-		<?php
-		$form = $this->form;
-		$form->setAttribute('method', 'GET');
 
-		$form->prepare();
-		echo $this->form()->openTag($form);
-		echo $this->formCollection($form);
-		echo $this->form()->closeTag();
-		?>
-		</ul>
-		<div class="panel-group" id="accordion">
-			<?php foreach ($controversialCompanies as $company): ?>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $this->escapeHtml($company->id) ?>">
-							<?php echo $this->escapeHtml($company->name) ?>
-							<?php foreach ($company->accusations as $accusation): ?>
-								<span class="label label-primary pull-right">
-									<?php echo $this->escapeHtml($accusation->category) ?>
-								</span>
-							<?php endforeach ?>
-						</a>
-					</h4>
-				</div>
-				<div id="<?php echo $this->escapeHtml($company->id) ?>" class="panel-collapse collapse">
-					<div class="panel-body">
-						<table class="table table-condensed">
-							<tr>
-								<th><?php echo $this->translate('Description') ?></th>
-								<th><?php echo $this->translate('Category') ?></th>
-								<th><?php echo $this->translate('Source') ?></th>
-							</tr>
+	<div class="row">
+		<div class="col-md-8">
+			<h2>Kontroversiella bolag</h2>
+			<?php
+			$form = $this->form;
+			$form->setAttribute('method', 'GET');
 
-							<?php foreach ($company->accusations as $accusation): ?>
-							<tr>
-								<td><?php echo $this->escapeHtml($accusation) ?></td>
-								<td><?php echo $this->escapeHtml($accusation->category) ?></td>
-								<td><?php echo $this->escapeHtml($accusation->source->name) ?></td>
-							</tr>
-							<?php endforeach ?>
+			$form->prepare();
+			echo $this->form()->openTag($form);
+			echo $this->formCollection($form);
+			echo $this->form()->closeTag();
+			?>
+			</ul>
+			<div class="panel-group" id="accordion">
+				<?php foreach ($controversialCompanies as $company): ?>
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $this->escapeHtml($company->id) ?>">
+								<?php echo $this->escapeHtml($company->name) ?>
+								<?php foreach ($company->accusations as $accusation): ?>
+									<span class="label label-primary pull-right">
+										<?php echo $this->escapeHtml($accusation->category) ?>
+									</span>
+								<?php endforeach ?>
+							</a>
+						</h4>
+					</div>
+					<div id="<?php echo $this->escapeHtml($company->id) ?>" class="panel-collapse collapse">
+						<div class="panel-body">
+							<table class="table table-condensed">
+								<tr>
+									<th><?php echo $this->translate('Description') ?></th>
+									<th><?php echo $this->translate('Category') ?></th>
+									<th><?php echo $this->translate('Source') ?></th>
+								</tr>
 
-						</table>
+								<?php foreach ($company->accusations as $accusation): ?>
+								<tr>
+									<td><?php echo $this->escapeHtml($accusation) ?></td>
+									<td><?php echo $this->escapeHtml($accusation->category) ?></td>
+									<td><?php echo $this->escapeHtml($accusation->source->name) ?></td>
+								</tr>
+								<?php endforeach ?>
+
+							</table>
+						</div>
 					</div>
 				</div>
+				<?php endforeach; ?>
+
 			</div>
-			<?php endforeach; ?>
-
-		</div>
 
 
-		<?php if ($controversialCompanies->getPages()->pageCount): ?>
-		<div>
-			<ul class="pagination pagination-centered">
-				<!-- Previous page link -->
-				<?php if (isset($controversialCompanies->getPages()->previous)): ?>
-					<li>
-						<a href="
-						<?php
-						$queryParameters['page'] = $controversialCompanies->getPages()->previous;
-						echo $this->url($this->route, array('id' => $fund->id), array(
-							'query' => $queryParameters)); ?>">
-							<<
-						</a>
-					</li>
-				<?php
-				else: ?>
-					<li class="disabled">
-						<a href="#">
-							<<
-						</a>
-					</li>
-				<?php endif; ?>
-				<!-- Numbered page links -->
-				<?php foreach ($controversialCompanies->getPages()->pagesInRange as $page): ?>
-					<?php if ($page != $controversialCompanies->getPages()->current): ?>
+			<?php if ($controversialCompanies->getPages()->pageCount): ?>
+			<div>
+				<ul class="pagination pagination-centered">
+					<!-- Previous page link -->
+					<?php if (isset($controversialCompanies->getPages()->previous)): ?>
 						<li>
 							<a href="
 							<?php
-							$queryParameters['page'] = $page;
+							$queryParameters['page'] = $controversialCompanies->getPages()->previous;
+							echo $this->url($this->route, array('id' => $fund->id), array(
+								'query' => $queryParameters)); ?>">
+								<<
+							</a>
+						</li>
+					<?php
+					else: ?>
+						<li class="disabled">
+							<a href="#">
+								<<
+							</a>
+						</li>
+					<?php endif; ?>
+					<!-- Numbered page links -->
+					<?php foreach ($controversialCompanies->getPages()->pagesInRange as $page): ?>
+						<?php if ($page != $controversialCompanies->getPages()->current): ?>
+							<li>
+								<a href="
+								<?php
+								$queryParameters['page'] = $page;
+								echo $this->url($this->route, array('id' => $fund->id), array(
+									'query' => $queryParameters));
+									?>">
+									<?php echo $page; ?>
+								</a>
+							</li>
+						<?php else: ?>
+							<li class="active">
+								<a href="#"><?php echo $page; ?></a>
+							</li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+
+					<!-- Next page link -->
+					<?php if (isset($controversialCompanies->getPages()->next)): ?>
+						<li>
+							<a href="
+							<?php
+							$queryParameters['page'] = $controversialCompanies->getPages()->next;
 							echo $this->url($this->route, array('id' => $fund->id), array(
 								'query' => $queryParameters));
 								?>">
-								<?php echo $page; ?>
+								>>
 							</a>
 						</li>
 					<?php else: ?>
-						<li class="active">
-							<a href="#"><?php echo $page; ?></a>
+						<li class="disabled">
+							<a href="#">
+								>>
+							</a>
 						</li>
 					<?php endif; ?>
-				<?php endforeach; ?>
+				</ul>
+			</div>
+			<?php endif; ?>
 
-				<!-- Next page link -->
-				<?php if (isset($controversialCompanies->getPages()->next)): ?>
-					<li>
-						<a href="
-						<?php
-						$queryParameters['page'] = $controversialCompanies->getPages()->next;
-						echo $this->url($this->route, array('id' => $fund->id), array(
-							'query' => $queryParameters));
-							?>">
-							>>
-						</a>
-					</li>
-				<?php else: ?>
-					<li class="disabled">
-						<a href="#">
-							>>
-						</a>
-					</li>
-				<?php endif; ?>
-			</ul>
 		</div>
-		<?php endif; ?>
 
-	</div>
+		<div class="col-md-4">
+			<h2>Kontroversiellt värde</h2>
+			<p>Kontroversiella inv. <?php echo $this->numberFormat($controversialValue) ?> SEK</p>
+			<p>Totala inv. i fonden <?php echo $this->numberFormat($fund->fundInstances[0]->totalMarketValue) ?> SEK</p>
+			<p>Kontroversiella värdepapper i fonden: <?php echo $this->escapeHtml($cSharesCount) ?></p>
+			<p>Totala antalet värdepapper i fonden:  <?php echo $this->escapeHtml($sharesCount) ?></p>
 
-	<div class="col-md-4">
-		<h2>Kontroversiellt värde</h2>
-		<p><?php echo $this->escapeHtml($controversialValue) ?></p>
-		<h2>Samma kategori</h2>
-		<h2>Dela</h2>
+			<h2>Samma kategori</h2>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>
+							<?php echo $this->translate('Fond') ?>
+						</th>
+						<th>
+							<?php echo $this->translate('Hållbarhetspoäng') ?>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($funds as $fund): ?>
+						<tr>
+							<td>
+								<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+									<?php echo $this->translate($fund->name) ?>
+								</a>
+							</td>
+							<td>
+								<?php
+								echo $this->numberFormat(
+									$fund->getSustainability(),
+									NumberFormatter::PERCENT,
+									NumberFormatter::TYPE_DEFAULT,
+									"en_US"
+									);
+								?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+		</div>
+
+			<h2>Dela</h2>
+		</div>
 	</div>
 </div>
