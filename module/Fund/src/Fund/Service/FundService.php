@@ -125,10 +125,10 @@ class FundService
         return array($paginator, $controversialCategoriesCount);
     }
 
-    public function findControversialValue(Fund $fund)
+    public function findControversialValue(Fund $fund, $sustainability = array())
     {
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return $fundRepository->findControversialValue($fund);
+        return $fundRepository->findControversialValue($fund, $sustainability);
     }
 
     public function setEntityManager(EntityManager $entityManager)
@@ -236,5 +236,29 @@ class FundService
         $orderedfunds = $funds->matching($criteria);
 
         return $orderedfunds;
+    }
+
+    /**
+    * Get the number of controversial shares for the given fund
+    *
+    * @param \Fund\Entity\Fund, string[] $sustainability
+    * @return int numberOfControversialShares
+    */
+    public function getCountControverisalShares($fund, $sustainability = array())
+    {
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        return $repository->countControversialShares($fund, $sustainability);
+    }
+
+    /**
+    * Get the total count of shares w/ marketvalue>0 for the given fund
+    *
+    * @param \Fund\Entity\Fund
+    * @return int numberOfShares
+    */
+    public function getCountShares($fund)
+    {
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        return $repository->countShares($fund);
     }
 }

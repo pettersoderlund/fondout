@@ -56,7 +56,10 @@ class FundController extends AbstractRestfulController
                 $parameters,
                 $sustainability
             );
-        $controversialValue = $service->findControversialValue($fund);
+            
+        $controversialValue = $service->findControversialValue($fund, $sustainability);
+        $cSharesCount = $service->getCountControverisalShares($fund, $sustainability);
+        $sharesCount = $service->getCountShares($fund);
 
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
@@ -72,6 +75,8 @@ class FundController extends AbstractRestfulController
                 'controversialCompanies' => $controversialCompaniesPaginator,
                 'controversialValue'     => $controversialValue,
                 'cCategoriesCount'       => $cCategoriesCount,
+                'cSharesCount'           => $cSharesCount,
+                'sharesCount'            => $sharesCount,
                 'queryParameters'        => $parameters->fromQuery(),
                 'form'                   => $form
             )
