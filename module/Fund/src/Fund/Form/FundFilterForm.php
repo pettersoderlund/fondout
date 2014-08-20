@@ -89,6 +89,34 @@ class FundFilterForm extends Form
             )
         );
 
+        $this->add(
+            array(
+
+                 'name' => 'q',
+                 'options' => array(
+                     
+
+                 ),
+
+                 'attributes' => array(
+                     'type'  => 'text',
+                     'class' => 'form-control'
+                 )
+             )
+        );
+
+        $this->add(
+            array(
+                'name' => 'qSubmit',
+                'type' => 'Submit',
+                'attributes' => array(
+                    'value' => 'Sök',
+                    'class' => 'btn btn-success'
+                )
+            )
+        );
+
+
 
         // We could also define the input filter here, or
         // lazy-create it in the getInputFilter() method.

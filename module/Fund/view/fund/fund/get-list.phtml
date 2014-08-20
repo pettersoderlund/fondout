@@ -26,6 +26,19 @@ $form->prepare();
 
             <div class="panel panel-default">
                 <div class="panel-heading">
+                    <h3 class="panel-title"><?php echo $this->translate('Sök på fond') ?></h3>
+                </div>
+                <div class="panel-body">
+                        <?php echo $this->formRow($form->get('q')); ?>
+                        <?php echo $this->formSubmit($form->get('qSubmit')) ?>
+                </div>
+            </div>
+
+
+
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     <h3 class="panel-title"><?php echo $this->translate('Fondkategori') ?></h3>
                 </div>
                 <div class="panel-body">

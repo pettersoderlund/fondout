@@ -161,6 +161,7 @@ class FundService
         $currentPage = $params->fromQuery('page', 1);
         $company     = $params->fromQuery('company', array());
         $size        = $params->fromQuery('size', array());
+        $q           = $params->fromQuery('q', "");
 
         $fondoutcategory = $params->fromQuery('fondoutcategory', array());
 
@@ -207,6 +208,10 @@ class FundService
                 }
             }
             $criteria->andWhere(call_user_func_array(array(Criteria::expr(), "orx"), $sizeCriteria));
+        }
+
+        if (strlen($q) > 0) {
+            $criteria->andWhere(Criteria::expr()->contains('name', $q));
         }
 
         $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
