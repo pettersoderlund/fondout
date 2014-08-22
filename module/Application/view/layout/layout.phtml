@@ -46,14 +46,16 @@
             <?php echo $this->content; ?>
             <footer>
                 <div class="container">
-                    <a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('fondout') ?></a>
+                    <a class="fondout-logo" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('fondout') ?></a>
                     <p><?php echo $this->translate('Jämför dina fonder på nätet.') ?></p>
-                    <ul>
+                    <ul class="footer-links">
                         <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Hem') ?></a></li>
+                        <li>&bull;</li>
                         <li><a href="<?php echo $this->url('funds') ?>"><?php echo $this->translate('Fondsök') ?></a></li>
+                        <li>&bull;</li>
                         <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate('Om oss') ?></a></li>
                     </ul>
-                    <p>&copy; 2013 - <?php echo date('Y') ?> <a href="/">fondout.se</a>.</p>
+                    <p class="copyright">&copy; 2013 - <?php echo date('Y') ?> <a href="/">fondout.se</a>.</p>
                 </div>
             </footer>
         <?php echo $this->inlineScript() ?>
