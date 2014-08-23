@@ -3,12 +3,12 @@ $form->setAttribute('method', 'POST');
 $form->setAttribute('action', $this->url('home/save'));
 $form->prepare();
 $submit = $form->get('submit');
-$submit->setValue('Gå till fondlistan');
+$submit->setValue('Hitta fonder');
 ?>
 <section class="jumbotron">
     <div class="container">
-        <h1><?php echo $this->translate('Investera hållbart!') ?></h1>
-        <p class="lead"><?php echo $this->translate('Få bättre insikt över hur hållbara dina fonder är. Fondout hjälper dig att hålla koll på dina fonder och dess investeringar.') ?></p>
+        <h2><?php echo $this->translate('Vissa fonder är mer hållbara än andra.') ?></h2>
+        <p class="lead"><?php echo $this->translate('Jämför svenska aktiefonder.') ?></p>
     </div>
 </section>
 
@@ -16,8 +16,8 @@ $submit->setValue('Gå till fondlistan');
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                <h2><?php echo $this->translate('Vad är viktigt för dig?') ?></h2>
-                <p class="lead"><?php echo $this->translate('Alla har olika synpunkter på vad hållbarhet innebär. Välj de kategorier som du vill vi ska ha med i våra beräkningar.') ?></p>
+                <h2><?php echo $this->translate('Vilka företag vill du äga?') ?></h2>
+                <p class="lead"><?php echo $this->translate('Du äger genom dina fonder många små andelar i olika företag. Upptäck vilka fonder som investerar i hållbart genom att sortera bort de verksamheter du inte vill vara en ägare av.') ?></p>
             </div>
 
             <div class="col-md-6">
@@ -39,7 +39,7 @@ $submit->setValue('Gå till fondlistan');
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-push-6">
-                <p class="lead"><?php echo $this->translate('Duis sit, pulvinar aenean urna, scelerisque pulvinar, lacus tincidunt, placerat augue! Sed tristique quis! Eros sed augue pulvinar a. Purus dapibus augue dapibus, sit ut, arcu, turpis in ultricies, pulvinar, vel pellentesque mauris tortor pid nec eu? Dolor purus scelerisque ac, nascetur turpis nascetur porta aliquam turpis.') ?></p>
+                <p class="lead"><?php echo $this->translate('Att spara sina pengar hållbart är ett smartare sätt att investera samtidigt som vi beverar jordens resurser för kommande generationer. Leta upp dina nuvarande och gamla fonder för att se hur hållbara just dina fonder är eller hitta alternativ på andra mer hållbara fonder. ') ?></p>
             </div>
 
             <div class="col-md-6 col-md-pull-6">
