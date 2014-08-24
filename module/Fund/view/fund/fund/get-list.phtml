@@ -125,12 +125,8 @@ $form->prepare();
                             </td>
                             <td>
                                 <?php
-                                echo $this->numberFormat(
-                                    $fund->getSustainability(),
-                                    NumberFormatter::PERCENT,
-                                    NumberFormatter::TYPE_DEFAULT,
-                                    "en_US"
-                                    );
+
+                                    echo number_format($fund->getSustainability()*100) . " / 100";
                                 ?>
                             </td>
                             <td>

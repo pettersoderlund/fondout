@@ -6,7 +6,7 @@
 
 	<div class="row">
 		<div class="col-md-8">
-			<h2>Kontroversiella bolag</h2>
+			<h2>Kritiserade företag i fonden</h2>
 			<?php
 				if ($controversialValue != 0):
 			?>
@@ -60,6 +60,7 @@
 				<?php endforeach; ?>
 
 			</div>
+
 
 
 			<?php if ($controversialCompanies->getPages()->pageCount): ?>
@@ -130,16 +131,23 @@
 			<p>Fonden har inga innehav från dina valda hållbarhetskategorier: <?php echo implode(', ', $sustainability) ?>.</p>
 		<?php endif; ?>
 
+		<h2>Fonden finns att köpa på</h2>
+		<ul>
+			<li>Avanza</li>
+			<li>Nordnet</li>
+			<li>Swedbank</li>
+			<li>Handelsbanken</li>
+		</ul>
 		</div>
 
 		<div class="col-md-4">
-			<h2>Kontroversiellt värde</h2>
+			<h2>Hållbart värde</h2>
 			<p>Kontroversiella inv. <?php echo $this->numberFormat($controversialValue) ?> SEK</p>
 			<p>Totala inv. i fonden <?php echo $this->numberFormat($fund->fundInstances[0]->totalMarketValue) ?> SEK</p>
 			<p>Kontroversiella värdepapper i fonden: <?php echo $this->escapeHtml($cSharesCount) ?></p>
 			<p>Totala antalet värdepapper i fonden:  <?php echo $this->escapeHtml($sharesCount) ?></p>
 
-			<h2>Samma kategori</h2>
+			<h2>Liknande fonder</h2>
 			<table class="table table-hover">
 				<thead>
 					<tr>
