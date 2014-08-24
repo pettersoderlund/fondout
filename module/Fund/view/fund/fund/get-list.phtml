@@ -124,10 +124,7 @@ $form->prepare();
                                 <?php echo $this->translate($fund->fondoutcategory->title) ?>
                             </td>
                             <td>
-                                <?php
-
-                                    echo number_format($fund->getSustainability()*100) . " / 100";
-                                ?>
+                                <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
                             </td>
                             <td>
                                 <?php
