@@ -33,46 +33,24 @@
             </div>
           </div>
           <?php echo $this->form()->closeTag() ?>
-          <div class="panel-group" id="accordion">
+
+          <table class="table table-striped">
             <?php foreach ($controversialCompanies as $company): ?>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#<?php echo $this->escapeHtml($company->id) ?>">
-                      <?php echo $this->escapeHtml($company->name) ?>
+              <tr>
+                <td><?php echo $this->escapeHtml($company->name) ?></td>
+                <td>
+                    <div class="accusation-categories">
                       <?php foreach ($company->accusations as $accusation): ?>
-                        <span class="label label-primary pull-right">
-                          <?php echo $this->escapeHtml($accusation->category) ?>
-                        </span>
+                      <span class="label label-primary" data-toggle="popover" data-placement="top" data-content="<?php echo $this->escapeHtml($accusation) ?><br/><small>Källa: <?php echo $this->escapeHtml($accusation->source->name) ?></small>">
+                        <?php echo $this->escapeHtml($accusation->category) ?>
+                      </span>
+                      &nbsp;
                       <?php endforeach ?>
-                    </a>
-                  </h4>
-                </div>
-                <div id="<?php echo $this->escapeHtml($company->id) ?>" class="panel-collapse collapse">
-                  <div class="panel-body">
-                    <table class="table table-condensed">
-                      <tr>
-                        <th><?php echo $this->translate('Beskrivning') ?></th>
-                        <th><?php echo $this->translate('Kategori') ?></th>
-                        <th><?php echo $this->translate('Källa') ?></th>
-                      </tr>
-
-                      <?php foreach ($company->accusations as $accusation): ?>
-                        <tr>
-                          <td><?php echo $this->escapeHtml($accusation) ?></td>
-                          <td><?php echo $this->escapeHtml($accusation->category) ?></td>
-                          <td><?php echo $this->escapeHtml($accusation->source->name) ?></td>
-                        </tr>
-                      <?php endforeach ?>
-
-                    </table>
-                  </div>
-                </div>
-              </div>
-            <?php endforeach; ?>
-
-          </div>
-
+                    </div>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+          </table>
 
           <?php if ($controversialCompanies->getPages()->pageCount): ?>
             <div>

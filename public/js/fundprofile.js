@@ -8,6 +8,10 @@ $(document).ready(function() {
       sortField: 'text'
   });
 
+  $("[data-toggle=popover]").popover({
+    html: true,
+    trigger: 'hover'
+  });
 
   // Sustainability score dougnut chart
   var canvas = document.querySelector('#sustainability-chart');
