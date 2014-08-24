@@ -110,6 +110,8 @@ class Fund extends Entity
 
     protected $totalMarketValue = 0;
 
+    protected $controversialValue;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
@@ -326,9 +328,15 @@ class Fund extends Entity
     {
         // NOTE: ugly hack, breaks if we have more then one fund instance.
         $totalMarketValue     = current($this->getFundInstances()->toArray())->totalMarketValue;
+        $this->controversialValue = $controversialValue;
         $this->sustainability = ($totalMarketValue - $controversialValue) / $totalMarketValue;
 
         return $this;
+    }
+
+    public function getControversialValue()
+    {
+        return $this->controversialValue;
     }
 
     /**

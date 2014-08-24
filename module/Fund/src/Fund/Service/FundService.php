@@ -49,6 +49,12 @@ class FundService
         return $fund;
     }
 
+    public function getFund($id)
+    {
+        $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        return current($fundRepository->mapControversialMarketValues($this->getFundById($id)));
+    }
+
     /**
      * Search
      *
@@ -125,7 +131,17 @@ class FundService
         return array($paginator, $controversialCategoriesCount);
     }
 
-    public function findControversialValue(Fund $fund, $sustainability = array())
+
+    /**
+     * Similar funds sorted by blacklisted shares ratio
+     *
+     * This method returns a list of the funds with the lowest marketvalue
+     * of blacklisted funds from the same category of funds as the fund given.
+     *
+     * @param  \Fund\Entity\Fund $fund, string[] $categories, string[] $organizations
+     * @return \Fund\Entity\Fund[]
+     */
+    public function getSimilarFunds(\Fund\Entity\Fund $fund, $categories, $organizations)
     {
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         return $fundRepository->findControversialValue($fund, $sustainability);

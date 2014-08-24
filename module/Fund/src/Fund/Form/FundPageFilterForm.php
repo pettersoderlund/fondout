@@ -3,10 +3,8 @@
 namespace Fund\Form;
 
 use Zend\Form\Form;
-use DoctrineModule\Persistence\ObjectManagerAwareInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 
-class FundPageFilterForm extends Form implements ObjectManagerAwareInterface
+class FundPageFilterForm extends Form
 {
     protected $objectManager;
 
@@ -14,15 +12,15 @@ class FundPageFilterForm extends Form implements ObjectManagerAwareInterface
     {
         $this->add(
             array(
-                'type' => 'Zend\Form\Element\Select',
+                'type' => 'select',
                 'name' => 'category_visible',
                 'options' => array(
-                    'label' => "Välj kategorier",
-                    'object_manager' => $this->getObjectManager(),
+                    'empty_option'   => 'Välj kategori...'
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'id' => 'filter-sustainability'
                 ),
             )
         );
@@ -32,21 +30,11 @@ class FundPageFilterForm extends Form implements ObjectManagerAwareInterface
                 'name' => 'submit',
                 'type' => 'Submit',
                 'attributes' => array(
-                    'value' => 'Visa',
-                    'class' => 'btn btn-primary btn-xs'
+                    'value' => 'Filtrera',
+                    'class' => 'btn btn-primary'
                 )
             )
         );
-    }
-
-    public function setObjectManager(ObjectManager $objectManager)
-    {
-        $this->objectManager = $objectManager;
-    }
-
-    public function getObjectManager()
-    {
-        return $this->objectManager;
     }
 
     public function setCategories(array $category)

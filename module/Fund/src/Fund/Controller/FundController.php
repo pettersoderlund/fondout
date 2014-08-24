@@ -52,11 +52,12 @@ class FundController extends AbstractRestfulController
     */
     public function get($id)
     {
-        $container      = new Container('fund');
+
+        $container = new Container('fund');
         $service = $this->getFundService();
         $parameters = $this->params();
         $sustainability = $container->sustainability;
-        $fund = $service->getFundById($id);
+        $fund = $service->getFund($id);
         $funds = $service->findSameCategoryFunds($fund, $sustainability);
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
 
@@ -67,7 +68,6 @@ class FundController extends AbstractRestfulController
                 $sustainability
             );
 
-        $controversialValue = $service->findControversialValue($fund, $sustainability);
         $cSharesCount = $service->getCountControverisalShares($fund, $sustainability);
         $sharesCount = $service->getCountShares($fund);
 
@@ -84,11 +84,10 @@ class FundController extends AbstractRestfulController
                 'funds'                  => $funds,
                 'sustainability'         => $sustainabilityNames,
                 'controversialCompanies' => $controversialCompaniesPaginator,
-                'controversialValue'     => $controversialValue,
                 'cCategoriesCount'       => $cCategoriesCount,
                 'cSharesCount'           => $cSharesCount,
                 'sharesCount'            => $sharesCount,
-                'queryParameters'        => $parameters->fromQuery(),
+                'query'                  => $parameters->fromQuery(),
                 'form'                   => $form
             )
         );

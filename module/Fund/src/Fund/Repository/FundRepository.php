@@ -159,8 +159,17 @@ class FundRepository extends EntityRepository
         return $this->mapControversialMarketValues($funds, $category);
     }
 
-    protected function mapControversialMarketValues(array $funds, $category = array())
+    public function mapControversialMarketValues($funds, $category = array())
     {
+
+        if ($funds instanceof Fund) {
+            $funds = array($funds);
+        }
+
+        if (!is_array($funds)) {
+            throw new \InvalidArgumentException();
+        }
+
         $queryBuilder    = $this->getEntityManager()->createQueryBuilder();
         $subQueryBuilder = clone $queryBuilder;
         $fundMap         = array();

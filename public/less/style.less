@@ -7,7 +7,7 @@ section {
   padding: 30px inherit;
 }
 
-input {
+input[type="submit"] {
   text-transform: uppercase;
 }
 
@@ -80,4 +80,25 @@ footer {
   .copyright {
     font-size: @font-size-small;
   }
+}
+
+
+// Dougnut chart
+
+.chart-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+#sustainability-percentage {
+  height: @font-size-base;
+  line-height: @font-size-base;
+  margin: auto;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  color: @gray-light;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
