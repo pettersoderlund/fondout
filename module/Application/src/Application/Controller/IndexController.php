@@ -32,12 +32,4 @@ class IndexController extends AbstractActionController
             )
         );
     }
-
-    public function saveAction()
-    {
-        $container = new Container('fund');
-
-        $container->sustainability = $this->params()->fromPost('sustainability', array());
-        $this->redirect()->toRoute('funds');
-    }
 }

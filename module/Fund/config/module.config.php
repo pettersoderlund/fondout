@@ -20,6 +20,16 @@ return array(
                     ),
                 ),
             ),
+            'change-sustainability-categories' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/funds/change-sustainability-categories',
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'changeCategories',
+                    ),
+                ),
+            ),
         ),
     ),
     'view_manager' => array(

@@ -78,6 +78,13 @@ class FundController extends AbstractRestfulController
         $form->setCategories($cCategoriesCount);
         $form->setData($parameters->fromQuery());
 
+        $sform = $this->getServiceLocator()
+            ->get('FormElementManager')
+            ->get('\Fund\Form\SustainabilityForm');
+
+        $value = isset($container->sustainability) ? $container->sustainability : true;
+        $sform->get('sustainability')->setValue($value);
+
         return new ViewModel(
             array(
                 'fund'                   => $fund,
@@ -88,7 +95,8 @@ class FundController extends AbstractRestfulController
                 'cSharesCount'           => $cSharesCount,
                 'sharesCount'            => $sharesCount,
                 'query'                  => $parameters->fromQuery(),
-                'form'                   => $form
+                'form'                   => $form,
+                'sform'                  => $sform
             )
         );
     }
@@ -115,5 +123,21 @@ class FundController extends AbstractRestfulController
         }
 
         return $this->fundService;
+    }
+
+    public function changeCategoriesAction()
+    {
+        $container = new Container('fund');
+        $container->sustainability = $this->params()->fromPost('sustainability', array());
+
+        $redirect = $this->params()->fromPost('redirect', $this->params()->fromQuery('redirect', false));
+
+        if ($redirect) {
+            return $this->redirect()->toRoute($redirect);
+        }
+
+
+        $url = $this->getRequest()->getHeader('Referer')->getUri();
+        $this->redirect()->toUrl($url);
     }
 }

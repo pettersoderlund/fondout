@@ -13,7 +13,7 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
 $form->prepare();
 
 $sform->setAttribute('method', 'POST');
-$sform->setAttribute('action', $this->url('home/save'));
+$sform->setAttribute('action', $this->url('change-sustainability-categories'));
 $sform->prepare();
 $submit = $sform->get('submit');
 $submit->setValue('Välj kategorier');

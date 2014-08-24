@@ -1,6 +1,6 @@
 <?php
 $form->setAttribute('method', 'POST');
-$form->setAttribute('action', $this->url('home/save'));
+$form->setAttribute('action', $this->url('change-sustainability-categories', array(), array('query' => array('redirect' => 'funds'))));
 $form->prepare();
 $submit = $form->get('submit');
 $submit->setValue('Hitta fonder');
