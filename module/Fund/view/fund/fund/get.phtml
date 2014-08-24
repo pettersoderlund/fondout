@@ -1,22 +1,118 @@
 <?php
 
-    $this->headScript()
-    ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
-    ->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
-    ->appendFile($this->basePath() . '/js/fundprofile.js');
-    ?>
+$this->headScript()
+->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
+->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
+->appendFile($this->basePath() . '/js/fundprofile.js');
+?>
 
-    <section class="jumbotron">
-      <div class="container">
-        <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
+<section class="jumbotron">
+  <div class="container">
+    <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
+  </div>
+</section>
+
+
+<section class="container">
+  <div class="row">
+
+
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="chart-container" width="100px" height="100px">
+          <canvas id="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
+          <div id="sustainability-percentage">
+            <?php
+            echo $this->numberFormat(
+              $fund->getSustainability(),
+              NumberFormatter::PERCENT,
+              NumberFormatter::TYPE_DEFAULT,
+              "en_US"
+              );
+              ?>
+            </div>
+          </div>
+
+          <table class="table">
+            <tr>
+              <th><?php echo $this->translate('Kategori') ?></th>
+              <td><?php echo $this->escapeHtml($fund->fondoutCategory) ?></td>
+            </tr>
+            <tr>
+              <th><?php echo $this->translate('Totalt marknadsvärde') ?></th>
+              <td>
+                <?php echo $this->currencyFormat(
+                    $fund->getTotalMarketValue(),
+                    "SEK",
+                    "sv_SE"
+                    );
+                ?>
+              </td>
+            </tr>
+            <tr>
+              <th><?php echo $this->translate('Kontroversiellt marknadsvärde') ?></th>
+              <td>
+                <?php echo $this->currencyFormat(
+                    $fund->getControversialValue(),
+                    "SEK",
+                    "sv_SE"
+                    );
+                ?>
+              </td>
+            </tr>
+            <tr>
+              <th><?php echo $this->translate('Antal kontroversiella värdepapper') ?></th>
+              <td><?php echo $this->escapeHtml($cSharesCount) ?></td>
+            </tr>
+            <tr>
+              <th><?php echo $this->translate('Totalt antal värdepapper') ?></th>
+              <td><?php echo $this->escapeHtml($sharesCount) ?></td>
+            </tr>
+          </table>
+        </div>
       </div>
-    </section>
 
+      <div class="panel panel-default">
+        <div class="panel-heading">Liknande fonder</div>
+        <div class="panel-body">
 
-    <section class="container">
-      <div class="row">
-        <div class="col-md-8">
-          <h2><?php echo $this->translate('Kritiserade företag i fonden') ?></h2>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>
+                  <?php echo $this->translate('Fond') ?>
+                </th>
+                <th>
+                  <?php echo $this->translate('Hållbarhetspoäng') ?>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($funds as $fund): ?>
+                <tr>
+                  <td>
+                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+                      <?php echo $this->translate($fund->name) ?>
+                    </a>
+                  </td>
+                  <td>
+                    <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <?php echo $this->translate('Kritiserade företag i fonden') ?>
+        </div>
+        <div class="panel-body">
           <?php
           $form = $this->form;
           $form->setAttribute('method', 'GET');
@@ -39,17 +135,17 @@
               <tr>
                 <td><?php echo $this->escapeHtml($company->name) ?></td>
                 <td>
-                    <div class="accusation-categories">
-                      <?php foreach ($company->accusations as $accusation): ?>
+                  <div class="accusation-categories">
+                    <?php foreach ($company->accusations as $accusation): ?>
                       <span class="label label-primary" data-toggle="popover" data-placement="top" data-content="<?php echo $this->escapeHtml($accusation) ?><br/><small>Källa: <?php echo $this->escapeHtml($accusation->source->name) ?></small>">
                         <?php echo $this->escapeHtml($accusation->category) ?>
                       </span>
                       &nbsp;
-                      <?php endforeach ?>
-                    </div>
+                    <?php endforeach ?>
+                  </div>
                 </td>
               </tr>
-              <?php endforeach; ?>
+            <?php endforeach; ?>
           </table>
 
           <?php if ($controversialCompanies->getPages()->pageCount): ?>
@@ -116,104 +212,9 @@
             </ul>
           </div>
         <?php endif; ?>
-
       </div>
-
-      <div class="col-md-4">
-
-        <div class="panel panel-default">
-    <!--                 <div class="panel-heading">
-    <h3 class="panel-title"><?php echo $this->translate('Fondkategori') ?></h3>
     </div>
-  -->                <div class="panel-body">
-
-  <div class="chart-container" width="100px" height="100px">
-
-  <canvas id="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
-    <div id="sustainability-percentage">
-      <?php
-      echo $this->numberFormat(
-          $fund->getSustainability(),
-          NumberFormatter::PERCENT,
-          NumberFormatter::TYPE_DEFAULT,
-          "en_US"
-      );
-      ?>
-      </div>
   </div>
-
-  <table class="table">
-
-    <tr>
-      <th><?php echo $this->translate('Kategori') ?></th>
-      <td><?php echo $this->escapeHtml($fund->fondoutCategory) ?></td>
-    </tr>
-    <tr>
-      <th><?php echo $this->translate('Totalt marknadsvärde') ?></th>
-      <td><?php
-      echo $this->currencyFormat(
-          $fund->getTotalMarketValue(),
-          "SEK",
-          "sv_SE"
-      );
-      ?></td>
-    </tr>
-    <tr>
-      <th><?php echo $this->translate('Kontroversiellt marknadsvärde') ?></th>
-      <td><?php
-      echo $this->currencyFormat(
-          $fund->getControversialValue(),
-          "SEK",
-          "sv_SE"
-      );
-      ?></td>
-    </tr>
-    <tr>
-      <th><?php echo $this->translate('Antal kontroversiella värdepapper') ?></th>
-      <td><?php echo $this->escapeHtml($cSharesCount) ?></td>
-    </tr>
-    <tr>
-      <th><?php echo $this->translate('Totalt antal värdepapper') ?></th>
-      <td><?php echo $this->escapeHtml($sharesCount) ?></td>
-    </tr>
-  </table>
-  </div>
-</div>
-
- <div class="panel panel-default">
-  <div class="panel-heading">Liknande fonder</div>
-  <div class="panel-body">
-
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>
-              <?php echo $this->translate('Fond') ?>
-            </th>
-            <th>
-              <?php echo $this->translate('Hållbarhetspoäng') ?>
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($funds as $fund): ?>
-            <tr>
-              <td>
-                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
-                  <?php echo $this->translate($fund->name) ?>
-                </a>
-              </td>
-              <td>
-                <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
-  </div>
- </div>
-
-</div>
 </div>
 </section>
 
