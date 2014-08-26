@@ -70,4 +70,9 @@ class Bank extends Entity
     {
         return $this->name;
     }
+
+    public function __toString()
+    {
+            return $this->name;
+    }
 }

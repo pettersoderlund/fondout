@@ -18,8 +18,13 @@ use Doctrine\ORM\Mapping as ORM;
  *             name="bank",
  *             columns={"bank"}
  *         )
+ *     },
+ *     uniqueConstraints={
+ *          @ORM\UniqueConstraint(name="bankFund", columns={"bank", "fund"})
  *     }
  * )
+
+ *
  * @ORM\Entity
  */
 class BankFundListing extends Entity
