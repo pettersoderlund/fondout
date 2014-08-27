@@ -60,6 +60,7 @@ class FundController extends AbstractRestfulController
         $fund = $service->getFund($id);
         $funds = $service->findSameCategoryFunds($fund, $sustainability);
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
+        $banks = $service->getBanks($fund);
 
         list ($controversialCompaniesPaginator, $cCategoriesCount)
             = $service->findControversialCompanies(
@@ -89,6 +90,7 @@ class FundController extends AbstractRestfulController
             array(
                 'fund'                   => $fund,
                 'funds'                  => $funds,
+                'banks'                  => $banks,
                 'sustainability'         => $sustainabilityNames,
                 'controversialCompanies' => $controversialCompaniesPaginator,
                 'cCategoriesCount'       => $cCategoriesCount,
