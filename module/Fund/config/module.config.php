@@ -110,6 +110,16 @@ return array(
                         )
                     )
                 ),
+                'add-bank-listing' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add banklisting <file> <bank>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addbanklisting'
+                        )
+                    )
+                ),
             ),
         ),
     ),

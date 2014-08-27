@@ -282,4 +282,16 @@ class FundService
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         return $repository->countShares($fund);
     }
+
+    /**
+    * Get a array of banks that offer the fund with a link (URL)
+    *
+    * @param \Fund\Entity\Fund
+    * @return mixed[] Banks
+    */
+    public function getBanks($fund)
+    {
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        return $repository->findBanks($fund);
+    }
 }

@@ -16,6 +16,7 @@ use Fund\Entity\FundInstance;
 use Fund\Entity\FundCompany;
 use Fund\Entity\Shareholding;
 use Fund\Entity\Share;
+use Fund\Entity\BankFundListing;
 
 class ConsoleController extends AbstractActionController
 {
@@ -553,6 +554,122 @@ class ConsoleController extends AbstractActionController
         $entityManager->flush();
         $entityManager->clear();  // Detaches all objects from Doctrine!
         echo " Success!\n";
+    }
+
+    public function addbanklistingAction()
+    {
+
+        $service = $this->getConsoleService();
+        $entityManager = $service->getEM();
+        $request = $this->getRequest();
+
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+        $bankName = $request->getParam('bank');
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl("\t");
+
+        $fileIterator = new \LimitIterator($file, 0);
+
+        // Funds added
+        $i = 0;
+        $batchSize = 1;
+
+        // Funds with different names
+        $j = 0;
+
+        // New listing count
+        $k = 0;
+
+        // Found by name
+        $l = 0;
+
+        // Not found
+        $m = 0;
+
+        foreach ($fileIterator as $row) {
+            $bank = $entityManager->getRepository('Fund\Entity\Bank')
+                ->findOneByName($bankName);
+
+            if (is_null($bank)) {
+                return "Bank does not exist in database.\n Please add manually";
+            }
+
+            $fundName = $row[0];
+            $isin = $row[1];
+            //$url = $row[2];
+
+            $fund = null;
+            $fundByName = null;
+            $bankListing = null;
+
+            $fund = $entityManager->getRepository('Fund\Entity\Fund')
+                ->findOneByIsin($isin);
+
+            $fundByName = $entityManager->getRepository('Fund\Entity\Fund')
+                ->findOneByName($fundName);
+
+            // Prio on funds found by name contra isin search imported.
+            if (!is_null($fundByName)) {
+                $fund = $fundByName;
+                $l++;
+            }
+
+            if (is_null($fund) && is_null($fundByName)) {
+                // echo "No fund found by name or isin $isin $fundName\n";
+                $m++;
+                continue;
+            }
+
+            //$bankListing = $entityManager->getRepository('Fund\Entity\BankFundListing')
+            //    ->findOneByFund($fund);
+            $bankListing = $entityManager->getRepository('Fund\Entity\BankFundListing')
+                ->findOneBy(array("fund" => $fund, "bank" => $bank));
+
+            if (is_null($bankListing)) {
+                $bankListing = new BankFundListing();
+                $k++;
+            }
+
+            if (strcmp($fundName, $fund->getName()) !== 0) {
+                echo "Names are not equal $fundName != $fund->name\n";
+                $j++;
+            }
+
+            // echo "Adding fund $fund->name $isin to bank $bankName\n";
+
+
+            $bankListing->setFund($fund);
+            $bankListing->setBank($bank);
+            //$bankListing->setUrl($url);
+
+            $entityManager->persist($bankListing);
+            $i++;
+
+            if (($i++ % $batchSize) == 0) {
+                $entityManager->flush();
+                $entityManager->clear(); // Detaches all objects from Doctrine!
+            }
+        }
+
+        $entityManager->flush();
+        $entityManager->clear();
+
+        echo $k . " new fundlistings added.\n";
+        echo $i-$k . " fundlisting updated.\n";
+        echo "$j funds differed on name.\n";
+        echo "$l funds found by name.\n";
+        echo "$m funds not found.\n";
     }
 
     private function createFundUrl ($fundName)

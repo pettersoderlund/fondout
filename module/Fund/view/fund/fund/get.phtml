@@ -240,7 +240,20 @@ $submit->setValue('Välj kategorier');
         <?php endif; ?>
       </div>
     </div>
+
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Köp fonden</div>
+      <div class="panel-body">
+          <p>Fonden finns tillgänglig att köpa på:</p>
+          <ul>
+              <?php foreach ($banks as $bank): ?>
+              <li><?php echo $this->translate($bank['name']) ?></li>
+            <?php endforeach; ?>
+          </ul>
+
+      </div>
+    </div>
   </div>
 </div>
 </section>
-
