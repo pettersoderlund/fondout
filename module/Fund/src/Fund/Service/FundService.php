@@ -226,8 +226,15 @@ class FundService
             $criteria->andWhere(call_user_func_array(array(Criteria::expr(), "orx"), $sizeCriteria));
         }
 
+        $q = trim($q);
         if (strlen($q) > 0) {
-            $criteria->andWhere(Criteria::expr()->contains('name', $q));
+            $criteria->andWhere(Criteria::expr()->orX(
+                Criteria::expr()->contains('name', $q),
+                Criteria::expr()->contains('name', strtoupper($q)),
+                Criteria::expr()->contains('url', strtolower($q))
+            ));
+
+            //$criteria->andWhere(Criteria::expr()->contains('name', $q));
         }
 
         $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
