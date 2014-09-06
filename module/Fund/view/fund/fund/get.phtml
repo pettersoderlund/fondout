@@ -34,6 +34,7 @@ $submit->setValue('Välj kategorier');
                     echo $this->formMultiCheckbox($sform->get('sustainability'));
                 ?>
             </div>
+            <br />
             <?php echo $this->formSubmit($submit) ?>
             <?php echo $this->form()->closeTag() ?>
         </div>
@@ -47,7 +48,7 @@ $submit->setValue('Välj kategorier');
   <div class="col-md-6">
     <div class="panel panel-default">
       <div class="panel-body">
-        <div class="chart-container" width="100px" height="100px">
+        <div class="chart-container pull-left" style="width:100px;height:100px;margin:20px;">
           <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
           <div class="sustainability-percentage">
             <?php
@@ -60,6 +61,11 @@ $submit->setValue('Välj kategorier');
               ?>
             </div>
           </div>
+
+          <h3><?php echo $this->escapeHtml($sharesCount - $cSharesCount) ?>/<?php echo $this->escapeHtml($sharesCount) ?></h3>
+          <p class="lead">
+            värdepapper i hållbara bolag
+          </p>
 
           <table class="table">
             <tr>
@@ -87,14 +93,6 @@ $submit->setValue('Välj kategorier');
                     );
                 ?>
               </td>
-            </tr>
-            <tr>
-              <th><?php echo $this->translate('Antal kontroversiella värdepapper') ?></th>
-              <td><?php echo $this->escapeHtml($cSharesCount) ?></td>
-            </tr>
-            <tr>
-              <th><?php echo $this->translate('Totalt antal värdepapper') ?></th>
-              <td><?php echo $this->escapeHtml($sharesCount) ?></td>
             </tr>
           </table>
         </div>
@@ -135,11 +133,13 @@ $submit->setValue('Välj kategorier');
     </div>
 
     <div class="col-md-6">
+
       <div class="panel panel-default">
         <div class="panel-heading">
           <?php echo $this->translate('Kritiserade företag i fonden') ?>
         </div>
         <div class="panel-body">
+          <?php if (count($controversialCompanies)): ?>
           <?php
           $form = $this->form;
           $form->setAttribute('method', 'GET');
@@ -175,7 +175,7 @@ $submit->setValue('Välj kategorier');
             <?php endforeach; ?>
           </table>
 
-          <?php if ($controversialCompanies->getPages()->pageCount): ?>
+          <?php if ($controversialCompanies->getPages()->pageCount > 1): ?>
             <div>
               <ul class="pagination pagination-centered">
                 <!-- Previous page link -->
@@ -186,14 +186,14 @@ $submit->setValue('Välj kategorier');
                     $query['page'] = $controversialCompanies->getPages()->previous;
                     echo $this->url($this->route, array('id' => $fund->id), array(
                     'query' => $query)); ?>">
-                    <<
+                    &laquo;
                   </a>
                 </li>
                 <?php
                 else: ?>
                 <li class="disabled">
                   <a href="#">
-                    <<
+                    &laquo;
                   </a>
                 </li>
               <?php endif; ?>
@@ -226,18 +226,21 @@ $submit->setValue('Välj kategorier');
                   echo $this->url($this->route, array('id' => $fund->id), array(
                     'query' => $query));
                     ?>">
-                    >>
+                    &raquo;
                   </a>
                 </li>
               <?php else: ?>
                 <li class="disabled">
                   <a href="#">
-                    >>
+                    &raquo;
                   </a>
                 </li>
               <?php endif; ?>
             </ul>
           </div>
+        <?php endif; ?>
+        <?php else: ?>
+          <p><?php echo $this->translate('Fonden har inte några värdepapper i kritiserade bolag.') ?></p>
         <?php endif; ?>
       </div>
     </div>

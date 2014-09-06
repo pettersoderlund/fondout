@@ -22,7 +22,7 @@ class ContactForm extends Form
             'name' => 'name',
             'type'  => 'Text',
             'options' => array(
-                'label' => 'Ditt namn',
+                'label' => 'Namn',
             ),
             'attributes' => array(
                 'required' => 'required',
@@ -32,7 +32,7 @@ class ContactForm extends Form
             'type' => 'Zend\Form\Element\Email',
             'name' => 'email',
             'options' => array(
-                'label' => 'Din epost',
+                'label' => 'E-post',
             ),
             'attributes' => array(
                 'required' => 'required',
@@ -56,6 +56,7 @@ class ContactForm extends Form
             'attributes' => array(
                 'type'  => 'submit',
                 'value' => 'Skicka',
+                'class' => 'btn btn-primary',
                 'id' => 'submitbutton',
             ),
         ));

@@ -1,26 +1,28 @@
 <?php
 $form->setAttribute('method', 'POST');
 $form->setAttribute('action', $this->url('change-sustainability-categories', array(), array('query' => array('redirect' => 'funds'))));
+$form->setAttribute('class', 'sustainability-categories');
 $form->prepare();
 $submit = $form->get('submit');
 $submit->setValue('Hitta fonder');
+$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-block');
 ?>
-<section class="jumbotron">
+<section class="jumbotron masthead">
     <div class="container">
-        <h1><?php echo $this->translate('Vissa fonder är mer hållbara än andra.') ?></h1>
-        <p><?php echo $this->translate('Jämför svenska aktiefonder.') ?></p>
+        <h1><?php echo $this->translate('Investera hållbart!') ?></h1>
+        <p><?php echo $this->translate('Fondout jämför dina fonder på nätet.') ?></p>
     </div>
 </section>
 
-<section class="featurette">
+<section class="featurette callout">
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <h2><?php echo $this->translate('Vilka företag vill du äga?') ?></h2>
-                <p class="lead"><?php echo $this->translate('Du äger genom dina fonder många små andelar i olika företag. Upptäck vilka fonder som investerar i hållbart genom att sortera bort de verksamheter du inte vill vara en ägare av.') ?></p>
+                <p class="lead"><?php echo $this->translate('Genom dina fonder äger du flera små andelar i olika företag. Upptäck vilka fonder som investerar hållbart genom att sortera bort de verksamheter du inte vill ta del av.') ?></p>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <?php echo $this->form()->openTag($form) ?>
                 <div class="checkbox">
                     <?php
@@ -28,13 +30,13 @@ $submit->setValue('Hitta fonder');
                         echo $this->formMultiCheckbox($form->get('sustainability'));
                     ?>
                 </div>
+                <br />
                 <?php echo $this->formSubmit($submit) ?>
                 <?php echo $this->form()->closeTag() ?>
             </div>
         </div>
     </div>
 </section>
-
 <section class="featurette">
     <div class="container">
         <div class="row">

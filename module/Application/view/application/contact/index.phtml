@@ -7,7 +7,7 @@
 
 <section class="container">
 
-  <p>
+  <p class="lead">
     Vi arbetar kontinuerligt med att ta fram bättre sätt att jämföra och analysera fonder. Det arbete vi gjort med bland andra Världsnaturfonden WWF Sverige och Swedwatch har resulterat i det som idag är Fondout.se. Vi jobbar för att fondout.se ska bli ett heltäckande analysverktyg för fonder som är enkelt att använda.
   </p>
 
@@ -28,8 +28,6 @@
             <?php
             $element->setAttribute('class', 'form-control')
             ->setAttribute('placeholder', $element->getLabel());
-          } else {
-            $element->setAttribute('class', 'btn btn-success');
           }
           echo $this->formElement($element);
           if ($this->formElementErrors($element)) : ?>
