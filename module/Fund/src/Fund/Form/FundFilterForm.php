@@ -58,18 +58,20 @@ class FundFilterForm extends Form
             )
         );
 
-        $this->add(array(
-            'name' => 'size',
-            'type' => 'Zend\Form\Element\MultiCheckbox',
-            'options' => array(
-                'label' => 'Type',
-                'value_options' => array(
-                    'small' => 'Liten',
-                    'medium' => 'Mellan',
-                    'large' => 'Stor',
-                ),
+        $this->add(
+            array(
+                'name' => 'size',
+                'type' => 'multicheckbox',
+                'options' => array(
+                    'label' => 'Type',
+                    'value_options' => array(
+                        'small' => 'Liten',
+                        'medium' => 'Mellan',
+                        'large' => 'Stor',
+                    ),
+                )
             )
-        ));
+        );
 
         $this->add(
             array(
@@ -84,25 +86,20 @@ class FundFilterForm extends Form
                 'type' => 'Submit',
                 'attributes' => array(
                     'value' => 'Filtrera',
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-primary'
                 )
             )
         );
 
         $this->add(
             array(
-
-                 'name' => 'q',
-                 'options' => array(
-                     
-
-                 ),
-
-                 'attributes' => array(
-                     'type'  => 'text',
-                     'class' => 'form-control'
-                 )
-             )
+                'name' => 'q',
+                'options' => array(),
+                'attributes' => array(
+                    'type'  => 'text',
+                    'class' => 'form-control'
+                )
+            )
         );
 
         $this->add(
@@ -111,7 +108,7 @@ class FundFilterForm extends Form
                 'type' => 'Submit',
                 'attributes' => array(
                     'value' => 'Sök',
-                    'class' => 'btn btn-success'
+                    'class' => 'btn btn-primary'
                 )
             )
         );

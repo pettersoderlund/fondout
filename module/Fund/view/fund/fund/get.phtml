@@ -3,7 +3,8 @@
 $this->headScript()
 ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
 ->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
-->appendFile($this->basePath() . '/js/fundprofile.js');
+->appendFile($this->basePath() . '/js/fundprofile.js')
+->appendFile($this->basePath() . '/js/sustainability-chart.js');
 
 
 $sform->setAttribute('method', 'POST');
@@ -47,8 +48,8 @@ $submit->setValue('Välj kategorier');
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="chart-container" width="100px" height="100px">
-          <canvas id="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
-          <div id="sustainability-percentage">
+          <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
+          <div class="sustainability-percentage">
             <?php
             echo $this->numberFormat(
               $fund->getSustainability(),

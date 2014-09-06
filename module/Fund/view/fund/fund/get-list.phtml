@@ -2,7 +2,10 @@
 
 $this->headScript()
      ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
-     ->appendFile($this->basePath() . '/js/funds.js');
+     ->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
+     ->appendFile($this->basePath() . '/js/funds.js')
+     ->appendFile($this->basePath() . '/js/sustainability-chart.js');
+
 
 // set default order if not set and inverse the order based on the previous value
 $order = isset($query['order']) ? $query['order'] : 'ASC';
@@ -58,8 +61,12 @@ $submit->setValue('Välj kategorier');
                     <h3 class="panel-title"><?php echo $this->translate('Sök på fond') ?></h3>
                 </div>
                 <div class="panel-body">
+                    <div class="input-group">
                         <?php echo $this->formRow($form->get('q')); ?>
-                        <?php echo $this->formSubmit($form->get('qSubmit')) ?>
+                        <span class="input-group-btn">
+                            <?php echo $this->formSubmit($form->get('qSubmit')) ?>
+                        </span>
+                    </div><!-- /input-group -->
                 </div>
             </div>
 
@@ -106,10 +113,12 @@ $submit->setValue('Välj kategorier');
             <?php echo $this->formHidden($form->get('category')) ?>
             <?php echo $this->formSubmit($form->get('submit')) ?>
             <?php echo $this->form()->closeTag() ?>
+            <br />
         </div>
         <div class="col-md-8 col-md-pull-4">
+
+            <?php if (count($funds)): ?>
             <table class="table table-bordered table-hover">
-                <thead>
                     <tr>
                         <th>
                             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
@@ -127,49 +136,64 @@ $submit->setValue('Välj kategorier');
                             </a>
                         </th>
                         <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
-                                <?php echo $this->translate('Hållbarhetspoäng') ?>
-                            </a>
-                        </th>
-                        <th>
                             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'size', 'order' => $order)  + $query))); ?>">
                                 <?php echo $this->translate('Storlek') ?>
                             </a>
                         </th>
+                        <th>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
+                                <?php echo $this->translate('Hållbarhetspoäng') ?>
+                            </a>
+                        </th>
                     </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($funds as $fund): ?>
-                        <tr>
-                            <td>
-                                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
-                                    <?php echo $this->translate($fund->name) ?>
-                                </a>
-                            </td>
-                            <td>
-                                <?php echo $this->translate($fund->company->name) ?>
-                            </td>
-                            <td>
-                                <?php echo $this->translate($fund->fondoutcategory->title) ?>
-                            </td>
-                            <td>
-                                <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
-                            </td>
-                            <td>
-                                <?php
-                                    if ($fund->totalMarketValue <= 600000000) {
-                                        echo $this->translate('Liten');
-                                    } elseif ($fund->totalMarketValue >= 2500000000) {
-                                        echo $this->translate('Stor');
-                                    } else {
-                                        echo $this->translate('Mellan');
-                                    }
-                                ?>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
             </table>
+
+            <ul class="results">
+            <?php foreach ($funds as $fund): ?>
+              <li>
+                <div class="chart-container pull-right" width="100px" height="100px">
+                  <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
+                  <div class="sustainability-percentage">
+                    <?php
+                    echo $this->numberFormat(
+                      $fund->getSustainability(),
+                      NumberFormatter::PERCENT,
+                      NumberFormatter::TYPE_DEFAULT,
+                      "en_US"
+                      );
+                      ?>
+                  </div>
+                </div>
+                <h3>
+                  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+                    <?php echo $this->translate($fund->name) ?>
+                  </a>
+                </h3>
+                <p><?php echo $this->translate($fund->company->name) ?></p>
+                <p>
+                <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+                <span class="label label-primary"><?php
+                    if ($fund->totalMarketValue <= 600000000) {
+                        echo $this->translate('Liten');
+                    } elseif ($fund->totalMarketValue >= 2500000000) {
+                        echo $this->translate('Stor');
+                    } else {
+                        echo $this->translate('Mellan');
+                    }
+                ?></span>
+                </p>
+              </li>
+            <?php endforeach; ?>
+            </ul>
+            <?php else: ?>
+            <h3><?php echo $this->translate('Vi kunde inte hitta några resultat med dina söktermer.') ?></h3>
+            <br>
+            <h4><?php echo $this->translate('Förslag') ?>:</h4>
+            <ul>
+              <li><?php echo $this->translate('Dubbelkolla din stavning') ?></li>
+              <li><?php echo $this->translate('Använd mer generalla söktermer') ?></li>
+            </ul>
+            <?php endif; ?>
 
             <?php if ($funds->getPages()->pageCount): ?>
                 <ul class="pagination pagination-centered">

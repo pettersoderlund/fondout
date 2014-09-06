@@ -242,7 +242,7 @@ class FundService
         $paginator    = new Paginator(new CollectionAdapter($orderedfunds));
 
         $paginator->setCurrentPageNumber((int)$currentPage);
-        $paginator->setItemCountPerPage(20);
+        $paginator->setItemCountPerPage(10);
 
         return $paginator;
     }
