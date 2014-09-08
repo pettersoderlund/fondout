@@ -64,6 +64,13 @@ class ShareCompany extends Entity
      **/
     protected $carbonTracker = null;
 
+    /**
+     * @var \Fund\Entity\Emissions
+     *
+     * @ORM\OneToOne(targetEntity="\Fund\Entity\Emissions", mappedBy="shareCompany")
+     **/
+    protected $emissions = null;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
