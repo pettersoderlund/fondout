@@ -176,4 +176,49 @@ class ShareCompany extends Entity
     {
         return $this->accusations;
     }
+
+    /**
+     * Get MarketValueSEK
+     *
+     * @return integer
+     */
+    public function getMarketValueSEK()
+    {
+        return $this->marketValueSEK;
+    }
+
+    /**
+     * Set marketValueSEK
+     *
+     * @param int $marketValueSek
+     * @return ShareCompany
+     */
+    public function setMarketValueSEK($marketValueSEK)
+    {
+        $this->marketValueSEK = $marketValueSEK;
+        return $this;
+    }
+
+    /**
+     * Add emissions
+     *
+     * @param \Fund\Entity\Emissions $emissions
+     * @return ShareCompany
+     */
+    public function setEmissions(\Fund\Entity\Emissions $emissions)
+    {
+        $this->emissions = $emissions;
+
+        return $this;
+    }
+
+    /**
+     * Get emissions
+     *
+     * @return \Fund\Entity\Emissions
+     */
+    public function getEmissions()
+    {
+        return $this->emissions;
+    }
 }

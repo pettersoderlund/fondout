@@ -17,6 +17,7 @@ use Fund\Entity\FundCompany;
 use Fund\Entity\Shareholding;
 use Fund\Entity\Share;
 use Fund\Entity\BankFundListing;
+use Fund\Entity\Emissions;
 
 class ConsoleController extends AbstractActionController
 {
@@ -654,7 +655,6 @@ class ConsoleController extends AbstractActionController
             //$bankListing->setUrl($url);
 
             $entityManager->persist($bankListing);
-            $i++;
 
             if (($i++ % $batchSize) == 0) {
                 $entityManager->flush();
@@ -670,6 +670,174 @@ class ConsoleController extends AbstractActionController
         echo "$j funds differed on name.\n";
         echo "$l funds found by name.\n";
         echo "$m funds not found.\n";
+    }
+
+
+    public function addmarketcapAction()
+    {
+
+        $service = $this->getConsoleService();
+        $entityManager = $service->getEM();
+        $request = $this->getRequest();
+
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl("\t");
+
+        // Table has header rows
+        $fileIterator = new \LimitIterator($file, 1);
+
+        $i = 0;
+        $batchSize = 1;
+
+        foreach ($fileIterator as $row) {
+
+            $companyName = $row[0];
+            $marketCap = $row[1];
+
+            $company = $entityManager->getRepository('Fund\Entity\ShareCompany')
+                ->findOneByName($companyName);
+
+            if (is_null($company)) {
+                echo "$companyName does not exist in database. " .
+                     "Please add sharemap before adding market value\n";
+                continue;
+            }
+
+            $company->setMarketValueSEK($marketCap);
+
+
+            $entityManager->persist($company);
+
+            if (($i++ % $batchSize) == 0) {
+                $entityManager->flush();
+                $entityManager->clear(); // Detaches all objects from Doctrine!
+            }
+        }
+
+        $entityManager->flush();
+        $entityManager->clear();
+
+        echo "$i mkt cap values added.";
+    }
+
+    public function addemissionsAction()
+    {
+
+        $service = $this->getConsoleService();
+        $entityManager = $service->getEM();
+        $request = $this->getRequest();
+
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl("\t");
+
+        // Table has header rows
+        $fileIterator = new \LimitIterator($file, 1);
+
+        $i = 0;
+        $batchSize = 1;
+
+        foreach ($fileIterator as $row) {
+
+            $companyName = $row[0];
+            $scope1      = $row[1];
+            $scope2      = $row[2];
+            $scope12     = $row[3];
+            $scope3      = $row[4];
+            $year        = $row[5];
+
+            $company = $entityManager->getRepository('Fund\Entity\ShareCompany')
+                ->findOneByName($companyName);
+
+            if (is_null($company)) {
+                echo "$companyName does not exist in database. " .
+                     "Please add sharemap before adding emissions\n";
+                continue;
+            }
+
+            $emissions = $company->getEmissions();
+
+            if (is_null($emissions)) {
+                $emissions = new Emissions();
+            }
+
+            if (!$scope1 && !$scope2 && !$scope12  && !$scope3) {
+                continue;
+            }
+
+            if ($scope1) {
+                $emissions->setScope1($scope1);
+            }
+            if ($scope2) {
+                $emissions->setScope2($scope2);
+            }
+
+            if (is_null($scope12) || $scope12 < 1) {
+                if ($scope1 || $scope2) {
+                    $emissions->setScope12($scope1+$scope2);
+                }
+
+            } else {
+                $emissions->setScope12($scope12);
+            }
+            if ($scope3) {
+                $emissions->setScope3($scope3);
+            }
+
+
+            if (!$year) {
+                $year = 2013;
+            }
+
+            // Check date
+            $date = "1/1/" . $year;
+            $timezone = "Europe/Stockholm";
+            $datetimev = \DateTime::createFromFormat(
+                'm/d/Y',
+                $date,
+                new \DateTimeZone($timezone)
+            );
+            // Set hours minutes seconds to 0/midnight
+            $datetimev->setTime(0, 0, 0);
+            $emissions->setDate($datetimev);
+
+
+            $emissions->setShareCompany($company);
+            $entityManager->persist($emissions);
+
+            if (($i++ % $batchSize) == 0) {
+                $entityManager->flush();
+                $entityManager->clear(); // Detaches all objects from Doctrine!
+            }
+        }
+
+        $entityManager->flush();
+        $entityManager->clear();
+
+        echo "$i emissions added.";
     }
 
     private function createFundUrl ($fundName)
