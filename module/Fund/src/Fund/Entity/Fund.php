@@ -112,6 +112,10 @@ class Fund extends Entity
 
     protected $controversialValue;
 
+    protected $co2;
+    protected $co2Coverage;
+
+
     public function __construct($options = null)
     {
         parent::__construct($options);
@@ -404,6 +408,28 @@ class Fund extends Entity
     {
         $this->fondoutcategory = $category;
 
+        return $this;
+    }
+
+    public function getCo2()
+    {
+        return $this->co2;
+    }
+
+    public function setCo2($co2)
+    {
+        $this->co2 = $co2;
+        return $this;
+    }
+
+    public function getCo2Coverage()
+    {
+        return $this->co2Coverage;
+    }
+
+    public function setCo2Coverage($co2Coverage)
+    {
+        $this->co2Coverage = $co2Coverage;
         return $this;
     }
 }

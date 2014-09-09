@@ -71,9 +71,6 @@ $submit->setValue('Välj kategorier');
                 </div>
             </div>
 
-
-
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><?php echo $this->translate('Fondkategori') ?></h3>
@@ -183,6 +180,13 @@ $submit->setValue('Välj kategorier');
                     }
                 ?></span>
                 </p>
+                <b><?php echo $this->numberFormat($fund->co2); ?></b>  CO2(ton)/Mkr
+                <br><b><?php echo $this->numberFormat(
+                  $fund->co2Coverage,
+                  NumberFormatter::PERCENT,
+                  NumberFormatter::TYPE_DEFAULT,
+                  "en_US"
+                  ); ?></b> Täckning CO2utsläpp
               </li>
             <?php endforeach; ?>
             </ul>

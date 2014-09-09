@@ -94,6 +94,27 @@ $submit->setValue('Välj kategorier');
                 ?>
               </td>
             </tr>
+            <tr>
+              <th><?php echo $this->translate('CO2(ton)/Mkr') ?></th>
+              <td>
+                <?php
+                echo $this->numberFormat($fund->co2);
+                ?>
+              </td>
+            </tr>
+            <tr>
+              <th><?php echo $this->translate('Täckning CO2') ?></th>
+              <td>
+                <?php
+                echo $this->numberFormat(
+                  $fund->co2Coverage,
+                  NumberFormatter::PERCENT,
+                  NumberFormatter::TYPE_DEFAULT,
+                  "en_US"
+                  );
+                ?>
+              </td>
+            </tr>
           </table>
         </div>
       </div>

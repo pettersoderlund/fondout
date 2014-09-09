@@ -225,6 +225,32 @@ class FundRepository extends EntityRepository
                 $fundMap[$cv['id']]->calculateSustainability($cv['score']);
             }
         }
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        // query: add scope12 for all holdings wieghted to fund size and share proportion
+        // Also add the coverage for the fund of co2 emissions that we know of
+        $queryBuilder->select(
+            'f.id, ' .
+            '(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/fi.totalMarketValue)*1000000 as scope12weighted, ' .
+            'sum(sh.marketValue)/fi.totalMarketValue as coverage'
+        )
+            ->from('Fund\Entity\Fund', 'f')
+            ->join('f.fundInstances', 'fi')
+            ->join('fi.shareholdings', 'sh')
+            ->join('sh.share', 's')
+            ->join('s.shareCompany', 'sc')
+            ->join('sc.emissions', 'e')
+            ->where($queryBuilder->expr()->in('f.id', array_keys($fundMap)))
+            ->groupBy('f.id');
+
+        // map the co2 value and co2coverage to the related fund
+        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
+            if (isset($fundMap[$cv['id']])) {
+                $fundMap[$cv['id']]->setCo2($cv['scope12weighted']);
+                $fundMap[$cv['id']]->setCo2Coverage($cv['coverage']);
+            }
+        }
+
         //echo \Doctrine\Common\Util\Debug::dump($funds);
 
         return $funds;
