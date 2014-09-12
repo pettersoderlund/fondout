@@ -71,9 +71,6 @@ $submit->setValue('Välj kategorier');
                 </div>
             </div>
 
-
-
-
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><?php echo $this->translate('Fondkategori') ?></h3>
@@ -142,6 +139,16 @@ $submit->setValue('Välj kategorier');
                             </a>
                         </th>
                         <th>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2Coverage', 'order' => $order)  + $query))); ?>">
+                                <?php echo $this->translate('CO2-täckning') ?>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => $order)  + $query))); ?>">
+                                <?php echo $this->translate('CO2/kr') ?>
+                            </a>
+                        </th>
+                        <th>
                             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
                                 <?php echo $this->translate('Hållbarhetspoäng') ?>
                             </a>
@@ -183,6 +190,13 @@ $submit->setValue('Välj kategorier');
                     }
                 ?></span>
                 </p>
+                <b><?php echo $this->numberFormat($fund->co2); ?></b>  CO2(ton)/Mkr
+                <br><b><?php echo $this->numberFormat(
+                  $fund->co2Coverage,
+                  NumberFormatter::PERCENT,
+                  NumberFormatter::TYPE_DEFAULT,
+                  "en_US"
+                  ); ?></b> Täckning CO2utsläpp
               </li>
             <?php endforeach; ?>
             </ul>
@@ -246,4 +260,3 @@ $submit->setValue('Välj kategorier');
             <?php endif; ?>
         </div>
 </section>
-

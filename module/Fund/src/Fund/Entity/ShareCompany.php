@@ -64,6 +64,13 @@ class ShareCompany extends Entity
      **/
     protected $carbonTracker = null;
 
+    /**
+     * @var \Fund\Entity\Emissions
+     *
+     * @ORM\OneToOne(targetEntity="\Fund\Entity\Emissions", mappedBy="shareCompany")
+     **/
+    protected $emissions = null;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
@@ -168,5 +175,50 @@ class ShareCompany extends Entity
     public function getAccusations()
     {
         return $this->accusations;
+    }
+
+    /**
+     * Get MarketValueSEK
+     *
+     * @return integer
+     */
+    public function getMarketValueSEK()
+    {
+        return $this->marketValueSEK;
+    }
+
+    /**
+     * Set marketValueSEK
+     *
+     * @param int $marketValueSek
+     * @return ShareCompany
+     */
+    public function setMarketValueSEK($marketValueSEK)
+    {
+        $this->marketValueSEK = $marketValueSEK;
+        return $this;
+    }
+
+    /**
+     * Add emissions
+     *
+     * @param \Fund\Entity\Emissions $emissions
+     * @return ShareCompany
+     */
+    public function setEmissions(\Fund\Entity\Emissions $emissions)
+    {
+        $this->emissions = $emissions;
+
+        return $this;
+    }
+
+    /**
+     * Get emissions
+     *
+     * @return \Fund\Entity\Emissions
+     */
+    public function getEmissions()
+    {
+        return $this->emissions;
     }
 }

@@ -120,6 +120,26 @@ return array(
                         )
                     )
                 ),
+                'add-share-company-market-cap' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add sc-marketcap <file>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addmarketcap'
+                        )
+                    )
+                ),
+                'add-emissions' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add emissions <file>',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addemissions'
+                        )
+                    )
+                ),
             ),
         ),
     ),

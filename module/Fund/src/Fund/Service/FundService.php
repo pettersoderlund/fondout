@@ -191,6 +191,12 @@ class FundService
             case 'size':
                 $sort = 'totalMarketValue';
                 break;
+            case 'co2':
+                $sort = 'co2';
+                break;
+            case 'co2Coverage':
+                $sort = 'co2coverage';
+                break;
         }
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
