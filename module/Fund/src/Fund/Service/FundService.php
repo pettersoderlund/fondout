@@ -172,8 +172,8 @@ class FundService
      */
     public function findFunds($params, $sustainability = array())
     {
-        $sort        = $params->fromQuery('sort', 'name');
-        $order       = $params->fromQuery('order', 'ASC');
+        $sort        = $params->fromQuery('sort', 'sustainability');
+        $order       = $params->fromQuery('order', 'DESC');
         $currentPage = $params->fromQuery('page', 1);
         $company     = $params->fromQuery('company', array());
         $size        = $params->fromQuery('size', array());
@@ -181,26 +181,32 @@ class FundService
 
         $fondoutcategory = $params->fromQuery('fondoutcategory', array());
 
+        $sortOrder = [];
         switch ($sort) {
+            case 'name':
+                $sortOrder['name'] = $order;
+                break;
             case 'company':
-                $sort = 'companyName';
+                $sortOrder['companyName'] = $order;
                 break;
             case 'fondoutcategory':
-                $sort = 'fondoutCategoryTitle';
+                $sortOrder['fondoutCategoryTitle'] = $order;
                 break;
             case 'size':
-                $sort = 'totalMarketValue';
+                $sortOrder['totalMarketValue'] = $order;
+                break;
+            case 'sustainability':
+                $sortOrder['sustainability'] = $order;
                 break;
             case 'co2':
                 $sort = 'co2';
-                break;
-            case 'co2Coverage':
-                $sort = 'co2coverage';
+                $sortOrder['co2Coverage'] = 'DESC';
+                $sortOrder[$sort] = $order;
                 break;
         }
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $criteria = Criteria::create()->orderBy(array($sort => $order));
+        $criteria = Criteria::create()->orderBy($sortOrder);
 
         if (count($company) > 0) {
             $criteria->andWhere(Criteria::expr()->in('companyId', $company));

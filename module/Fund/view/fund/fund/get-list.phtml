@@ -8,8 +8,9 @@ $this->headScript()
 
 
 // set default order if not set and inverse the order based on the previous value
-$order = isset($query['order']) ? $query['order'] : 'ASC';
-$order = ($order == 'ASC') ? 'DESC' : 'ASC';
+// $order = isset($query['order']) ? $query['order'] : 'ASC';
+// $order = ($order == 'ASC') ? 'DESC' : 'ASC';
+$order = 'ASC';
 
 $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
@@ -60,8 +61,10 @@ $submit->setValue('Välj kategorier');
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title"><?php echo $this->translate('Sök på fond') ?></h3>
+
                 </div>
                 <div class="panel-body">
+                    <p><?php echo $this->translate('Sök på hela eller delar av fondnamnet.') ?></p>
                     <div class="input-group">
                         <?php echo $this->formRow($form->get('q')); ?>
                         <span class="input-group-btn">
@@ -76,6 +79,7 @@ $submit->setValue('Välj kategorier');
                     <h3 class="panel-title"><?php echo $this->translate('Fondkategori') ?></h3>
                 </div>
                 <div class="panel-body">
+                    <p><?php echo $this->translate('Välj var i världen fonden äger sin majoritet av företag.') ?></p>
                     <div class="checkbox">
                         <?php
                             $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
@@ -90,6 +94,7 @@ $submit->setValue('Välj kategorier');
                     <h3 class="panel-title"><?php echo $this->translate('Fondbolag') ?></h3>
                 </div>
                 <div class="panel-body">
+                    <p><?php echo $this->translate(' Välj vilken bank eller fondbolags fonder du vill se.') ?></p>
                     <?php echo $this->formSelect($form->get('company')) ?>
                 </div>
             </div>
@@ -99,6 +104,7 @@ $submit->setValue('Välj kategorier');
                     <h3 class="panel-title"><?php echo $this->translate('Fondstorlek') ?></h3>
                 </div>
                 <div class="panel-body">
+                    <p><?php echo $this->translate('Välj vilken storlek av fonder du vill se. Fonder som många personer äger är generellt större och nischade fonder mindre. ') ?></p>
                     <div class="checkbox">
                         <?php
                             $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
@@ -123,7 +129,7 @@ $submit->setValue('Välj kategorier');
                                 <?php echo $this->translate('Fond') ?>
                             </a>
                         </th>
-                        <th>
+                        <!--<th>
                             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
                                 <?php echo $this->translate('Fondbolag') ?>
                             </a>
@@ -142,14 +148,14 @@ $submit->setValue('Välj kategorier');
                             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2Coverage', 'order' => $order)  + $query))); ?>">
                                 <?php echo $this->translate('CO2-täckning') ?>
                             </a>
-                        </th>
+                        </th> -->
                         <th>
                             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => $order)  + $query))); ?>">
                                 <?php echo $this->translate('CO2/kr') ?>
                             </a>
                         </th>
                         <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => $order)  + $query))); ?>">
+                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">
                                 <?php echo $this->translate('Hållbarhetspoäng') ?>
                             </a>
                         </th>
@@ -171,12 +177,22 @@ $submit->setValue('Välj kategorier');
                       );
                       ?>
                   </div>
+
                 </div>
+                <div class="pull-right"><h1>
+                <?php
+                    if ($fund->co2Coverage>0.5):
+                        echo number_format($fund->co2, 2, ',', ' ');
+
+                    ?></h1> <br>gram CO2/kr
+                <?php endif;?>
+            </div>
                 <h3>
                   <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
                     <?php echo $this->translate($fund->name) ?>
                   </a>
                 </h3>
+
                 <p><?php echo $this->translate($fund->company->name) ?></p>
                 <p>
                 <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
@@ -190,13 +206,8 @@ $submit->setValue('Välj kategorier');
                     }
                 ?></span>
                 </p>
-                <b><?php echo $this->numberFormat($fund->co2); ?></b>  CO2(ton)/Mkr
-                <br><b><?php echo $this->numberFormat(
-                  $fund->co2Coverage,
-                  NumberFormatter::PERCENT,
-                  NumberFormatter::TYPE_DEFAULT,
-                  "en_US"
-                  ); ?></b> Täckning CO2utsläpp
+
+
               </li>
             <?php endforeach; ?>
             </ul>
