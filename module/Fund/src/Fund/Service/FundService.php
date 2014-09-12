@@ -262,7 +262,7 @@ class FundService
     public function findSameCategoryFunds($fund, $sustainability = array())
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $criteria = Criteria::create()->orderBy(array('sustainability' => 'DESC'));
+        $criteria = Criteria::create()->orderBy(array('sustainability' => 'DESC', 'co2Coverage' => 'DESC',  'co2' => 'ASC'));
         $criteria->andWhere(Criteria::expr()->eq('fondoutcategoryId', $fund->fondoutcategory->id));
         $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
         $criteria->setMaxResults(10);

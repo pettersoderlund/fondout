@@ -62,223 +62,236 @@ $submit->setValue('Välj kategorier');
             </div>
           </div>
 
-          <h3><?php echo $this->escapeHtml($sharesCount - $cSharesCount) ?>/<?php echo $this->escapeHtml($sharesCount) ?></h3>
-          <p class="lead">
-            värdepapper i hållbara bolag
-          </p>
+        <p> Hållbarheten i fonden är uträknad utifrån dina valda hållbarhetskategorier.</p>
 
           <table class="table">
             <tr>
-              <th><?php echo $this->translate('Kategori') ?></th>
-              <td><?php echo $this->escapeHtml($fund->fondoutCategory) ?></td>
-            </tr>
-            <tr>
-              <th><?php echo $this->translate('Totalt marknadsvärde') ?></th>
-              <td>
-                <?php echo $this->currencyFormat(
-                    $fund->getTotalMarketValue(),
-                    "SEK",
-                    "sv_SE"
-                    );
-                ?>
-              </td>
-            </tr>
-            <tr>
-              <th><?php echo $this->translate('Kontroversiellt marknadsvärde') ?></th>
-              <td>
-                <?php echo $this->currencyFormat(
-                    $fund->getControversialValue(),
-                    "SEK",
-                    "sv_SE"
-                    );
-                ?>
-              </td>
-            </tr>
-            <tr>
-              <th><?php echo $this->translate('CO2(ton)/Mkr') ?></th>
+              <th><?php echo $this->translate('Hållbara pengar i fonden') ?></th>
               <td>
                 <?php
-                echo $this->numberFormat($fund->co2);
+                 if ($fund->getTotalMarketValue() < 10000000000) {
+                     echo number_format(($fund->getTotalMarketValue()-$fund->getControversialValue())/1000000, 0, ',', ' ') . " miljoner kr";
+                 } else {
+                     echo number_format(($fund->getTotalMarketValue()-$fund->getControversialValue())/1000000000, 2, ',', ' ') . " miljarder kr";
+                 }
                 ?>
               </td>
             </tr>
             <tr>
-              <th><?php echo $this->translate('Täckning CO2') ?></th>
+              <th><?php echo $this->translate('Pengar i fonden') ?></th>
               <td>
                 <?php
-                echo $this->numberFormat(
-                  $fund->co2Coverage,
-                  NumberFormatter::PERCENT,
-                  NumberFormatter::TYPE_DEFAULT,
-                  "en_US"
-                  );
+                 if ($fund->getTotalMarketValue() < 10000000000) {
+                     echo number_format($fund->getTotalMarketValue()/1000000, 0, ',', ' ') . " miljoner kr";
+                 } else {
+                     echo number_format($fund->getTotalMarketValue()/1000000000, 2, ',', ' ') . " miljarder kr";
+                 }
                 ?>
               </td>
             </tr>
+
           </table>
         </div>
       </div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <?php echo $this->translate('Kritiserade företag i fonden') ?>
+  </div>
+  <div class="panel-body">
+    <?php if (count($controversialCompanies)): ?>
+    <?php
+    $form = $this->form;
+    $form->setAttribute('method', 'GET');
 
-      <div class="panel panel-default">
-        <div class="panel-heading">Liknande fonder</div>
-        <div class="panel-body">
-
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th>
-                  <?php echo $this->translate('Fond') ?>
-                </th>
-                <th>
-                  <?php echo $this->translate('Hållbarhetspoäng') ?>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($funds as $fund): ?>
-                <tr>
-                  <td>
-                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
-                      <?php echo $this->translate($fund->name) ?>
-                    </a>
-                  </td>
-                  <td>
-                    <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
-                  </td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
-        </div>
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    ?>
+    <div class="row">
+      <div class="col-sm-6">
+        <?php echo $this->formSelect($form->get('category_visible')); ?>
       </div>
+      <div class="col-sm-6">
+        <?php echo $this->formSubmit($form->get('submit')); ?>
+      </div>
+    </div>
+    <?php echo $this->form()->closeTag() ?>
+
+    <table class="table table-striped">
+      <?php foreach ($controversialCompanies as $company): ?>
+        <tr>
+          <td><?php echo $this->escapeHtml($company->name) ?></td>
+          <td>
+            <div class="accusation-categories">
+              <?php foreach ($company->accusations as $accusation): ?>
+                <span class="label label-primary" data-toggle="popover" data-placement="top" data-content="<?php echo $this->escapeHtml($accusation) ?><br/><small>Källa: <?php echo $this->escapeHtml($accusation->source->name) ?></small>">
+                  <?php echo $this->escapeHtml($accusation->category) ?>
+                </span>
+                &nbsp;
+              <?php endforeach ?>
+            </div>
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
+
+    <?php if ($controversialCompanies->getPages()->pageCount > 1): ?>
+      <div>
+        <ul class="pagination pagination-centered">
+          <!-- Previous page link -->
+          <?php if (isset($controversialCompanies->getPages()->previous)): ?>
+            <li>
+              <a href="
+              <?php
+              $query['page'] = $controversialCompanies->getPages()->previous;
+              echo $this->url($this->route, array('id' => $fund->id), array(
+              'query' => $query)); ?>">
+              &laquo;
+            </a>
+          </li>
+          <?php
+          else: ?>
+          <li class="disabled">
+            <a href="#">
+              &laquo;
+            </a>
+          </li>
+        <?php endif; ?>
+        <!-- Numbered page links -->
+        <?php foreach ($controversialCompanies->getPages()->pagesInRange as $page): ?>
+          <?php if ($page != $controversialCompanies->getPages()->current): ?>
+            <li>
+              <a href="
+              <?php
+              $query['page'] = $page;
+              echo $this->url($this->route, array('id' => $fund->id), array(
+                'query' => $query));
+                ?>">
+                <?php echo $page; ?>
+              </a>
+            </li>
+          <?php else: ?>
+            <li class="active">
+              <a href="#"><?php echo $page; ?></a>
+            </li>
+          <?php endif; ?>
+        <?php endforeach; ?>
+
+        <!-- Next page link -->
+        <?php if (isset($controversialCompanies->getPages()->next)): ?>
+          <li>
+            <a href="
+            <?php
+            $query['page'] = $controversialCompanies->getPages()->next;
+            echo $this->url($this->route, array('id' => $fund->id), array(
+              'query' => $query));
+              ?>">
+              &raquo;
+            </a>
+          </li>
+        <?php else: ?>
+          <li class="disabled">
+            <a href="#">
+              &raquo;
+            </a>
+          </li>
+        <?php endif; ?>
+      </ul>
+    </div>
+  <?php endif; ?>
+  <?php else: ?>
+    <p><?php echo $this->translate('Fonden har inte några värdepapper i kritiserade bolag.') ?></p>
+  <?php endif; ?>
+</div>
+</div>
+
+
     </div>
 
     <div class="col-md-6">
 
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <?php echo $this->translate('Kritiserade företag i fonden') ?>
-        </div>
-        <div class="panel-body">
-          <?php if (count($controversialCompanies)): ?>
-          <?php
-          $form = $this->form;
-          $form->setAttribute('method', 'GET');
 
-          $form->prepare();
-          echo $this->form()->openTag($form);
-          ?>
-          <div class="row">
-            <div class="col-sm-6">
-              <?php echo $this->formSelect($form->get('category_visible')); ?>
-            </div>
-            <div class="col-sm-6">
-              <?php echo $this->formSubmit($form->get('submit')); ?>
-            </div>
-          </div>
-          <?php echo $this->form()->closeTag() ?>
+        <div class="panel panel-default">
+          <div class="panel-heading">CO2-utsläpp</div>
+          <div class="panel-body">
 
-          <table class="table table-striped">
-            <?php foreach ($controversialCompanies as $company): ?>
-              <tr>
-                <td><?php echo $this->escapeHtml($company->name) ?></td>
-                <td>
-                  <div class="accusation-categories">
-                    <?php foreach ($company->accusations as $accusation): ?>
-                      <span class="label label-primary" data-toggle="popover" data-placement="top" data-content="<?php echo $this->escapeHtml($accusation) ?><br/><small>Källa: <?php echo $this->escapeHtml($accusation->source->name) ?></small>">
-                        <?php echo $this->escapeHtml($accusation->category) ?>
-                      </span>
-                      &nbsp;
-                    <?php endforeach ?>
-                  </div>
-                </td>
-              </tr>
-            <?php endforeach; ?>
-          </table>
+              <?php if ($fund->co2Coverage > 0.5):?>
+                  <p>Företagen i fondens gemensamma CO2-utsläpp.</p>
+                  <p><b>
+                      <?php
+                      echo number_format($fund->co2 , '2', ',' , ' ');
+                      ?> </b>
+                  <?php echo $this->translate(' CO2(gram)/kr') ?></p>
 
-          <?php if ($controversialCompanies->getPages()->pageCount > 1): ?>
-            <div>
-              <ul class="pagination pagination-centered">
-                <!-- Previous page link -->
-                <?php if (isset($controversialCompanies->getPages()->previous)): ?>
-                  <li>
-                    <a href="
-                    <?php
-                    $query['page'] = $controversialCompanies->getPages()->previous;
-                    echo $this->url($this->route, array('id' => $fund->id), array(
-                    'query' => $query)); ?>">
-                    &laquo;
-                  </a>
-                </li>
-                <?php
-                else: ?>
-                <li class="disabled">
-                  <a href="#">
-                    &laquo;
-                  </a>
-                </li>
-              <?php endif; ?>
-              <!-- Numbered page links -->
-              <?php foreach ($controversialCompanies->getPages()->pagesInRange as $page): ?>
-                <?php if ($page != $controversialCompanies->getPages()->current): ?>
-                  <li>
-                    <a href="
-                    <?php
-                    $query['page'] = $page;
-                    echo $this->url($this->route, array('id' => $fund->id), array(
-                      'query' => $query));
-                      ?>">
-                      <?php echo $page; ?>
-                    </a>
-                  </li>
-                <?php else: ?>
-                  <li class="active">
-                    <a href="#"><?php echo $page; ?></a>
-                  </li>
-                <?php endif; ?>
-              <?php endforeach; ?>
-
-              <!-- Next page link -->
-              <?php if (isset($controversialCompanies->getPages()->next)): ?>
-                <li>
-                  <a href="
                   <?php
-                  $query['page'] = $controversialCompanies->getPages()->next;
-                  echo $this->url($this->route, array('id' => $fund->id), array(
-                    'query' => $query));
-                    ?>">
-                    &raquo;
-                  </a>
-                </li>
+                  echo $this->numberFormat(
+                    $fund->co2Coverage,
+                    NumberFormatter::PERCENT,
+                    NumberFormatter::TYPE_DEFAULT,
+                    "en_US"
+                    );
+                  ?>
+                  <?php echo $this->translate(' - andel av fonden som vi har CO2-utsläppsdata på.') ?>
               <?php else: ?>
-                <li class="disabled">
-                  <a href="#">
-                    &raquo;
-                  </a>
-                </li>
+              <?php echo $this->translate('Ej tillgängligt. <br>Vi saknar tillräckligt med underliggande data för att beräkna CO2-utsläpp på denna fond.') ?>
+
               <?php endif; ?>
-            </ul>
           </div>
-        <?php endif; ?>
-        <?php else: ?>
-          <p><?php echo $this->translate('Fonden har inte några värdepapper i kritiserade bolag.') ?></p>
-        <?php endif; ?>
-      </div>
-    </div>
+        </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">Liknande fonder</div>
+          <div class="panel-body">
+
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>
+                    <?php echo $this->translate('Fond') ?>
+                  </th>
+                  <th>
+                    <?php echo $this->translate('CO2-utsläpp') ?>
+                  </th>
+                  <th>
+                    <?php echo $this->translate('Hållbarhet') ?>
+                  </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <?php foreach ($funds as $fund): ?>
+                  <tr>
+                    <td>
+                      <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+                        <?php echo $this->translate($fund->name) ?>
+                      </a>
+                    </td>
+                    <td>
+
+                      <?php if($fund->getCo2() > 0.5) { echo number_format($fund->getCo2(), 2) . " <br>gram co2/kr"; } ?>
+                    </td>
+                    <td>
+                      <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
+                    </td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
 
-    <div class="panel panel-default">
-      <div class="panel-heading">Köp fonden</div>
-      <div class="panel-body">
-          <p>Fonden finns tillgänglig att köpa på:</p>
-          <ul>
-              <?php foreach ($banks as $bank): ?>
-              <li><?php echo $this->translate($bank['name']) ?></li>
-            <?php endforeach; ?>
-          </ul>
+        <div class="panel panel-default">
+          <div class="panel-heading">Köp fonden</div>
+          <div class="panel-body">
+              <p>Fonden finns tillgänglig att köpa på:</p>
+              <ul>
+                  <?php foreach ($banks as $bank): ?>
+                  <li><?php echo $this->translate($bank['name']) ?></li>
+                <?php endforeach; ?>
+              </ul>
 
-      </div>
-    </div>
+          </div>
+        </div>
   </div>
 </div>
 </section>
