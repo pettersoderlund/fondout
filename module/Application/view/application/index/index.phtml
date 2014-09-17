@@ -25,6 +25,7 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-block');
             <div class="col-md-4">
                 <?php echo $this->form()->openTag($form) ?>
                 <div class="checkbox">
+                    <h3>Undvik att investera i:</h3>
                     <?php
                         $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
                         echo $this->formMultiCheckbox($form->get('sustainability'));
