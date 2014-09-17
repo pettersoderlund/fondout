@@ -28,6 +28,7 @@ input[type="submit"] {
 
   h1 {
     font-weight: 600;
+    // font-size:60px;
   }
 
   p {
@@ -36,12 +37,17 @@ input[type="submit"] {
 
   &.masthead {
     text-align: center;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    /*padding-top: 100px;
+    padding-bottom: 100px;*/
   }
 }
 
+@media screen and (min-width: 768px) {
+    .jumbotron h1, .jumbotron .h1 {
+        font-size: ceil((@font-size-base * 4));
 
+    }
+}
 
 .featurette {
     padding-top: 80px;
