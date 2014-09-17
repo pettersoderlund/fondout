@@ -267,7 +267,7 @@ $submit->setValue('Välj kategorier');
                     </td>
                     <td>
 
-                      <?php if($fund->getCo2() > 0.5) { echo number_format($fund->getCo2(), 2) . " <br>gram co2/kr"; } ?>
+                      <?php if($fund->getCo2Coverage() > 0.5) { echo number_format($fund->getCo2(), 2) . " <br>gram co2/kr"; } ?>
                     </td>
                     <td>
                       <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
