@@ -46,7 +46,11 @@ $submit->setValue('Välj kategorier');
 
 
   <div class="col-md-6">
+  <div class="panel-group panel-box">
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <?php echo $this->translate('Hållbara investeringar') ?>
+      </div>
       <div class="panel-body">
         <div class="chart-container pull-left" style="width:100px;height:100px;margin:20px;">
           <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
@@ -203,7 +207,20 @@ $submit->setValue('Välj kategorier');
   <?php endif; ?>
 </div>
 </div>
+</div>
 
+<div class="panel panel-default">
+  <div class="panel-heading">Köp fonden</div>
+  <div class="panel-body">
+      <p>Fonden finns tillgänglig att köpa på:</p>
+      <ul>
+          <?php foreach ($banks as $bank): ?>
+          <li><?php echo $this->translate($bank['name']) ?></li>
+        <?php endforeach; ?>
+      </ul>
+
+  </div>
+</div>
 
     </div>
 
@@ -211,16 +228,16 @@ $submit->setValue('Välj kategorier');
 
 
         <div class="panel panel-default">
-          <div class="panel-heading">CO2-utsläpp</div>
+          <div class="panel-heading">CO<sub>2</sub>-utsläpp</div>
           <div class="panel-body">
 
               <?php if ($fund->co2Coverage > 0.5):?>
-                  <p>Företagen i fondens gemensamma CO2-utsläpp.</p>
+                  <p>Företagen i fondens gemensamma CO<sub>2</sub>-utsläpp.</p>
                   <p><b>
                       <?php
                       echo number_format($fund->co2 , '2', ',' , ' ');
                       ?> </b>
-                  <?php echo $this->translate(' CO2(gram)/kr') ?></p>
+                  <?php echo $this->translate(' gram CO<sub>2</sub>/kr') ?></p>
 
                   <?php
                   echo $this->numberFormat(
@@ -230,9 +247,9 @@ $submit->setValue('Välj kategorier');
                     "en_US"
                     );
                   ?>
-                  <?php echo $this->translate(' - andel av fonden som vi har CO2-utsläppsdata på.') ?>
+                  <?php echo $this->translate(' - andel av fonden som vi har CO<sub>2</sub>-utsläppsdata på.') ?>
               <?php else: ?>
-              <?php echo $this->translate('Ej tillgängligt. <br>Vi saknar tillräckligt med underliggande data för att beräkna CO2-utsläpp på denna fond.') ?>
+              <?php echo $this->translate('Ej tillgängligt. <br>Vi saknar tillräckligt med underliggande data för att beräkna CO<sub>2</sub>-utsläpp på denna fond.') ?>
 
               <?php endif; ?>
           </div>
@@ -249,7 +266,7 @@ $submit->setValue('Välj kategorier');
                     <?php echo $this->translate('Fond') ?>
                   </th>
                   <th>
-                    <?php echo $this->translate('CO2-utsläpp') ?>
+                    <?php echo $this->translate('CO<sub>2</sub>-utsläpp') ?>
                   </th>
                   <th>
                     <?php echo $this->translate('Hållbarhet') ?>
@@ -267,7 +284,7 @@ $submit->setValue('Välj kategorier');
                     </td>
                     <td>
 
-                      <?php if($fund->getCo2Coverage() > 0.5) { echo number_format($fund->getCo2(), 2) . " <br>gram co2/kr"; } ?>
+                      <?php if($fund->getCo2Coverage() > 0.5) { echo number_format($fund->getCo2(), 2) . "gram CO<sub>2</sub>/kr"; } ?>
                     </td>
                     <td>
                       <?php echo number_format($fund->getSustainability()*100) . "/100"; ?>
@@ -276,20 +293,6 @@ $submit->setValue('Välj kategorier');
                 <?php endforeach; ?>
               </tbody>
             </table>
-          </div>
-        </div>
-
-
-        <div class="panel panel-default">
-          <div class="panel-heading">Köp fonden</div>
-          <div class="panel-body">
-              <p>Fonden finns tillgänglig att köpa på:</p>
-              <ul>
-                  <?php foreach ($banks as $bank): ?>
-                  <li><?php echo $this->translate($bank['name']) ?></li>
-                <?php endforeach; ?>
-              </ul>
-
           </div>
         </div>
   </div>
