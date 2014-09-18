@@ -179,12 +179,18 @@ $submit->setValue('Välj kategorier');
                   </div>
 
                 </div>
-                <div class="pull-right"><h1>
-                <?php
-                    if ($fund->co2Coverage>0.5):
-                        echo number_format($fund->co2, 2, ',', ' ');
-
-                    ?></h1> <p>gram CO2/kr<p>
+                <div class="co2-meter pull-right">
+                    <div class="co2-meter-number">
+                        <?php
+                            if ($fund->co2Coverage>0.5):
+                                if ($fund->co2 < 10):
+                                    echo number_format($fund->co2, 2, ',', ' ');
+                                else:
+                                    echo number_format($fund->co2, 1, ',', ' ');
+                                endif;
+                        ?>
+                    </div>
+                    <div class="co2-meter-unit">gram CO2/kr</div>
                 <?php endif;?>
             </div>
                 <h3>

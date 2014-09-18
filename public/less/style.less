@@ -120,6 +120,7 @@ footer {
 
 .sustainability-percentage {
   height: @font-size-base;
+
   line-height: @font-size-base;
   margin: auto;
   text-align: center;
@@ -144,4 +145,20 @@ footer {
     border-bottom: 1px solid rgba(0,0,0, 0.1);
     min-height: 120px;
   }
+}
+
+
+// CO2 meter fund list
+@media screen and (min-width: 768px) {
+    .co2-meter {
+        margin-right: 20px;
+    }
+}
+
+.co2-meter-number {
+    margin-top: 10px;
+    font-size: ceil(@font-size-base*2.9);
+}
+.co2-meter-unit {
+    margin-top:-5px;
 }
