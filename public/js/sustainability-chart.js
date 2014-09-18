@@ -5,7 +5,8 @@ Chart.defaults = {
 $(document).ready(function() {
   var options = {
     animateRotate : false,
-    responsive: true
+    responsive: true,
+    percentageInnerCutout : 70
   }
 
   // Sustainability score dougnut chart
