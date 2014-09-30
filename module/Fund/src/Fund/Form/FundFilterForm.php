@@ -113,8 +113,6 @@ class FundFilterForm extends Form
             )
         );
 
-
-
         // We could also define the input filter here, or
         // lazy-create it in the getInputFilter() method.
     }
