@@ -1,10 +1,10 @@
 <?php
 
 $this->headScript()
-     ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
-     ->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
-     ->appendFile($this->basePath() . '/js/funds.js')
-     ->appendFile($this->basePath() . '/js/sustainability-chart.js');
+->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
+->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
+->appendFile($this->basePath() . '/js/funds.js')
+->appendFile($this->basePath() . '/js/sustainability-chart.js');
 
 
 // set default order if not set and inverse the order based on the previous value
@@ -25,283 +25,295 @@ $submit->setValue('Välj kategorier');
 ?>
 
 <section class="jumbotron">
-    <div class="container">
-        <h1><?php echo $this->translate('Fondsök') ?></h1>
-        <p>Bläddra bland över tusen svenska och internationella fonder.</p>
-    </div>
+  <div class="container">
+    <h1><?php echo $this->translate('Fondsök') ?></h1>
+    <p><?php echo $this->translate('Bläddra bland över tusen svenska och internationella fonder.') ?></p>
+  </div>
 </section>
 
 <section class="sustainability-categories">
-    <div class="container">
-        <strong><?php echo $this->translate('Valda hållbarhetskategorier') ?></strong>
-        <?php echo implode(', ', $sustainability) ?>
-        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#sustainability-form"><?php echo $this->translate('Ändra') ?></button>
+  <div class="container">
+    <strong><?php echo $this->translate('Valda hållbarhetskategorier') ?></strong>
+    <?php echo implode(', ', $sustainability) ?>
+    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#sustainability-form"><?php echo $this->translate('Ändra') ?></button>
 
-        <div id="sustainability-form" class="collapse">
-            <?php echo $this->form()->openTag($sform) ?>
-            <div class="checkbox">
-                <?php
-                    $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-                    echo $this->formMultiCheckbox($sform->get('sustainability'));
-                ?>
-            </div>
-            <br />
-            <?php echo $this->formSubmit($submit) ?>
-            <?php echo $this->form()->closeTag() ?>
+    <div id="sustainability-form" class="collapse">
+      <?php echo $this->form()->openTag($sform) ?>
+      <div class="checkbox">
+        <?php
+        $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
+          echo $this->formMultiCheckbox($sform->get('sustainability'));
+          ?>
         </div>
+        <br />
+        <?php echo $this->formSubmit($submit) ?>
+        <?php echo $this->form()->closeTag() ?>
+      </div>
     </div>
-</section>
+  </section>
 
-<section class="container">
+  <section class="container fund-list">
     <div class="row">
-        <div class="col-md-4 col-md-push-8 panel-group panel-box">
+      <div class="col-md-4 col-md-push-8 panel-group panel-box">
 
-            <?php echo $this->form()->openTag($form) ?>
+        <?php echo $this->form()->openTag($form) ?>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                       <a data-toggle="collapse" data-parent="#accordion" href="#collapseQ">
-                           <?php echo $this->translate('Sök på fond') ?>
-                       </a>
-                    </h3>
-                </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseQ">
+                <?php echo $this->translate('Sök på fond') ?>
+              </a>
+            </h3>
+          </div>
 
-                <div id="collapseQ" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <p><?php echo $this->translate('Sök på hela eller delar av fondnamnet.') ?></p>
-                        <div class="input-group">
-                            <?php echo $this->formRow($form->get('q')); ?>
-                        </div><!-- /input-group -->
-                    </div>
-                </div>
+          <div id="collapseQ" class="panel-collapse collapse in">
+            <div class="panel-body">
+              <p><?php echo $this->translate('Sök på hela eller delar av fondnamnet.') ?></p>
+              <div class="input-group">
+                <?php echo $this->formRow($form->get('q')); ?>
+              </div><!-- /input-group -->
             </div>
+          </div>
+        </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseFondoutCategory">
-                            <?php echo $this->translate('Fondkategori') ?>
-                        </a>
-                    </h3>
-                </div>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseFondoutCategory">
+                <?php echo $this->translate('Fondkategori') ?>
+              </a>
+            </h3>
+          </div>
 
-                <div id="collapseFondoutCategory" class="panel-collapse collapse <?php if ($form->get('fondoutcategory')->getValue()) {echo " in ";} ?>">
-                    <div class="panel-body">
-                        <p><?php echo $this->translate('Välj var i världen fonden äger sin majoritet av företag.') ?></p>
-                        <div class="checkbox">
-                            <?php
-                                $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-                                echo $this->formMultiCheckbox($form->get('fondoutcategory'));
-                            ?>
-                        </div>
-                    </div>
+          <div id="collapseFondoutCategory" class="panel-collapse collapse <?php if ($form->get('fondoutcategory')->getValue()) {echo " in ";} ?>">
+            <div class="panel-body">
+              <p><?php echo $this->translate('Välj var i världen fonden äger sin majoritet av företag.') ?></p>
+              <div class="checkbox">
+                <?php
+                $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
+                  echo $this->formMultiCheckbox($form->get('fondoutcategory'));
+                  ?>
                 </div>
+              </div>
             </div>
+          </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseCompany">
-                            <?php echo $this->translate('Fondbolag') ?>
-                        </a>
-                    </h3>
-                </div>
-                <div id="collapseCompany" class="panel-collapse collapse <?php if ($form->get('company')->getValue()) {echo " in ";} ?>">
-                    <div class="panel-body">
-                        <p><?php echo $this->translate(' Välj vilken bank eller fondbolags fonder du vill se.') ?></p>
-                        <?php echo $this->formSelect($form->get('company')) ?>
-                    </div>
-                </div>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseCompany">
+                  <?php echo $this->translate('Fondbolag') ?>
+                </a>
+              </h3>
             </div>
+            <div id="collapseCompany" class="panel-collapse collapse <?php if ($form->get('company')->getValue()) {echo " in ";} ?>">
+              <div class="panel-body">
+                <p><?php echo $this->translate(' Välj vilken bank eller fondbolags fonder du vill se.') ?></p>
+                <?php echo $this->formSelect($form->get('company')) ?>
+              </div>
+            </div>
+          </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseSize">
-                            <?php echo $this->translate('Fondstorlek') ?>
-                        </a>
-                    </h3>
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSize">
+                  <?php echo $this->translate('Fondstorlek') ?>
+                </a>
+              </h3>
+            </div>
+            <div id="collapseSize" class="panel-collapse collapse <?php if ($form->get('size')->getValue()) {echo " in ";} ?>">
+              <div class="panel-body">
+                <p><?php echo $this->translate('Välj vilken storlek av fonder du vill se. Fonder som många personer äger är generellt större och nischade fonder mindre. ') ?></p>
+                <div class="checkbox">
+                  <?php
+                  $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
+                    echo $this->formMultiCheckbox($form->get('size'));
+                    ?>
+                  </div>
                 </div>
-                <div id="collapseSize" class="panel-collapse collapse <?php if ($form->get('size')->getValue()) {echo " in ";} ?>">
-                    <div class="panel-body">
-                        <p><?php echo $this->translate('Välj vilken storlek av fonder du vill se. Fonder som många personer äger är generellt större och nischade fonder mindre. ') ?></p>
-                        <div class="checkbox">
-                            <?php
-                                $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-                                echo $this->formMultiCheckbox($form->get('size'));
-                            ?>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
 
             <?php echo $this->formHidden($form->get('category')) ?>
             <div class="search-fund-button pull-right">
-                <?php echo $this->formSubmit($form->get('submit')->setValue('Sök fond')) ?>
+              <?php echo $this->formSubmit($form->get('submit')->setValue('Sök fond')) ?>
             </div>
             <?php echo $this->form()->closeTag() ?>
             <br />
-        </div>
-        <div class="col-md-8 col-md-pull-4">
+          </div>
+          <div class="col-md-8 col-md-pull-4">
 
             <?php if (count($funds)): ?>
-            <table class="table table-bordered table-hover">
-                    <tr>
-                        <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
-                                <?php echo $this->translate('Fond') ?>
-                            </a>
-                        </th>
-                        <!--<th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
-                                <?php echo $this->translate('Fondbolag') ?>
-                            </a>
-                        </th>
-                        <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fondoutcategory', 'order' => $order) + $query))); ?>">
-                                <?php echo $this->translate('Fondkategori') ?>
-                            </a>
-                        </th>
-                        <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'size', 'order' => $order)  + $query))); ?>">
-                                <?php echo $this->translate('Storlek') ?>
-                            </a>
-                        </th>
-                        <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2Coverage', 'order' => $order)  + $query))); ?>">
-                                <?php echo $this->translate('CO2-täckning') ?>
-                            </a>
-                        </th> -->
-                        <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => $order)  + $query))); ?>">
-                                <?php echo $this->translate('CO2/kr') ?>
-                            </a>
-                        </th>
-                        <th>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">
-                                <?php echo $this->translate('Hållbarhetspoäng') ?>
-                            </a>
-                        </th>
-                    </tr>
-            </table>
+              <table class="table table-bordered table-hover">
+                <tr>
+                  <th>
+                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
+                      <?php echo $this->translate('Fond') ?>
+                    </a>
+                  </th>
+                  <!--<th>
+                  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
+                  <?php echo $this->translate('Fondbolag') ?>
+                </a>
+              </th>
+              <th>
+              <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fondoutcategory', 'order' => $order) + $query))); ?>">
+              <?php echo $this->translate('Fondkategori') ?>
+            </a>
+          </th>
+          <th>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'size', 'order' => $order)  + $query))); ?>">
+          <?php echo $this->translate('Storlek') ?>
+        </a>
+      </th>
+      <th>
+      <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2Coverage', 'order' => $order)  + $query))); ?>">
+      <?php echo $this->translate('CO2-täckning') ?>
+    </a>
+  </th> -->
+  <th>
+    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => $order)  + $query))); ?>">
+      <?php echo $this->translate('CO2/kr') ?>
+    </a>
+  </th>
+  <th>
+    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">
+      <?php echo $this->translate('Hållbarhetsnivå') ?>
+    </a>
+  </th>
+</tr>
+</table>
 
-            <ul class="results">
-            <?php foreach ($funds as $fund): ?>
-              <li>
-                <div class="pull-right">
-                    <div class="pull-right sustainability-desc">
-                        Hållbarhetsmätaren visar fondens hållbarhet enligt din sökning.
-                    </div>
-
-                    <div class="chart-container pull-left" style="width:100px;height:100px;">
-                      <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
-                      <div class="sustainability-percentage">
-                        <?php
-                        echo number_format($fund->getSustainability()*100, 0, ',', '') . '/100';
-                          ?>
-                      </div>
-
-                    </div>
-                </div>
-                <?php
-                    if ($fund->co2Coverage>0.5):
-                ?>
-                <div class="co2-meter pull-right">
-                    <div class="co2-meter-number">
-                        <?php
-
-                                if ($fund->co2 < 10):
-                                    echo number_format($fund->co2, 2, ',', ' ');
-                                else:
-                                    echo number_format($fund->co2, 1, ',', ' ');
-                                endif;
-                        ?>
-                    </div>
-                    <div class="co2-meter-unit">gram CO2/kr</div>
-                </div>
-                <?php endif;?>
-                <h3>
-                  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
-                    <?php echo $this->translate($fund->name) ?>
-                  </a>
-                </h3>
-
-                <p><?php echo $this->translate($fund->company->name) ?></p>
-                <p>
-                <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
-                <span class="label label-primary"><?php
-                    if ($fund->totalMarketValue <= 600000000) {
-                        echo $this->translate('Liten');
-                    } elseif ($fund->totalMarketValue >= 2500000000) {
-                        echo $this->translate('Stor');
-                    } else {
-                        echo $this->translate('Mellan');
-                    }
-                ?></span>
-                </p>
-
-
-              </li>
-            <?php endforeach; ?>
-            </ul>
-            <?php else: ?>
-            <h3><?php echo $this->translate('Vi kunde inte hitta några resultat med dina söktermer.') ?></h3>
-            <br>
-            <h4><?php echo $this->translate('Förslag') ?>:</h4>
-            <ul>
-              <li><?php echo $this->translate('Dubbelkolla din stavning') ?></li>
-              <li><?php echo $this->translate('Använd mer generella söktermer') ?></li>
-            </ul>
-            <?php endif; ?>
-
-            <?php if ($funds->getPages()->pageCount > 1): ?>
-                <ul class="pagination pagination-centered">
-                    <!-- Previous page link -->
-                    <?php if (isset($funds->getPages()->previous)): ?>
-                        <li>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
-                                &laquo;
-                            </a>
-                        </li>
-                        <?php
-                        else: ?>
-                        <li class="disabled">
-                            <a href="#">
-                                &laquo;
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                    <!-- Numbered page links -->
-                    <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
-                        <?php if ($page != $funds->getPages()->current): ?>
-                            <li>
-                                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
-                                    <?php echo $page; ?>
-                                </a>
-                            </li>
-                        <?php else: ?>
-                            <li class="active">
-                                <a href="#"><?php echo $page; ?></a>
-                            </li>
-                        <?php endif; ?>
-                    <?php endforeach; ?>
-
-                    <!-- Next page link -->
-                    <?php if (isset($funds->getPages()->next)): ?>
-                        <li>
-                            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
-                                &raquo;
-                            </a>
-                        </li>
-                    <?php else: ?>
-                        <li class="disabled">
-                            <a href="#">
-                                &raquo;
-                            </a>
-                        </li>
-                    <?php endif; ?>
-                </ul>
-            <?php endif; ?>
+<ul class="results">
+  <?php foreach ($funds as $fund): ?>
+    <li>
+      <div class="pull-right">
+        <div class="pull-right sustainability-desc">
+          <?php echo $this->translate('Hållbarhetsnivå') ?>
+          <span class="sustainability-score"><strong><?php echo $fund->getSustainability()*5 ?></strong>/5</span>
+          <?php
+            if ($fund->getSustainability() == 1): echo $this->translate('Hållbar fond enligt din sökning.');
+            elseif ($fund->getSustainability() == 0.8): echo $this->translate('Fonden har ett fåtal ohållbara bolag.');
+            elseif ($fund->getSustainability() == 0.6): echo $this->translate('Fonden har en stor del ohållbara bolag.');
+            elseif ($fund->getSustainability() == 0.4): echo $this->translate('Fonden har en mycket stor del ohållbara bolag.');
+            elseif ($fund->getSustainability()): echo $this->translate('Denna fond stämmer inte in på dina hållbarhetskriterier.');
+            else: echo $this->translate('Denna fond har inte kunnat granskas.');
+            endif;
+          ?>
         </div>
+
+        <div class="chart-container pull-left">
+          <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
+        </div>
+      </div>
+
+
+        <div class="co2-meter pull-right">
+          <div class="co2-header">CO2-utsläpp</div>
+          <?php if ($fund->co2Coverage > 0.5): ?>
+          <div class="co2-meter-number">
+            <?php
+              if ($fund->co2 < 10):
+                echo number_format($fund->co2, 2, ',', ' ');
+              else:
+                echo number_format($fund->co2, 1, ',', ' ');
+              endif;
+            ?>
+          </div>
+          <div class="co2-meter-unit">gram CO2/kr</div>
+
+          <?php else: ?>
+          <div class="co2-meter-number co2-na">
+            -
+          </div>
+          <div class="co2-meter-unit">Ej tillgängligt</div>
+        <?php endif;?>
+
+        </div>
+
+      <h3>
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+          <?php echo $this->translate($fund->name) ?>
+        </a>
+      </h3>
+
+      <p><?php echo $this->translate($fund->company->name) ?></p>
+      <p>
+        <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+        <span class="label label-primary"><?php
+          if ($fund->totalMarketValue <= 600000000) {
+            echo $this->translate('Liten fond');
+          } elseif ($fund->totalMarketValue >= 2500000000) {
+            echo $this->translate('Stor fond');
+          } else {
+            echo $this->translate('Mellanfond');
+          }
+          ?>
+        </span>
+      </p>
+    </li>
+  <?php endforeach; ?>
+</ul>
+
+<?php else: ?>
+  <h3><?php echo $this->translate('Vi kunde inte hitta några resultat med dina söktermer.') ?></h3>
+  <br>
+  <h4><?php echo $this->translate('Förslag') ?>:</h4>
+  <ul>
+    <li><?php echo $this->translate('Dubbelkolla din stavning') ?></li>
+    <li><?php echo $this->translate('Använd mer generella söktermer') ?></li>
+  </ul>
+<?php endif; ?>
+
+<?php if ($funds->getPages()->pageCount > 1): ?>
+  <ul class="pagination pagination-centered">
+    <!-- Previous page link -->
+    <?php if (isset($funds->getPages()->previous)): ?>
+      <li>
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
+          &laquo;
+        </a>
+      </li>
+      <?php
+      else: ?>
+      <li class="disabled">
+        <a href="#">
+          &laquo;
+        </a>
+      </li>
+    <?php endif; ?>
+    <!-- Numbered page links -->
+    <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
+      <?php if ($page != $funds->getPages()->current): ?>
+        <li>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
+            <?php echo $page; ?>
+          </a>
+        </li>
+      <?php else: ?>
+        <li class="active">
+          <a href="#"><?php echo $page; ?></a>
+        </li>
+      <?php endif; ?>
+    <?php endforeach; ?>
+
+    <!-- Next page link -->
+    <?php if (isset($funds->getPages()->next)): ?>
+      <li>
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
+          &raquo;
+        </a>
+      </li>
+    <?php else: ?>
+      <li class="disabled">
+        <a href="#">
+          &raquo;
+        </a>
+      </li>
+    <?php endif; ?>
+  </ul>
+<?php endif; ?>
+</div>
 </section>

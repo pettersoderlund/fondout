@@ -172,8 +172,8 @@ class FundService
      */
     public function findFunds($params, $sustainability = array())
     {
-        $sort            = $params->fromQuery('sort', 'sustainability');
-        $order           = $params->fromQuery('order', 'DESC');
+        $sort            = $params->fromQuery('sort', 'name');
+        $order           = $params->fromQuery('order', 'ASC');
         $currentPage     = $params->fromQuery('page', 1);
         $company         = $params->fromQuery('company', array());
         $size            = $params->fromQuery('size', array());
@@ -270,7 +270,7 @@ class FundService
         $criteria = Criteria::create()->orderBy(array('sustainability' => 'DESC', 'co2Coverage' => 'DESC',  'co2' => 'ASC'));
         $criteria->andWhere(Criteria::expr()->eq('fondoutcategoryId', $fund->fondoutcategory->id));
         $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
-        $criteria->setMaxResults(10);
+        $criteria->setMaxResults(5);
         $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
         $orderedfunds = $funds->matching($criteria);
 

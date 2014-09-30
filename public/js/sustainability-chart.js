@@ -3,26 +3,41 @@ Chart.defaults = {
 }
 
 $(document).ready(function() {
-  var options = {
-    animateRotate : false,
-    responsive: true,
-    percentageInnerCutout : 70
-  }
-
   // Sustainability score dougnut chart
   $('.chart-container').each(function(index, container) {
     var canvas = container.querySelector('.sustainability-chart');
     var sustainability = canvas.dataset.percentage;
+    var smallchart = canvas.dataset.smallchart;
+
+    var options = {
+      animateRotate : false,
+      responsive: true,
+      segmentShowStroke : true,
+      segmentStrokeWidth : (smallchart ? 0 : 3),
+      percentageInnerCutout : 0
+    }
 
     var data = [
         {
-            value: sustainability * 100,
-            color: "#A7D276"
+            value: 20,
+            color: ((sustainability > 0.1) ? "#A7D276" : "#e6e6e6")
         },
         {
-            value: (1 - sustainability) * 100,
-            color:"#FF5252"
-        }
+            value: 20,
+            color: ((sustainability > 0.3) ? "#A7D276" : "#e6e6e6")
+        },
+        {
+            value: 20,
+            color: ((sustainability > 0.5) ? "#A7D276" : "#e6e6e6")
+        },
+        {
+            value: 20,
+            color: ((sustainability > 0.7) ? "#A7D276" : "#e6e6e6")
+        },
+        {
+            value: 20,
+            color: ((sustainability > 0.9) ? "#A7D276" : "#e6e6e6")
+        },
     ];
 
     var length = this.offsetWidth;

@@ -294,7 +294,21 @@ class Fund extends Entity
      */
     public function getSustainability()
     {
-        return $this->sustainability;
+        if ($this->sustainability == 1) {
+            return 1;
+        } elseif ($this->sustainability > 0.94) {
+            return 0.8;
+        } elseif ($this->sustainability > 0.89) {
+            return 0.6;
+        } elseif ($this->sustainability > 0.84) {
+            return 0.4;
+        } elseif ($this->sustainability) {
+            return 0.2;
+        } else {
+            // This should only happen if there is
+            // no sustainability score calculated.
+            return 0;
+        }
     }
 
     /**
