@@ -75,6 +75,23 @@ class FundFilterForm extends Form
 
         $this->add(
             array(
+                'name' => 'sustainabilityscore',
+                'type' => 'multicheckbox',
+                'options' => array(
+                    'label' => 'Type',
+                    'value_options' => array(
+                        '5' => '5',
+                        '4' => '4',
+                        '3' => '3',
+                        '2' => '2',
+                        '1' => '1'
+                    ),
+                )
+            )
+        );
+
+        $this->add(
+            array(
                 'name' => 'category',
                 'type' => 'hidden'
             )
