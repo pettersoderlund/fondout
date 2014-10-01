@@ -308,7 +308,9 @@ class Fund extends Entity
             // This should only happen if there is
             // no sustainability score calculated.
             return 0;
+
         }
+        return $this->sustainability;
     }
 
     /**

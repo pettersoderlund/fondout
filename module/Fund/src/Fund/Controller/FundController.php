@@ -57,7 +57,7 @@ class FundController extends AbstractRestfulController
         $service = $this->getFundService();
         $parameters = $this->params();
         $sustainability = $container->sustainability;
-        $fund = $service->getFund($id);
+        $fund = $service->getFund($id, $sustainability);
         $funds = $service->findSameCategoryFunds($fund, $sustainability);
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
         $banks = $service->getBanks($fund);
@@ -72,12 +72,14 @@ class FundController extends AbstractRestfulController
         $cSharesCount = $service->getCountControverisalShares($fund, $sustainability);
         $sharesCount = $service->getCountShares($fund);
 
+        /* Not USED Filter fund categories.
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('\Fund\Form\FundPageFilterForm');
 
         $form->setCategories($cCategoriesCount);
         $form->setData($parameters->fromQuery());
+        */
 
         $sform = $this->getServiceLocator()
             ->get('FormElementManager')
@@ -97,7 +99,7 @@ class FundController extends AbstractRestfulController
                 'cSharesCount'           => $cSharesCount,
                 'sharesCount'            => $sharesCount,
                 'query'                  => $parameters->fromQuery(),
-                'form'                   => $form,
+                //'form'                   => $form,
                 'sform'                  => $sform
             )
         );

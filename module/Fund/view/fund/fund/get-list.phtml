@@ -6,11 +6,8 @@ $this->headScript()
 ->appendFile($this->basePath() . '/js/funds.js')
 ->appendFile($this->basePath() . '/js/sustainability-chart.js');
 
-
-// set default order if not set and inverse the order based on the previous value
-// $order = isset($query['order']) ? $query['order'] : 'ASC';
-// $order = ($order == 'ASC') ? 'DESC' : 'ASC';
-$order = 'ASC';
+$order = $query['order'];
+$sortby = $query['sort'];
 
 $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
@@ -146,45 +143,70 @@ $submit->setValue('Välj kategorier');
           <div class="col-md-8 col-md-pull-4">
 
             <?php if (count($funds)): ?>
-              <table class="table table-bordered table-hover">
-                <tr>
-                  <th>
-                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
-                      <?php echo $this->translate('Fond') ?>
-                    </a>
-                  </th>
-                  <!--<th>
-                  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
-                  <?php echo $this->translate('Fondbolag') ?>
-                </a>
-              </th>
-              <th>
-              <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fondoutcategory', 'order' => $order) + $query))); ?>">
-              <?php echo $this->translate('Fondkategori') ?>
-            </a>
-          </th>
-          <th>
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'size', 'order' => $order)  + $query))); ?>">
-          <?php echo $this->translate('Storlek') ?>
-        </a>
-      </th>
-      <th>
-      <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2Coverage', 'order' => $order)  + $query))); ?>">
-      <?php echo $this->translate('CO2-täckning') ?>
+    <!--<th>
+    <table class="table table-bordered table-hover">
+    <tr>
+
+    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => $order) + $query))); ?>">
+    <?php echo $this->translate('Fond') ?>
     </a>
-  </th> -->
-  <th>
+    </th>
+    <th>
+    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'company', 'order' => $order) + $query))); ?>">
+    <?php echo $this->translate('Fondbolag') ?>
+    </a>
+    </th>
+    <th>
+    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fondoutcategory', 'order' => $order) + $query))); ?>">
+    <?php echo $this->translate('Fondkategori') ?>
+    </a>
+    </th>
+    <th>
+    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'size', 'order' => $order)  + $query))); ?>">
+    <?php echo $this->translate('Storlek') ?>
+    </a>
+    </th>
+    <th>
+    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2Coverage', 'order' => $order)  + $query))); ?>">
+    <?php echo $this->translate('CO2-täckning') ?>
+    </a>
+    </th>
+    <th>
     <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => $order)  + $query))); ?>">
-      <?php echo $this->translate('CO2/kr') ?>
+    <?php echo $this->translate('CO2/kr') ?>
     </a>
-  </th>
-  <th>
+    </th>
+    <th>
     <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">
-      <?php echo $this->translate('Hållbarhetsnivå') ?>
+    <?php echo $this->translate('Hållbarhetsnivå') ?>
     </a>
-  </th>
-</tr>
-</table>
+    </th>
+    </tr>
+    </table>
+    -->
+<p class="sortby-header">Sortera efter</p>
+<ul class="nav nav-pills">
+  </li>
+  <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      CO2-utsläpp <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'DESC')  + $query))); ?>">CO2-utsläpp (högst till lägst)</a></li>
+      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO2-utsläpp (lägst till högst)</a></li>
+    </ul>
+  </li>
+  <li class="dropdown <?php if (strcmp($sortby,'sustainability') == 0): echo ' active '; endif; ?>">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Hållbarhetsnivå <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">Hållbarhetsnivå (högst till lägst)</a></li>
+      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'ASC')  + $query))); ?>">Hållbarhetsnivå (lägst till högst)</a></li>
+    </ul>
+  </li>
+
+</ul>
 
 <ul class="results">
   <?php foreach ($funds as $fund): ?>

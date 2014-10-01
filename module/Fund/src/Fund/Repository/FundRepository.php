@@ -174,6 +174,10 @@ class FundRepository extends EntityRepository
         return $this->mapControversialMarketValues($funds, $category);
     }
 
+    /**
+    *
+    * Second argument is an array of sustainability categories identified by id.
+    */
     public function mapControversialMarketValues($funds, $category = array())
     {
 

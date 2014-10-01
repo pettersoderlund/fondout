@@ -49,10 +49,12 @@ class FundService
         return $fund;
     }
 
-    public function getFund($id)
+    public function getFund($id, $sustainabilityCategories = array())
     {
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return current($fundRepository->mapControversialMarketValues($this->getFundById($id)));
+        return current(
+            $fundRepository->mapControversialMarketValues($this->getFundById($id), $sustainabilityCategories)
+        );
     }
 
     /**
@@ -175,9 +177,13 @@ class FundService
         $sort            = $params->fromQuery('sort', 'name');
         $order           = $params->fromQuery('order', 'ASC');
         $currentPage     = $params->fromQuery('page', 1);
+        //Filter fundcompany
         $company         = $params->fromQuery('company', array());
+        //Filter fundsize
         $size            = $params->fromQuery('size', array());
+        //Filter textsearch
         $q               = $params->fromQuery('q', "");
+        //Filter category
         $fondoutcategory = $params->fromQuery('fondoutcategory', array());
 
         $sortOrder = [];
@@ -198,9 +204,7 @@ class FundService
                 $sortOrder['sustainability'] = $order;
                 break;
             case 'co2':
-                $sort = 'co2';
-                $sortOrder['co2Coverage'] = 'DESC';
-                $sortOrder[$sort] = $order;
+                $sortOrder['co2'] = $order;
                 break;
         }
 
@@ -213,6 +217,11 @@ class FundService
 
         if (count($fondoutcategory) > 0) {
             $criteria->andWhere(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
+        }
+
+        //Condition removes results that doesnt have the right co2coverage level
+        if ($sort == 'co2') {
+            $criteria->andWhere(Criteria::expr()->gt('co2Coverage', '0.5'));
         }
 
         if (count($size) > 0) {
