@@ -1,19 +1,54 @@
 box: wercker/php
+no-response-timeout: 10
 build:
     # The steps that will be executed on build
     steps:
-      # A custom script step, name value is used in the UI
-      # and the code value contains the command that get executed
+      # Frontend pipeline
       - script:
-          name: install dependencies
-          code: composer install --no-interaction
-      - script:
-          name: echo php information
+          name: install node
           code: |
-            echo "php version $(php --version) running"
-            echo "from location $(which php)"
-      # Add more steps here:
-      #- script:
-      #    name: run unit tests
-      #    code: phpunit
-
+              echo '\n' | sudo add-apt-repository ppa:chris-lea/node.js
+              sudo apt-get update
+              sudo apt-get install nodejs
+      - script:
+          name: install npm
+          code: |
+              curl -L http://www.npmjs.org/install.sh -o /home/ubuntu/tmp/npm.sh
+              sudo clean=y sh /home/ubuntu/tmp/npm.sh
+              sudo rm -rf /home/ubuntu/tmp/
+              mkdir -p /home/ubuntu/tmp/
+      - npm-install
+      - script:
+          name: install bower
+          code: sudo npm install -g bower
+      - script:
+          name: install bower packages
+          code: bower install --config.storage.cache=$WERCKER_CACHE_DIR/wercker/bower
+      - script:
+          name: echo nodejs information
+          code: |
+              echo "node version: $(node -v)"
+              echo "npm version: $(npm -v)"
+      - grunt
+      # Backend pipeline
+      - script:
+          name: install composer packages
+          code: composer install --no-interaction --optimize-autoloader
+      - script:
+          name: run unit tests
+          code: phpunit
+deploy:
+    steps:
+      - script:
+          name: fix .gitignore
+          code: |
+              rm -r ./**/.gitignore
+              echo "/node_modules" > .gitignore
+              echo "/public" >> .gitignore
+      - script:
+          name: generate doctrine proxies
+          code: vendor/bin/doctrine orm:generate-proxies
+      - script:
+          name: create openshift webroot symlink
+          code: ln -s dist php
+      - openshift-deploy

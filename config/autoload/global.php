@@ -41,7 +41,12 @@ return array(
                     'charset' => 'utf8',
                     'driverOptions' => array(
                         1002=>'SET NAMES utf8'
-                    )
+                    ),
+                    'host'     => getenv('OPENSHIFT_MYSQL_DB_HOST'),
+                    'port'     => getenv('OPENSHIFT_MYSQL_DB_PORT'),
+                    'user'     => getenv('OPENSHIFT_MYSQL_DB_USERNAME'),
+                    'password' => getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
+                    'dbname'   => getenv('OPENSHIFT_GEAR_NAME')
                 )
             )
         )
