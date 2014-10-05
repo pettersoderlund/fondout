@@ -36,25 +36,12 @@ build:
       - script:
           name: install composer packages
           code: composer install --no-interaction --optimize-autoloader
-#      - script:
-#          name: run unit tests'
-#          code: phpunit
-
 deploy:
     steps:
-#      - script:
-#          name: fix .gitignore
-#          code: |
-#              rm -r ./**/.gitignore
-#              echo "/node_modules" > .gitignore
-#              echo "/public" >> .gitignore
-#      - script:
-#          name: generate doctrine proxies
-#          code: vendor/bin/doctrine orm:generate-proxies
       - script:
           name: create openshift webroot symlink
           code: |
               ln -s public php
               ln -s vendor libs
-              
+
       - openshift-deploy
