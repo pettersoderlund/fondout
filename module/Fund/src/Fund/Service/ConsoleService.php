@@ -9,7 +9,7 @@ class ConsoleService extends FundService
 {
     protected $entityManager;
 
-    public function getEM ()
+    public function getEM()
     {
         return $this->getEntityManager();
     }

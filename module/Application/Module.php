@@ -61,7 +61,8 @@ class Module
 
                         $sessionConfig = null;
                         if (isset($session['config'])) {
-                            $class = isset($session['config']['class'])  ? $session['config']['class'] : 'Zend\Session\Config\SessionConfig';
+                            $class = isset($session['config']['class'])  ?
+                              $session['config']['class'] : 'Zend\Session\Config\SessionConfig';
                             $options = isset($session['config']['options']) ? $session['config']['options'] : array();
                             $sessionConfig = new $class();
                             $sessionConfig->setOptions($options);

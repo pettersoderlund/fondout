@@ -30,6 +30,8 @@ build:
               echo "node version: $(node -v)"
               echo "npm version: $(npm -v)"
       - grunt
+          tasks: less
+          
       # Backend pipeline
       - script:
           name: install composer packages

@@ -24,7 +24,7 @@ class ConsoleController extends AbstractActionController
     protected $consoleService;
     protected $em;
 
-    public function mapsharecompaniesAction ()
+    public function mapsharecompaniesAction()
     {
         $request = $this->getRequest();
 
@@ -840,7 +840,7 @@ class ConsoleController extends AbstractActionController
         echo "$i emissions added.";
     }
 
-    private function createFundUrl ($fundName)
+    private function createFundUrl($fundName)
     {
         // replace non letter or digits by -
         $text = preg_replace('~[^\\pL\d]+~u', '-', $fundName);
