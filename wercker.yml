@@ -36,9 +36,10 @@ build:
       - script:
           name: install composer packages
           code: composer install --no-interaction --optimize-autoloader
-      - script:
-          name: run unit tests
-          code: phpunit
+#      - script:
+#          name: run unit tests'
+#          code: phpunit
+
 deploy:
     steps:
       - script:
