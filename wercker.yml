@@ -53,5 +53,8 @@ deploy:
 #          code: vendor/bin/doctrine orm:generate-proxies
       - script:
           name: create openshift webroot symlink
-          code: ln -s dist php
+          code: |
+              ln -s public php
+              ln -s vendor libs
+              
       - openshift-deploy
