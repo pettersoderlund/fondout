@@ -42,12 +42,12 @@ build:
 
 deploy:
     steps:
-      - script:
-          name: fix .gitignore
-          code: |
-              rm -r ./**/.gitignore
-              echo "/node_modules" > .gitignore
-              echo "/public" >> .gitignore
+#      - script:
+#          name: fix .gitignore
+#          code: |
+#              rm -r ./**/.gitignore
+#              echo "/node_modules" > .gitignore
+#              echo "/public" >> .gitignore
       - script:
           name: generate doctrine proxies
           code: vendor/bin/doctrine orm:generate-proxies
