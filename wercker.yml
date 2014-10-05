@@ -48,9 +48,9 @@ deploy:
 #              rm -r ./**/.gitignore
 #              echo "/node_modules" > .gitignore
 #              echo "/public" >> .gitignore
-      - script:
-          name: generate doctrine proxies
-          code: vendor/bin/doctrine orm:generate-proxies
+#      - script:
+#          name: generate doctrine proxies
+#          code: vendor/bin/doctrine orm:generate-proxies
       - script:
           name: create openshift webroot symlink
           code: ln -s dist php
