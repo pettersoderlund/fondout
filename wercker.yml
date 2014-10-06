@@ -39,6 +39,10 @@ build:
 deploy:
     steps:
       - script:
+          name: fix .gitignore
+          code: |
+              rm -r .gitignore
+      - script:
           name: create openshift webroot symlink
           code: |
               ln -s public php
