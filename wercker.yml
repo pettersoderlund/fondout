@@ -41,7 +41,9 @@ deploy:
       - script:
           name: fix .gitignore
           code: |
-              rm -r .gitignore
+              cd /pipeline/build
+              rm .gitignore
+              echo "/node_modules" > .gitignore
       - script:
           name: create openshift webroot symlink
           code: |
