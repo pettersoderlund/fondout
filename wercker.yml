@@ -40,14 +40,17 @@ deploy:
     steps:
       - script:
           name: generate doctrine proxies
-          code: vendor/bin/doctrine orm:generate-proxies
+          code: vendor/bin/doctrine-module orm:generate-proxies
 
       - script:
           name: fix .gitignore
           code: |
+              pwd
               cd /pipeline/build
-              rm -r **/.gitignore
-              rm .gitignore
+              ls -la
+              cat .gitignore
+              shopt -s globstar
+              rm -r ./**/.gitignore
               echo "/node_modules" > .gitignore
       - script:
           name: create openshift webroot symlink
