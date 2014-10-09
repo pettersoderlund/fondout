@@ -185,6 +185,9 @@ class FundService
         $q               = $params->fromQuery('q', "");
         //Filter category
         $fondoutcategory = $params->fromQuery('fondoutcategory', array());
+        //Filter sustainability-score (1-5)
+        $sustainabilityScore = $params->fromQuery('sustainabilityscore', array());
+
 
         $sortOrder = [];
         switch ($sort) {
@@ -244,6 +247,41 @@ class FundService
                 }
             }
             $criteria->andWhere(call_user_func_array(array(Criteria::expr(), "orx"), $sizeCriteria));
+        }
+
+        //Filter sustainability scores
+        if (count($sustainabilityScore) > 0) {
+            $susScoreCriteria = array();
+            foreach ($sustainabilityScore as $s) {
+                switch ($s) {
+                    case "1":
+                        $susScoreCriteria[] = Criteria::expr()->lt('sustainability', '0.4');
+                        break;
+                    case "2":
+                        $susScoreCriteria[] = Criteria::expr()->andx(
+                            Criteria::expr()->gte('sustainability', '0.4'),
+                            Criteria::expr()->lt('sustainability', '0.6')
+                        );
+                        break;
+                    case "3":
+                            $susScoreCriteria[] = Criteria::expr()->andx(
+                                Criteria::expr()->gte('sustainability', '0.6'),
+                                Criteria::expr()->lt('sustainability', '0.8')
+                            );
+                        break;
+                    case "4":
+                            $susScoreCriteria[] = Criteria::expr()->andx(
+                                Criteria::expr()->gte('sustainability', '0.8'),
+                                Criteria::expr()->lt('sustainability', '1')
+                            );
+                        break;
+                    case "5":
+                        $susScoreCriteria[] = Criteria::expr()->gte('sustainability', 1);
+                        break;
+                    default:
+                }
+            }
+            $criteria->andWhere(call_user_func_array(array(Criteria::expr(), "orx"), $susScoreCriteria));
         }
 
         $q = trim($q);
