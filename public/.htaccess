@@ -21,11 +21,13 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 # ------------------------------------------------------------------------------
 
 SetEnvIfNoCase HOST staging.*$ PROTECTED_HOST
-AuthUserFile "/var/lib/openshift/52f7ab8d4382ec7847000071/app-root/runtime/repo/public/.htpasswd"
-AuthName "Fondout Staging Server"
-AuthType Basic
-Order Deny,Allow
-Satisfy any
-Deny from all
-Require valid-user
-Allow from env=!PROTECTED_HOST
+<IfDefine PROTECTED_HOST>
+  AuthUserFile "/var/lib/openshift/52f7ab8d4382ec7847000071/app-root/runtime/repo/public/.htpasswd"
+  AuthName "Fondout Staging Server"
+  AuthType Basic
+  Order Deny,Allow
+  Satisfy any
+  Deny from all
+  Require valid-user
+  Allow from env=!PROTECTED_HOST
+</IfDefine>
