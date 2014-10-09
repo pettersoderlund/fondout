@@ -13,7 +13,9 @@ input[type="submit"] {
 
 .sustainability-categories {
   padding: 20px inherit;
-  background: #00695c;
+  //background: #2b9c79;
+  //background: #00695c;
+  background: @dark-primary;
   color: #fff;
   // line-height: @input-height-base;
 
@@ -63,7 +65,7 @@ input[type="submit"] {
       border-bottom: 1px solid rgba(0,0,0,0.07);
 
       .sustainability-categories {
-        background-color: darkslategray;
+        background-color: @dark-primary;
         padding: 40px;
         margin-bottom: -120px;
         margin-top: -50px;
@@ -232,4 +234,10 @@ footer {
 .sortby-header {
   float: left;
   margin: 10px;
+}
+
+// About page
+
+.image-text {
+  text-align: center;
 }
