@@ -2,6 +2,8 @@
 @import "../vendor/bootstrap/less/bootstrap.less";
 @import "../vendor/selectize/dist/less/selectize.bootstrap3.less";
 @import "variables.less";
+@import "get-list.less";
+@import "get.less";
 
 section {
   padding: 30px inherit;
@@ -12,7 +14,7 @@ input[type="submit"] {
 }
 
 .sustainability-categories {
-  padding: 20px inherit;
+  padding: 10px inherit;
   //background: #2b9c79;
   //background: #00695c;
   background: @dark-primary;
@@ -30,20 +32,37 @@ input[type="submit"] {
     margin-bottom: 15px;
 }
 
+
+// darker links when using lighter primary color
+/*a {
+  color: @dark-primary;
+  text-decoration: none;
+}*/
+
 .jumbotron {
-  margin-bottom: 0;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
 
   h1 {
     font-weight: 600;
     // font-size:60px;
   }
+  @media screen and (min-width: @screen-md-min) {
+    p {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      padding-right: 15px; // same as the menu options padding
+      // color: #EEFF41;
+    }
 
-  p {
-    // color: #EEFF41;
+    .container {  // why dont this work as &.container???
+      position: relative;
+    }
   }
 
   &.masthead {
-    text-align: center;
     /*padding-top: 100px;
     padding-bottom: 100px;*/
   }
@@ -52,13 +71,18 @@ input[type="submit"] {
 @media screen and (min-width: 768px) {
     .jumbotron h1, .jumbotron .h1 {
         font-size: ceil((@font-size-base * 4));
-
     }
 }
 
 .featurette {
+  @media screen and (max-width: @screen-md-min) {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  @media screen and (min-width: @screen-md-min) {
     padding-top: 80px;
     padding-bottom: 80px;
+  }
 
     &.callout {
       background-color: rgba(0,0,0,0.03);
@@ -67,8 +91,13 @@ input[type="submit"] {
       .sustainability-categories {
         background-color: @dark-primary;
         padding: 40px;
-        margin-bottom: -120px;
-        margin-top: -50px;
+      }
+
+      @media screen and (min-width: @screen-md-min) {
+        .sustainability-categories {
+          margin-bottom: -120px;
+          margin-top: -50px;
+        }
       }
     }
 }
@@ -137,7 +166,7 @@ footer {
   }
 }
 
-// CO2 meter fund list
+// CO2 meter
 
 .co2-header {
   margin-bottom: -18px;
@@ -151,7 +180,6 @@ footer {
 }
 
 .co2-na {
-
   color: #cecece;
 }
 
@@ -169,75 +197,7 @@ footer {
     margin-bottom: 10px;
 }
 
-// Fund page
-.fund-page .sustainability-categories-list {
-  margin-left: 180px;
-}
-
-.sustainability-grades-explained .chart-cell {
-    width: 30px;
-}
-
-.fund-page .small-chart {
-  width: 32px;
-  height: 32px;
-}
-
-.fund-page .similar-chart {
-  width: 60px;
-  height: 60px;
-}
-
-.fund-page .big-chart {
-  width: 150px;
-  height: 150px;
-  margin: 20px;
-}
-
-.fund-page .co2-meter {
-  margin-left: 10px;
-  float: left;
-}
-.fund-page .co2-meter-number {
-  margin: 0px;
-}
-
-.fund-page .co2-text {
-  margin: 12px;
-  margin-left: 120px;
-}
-
-.fund-page .panel-body {
-  min-height: 120px;
-}
-
-// Fund list
-
-.fund-list .chart-container {
-  width: 100px;
-  height: 100px;
-}
-
-
-@media screen and (min-width: 768px) {
-    .fund-list .co2-meter {
-        margin-right: 8%;
-    }
-}
-
-.sustainability-desc .sustainability-score {
-    font-size: 16px;
-    line-height: 30px;
-    margin: 32px;
-}
-
-.sortby-header {
-  float: left;
-  margin: 10px;
-}
-
 // About page
-
 .image-text {
   text-align: center;
 }

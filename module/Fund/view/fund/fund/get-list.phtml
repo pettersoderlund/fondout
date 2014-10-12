@@ -217,29 +217,34 @@ $submit->setValue('Välj kategorier');
     </tr>
     </table>
     -->
-<p class="sortby-header">Sortera efter</p>
-<ul class="nav nav-pills">
-  </li>
-  <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-      CO2-utsläpp <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'DESC')  + $query))); ?>">CO2-utsläpp (högst till lägst)</a></li>
-      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO2-utsläpp (lägst till högst)</a></li>
-    </ul>
-  </li>
-  <li class="dropdown <?php if (strcmp($sortby,'sustainability') == 0): echo ' active '; endif; ?>">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-      Hållbarhetsnivå <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu" role="menu">
-      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">Hållbarhetsnivå (högst till lägst)</a></li>
-      <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'ASC')  + $query))); ?>">Hållbarhetsnivå (lägst till högst)</a></li>
-    </ul>
-  </li>
+    <div class="well well-sm">
+<div class="row">
 
-</ul>
+    <p class="sortby-header">Sortera efter</p>
+    <ul class="nav nav-pills pull-right sortby-buttons">
+      </li>
+      <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          CO2-utsläpp <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'DESC')  + $query))); ?>">CO2-utsläpp (högst till lägst)</a></li>
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO2-utsläpp (lägst till högst)</a></li>
+        </ul>
+      </li>
+      <li class="dropdown <?php if (strcmp($sortby,'sustainability') == 0): echo ' active '; endif; ?>">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Hållbarhetsnivå <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">Hållbarhetsnivå (högst till lägst)</a></li>
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'ASC')  + $query))); ?>">Hållbarhetsnivå (lägst till högst)</a></li>
+        </ul>
+      </li>
+
+    </ul>
+  </div>
+</div>
 
 <ul class="results">
   <?php foreach ($funds as $fund): ?>
@@ -311,6 +316,7 @@ $submit->setValue('Välj kategorier');
     </li>
   <?php endforeach; ?>
 </ul>
+
 
 <?php else: ?>
   <h3><?php echo $this->translate('Vi kunde inte hitta några resultat med dina söktermer.') ?></h3>
