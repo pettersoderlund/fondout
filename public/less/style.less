@@ -46,12 +46,13 @@ input[type="submit"] {
 
   h1 {
     font-weight: 600;
+    margin-bottom: 20px;
     // font-size:60px;
   }
   @media screen and (min-width: @screen-md-min) {
     p {
       position: absolute;
-      bottom: 0px;
+      bottom: 10px;
       right: 0px;
       padding-right: 15px; // same as the menu options padding
       // color: #EEFF41;
@@ -66,6 +67,13 @@ input[type="submit"] {
     /*padding-top: 100px;
     padding-bottom: 100px;*/
   }
+}
+
+// For the jumbotrons without a border of sustainability categories.
+// eg. Index page and about/contact page
+.no-sus-categories  {
+  border-bottom: 54px solid @dark-primary;
+  //border-bottom: 54px solid @brand-primary;
 }
 
 @media screen and (min-width: 768px) {
