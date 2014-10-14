@@ -13,7 +13,24 @@ class FundController extends AbstractRestfulController
     {
         $container      = new Container('fund');
         $service        = $this->getFundService();
-        $parameters     = $this->params();
+        $params         = $this->params();
+
+        $parameters = array(
+          'sort'            => $params->fromQuery('sort', 'sustainability'),
+          'order'           => $params->fromQuery('order', 'DESC'),
+          'page'     => $params->fromQuery('page', 1),
+          //Filter fundcompany
+          'company'         => $params->fromQuery('company', array()),
+          //Filter fundsize
+          'size'            => $params->fromQuery('size', array()),
+          //Filter textsearch
+          'q'               => $params->fromQuery('q', ""),
+          //Filter category
+          'fondoutcategory' => $params->fromQuery('fondoutcategory', array()),
+          //Filter sustainability-score (1-5)
+          'sustainabilityscore' => $params->fromQuery('sustainabilityscore', array('5'))
+        );
+
         $sustainability = $container->sustainability;
         $fundsPaginator = $service->findFunds($parameters, $sustainability);
         $names = $service->getSustainabilityCategories($sustainability);
@@ -23,7 +40,7 @@ class FundController extends AbstractRestfulController
             ->get('FormElementManager')
             ->get('\Fund\Form\FundFilterForm');
 
-        $form->setData($parameters->fromQuery());
+        $form->setData($parameters);
 
         $container = new Container('fund');
 
@@ -37,7 +54,7 @@ class FundController extends AbstractRestfulController
         return new ViewModel(
             array(
                 'sustainability' => $names,
-                'query' => $parameters->fromQuery(),
+                'query' => $parameters,
                 'funds' => $fundsPaginator,
                 'form' => $form,
                 'sform' => $sform

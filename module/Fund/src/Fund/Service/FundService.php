@@ -174,19 +174,19 @@ class FundService
      */
     public function findFunds($params, $sustainability = array())
     {
-        $sort            = $params->fromQuery('sort', 'name');
-        $order           = $params->fromQuery('order', 'ASC');
-        $currentPage     = $params->fromQuery('page', 1);
+        $sort            = $params['sort'];
+        $order           = $params['order'];
+        $currentPage     = $params['page'];
         //Filter fundcompany
-        $company         = $params->fromQuery('company', array());
+        $company         = $params['company'];
         //Filter fundsize
-        $size            = $params->fromQuery('size', array());
+        $size            = $params['size'];
         //Filter textsearch
-        $q               = $params->fromQuery('q', "");
+        $q               = $params['q'];
         //Filter category
-        $fondoutcategory = $params->fromQuery('fondoutcategory', array());
+        $fondoutcategory = $params['fondoutcategory'];
         //Filter sustainability-score (1-5)
-        $sustainabilityScore = $params->fromQuery('sustainabilityscore', array());
+        $sustainabilityScore = $params['sustainabilityscore'];
 
 
         $sortOrder = [];
