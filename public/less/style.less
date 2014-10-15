@@ -145,46 +145,22 @@ footer {
 
 
 // Dougnut chart
-
 .chart-container {
   position: relative;
 }
 
-.sustainability-desc {
-    margin-top: 8px;
-    font-size: ceil(@font-size-base*0.8);
-    line-height: ceil(@font-size-base*0.8);
-    width:120px;
-    height:100px;
-    margin: 8px;
-}
-
-.accusation-categories .label {
-  cursor: help;
-}
-
-.results {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-
-  li {
-    border-bottom: 1px solid rgba(0,0,0, 0.1);
-    min-height: 120px;
-  }
-}
-
 // CO2 meter
-
-.co2-header {
-  margin-bottom: -18px;
-}
-.co2-meter-number {
-    margin-top: 10px;
-    font-size: ceil(@font-size-base*2.9);
-}
-.co2-meter-unit {
-    margin-top:-5px;
+@media (min-width: @screen-sm-min) {
+  .co2-header {
+    margin-bottom: -18px;
+  }
+  .co2-meter-number {
+      margin-top: 10px;
+      font-size: ceil(@font-size-base*2.9);
+  }
+  .co2-meter-unit {
+      margin-top:-5px;
+  }
 }
 
 .co2-na {
