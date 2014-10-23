@@ -11,26 +11,81 @@
     }
 }
 
-.sustainability-desc .sustainability-score {
-    font-size: 16px;
-    line-height: 30px;
-    margin: 32px;
-}
-
 .sortby-header {
   float: left;
   margin: 10px;
   margin-left: 20px;
 }
 
+.filter-header {
+  h3 {
+    font-size: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  margin-left: 10px;
+  margin-bottom: 15px;
+
+}
+
+.sustainability-desc {
+    margin-top: 4px;
+    width:100px;
+    font-size: ceil(@font-size-base*0.8);
+    line-height: ceil(@font-size-base*0.8);
+  }
+
+  .sustainability-desc .sustainability-score {
+      font-size: 16px;
+      line-height: 20px;
+      margin: 30px;
+  }
+
 @media screen and (min-width: 768px) {
   .sortby-buttons {
     margin-right: 25px;
   }
+
+  .sustainability-desc {
+      margin-top: 8px;
+      width:120px;
+      height:100px;
+      margin: 8px;
+  }
+  .sustainability-desc .sustainability-score {
+      line-height: 30px;
+      margin: 32px;
+  }
+}
+
+
+.fund-list {
+  .panel-heading > h3, .h3 {
+      margin-top: 4px;
+      margin-bottom: 4px;
+  }
+
+}
+
+@media (min-width: @screen-sm-min) {
+  .results {
+    li {
+      min-height: 120px;
+    }
+  }
+}
+
+.results {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    border-bottom: 1px solid rgba(0,0,0, 0.1);
+  }
 }
 
 /*.fund-list {
-
   .co2-header {
     margin-bottom: -18px;
   }
@@ -46,3 +101,21 @@
     color: #cecece;
   }
 }*/
+
+/*   MOBILE SETTINGS     */
+/*   EXTRA SMALL DEVICES */
+@media (max-width: @screen-sm-min) {
+  .fund-list .chart-container {
+    width: 50px;
+    height: 50px;
+  }
+
+  .results h3, .h3 {
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  .fund-list {
+    font-size: 13px;
+  }
+}
