@@ -46,7 +46,7 @@ class FundRepository extends EntityRepository
            ->getResult();
     }
 
-    public function findControversialCompanies(Fund $fund, array $category = array())
+    public function findControversialCompanies(Fund $fund, $category = array())
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder()
