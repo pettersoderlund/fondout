@@ -354,6 +354,10 @@ class ConsoleController extends AbstractActionController
 
     public function addfundAction()
     {
+
+        echo "Be very precise on parameters. Always enter --date. \n"
+          . "This action requires the use of php version >=5.4 \n";
+
         $service = $this->getConsoleService();
         // Get the entity manager straight up
         $entityManager = $service->getEM();
@@ -395,6 +399,7 @@ class ConsoleController extends AbstractActionController
 
         $fundAuM = str_replace(array(" ", ","), "", $fundAuM);
 
+
         echo $fundAuM . "\n";
 
         $exchangeRate = $request->getParam('exchangerate');
@@ -435,6 +440,8 @@ class ConsoleController extends AbstractActionController
             }
 
         }
+
+        echo "Fundcompany step completed.\n";
 
         $fundInstance = null;
 
