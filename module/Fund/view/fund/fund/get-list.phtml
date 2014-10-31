@@ -14,14 +14,15 @@ if (isset($query['order'])) {
 if (isset($query['sort'])) {
   $sortby = $query['sort'];
 } else {
-  $sortby = "";
+  $sortby = "sustainability";
 }
 
-
+/* Filter funds form */
 $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 $form->prepare();
 
+/* sustainability categories form */
 $sform->setAttribute('method', 'POST');
 $sform->setAttribute('action', $this->url('change-sustainability-categories'));
 $sform->prepare();
