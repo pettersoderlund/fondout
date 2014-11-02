@@ -46,16 +46,33 @@ $submit->setValue('Välj kategorier');
       <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#sustainability-form"><?php echo $this->translate('Ändra') ?></button>
 
       <div id="sustainability-form" class="collapse">
-        <?php echo $this->form()->openTag($sform) ?>
-        <div class="checkbox">
-          <?php
-          $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-            echo $this->formMultiCheckbox($sform->get('sustainability'));
-            ?>
+        <div class="row">
+          <div class="col-md-4">
+            <?php echo $this->form()->openTag($sform) ?>
+            <div class="checkbox">
+              <?php
+              $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
+                echo $this->formMultiCheckbox($sform->get('sustainability'));
+                ?>
+              </div>
+              <br />
+              <?php echo $this->formSubmit($submit) ?>
+              <?php echo $this->form()->closeTag() ?>
+            </div>
+            <div class="col-md-8">
+              <h3>Hållbarhetskategorier förklarade</h3>
+              <ul>
+                <li>Vapen - Företag som till stor del har vapenproduktion.</li>
+                <li>Miljöförstöring - Företag anklagade för allvarlig miljöförstöring. </li>
+                <li>Brott mot mänskliga rättigheter - Företag dömda för brott mot mänskliga rättigheter. </li>
+                <li>Tobak - Företag med tobaksproduktion. </li>
+                <li>Olja - Företag med oljeproduktion. </li>
+                <li>Kol - Företag med kolproduktion.</li>
+                <li>Gas - Företag med gasproduktion. </li>
+                <li>Land grabbing - Företag med anknytning till landgrabbing. </li>
+              <ul>
+            </div>
           </div>
-          <br />
-          <?php echo $this->formSubmit($submit) ?>
-          <?php echo $this->form()->closeTag() ?>
         </div>
       </div>
     </section>

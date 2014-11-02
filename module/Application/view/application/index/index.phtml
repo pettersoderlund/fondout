@@ -1,4 +1,6 @@
 <?php
+$this->headScript()->appendFile($this->basePath() . '/js/index.js');
+
 $form->setAttribute('method', 'POST');
 $form->setAttribute('action', $this->url('change-sustainability-categories', array(), array('query' => array('redirect' => 'funds'))));
 $form->setAttribute('class', 'sustainability-categories');
@@ -25,7 +27,23 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-block');
             <div class="col-md-4">
                 <?php echo $this->form()->openTag($form) ?>
                 <div class="checkbox">
-                    <h3>Undvik att investera i:</h3>
+                    <h3>Undvik att investera i:
+                      <a href="javascript://" data-toggle="popover" tabindex="0" data-placement="left" data-trigger="focus"
+                      title="Hållbarhetsnivå"
+                      data-content="
+                      <p>Hållbarhetsnivån på fonder bestäms från vilka kategorier du väljer.</p>
+                        <ul>
+                          <li>Vapen - Företag som till stor del har vapenproduktion.</li>
+                          <li>Miljöförstöring - Företag anklagade för allvarlig miljöförstöring. </li>
+                          <li>Brott mot mänskliga rättigheter - Företag dömda för brott mot mänskliga rättigheter. </li>
+                          <li>Tobak - Företag med tobaksproduktion. </li>
+                          <li>Olja - Företag med oljeproduktion. </li>
+                          <li>Kol - Företag med kolproduktion.</li>
+                          <li>Gas - Företag med gasproduktion. </li>
+                          <li>Land grabbing - Företag med anknytning till landgrabbing. </li>
+                        <ul>
+                        ">(i)</a>
+                    </h3>
                     <?php
                         $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
                         echo $this->formMultiCheckbox($form->get('sustainability'));
