@@ -35,7 +35,7 @@ build:
       # Backend pipeline
       - script:
           name: install composer packages
-          code: composer install --no-interaction --optimize-autoloader
+          code: composer install --no-interaction --optimize-autoloader --no-dev
 deploy:
     steps:
       - script:
