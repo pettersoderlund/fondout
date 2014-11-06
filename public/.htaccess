@@ -14,19 +14,3 @@ RewriteRule ^.*$ - [NC,L]
 RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
 RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
-
-
-# ------------------------------------------------------------------------------
-# | Basic Auth for staging servers                                             |
-# ------------------------------------------------------------------------------
-
-<IfDefine PROTECTED_HOST>
-  AuthUserFile "${OPENSHIFT_REPO_DIR}/public/.htpasswd"
-  AuthName "Sparfabriken Staging Server"
-  AuthType Basic
-  Order Deny,Allow
-  Satisfy any
-  Deny from all
-  Require valid-user
-  Allow from env=!PROTECTED_HOST
-</IfDefine>

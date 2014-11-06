@@ -43,7 +43,7 @@ deploy:
           code: vendor/bin/doctrine-module orm:generate-proxies
 
       - script:
-          name: fix .gitignore
+          name: fix .gitignore to upload a full build to openshift.
           code: |
               pwd
               cd /pipeline/build
@@ -57,5 +57,10 @@ deploy:
           code: |
               ln -s public php
               ln -s vendor libs
+      - script:
+          name: Add authentication to htaccess on the staging server.
+          code: |
+              cd public
+              cat .htaccess-staging-addition-auth >> .htaccess
 
       - openshift-deploy

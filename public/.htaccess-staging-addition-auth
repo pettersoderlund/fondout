@@ -1,0 +1,11 @@
+# ------------------------------------------------------------------------------
+# | Basic Auth for staging servers                                             |
+# ------------------------------------------------------------------------------
+
+AuthUserFile "${OPENSHIFT_REPO_DIR}/public/.htpasswd"
+AuthName "Sparfabriken Staging Server"
+AuthType Basic
+Order Deny,Allow
+Satisfy any
+Deny from all
+Require valid-user
