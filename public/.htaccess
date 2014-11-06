@@ -20,9 +20,8 @@ RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 # | Basic Auth for staging servers                                             |
 # ------------------------------------------------------------------------------
 
-SetEnvIfNoCase HOST staging.*$ PROTECTED_HOST
 <IfDefine PROTECTED_HOST>
-  AuthUserFile "/var/lib/openshift/52f7ab8d4382ec7847000071/app-root/runtime/repo/public/.htpasswd"
+  AuthUserFile "${OPENSHIFT_REPO_DIR}/public/.htpasswd"
   AuthName "Sparfabriken Staging Server"
   AuthType Basic
   Order Deny,Allow
