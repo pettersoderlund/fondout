@@ -28,7 +28,7 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-block');
                 <?php echo $this->form()->openTag($form) ?>
                 <div class="checkbox">
                     <h3>Undvik att investera i:
-                      <a href="javascript://" data-toggle="popover" tabindex="0" data-placement="left" data-trigger="focus"
+                      <a href="javascript://" data-toggle="popover" tabindex="0"  data-trigger="focus"
                       title="Hållbarhetsnivå"
                       data-content="
                       <p>Hållbarhetsnivån på fonder bestäms från vilka kategorier du väljer.</p>
@@ -42,7 +42,9 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-block');
                           <li>Gas - Företag med gasproduktion. </li>
                           <li>Land grabbing - Företag med anknytning till landgrabbing. </li>
                         <ul>
-                        ">(i)</a>
+                        ">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
                     </h3>
                     <?php
                         $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
