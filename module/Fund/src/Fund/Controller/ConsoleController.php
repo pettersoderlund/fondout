@@ -90,6 +90,7 @@ class ConsoleController extends AbstractActionController
             echo "No share found with ISIN: $isin \n";
 
             // Maybe we should return an errorcode instead. throw exception?
+            $em->clear();
             return null;
         }
 
