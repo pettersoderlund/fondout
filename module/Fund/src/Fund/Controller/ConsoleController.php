@@ -797,9 +797,12 @@ class ConsoleController extends AbstractActionController
             }
 
             if ($scope1) {
+                $scope1 = str_replace(',', '', $scope1);
                 $emissions->setScope1($scope1);
             }
+
             if ($scope2) {
+                $scope2 = str_replace(',', '', $scope2);
                 $emissions->setScope2($scope2);
             }
 
@@ -809,9 +812,12 @@ class ConsoleController extends AbstractActionController
                 }
 
             } else {
+                $scope12 = str_replace(',', '', $scope12);
                 $emissions->setScope12($scope12);
             }
+
             if ($scope3) {
+                $scope3 = str_replace(',', '', $scope3);
                 $emissions->setScope3($scope3);
             }
 
