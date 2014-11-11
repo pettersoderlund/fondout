@@ -40,8 +40,8 @@ class ContactController extends AbstractActionController
                 'Source' => 'no-reply@fondout.se',
                 // Destination is required
                 'Destination' => array(
-                    // 'ToAddresses' => array('info@fondout.se'),
-                     'ToAddresses' => array(\Aws\Ses\Enum\MailboxSimulator::SUCCESS),
+                    'ToAddresses' => array('info@fondout.se'),
+                    // 'ToAddresses' => array(\Aws\Ses\Enum\MailboxSimulator::SUCCESS),
 
                 ),
                 // Message is required
@@ -62,7 +62,7 @@ class ContactController extends AbstractActionController
                 'ReplyToAddresses' => array($data['email'])
                 )
                 );
-    
+
                 echo json_encode($result->toArray());
 
 
