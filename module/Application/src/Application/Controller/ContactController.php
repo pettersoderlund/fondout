@@ -63,7 +63,7 @@ class ContactController extends AbstractActionController
                 )
                 );
 
-                echo json_encode($result->toArray());
+                //echo json_encode($result->toArray());
 
 
             } catch (Aws\Ses\Exception\MessageRejectedException $e) {
