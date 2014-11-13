@@ -5,13 +5,18 @@ $(document).ready(function() {
     var canvas = container.querySelector('.sustainability-chart');
     var sustainability = canvas.dataset.percentage;
     var smallchart = canvas.dataset.smallchart;
+    var rotation = canvas.dataset.rotation;
 
     var options = {
-      animateRotate : false,
+      animateRotate : (rotation ? true : false),
       responsive: true,
       segmentShowStroke : true,
       segmentStrokeWidth : (smallchart ? 0 : 2),
-      percentageInnerCutout : 0
+      percentageInnerCutout : 0,
+      animationSteps : 350,
+      animationEasing : "easeOutQuart",
+      //Boolean - Whether we animate scaling the Doughnut from the centre
+      animateScale : false,
     };
 
     var data = [

@@ -1,5 +1,8 @@
 <?php
-$this->headScript()->appendFile($this->basePath() . '/js/index.js');
+$this->headScript()
+->appendFile($this->basePath() . '/js/index.js')
+->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
+->appendFile($this->basePath() . '/js/sustainability-chart.js');
 
 $form->setAttribute('method', 'POST');
 $form->setAttribute('action', $this->url('change-sustainability-categories', array(), array('query' => array('redirect' => 'funds'))));
@@ -13,6 +16,11 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
 
 <section class="featurette first-section-landing-page">
     <div class="container">
+      <div class="row dummy-chart">
+        <div class="chart-container col-md-1 col-md-offset-5">
+          <canvas class="sustainability-chart" data-percentage="0.7" data-rotation="1"></canvas>
+        </div>
+      </div>
         <div class="row">
           <h1><?php echo $this->translate('Vi jämför dina fonder utifrån ett hållbarhetsperspektiv.') ?></h1>
           <h3><?php echo $this->translate('Vilka företag äger du? Vilka företag vill du äga? ') ?></h3>
