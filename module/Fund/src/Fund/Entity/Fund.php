@@ -296,14 +296,24 @@ class Fund extends Entity
     {
         if ($this->sustainability == 1) {
             return 1;
+        } elseif ($this->sustainability > 0.97) {
+            return 0.9;
         } elseif ($this->sustainability > 0.94) {
             return 0.8;
-        } elseif ($this->sustainability > 0.89) {
+        } elseif ($this->sustainability > 0.91) {
+            return 0.7;
+        } elseif ($this->sustainability > 0.87) {
             return 0.6;
         } elseif ($this->sustainability > 0.84) {
+            return 0.5;
+        } elseif ($this->sustainability > 0.81) {
             return 0.4;
-        } elseif ($this->sustainability) {
+        } elseif ($this->sustainability > 0.78) {
+            return 0.3;
+        } elseif ($this->sustainability > 0.76) {
             return 0.2;
+        } elseif ($this->sustainability) {
+            return 0.1;
         } else {
             // This should only happen if there is
             // no sustainability score calculated.
