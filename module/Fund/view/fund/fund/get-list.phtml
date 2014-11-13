@@ -149,7 +149,7 @@ $submit->setValue('Välj kategorier');
           </div>
           <div class="col-md-8 col-md-pull-4">
             <?php if (strcmp($sortby,'sustainability') == 0): ?>
-            <div class="well">
+            <div class="well sustainability-categories">
               <strong><?php echo $this->translate('Valda hållbarhetskategorier') ?></strong>
               <br>
               <?php echo implode(', ', $sustainability) ?>
