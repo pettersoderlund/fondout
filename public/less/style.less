@@ -101,26 +101,27 @@ input[type="submit"] {
     margin-top: 0px;
   }
 
+    .sustainability-categories {
+      text-align: center;
+      //background-color: @dark-primary;
+      //color: white;
+      padding: 25px;
+      margin-top: 30px;
+      margin-bottom: 40px;
 
+      label input {
+        margin-right: 4px;
+      }
+
+      input[type="submit"] {
+        margin-top: 20px;
+      }
+    }
 
   &.callout {
     background-color: rgba(0,0,0,0.03);
     border-bottom: 1px solid rgba(0,0,0,0.07);
 
-
-    .sustainability-categories {
-      text-align: left;
-      background-color: @dark-primary;
-      color: white;
-      padding: 25px;
-      margin-top: 30px;
-      margin-bottom: 40px;
-
-
-      label input {
-        margin-right: 4px;
-      }
-    }
 
     @media screen and (min-width: @screen-md-min) {
       .sustainability-categories {
@@ -153,7 +154,7 @@ input[type="submit"] {
 
 footer {
   .center-block();
-
+  padding-top: 20px;
   padding-bottom: 15px;
   color: @gray-light;
 
@@ -224,7 +225,7 @@ footer {
   }
 
   h3 > a {
-    color: white;
+    color: gray;
   }
 
   .popover ul {

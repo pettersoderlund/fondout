@@ -3,15 +3,15 @@ $this->headScript()->appendFile($this->basePath() . '/js/index.js');
 
 $form->setAttribute('method', 'POST');
 $form->setAttribute('action', $this->url('change-sustainability-categories', array(), array('query' => array('redirect' => 'funds'))));
-$form->setAttribute('class', 'sustainability-categories form-inline');
+$form->setAttribute('class', 'sustainability-categories form-inline well');
 $form->prepare();
 $submit = $form->get('submit');
 $submit->setValue('Hitta fonder');
-//$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-block');
-$submit->setAttribute('class', $submit->getAttribute('class') . ' pull-right');
+$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success btn-block');
+//$submit->setAttribute('class', $submit->getAttribute('class') . '');
 ?>
 
-<section class="featurette callout first-section-landing-page">
+<section class="featurette first-section-landing-page">
     <div class="container">
         <div class="row">
           <h1><?php echo $this->translate('Vi jämför dina fonder utifrån ett hållbarhetsperspektiv.') ?></h1>
@@ -52,7 +52,7 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' pull-right');
       </div>
     </div>
 </section>
-<section class="featurette">
+<section class="featurette callout">
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-push-6">
