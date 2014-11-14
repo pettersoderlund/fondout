@@ -191,7 +191,7 @@ $submit->setValue('Välj kategorier');
   <div class="row">
     <p class="sortby-header">Sortera efter</p>
     <ul class="nav nav-pills pull-right sortby-buttons">
-      <!--
+
       <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           CO2-utsläpp <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
@@ -201,7 +201,7 @@ $submit->setValue('Välj kategorier');
           <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO2-utsläpp (lägst till högst)</a></li>
         </ul>
       </li>
-    -->
+
       <li class="dropdown <?php if (strcmp($sortby,'sustainability') == 0): echo ' active '; endif; ?>">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
           Hållbarhetsnivå <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
@@ -243,7 +243,7 @@ $submit->setValue('Välj kategorier');
         </div>
       <?php endif;?>
 
-        <!--
+
         <?php if (strcmp($sortby,'co2') == 0): ?>
           <div class="co2-meter pull-right">
             <div class="co2-header">CO2-utsläpp</div>
@@ -266,7 +266,7 @@ $submit->setValue('Välj kategorier');
           <?php endif;?>
           </div>
         <?php endif;?>
-        -->
+
 
       <h3>
         <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
@@ -299,7 +299,11 @@ $submit->setValue('Välj kategorier');
   <ul>
     <li><?php echo $this->translate('Dubbelkolla din stavning') ?></li>
     <li><?php echo $this->translate('Använd mer generella söktermer') ?></li>
+    <li><a href="/funds" class="btn btn-primary" role="button">Återställ sökning</a>
+
+
   </ul>
+
 <?php endif; ?>
 
 <?php if ($funds->getPages()->pageCount > 1): ?>
