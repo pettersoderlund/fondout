@@ -35,7 +35,7 @@ $submit->setValue('Välj kategorier');
 
   <section class="container fund-list">
     <div class="row">
-      <div id="fund-filters" class="col-md-4 col-md-push-8 panel-group panel-box">
+      <div id="fund-filters" class="col-md-4 col-md-push-8 panel-group panel-box clearfix">
         <div class="filter-header">
           <h3>Begränsa sökresultaten: </h3>
           <p><?php echo $funds->getPages()->totalItemCount;?> fonder.</p>
@@ -149,7 +149,7 @@ $submit->setValue('Välj kategorier');
           </div>
           <div class="col-md-8 col-md-pull-4">
             <?php if (strcmp($sortby,'sustainability') == 0): ?>
-            <div class="well sustainability-categories">
+            <div class="well sustainability-categories clearfix">
               <strong><?php echo $this->translate('Valda hållbarhetskategorier') ?></strong>
               <br>
               <?php echo implode(', ', $sustainability) ?>
