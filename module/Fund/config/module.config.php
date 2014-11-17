@@ -103,7 +103,7 @@ return array(
                 'add-fund' => array(
                     'options' => array(
                         'route'    =>
-                            'add fund [--date=] [--exchangerate=] <file>',
+                            'add fund --date= [--exchangerate=] <file>',
                         'defaults' => array(
                             'controller' => 'Fund\Controller\Console',
                             'action'     => 'addfund'
@@ -137,6 +137,19 @@ return array(
                         'defaults' => array(
                             'controller' => 'Fund\Controller\Console',
                             'action'     => 'addemissions'
+                        )
+                    )
+                ),
+                'match-companies' => array(
+                    'options' => array(
+                        'route'    =>
+                            'match companies <file> [--company-name-column=] [--output-directory=] [--market-cap|-m] [--delimiter=]',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'matchcompanies',
+                            'company-name-column' => '0',
+                            'output-directory' => '.',
+                            'delimiter' => chr(9)
                         )
                     )
                 ),
