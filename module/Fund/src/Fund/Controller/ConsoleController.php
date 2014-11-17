@@ -854,6 +854,163 @@ class ConsoleController extends AbstractActionController
         echo "$i emissions added.";
     }
 
+
+    /**
+    *   This method is an attempt for a generic way to identify sharecomapnies
+    *   we've got in the DB or not. The goal is for it to split the entered file
+    *   giving four files:
+    *
+    *   - one with the matched entries and
+    *   - one where the entrie sdoes not match to know which ones to research
+    *      and find new sharemaps :)
+    *   - One with parital name matches
+    *   - One with companies found in the partial and exact matches w/ mkt cap
+    *
+    *
+    *   First row have headers.
+    *
+    **/
+    public function matchcompaniesAction()
+    {
+        $service = $this->getConsoleService();
+        $entityManager = $service->getEM();
+        $request = $this->getRequest();
+
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        // Company name column, defaults to 0
+        $companyNameColumn = $request->getParam('company-name-column');
+        $outputDir = $request->getParam('output-directory');
+        $delimiter = $request->getParam('delimiter');
+        $mktCapOption =
+          $request->getParam('market-cap') || $request->getParam('m');
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl($delimiter);
+
+        // Table has header rows
+        $fileIterator = new \LimitIterator($file, 1);
+
+        $i = 0;
+        $j = 0;
+        $h = 0;
+
+        // Companies not in DB
+        $newFile = fopen($outputDir . '/' . 'newCompanies.tsv', 'w', chr(9));
+        // Companies found on exact match
+        $existingFile = fopen($outputDir . '/' . 'existing.tsv', 'w', chr(9));
+        // Companies found on partial match
+        $maybeExistingFile = fopen($outputDir . '/' . 'maybe-existing.tsv', 'w', chr(9));
+
+        if ($mktCapOption) {
+          // Market cap on companies found, both exact and partial
+          $existingMktCapFile = fopen($outputDir . '/' . 'existing-w-mkt-cap.tsv', 'w', chr(9));
+        }
+
+        // Add headers
+        foreach (new \LimitIterator($file, 0, 1) as $header) {
+            fputcsv($newFile, $header, chr(9));
+            fputcsv($existingFile, $header, chr(9));
+            fputcsv($maybeExistingFile, $header, chr(9));
+        }
+
+        if ($mktCapOption) {
+          fputcsv(
+            $existingMktCapFile,
+            array(
+              'Company Name (sharecompany)',
+              'Market cap SEK'
+            ),
+            chr(9));
+        }
+
+        foreach ($fileIterator as $row) {
+            $companyName = $row[$companyNameColumn];
+
+            $company = $entityManager->getRepository('Fund\Entity\ShareCompany')
+                ->findOneByName($companyName);
+
+            if (is_null($company)) {
+              // Simplify LIKE search string
+              $companySuffix = array('Inc', 'Group', '.', ',', 'Corp', 'Corporation', 'group', 'plc', 'PLC', 'Limited', 'limited' );
+              $trimmedCompanyName = str_replace($companySuffix, "", $companyName);
+              $trimmedCompanyName = trim($trimmedCompanyName);
+
+              $result = $entityManager->getRepository('Fund\Entity\ShareCompany')
+               ->createQueryBuilder('o')
+               ->where('o.name LIKE :name')
+               ->setParameter('name', '%' . $trimmedCompanyName .'%')
+               ->getQuery()
+               ->getResult();
+
+               if (sizeof($result) > 0) {
+                 /*echo $result[0]->name . " is this what youre looking for? "
+                 . $companyName . "\n";*/
+                 if ($mktCapOption) {
+                   fputcsv($existingMktCapFile, array($result[0]->name, $result[0]->marketValueSEK), chr(9));
+                 }
+
+                 $row[] = $result[0]->name;
+                 fputcsv($maybeExistingFile, $row, chr(9));
+                 $h++;
+                 continue;
+               }
+            }
+
+            if (is_null($company)) {
+                $i++;
+
+                // this company is to add to the file listing
+                // the companies not in DB.
+                fputcsv($newFile, $row, chr(9));
+                /*echo "$companyName does not exist in database.\n " .
+                     "Please add sharemaps \n";*/
+                continue;
+
+            } else {
+                $j++;
+
+                // This line should be added to companies found file.
+                // echo "$companyName found! ====> $company->name\n";
+                fputcsv($existingFile, $row, chr(9));
+
+                // print this to another file.
+                // Set if to print this in an option to console route?
+                // echo "$company->name market cap: $company->marketValueSEK \n";
+                if ($mktCapOption) {
+                  fputcsv($existingMktCapFile, array($company->name, $company->marketValueSEK), chr(9));
+                }
+
+                continue;
+            }
+        }
+
+        fclose($newFile);
+        fclose($existingFile);
+        fclose($maybeExistingFile);
+
+        if ($mktCapOption) {
+          fclose($existingMktCapFile);
+        }
+
+        echo "$i new companies.\n";
+        echo "$j existing companies.\n";
+        echo "$h maybe existing companies. (partial matches)\n";
+    }
+
+
+
+    //Helper functions
     private function createFundUrl($fundName)
     {
         // replace non letter or digits by -
