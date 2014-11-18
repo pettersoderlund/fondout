@@ -49,19 +49,13 @@ class ShareCompany extends Entity
      **/
     protected $accusations = null;
 
+
     /**
      * @var integer
      *
      * @ORM\Column(name="market_value_sek", type="bigint", nullable=true)
      */
     private $marketValueSEK;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="date", type="date", nullable=true)
-     */
-    private $date;
 
     /**
      * @var \Fund\Entity\CarbonTracker
@@ -227,28 +221,4 @@ class ShareCompany extends Entity
     {
         return $this->emissions;
     }
-
-    /**
-     * Set date
-     *
-     * @param \DateTime $date
-     * @return self
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
 }

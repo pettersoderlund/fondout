@@ -90,13 +90,6 @@ class Fund extends Entity
     protected $fondoutcategory;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="morningstar_rating", type="integer", nullable=true)
-     */
-    protected $morningstarRating;
-
-    /**
      * @var \Fund\Entity\FundCompany
      *
      * @ORM\ManyToOne(targetEntity="\Fund\Entity\FundCompany", inversedBy="funds")
@@ -443,29 +436,6 @@ class Fund extends Entity
     {
         $this->co2 = $co2;
         return $this;
-    }
-
-    /**
-     * Set morningstar rating
-     *
-     * @param integer $morningstarRating
-     * @return Fund
-     */
-    public function setMorningstarRating($morningstarRating)
-    {
-        $this->morningstarRating = $morningstarRating;
-
-        return $this;
-    }
-
-    /**
-     * Get morningstarRating
-     *
-     * @return integer
-     */
-    public function getMorningstarRating()
-    {
-        return $this->morningstarRating;
     }
 
     public function getCo2Coverage()

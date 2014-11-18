@@ -713,7 +713,6 @@ class ConsoleController extends AbstractActionController
 
             $companyName = $row[0];
             $marketCap = $row[1];
-            $date = $row[2];
 
             $company = $entityManager->getRepository('Fund\Entity\ShareCompany')
                 ->findOneByName($companyName);
@@ -726,15 +725,6 @@ class ConsoleController extends AbstractActionController
 
             $company->setMarketValueSEK($marketCap);
 
-            $timezone = "Europe/Stockholm";
-            $datetimev = \DateTime::createFromFormat(
-                'd/m/Y',
-                $date,
-                new \DateTimeZone($timezone)
-            );
-            // Set hours minutes seconds to 0/midnight
-            $datetimev->setTime(0, 0, 0);
-            $company->setDate($datetimev);
 
             $entityManager->persist($company);
 
