@@ -227,4 +227,28 @@ class ShareCompany extends Entity
     {
         return $this->emissions;
     }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return self
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
 }
