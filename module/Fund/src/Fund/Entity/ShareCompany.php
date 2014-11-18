@@ -49,13 +49,19 @@ class ShareCompany extends Entity
      **/
     protected $accusations = null;
 
-
     /**
      * @var integer
      *
      * @ORM\Column(name="market_value_sek", type="bigint", nullable=true)
      */
     private $marketValueSEK;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date", nullable=true)
+     */
+    private $date;
 
     /**
      * @var \Fund\Entity\CarbonTracker
