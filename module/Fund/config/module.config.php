@@ -153,6 +153,19 @@ return array(
                         )
                     )
                 ),
+                'match-companies-on-shares' => array(
+                    'options' => array(
+                        'route'    =>
+                            'match companiestoshares <file> [--company-name-column=] [--output-directory=] [--delimiter=]',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'matchcompaniestoshares',
+                            'company-name-column' => '0',
+                            'output-directory' => '.',
+                            'delimiter' => chr(9)
+                        )
+                    )
+                ),
             ),
         ),
     ),

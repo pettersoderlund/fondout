@@ -942,7 +942,7 @@ class ConsoleController extends AbstractActionController
 
             if (is_null($company)) {
               // Simplify LIKE search string
-              $companySuffix = array('Inc', 'Group', '.', ',', 'Corp', 'Corporation', 'group', 'plc', 'PLC', 'Limited', 'limited' );
+              $companySuffix = array('Inc', 'Group', '.', ',', 'Corp', 'Corporation', 'group', 'plc', 'PLC', 'Limited', 'limited', '& Co.', ' AB', ' A/S', ' Oyj', ' ASA', ' hf', ' Abp', ' Incorporated', ' Company', '& Company', ' AG', ' (The)', ' and Company', ' Holdings', ' Financial', 'The ');
               $trimmedCompanyName = str_replace($companySuffix, "", $companyName);
               $trimmedCompanyName = trim($trimmedCompanyName);
 
@@ -1007,6 +1007,85 @@ class ConsoleController extends AbstractActionController
         echo "$j existing companies.\n";
         echo "$h maybe existing companies. (partial matches)\n";
     }
+
+    /**
+    *
+    *  This method is to find ISIN numbers from our current DB of shares to
+    *  map them to sharecompanies.
+    *
+    */
+    public function matchcompaniestosharesAction()
+    {
+        $service = $this->getConsoleService();
+        $entityManager = $service->getEM();
+        $request = $this->getRequest();
+
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        // Company name column, defaults to 0
+        $companyNameColumn = $request->getParam('company-name-column');
+        $outputDir = $request->getParam('output-directory');
+        $delimiter = $request->getParam('delimiter');
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl($delimiter);
+
+        // Table has header rows
+        $fileIterator = new \LimitIterator($file, 1);
+
+        $i = 0;
+        $j = 0;
+
+        $outputFile = fopen($outputDir . '/' . 'isinMatches.tsv', 'w', chr(9));
+        fputcsv($outputFile, array('testName', 'shareName', 'shareISIN', 'current_shareCompany'), chr(9));
+
+        foreach ($fileIterator as $row) {
+          $j++;
+          $companyName = $row[$companyNameColumn];
+          // Simplify LIKE search string
+          $companySuffix = array(' Inc', ' Group', '.', ',', ' Corp', ' Corporation', ' group', ' plc', ' PLC', ' Limited', ' limited', ' & Co.', ' International', ' Plc', ' S.A.', ' SA', ' Company' );
+          $trimmedCompanyName = str_replace($companySuffix, "", $companyName);
+          $trimmedCompanyName = trim($trimmedCompanyName);
+
+          $slimCompanyName = str_replace(array(" ", "-", ".", "!"), "", $companyName);
+          $slimCompanyName = substr($slimCompanyName, 0, 8);
+
+          //EXCLUDE XS* IN ISIN? BONDS OBLIGATIONS NOT NEEDED
+
+          $result = $entityManager->getRepository('Fund\Entity\Share')
+           ->createQueryBuilder('o')
+           ->where('o.name LIKE :name')
+           ->orWhere('o.name LIKE :slimname')
+           ->setParameter('name', '%' . $trimmedCompanyName .'%')
+           ->setParameter('slimname', '%' . $slimCompanyName .'%')
+           ->getQuery()
+           ->getResult();
+
+          foreach ($result as $share) {
+             fputcsv($outputFile, array($companyName, $share->name, $share->isin, $share->shareCompany), chr(9));
+             $i++;
+          }
+
+          // If we had no results here do a search where we remove all
+          // whitespaces and shorten the string to a max of 8 char.
+
+        }
+
+        fclose($outputFile);
+        echo "Processed $j rows. \n";
+        echo "printed $i shares to $outputDir/isinMatches.tsv\n";
+    }
+
 
 
 
