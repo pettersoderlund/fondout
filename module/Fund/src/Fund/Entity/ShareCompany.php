@@ -58,27 +58,6 @@ class ShareCompany extends Entity
     private $marketValueSEK;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="nyseSymbol", type="string", length=255, nullable=true)
-     */
-    private $nyseSymbol;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="nasdaqSymbol", type="string", length=255, nullable=true)
-     */
-    private $nasdaqSymbol;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="omxCompanyCode", type="string", length=255, nullable=true)
-     */
-    private $omxCompanyCode;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date", nullable=true)
@@ -225,75 +204,6 @@ class ShareCompany extends Entity
     {
         $this->marketValueSEK = $marketValueSEK;
         return $this;
-    }
-
-    /**
-     * Set nyseSymbol
-     *
-     * @param string $nyseSymbol
-     * @return ShareCompany
-     */
-    public function setNyseSymbol($nyseSymbol)
-    {
-        $this->nyseSymbol = $nyseSymbol;
-
-        return $this;
-    }
-
-    /**
-     * Get nyseSymbol
-     *
-     * @return string
-     */
-    public function getNyseSymbol()
-    {
-        return $this->nyseSymbol;
-    }
-
-    /**
-     * Set nasdaqSymbol
-     *
-     * @param string $nasdaqSymbol
-     * @return ShareCompany
-     */
-    public function setNasdaqSymbol($nasdaqSymbol)
-    {
-        $this->nasdaqSymbol = $nasdaqSymbol;
-
-        return $this;
-    }
-
-    /**
-     * Get nasdaqSymbol
-     *
-     * @return string
-     */
-    public function getNasdaqSymbol()
-    {
-        return $this->nasdaqSymbol;
-    }
-
-    /**
-     * Set omxCompanyCode
-     *
-     * @param string $omxCompanyCode
-     * @return ShareCompany
-     */
-    public function setOmxCompanyCode($omxCompanyCode)
-    {
-        $this->omxCompanyCode = $omxCompanyCode;
-
-        return $this;
-    }
-
-    /**
-     * Get omxCompanyCode
-     *
-     * @return string
-     */
-    public function getOmxCompanyCode()
-    {
-        return $this->omxCompanyCode;
     }
 
     /**
