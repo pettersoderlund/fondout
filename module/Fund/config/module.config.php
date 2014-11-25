@@ -166,6 +166,32 @@ return array(
                         )
                     )
                 ),
+                'add-stock-exchange-listing' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add stock-exchange-listing <file> --stock-exchange= [--company-name-column=] [--symbol-column=]  [--delimiter=]',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addStockListing',
+                            'company-name-column' => '1',
+                            'symbol-column' => '0',
+                            'delimiter' => chr(9)
+                        )
+                    )
+                ),
+                'add-market-cap-from-symbol' => array(
+                    'options' => array(
+                        'route'    =>
+                            'add market-cap-by-symbol <file> --stock-exchange= --exchange-rate= [--market-cap-column=] [--symbol-column=]  [--delimiter=]',
+                        'defaults' => array(
+                            'controller' => 'Fund\Controller\Console',
+                            'action'     => 'addMarketCapBySymbol',
+                            'market-cap-column' => '3',
+                            'symbol-column' => '0',
+                            'delimiter' => chr(9)
+                        )
+                    )
+                ),
             ),
         ),
     ),

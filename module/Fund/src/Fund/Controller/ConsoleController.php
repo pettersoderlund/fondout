@@ -18,6 +18,8 @@ use Fund\Entity\Shareholding;
 use Fund\Entity\Share;
 use Fund\Entity\BankFundListing;
 use Fund\Entity\Emissions;
+use Fund\Entity\StockExchangeListing;
+
 
 class ConsoleController extends AbstractActionController
 {
@@ -942,9 +944,15 @@ class ConsoleController extends AbstractActionController
 
             if (is_null($company)) {
               // Simplify LIKE search string
-              $companySuffix = array('Inc', 'Group', '.', ',', 'Corp', 'Corporation', 'group', 'plc', 'PLC', 'Limited', 'limited', '& Co.', ' AB', ' A/S', ' Oyj', ' ASA', ' hf', ' Abp', ' Incorporated', ' Company', '& Company', ' AG', ' (The)', ' and Company', ' Holdings', ' Financial', 'The ');
+              $companySuffix = $this->getCompanySuffix();
+              $companyName = strtolower($companyName);
               $trimmedCompanyName = str_replace($companySuffix, "", $companyName);
               $trimmedCompanyName = trim($trimmedCompanyName);
+
+              /*if ($companyName == "The AES Corporation") {
+                echo "HELLO!";
+                echo $trimmedCompanyName;
+              }*/
 
               $result = $entityManager->getRepository('Fund\Entity\ShareCompany')
                ->createQueryBuilder('o')
@@ -961,6 +969,8 @@ class ConsoleController extends AbstractActionController
                  }
 
                  $row[] = $result[0]->name;
+                 $row[] = ($result[0]->date) ? "HAS DATE" : "HAS NOT GOT DATE";
+
                  fputcsv($maybeExistingFile, $row, chr(9));
                  $h++;
                  continue;
@@ -1053,7 +1063,11 @@ class ConsoleController extends AbstractActionController
           $j++;
           $companyName = $row[$companyNameColumn];
           // Simplify LIKE search string
-          $companySuffix = array(' Inc', ' Group', '.', ',', ' Corp', ' Corporation', ' group', ' plc', ' PLC', ' Limited', ' limited', ' & Co.', ' International', ' Plc', ' S.A.', ' SA', ' Company' );
+          $companySuffix = $this->getCompanySuffix();
+          /* array(' Inc', ' Group', '.', ',', ' Corp', ' Corporation',
+          ' group', ' plc', ' PLC', ' Limited', ' limited', ' & Co.',
+          ' International', ' Plc', ' S.A.', ' SA', ' Company' );
+          */
           $trimmedCompanyName = str_replace($companySuffix, "", $companyName);
           $trimmedCompanyName = trim($trimmedCompanyName);
 
@@ -1086,10 +1100,277 @@ class ConsoleController extends AbstractActionController
         echo "printed $i shares to $outputDir/isinMatches.tsv\n";
     }
 
+    /**
+    *
+    * This function is used to add listings to the stockexchanges. Matches
+    * a ShareCompany to a StockExchange where it also savas the stocks symbol
+    * to able to update the stock data later on with the symbol as an id.
+    *
+    */
+    public function addStockListingAction()
+    {
+        $service = $this->getConsoleService();
+        $entityManager = $service->getEM();
+        $request = $this->getRequest();
+
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        // Company name column, defaults to 0
+        $symbolColumn = $request->getParam('symbol-column');
+        // Company name column, defaults to 1
+        $companyNameColumn = $request->getParam('company-name-column');
+
+        $stockExchange = $request->getParam('stock-exchange');
+
+        $delimiter = $request->getParam('delimiter');
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl($delimiter);
+
+        // Table has header rows
+        $fileIterator = new \LimitIterator($file, 1);
+
+        $i = 0;
+        $j = 0;
+        $h = 0;
+
+        $se = $entityManager->getRepository('Fund\Entity\StockExchange')
+            ->findOneByName($stockExchange);
+        if (is_null($se)){
+          exit("\' $stockExchange \' stock exchange not found \n  Quitting. \n");
+        }
+
+        foreach ($fileIterator as $row) {
+            echo var_dump($row);
+            $i++;
+            $companyName = $row[$companyNameColumn];
+            $stockSymbol = $row[$symbolColumn];
 
 
+            // Find the company, much match exactly on name
+            $company = $entityManager->getRepository('Fund\Entity\ShareCompany')
+                ->findOneByName($companyName);
+
+            if (is_null($company)) {
+              echo "No company found with the name $companyName.\n";
+              $j++;
+              continue;
+            }
+
+            // Check if the listings already exists
+            $result = $entityManager->getRepository('Fund\Entity\StockExchangeListing')
+             ->createQueryBuilder('sel')
+             ->leftJoin('sel.stockExchange', 'se')
+             ->leftJoin('sel.shareCompany', 'sc')
+             ->where('se.name LIKE :name')
+             ->andWhere('sel.symbol LIKE :symbol')
+             ->setParameter('name', $stockExchange)
+             ->setParameter('symbol', $stockSymbol)
+             ->getQuery()
+             ->getResult();
+
+             if (sizeof($result) > 0) {
+               // If were in here weve got a match! The stocklisting already exists.
+
+               $h++;
+              continue;
+             }
+
+             // Create stock listing
+             $seListing = new StockExchangeListing();
+             $seListing->setStockExchange($se);
+             $seListing->setSymbol($stockSymbol);
+             $seListing->setShareCompany($company);
+
+             $entityManager->persist($seListing);
+             $entityManager->flush();
+          }
+
+        $entityManager->flush();
+        $entityManager->clear();
+
+        echo "$i rows handled.\n";
+        echo "$j companies not found.\n";
+        echo "$h stock listings already added. \n";
+    }
+
+
+
+    /**
+    *
+    * Update market caps from stock exchanges files id on symbol
+    * Nasdaq csv for nyse or nasdaq or
+    * monthly report from OMXS
+    *
+    *
+    */
+    public function addMarketCapBySymbolAction()
+    {
+        $service = $this->getConsoleService();
+        $entityManager = $service->getEM();
+        $request = $this->getRequest();
+
+        if (!$request instanceof ConsoleRequest) {
+            throw new \RuntimeException('You can only use this action from a console!');
+        }
+
+        // Open file passed through argument
+        // Open CSV file
+        $file = new SplFileObject($request->getParam('file'));
+
+        // Company name column, defaults to 0
+        $symbolColumn = $request->getParam('symbol-column');
+
+        $mktCapColumn = $request->getParam('market-cap-column');
+
+        $stockExchange = $request->getParam('stock-exchange');
+        $exchangeRate = $request->getParam('exchange-rate');
+        if (is_numeric($exchangeRate)) {
+          echo "Exchange rate: $exchangeRate. \n";
+        } else {
+          echo "ex rate is not a numeric $exchangeRate.\n";
+        }
+
+        $delimiter = $request->getParam('delimiter');
+
+        $file->setFlags(
+            SplFileObject::READ_CSV |
+            SplFileObject::READ_AHEAD |
+            SplFileObject::SKIP_EMPTY
+        );
+        $file->setCsvControl($delimiter);
+
+        // Table has header rows
+        $fileIterator = new \LimitIterator($file, 1);
+
+        $i = 0;
+        $j = 0;
+        $h = 0;
+
+        $se = $entityManager->getRepository('Fund\Entity\StockExchange')
+            ->findOneByName($stockExchange);
+        if (is_null($se)){
+          exit("\' $stockExchange \' stock exchange not found \n  Quitting. \n");
+        }
+
+        foreach ($fileIterator as $row) {
+            //echo var_dump($row);
+            $i++;
+            $mktCap = $row[$mktCapColumn];
+            $stockSymbol = $row[$symbolColumn];
+
+
+            // Find listing on symbol
+
+            // Check if the listings already exists
+            $listing = $entityManager->getRepository('Fund\Entity\StockExchangeListing')
+             ->createQueryBuilder('sel')
+             ->leftJoin('sel.stockExchange', 'se')
+             ->leftJoin('sel.shareCompany', 'sc')
+             ->where('se.name LIKE :name')
+             ->andWhere('sel.symbol LIKE :symbol')
+             ->setParameter('name', $stockExchange)
+             ->setParameter('symbol', $stockSymbol)
+             ->getQuery()
+             ->getOneOrNullResult();
+
+             if (!is_null($listing)) {
+               // If were in here weve got a match! The stocklisting exists.
+               echo "$stockSymbol matched on $listing->shareCompany market cap: $mktCap \n";
+               echo "market cap in sek " .  $mktCap*$exchangeRate . "\n";
+
+               $h++;
+               $shareCompany = $listing->shareCompany;
+
+               // clear the market cap formatting, dots, commas whatever
+               if (!is_numeric($mktCap)) {
+                 echo "mkt cap $mktCap is not a numeric. Could not be handled. \n";
+                 continue;
+               }
+
+               // convert currency to SEK
+               $mktCapSEK = $mktCap*$exchangeRate;
+
+               // update the market cap
+               $shareCompany->setMarketValueSEK($mktCapSEK);
+               // update date
+
+               $timezone = "Europe/Stockholm";
+               $datetimev = \DateTime::createFromFormat(
+                   'm/d/Y',
+                   date('m/d/Y'),
+                   new \DateTimeZone($timezone)
+               );
+               $shareCompany->setDate($datetimev);
+               $entityManager->persist($shareCompany);
+               $entityManager->flush();
+
+            } else {
+              // echo "Symbol $stockSymbol not found on se $stockExchange\n";
+              $j++;
+              continue;
+            }
+
+
+          }
+
+        $entityManager->flush();
+        $entityManager->clear();
+
+        echo "$i rows handled.\n";
+        echo "$j companies not found.\n";
+        echo "$h companies succesfully found on symbol.\n";
+    }
 
     //Helper functions
+    private function getCompanySuffix() {
+      return array(
+
+        ' group',
+        '.',
+        ',',
+        ' corporation',
+        ' group',
+        ' plc',
+        ' limited',
+        ' & co.',
+        ' ab',
+        ' a/s',
+        ' oyj',
+        ' asa',
+        ' hf',
+        ' abp',
+        ' incorporated',
+        ' company',
+        ' & company',
+        ' ag',
+        ' (the)',
+        ' and company',
+        ' holdings',
+        ' financial',
+        'the ',
+        ' corp',
+        ' inc',
+        ' hldgs',
+        ' companies',
+        ' nl',
+        ' se',
+        's.p.a.',
+        ' spa',
+        's.a.',
+        'aktiengesellschaft');
+    }
+
     private function createFundUrl($fundName)
     {
         // replace non letter or digits by -
