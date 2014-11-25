@@ -119,6 +119,10 @@ class Fund extends Entity
 
     protected $controversialValue;
 
+    protected $co2;
+
+    protected $co2Coverage;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
@@ -314,13 +318,39 @@ class Fund extends Entity
     }
 
     /**
-     * Gets the value of sustainability.
-     *
-     * @return mixed
-     */
+    * Gets the value of sustainability.
+    *
+    * @return mixed
+    */
     public function getSustainability()
     {
-        return $this->sustainability;
+      if ($this->sustainability == 1) {
+        return 1;
+      } elseif ($this->sustainability > 0.97) {
+        return 0.9;
+      } elseif ($this->sustainability > 0.94) {
+        return 0.8;
+      } elseif ($this->sustainability > 0.91) {
+        return 0.7;
+      } elseif ($this->sustainability > 0.87) {
+        return 0.6;
+      } elseif ($this->sustainability > 0.84) {
+        return 0.5;
+      } elseif ($this->sustainability > 0.81) {
+        return 0.4;
+      } elseif ($this->sustainability > 0.78) {
+        return 0.3;
+      } elseif ($this->sustainability > 0.76) {
+        return 0.2;
+      } elseif ($this->sustainability) {
+        return 0.1;
+      } else {
+        // This should only happen if there is
+        // no sustainability score calculated.
+        return 0;
+
+      }
+      return $this->sustainability;
     }
 
     /**
@@ -436,4 +466,28 @@ class Fund extends Entity
 
         return $this;
     }
+
+    public function getCo2()
+    {
+      return $this->co2;
+    }
+
+    public function setCo2($co2)
+    {
+      $this->co2 = $co2;
+      return $this;
+    }
+
+    public function getCo2Coverage()
+    {
+      return $this->co2Coverage;
+    }
+
+    public function setCo2Coverage($co2Coverage)
+    {
+      $this->co2Coverage = $co2Coverage;
+      return $this;
+    }
+
+
 }
