@@ -235,7 +235,8 @@ class FundRepository extends EntityRepository
         // Also add the coverage for the fund of co2 emissions that we know of
         $queryBuilder->select(
             'f.id, ' .
-            '(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/fi.totalMarketValue)*1000000 as scope12weighted, ' .
+            //'(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/fi.totalMarketValue)*1000000 as scope12weighted, ' .
+            '(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/sum(sh.marketValue))*1000000 as scope12weighted, ' .
             'sum(sh.marketValue)/fi.totalMarketValue as coverage'
         )
             ->from('Fund\Entity\Fund', 'f')
