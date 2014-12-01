@@ -77,7 +77,7 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
         <p>
           Dina val matchas med fonderna i vår databas (>200 st) och presenteras
           utifrån hållbarhetsnivå och CO<sub>2</sub>-utsläpp.
-          <a href="/products"> Läs mer om våra mått här </a>
+          <a href="#products"> Läs mer om våra mått här </a>
         </p>
       </div>
       <div class="col-sm-4 glyph-explainations">
@@ -119,14 +119,15 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
   </div>
 </section>
 
-<section class="featurette">
+<section id="products" class="featurette">
   <div class="container">
     <div class="section-chevron-down">
       <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
     <div class="row">
-      <h1>Våra mått</h1>
+  <!--    <h1>Våra mått</h1>
       <h2>Hållbarhetsnivå</h2>
+    -->
         <!--
         <div class="dummy-chart">
           <div class="chart-container">
@@ -134,25 +135,106 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
           </div>
         </div>
         -->
-
+<!--
       <p class="lead">Varje fond mäts av ett hållbarhetsnivå som räknas ut från de parametrar du tycker är viktiga,
       vad är en hållbar fond? Se vilka fonder som investerar hållbart och väljer bort fossila bränslen.  </p>
 
       <h2>Koldioxidutsläpp</h2>
       <p class="lead">Varför inte jämföra koldioxidutsläpp på dina fonder när man redan gör det på så mycket annat? Detta kanske är den plats man kan påverka mest.</p>
+-->
+
+
+<h1>Våra mått</h1>
+<h2>Hållbarhetsnivå</h2>
+<p>Sparfabrikens fond-hållbarhetsnivå utgår ifrån till vilken grad fonden investerat i kontroversiella bolag och redovisas på en tiogradig skala. Den 10-gradiga skalan är inte en direkt översättning av hur stor del hållbara bolag fonden har utan ett betyg som viktat från en normalfördelning för att enkelt kunna se skillnad på fonder (så att inte alla fonder får 10/10).
+
+  De bolag vi valt ut som ohållbara kommer från andra fonders uteslutningar och är sorterade under fyra kategorier: Förbjudna vapen, Miljöförstöring, Brott mot mänskliga rättigheter och  Fossila bränslen.</p>
+
+  <h3>Exempel på hållbarhetsnivå</h3>
+  <p>
+    Swedbank Robur Ethica Sverige - har bara hållbara bolag - betyg 10/10
+    <br>
+    Länsförsäkringar Sverige Index -  har en investering i fossila bränslen nämligen Lundin Petroleum - betyg 9/10
+    <br>
+    Länsförsäkringar Europa Index - har många bolag som inte är hållbara.
+    <strong>Kärnvapentillverkare</strong>: Babcock international group, Thales och Rolls-Royce.
+    Företag som dömts för <strong>allvarlig miljöförstöring</strong>: Shell, BP, Rio Tinto
+    Företag dömda för brott mot <strong>mänskliga rättigheter</strong>: Deutsche Telecom, Eutelsat, Communications, Heidelberg Cement.
+    Företag som tar upp och säljer <strong>fossila bränslen</strong>: BHP Billiton, BP, Total S.A., Royal Dutch Shell, ENI S.p.A., Repsol YPF S.A., BG Group PLC, Statoil, OMV AG, Tullow Oil PLC, GDF Suez S.A., Anglo American PLC, Rio Tinto Co. Ltd., RWE AG, ArcelorMittal, Lundin Petroleum.
+    <br>
+    Sammanfattningsvis en stor andel ohållbara bolag - fonden får därför betyg 6/10 då många bolagen i fonden ändå är hållbara, över 400 stycken.
+  </p>
+  <h2>CO2-utsläpp </h2>
+  <p>
+    Företag mäter i CO2-utsläpp i en standard från Greenhouse gas protocol (GHG) som delats upp i tre delar: scope 1, 2, och 3.
+    Förenklat kan man säga att:
+  </p>
+  <ul>
+    <li>Scope 1 är direkta utsläpp som företaget ger upphov till genom exempelvis förbränning. </li>
+    <li>Scope 2 är indirekta utsläpp som köpt energi i form av elektricitet eller ånga.</li>
+    <li>Scope 3 är övriga indirekta utsläpp från tex. energi som underkonsulter använder tex om man köper en budtjänst.</li>
+  </ul>
+  <p>
+    <a href="http://coolclimate.berkeley.edu/node/405" target="_blank">
+      Läs en bra förklaring på scope 1, 2, 3
+    </a>
+    <br>
+    <a href="http://www.ghgprotocol.org/" target="_blank">
+    Läs mer om GHG
+    </a>
+  </p>
+
+  <p>I våra beräkningar väljer vi att ta med de utsläpp som är närmast företaget i sig genom att använda scope 1 och scope 2. Detta är siffror som de flesta börsnoterade företag själva tar fram och redovisar årligen, det finns stora ramverk för hur man kan revidera om mätningarna är korrekta bland annat Global Reporting Initiative(GRI) som gör det till en prestige för företag att nå upp till deras krav. GRIs kravnivåer har fler parametrar än bara CO2-utsläpp.</p>
 
 
     </div>
   </div>
 </section>
-<section class="featurette callout">
+<section id="contact" class="featurette callout">
   <div class="container">
     <div class="section-chevron-down">
       <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
     <div class="row">
       <h1>Om Sparfabriken</h1>
-      <p class="lead">Sparfabriken har sin bas i Lund och jobbar med att tillgängliggöra information om sparande. Vi arbetar kontinuerligt med att ta fram bättre sätt att jämföra och analysera fonder. Det arbete vi gjort med bland andra Världsnaturfonden WWF Sverige och Swedwatch har resulterat i det som idag är sparfabriken.se. </p>
+      <p class="lead">
+        Sparfabriken har sin bas i Lund och jobbar med att tillgängliggöra information om sparande.
+        Vi arbetar kontinuerligt med att ta fram bättre sätt att jämföra och analysera fonder.
+        Det arbete vi gjort med bland andra Världsnaturfonden WWF Sverige och
+        Swedwatch har resulterat i det som idag är sparfabriken.se.
+      </p>
+
+    </div>
+    <div class="row">
+      <div class="col-md-3 col-md-offset-2">
+        <div class="thumbnail">
+          <img src='/img/people/stefan.png' alt="Stefan Carlsson">
+          <div class="caption image-text">
+            <h4>Stefan Carlsson</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-md-offset-2">
+        <div class="thumbnail">
+          <img src='/img/people/petter.png' alt="Petter Söderlund">
+          <div class="caption image-text">
+            <h4>Petter Söderlund</h4>
+          </div>
+        </div>
+      </div>
+      <address class="vcard col-md-2">
+        <strong><a class="url fn org" href="http://www.sparfabriken.se">Sparfabriken</a></strong><br />
+        <a class="email" href="mailto:hej@sparfabriken.se">hej@sparfabriken.se</a><br />
+        <div class="adr">
+          <div class="street-address">Scheelevägen 15</div>
+          <span class="postal-code">223 63</span>,
+          <span class="locality">Lund</span>,
+          <span class="region">Skåne</span>,
+          <span class="country-name">Sverige</span>
+        </div>
+        <span class="tel">+46 70 - 227 12 50</span>
+      </address>
     </div>
   </div>
 </section>
