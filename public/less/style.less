@@ -5,22 +5,17 @@
 @import "get-list.less";
 @import "get.less";
 
-section {
-  padding: 30px;
+
+.navbar-nav {
+  // text-transform: uppercase;
 }
 
-.section-chevron-down {
-  @media screen and (max-width: @screen-md-min) {
-    font-size: 32px;
-    margin-top: -20px;
-    margin-bottom: 10px;
-  }
-  @media screen and (min-width: @screen-md-min) {
-    font-size: 46px;
-    margin-top: -60px;
-    margin-bottom: 20px;
-  }
-  text-align: center;
+.navbar-brand {
+  padding: 15px;
+}
+
+section {
+  padding: 30px;
 }
 
 section:nth-child(2) {
@@ -31,9 +26,10 @@ input[type="submit"] {
   text-transform: uppercase;
 }
 
+/*
 .dummy-chart .chart-container {
-    width: 53px;
-    height: 53px;
+    width: 75px;
+    height: 75px;
     //margin-top: 10px;
     //margin-bottom: 30px;
     @media (max-width: @screen-sm-min) {
@@ -41,6 +37,7 @@ input[type="submit"] {
         height: 50px;
     }
 }
+*/
 
 .sustainability-categories {
   button {
@@ -99,17 +96,20 @@ input[type="submit"] {
 
   &.callout {
     background-color: rgba(0,0,0,0.03);
+    // does not look good with border if you do double/followed/continuous callout sections
     //border-bottom: 1px solid rgba(0,0,0,0.07);
-
-    @media screen and (min-width: @screen-md-min) {
-      .sustainability-categories {
-      }
-    }
   }
 }
 
-.double-callout {
+.callout + section {
+  border-top: 1px solid rgba(0,0,0,0.07);
+}
+
+
+// grey section preceded with a Grey section
+.callout + .callout {
   padding-top: 0px;
+  border-top: 0px;
 }
 
 
@@ -143,13 +143,6 @@ input[type="submit"] {
     color: rgba(0, 0, 0, 0.8);
 }
 
-.navbar-nav {
-  text-transform: uppercase;
-}
-
-.navbar-brand {
-  padding: 15px;
-}
 
 .glyph-explainations {
   .glyphicon {
@@ -163,6 +156,21 @@ input[type="submit"] {
 
   text-align: center;
 }
+
+.section-chevron-down {
+  @media screen and (max-width: @screen-md-min) {
+    font-size: 32px;
+    margin-top: -20px;
+    margin-bottom: 10px;
+  }
+  @media screen and (min-width: @screen-md-min) {
+    font-size: 46px;
+    margin-top: -60px;
+    margin-bottom: 20px;
+  }
+  text-align: center;
+}
+
 
 // Footer
 // -------------------------
