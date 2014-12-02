@@ -5,6 +5,11 @@
 @import "get-list.less";
 @import "get.less";
 
+.font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .navbar {
   // Shadow
 
@@ -185,6 +190,23 @@ input[type="submit"] {
     margin-bottom: 18px;
   }
   text-align: center;
+}
+
+
+// headers with symbols to the left explaining measures CO2 and Sust. 
+.header-symbol {
+  float: left;
+  padding-left: 20px;
+  margin-top: 8px;
+  margin-bottom: 32px;
+}
+
+.header-with-symbol h2 {
+  padding-left: 100px;
+}
+
+.header-with-symbol {
+  margin-top: 20px;
 }
 
 

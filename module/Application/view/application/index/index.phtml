@@ -10,14 +10,14 @@ $form->setAttribute('class', 'sustainability-categories form-inline well');
 $form->prepare();
 $submit = $form->get('submit');
 $submit->setValue('Hitta fonder');
-$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success btn-block');
+$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary btn-block');
 //$submit->setAttribute('class', $submit->getAttribute('class') . '');
 ?>
 
 <section class="featurette first-section-landing-page">
     <div class="container">
 
-        <div class="row header-row">
+        <div class="row header-row font-smoothing">
           <h1><?php echo $this->translate('Dags att fondera?') ?></h1>
           <h3><?php echo $this->translate('Fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare.') ?></h3>
         </div>
@@ -75,8 +75,9 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
           2. Hållbarhetsnivå & CO<sub>2</sub>-utsläpp
         </h4>
         <p>
-          Dina val matchas med fonderna i vår databas (>200 st) och presenteras
+          Dina val matchas med fonderna i vår databas och presenteras
           utifrån hållbarhetsnivå och CO<sub>2</sub>-utsläpp.
+          <br>
           <a href="#products"> Läs mer om våra mått här </a>
         </p>
       </div>
@@ -145,7 +146,12 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
 
 
 <h1>Våra mått</h1>
-<h2>Hållbarhetsnivå</h2>
+<div class="row header-with-symbol">
+  <div class="header-symbol">
+    <img src="img/sustainability-score-symbol.png" alt="Hållbarhetsnivå-symbol" />
+  </div>
+  <h2>Hållbarhetsnivå</h2>
+</div>
 <p>Sparfabrikens fond-hållbarhetsnivå utgår ifrån till vilken grad fonden investerat i kontroversiella bolag och redovisas på en tiogradig skala. Den 10-gradiga skalan är inte en direkt översättning av hur stor del hållbara bolag fonden har utan ett betyg som viktat från en normalfördelning för att enkelt kunna se skillnad på fonder (så att inte alla fonder får 10/10).
 
   De bolag vi valt ut som ohållbara kommer från andra fonders uteslutningar och är sorterade under fyra kategorier: Förbjudna vapen, Miljöförstöring, Brott mot mänskliga rättigheter och  Fossila bränslen.</p>
@@ -164,9 +170,15 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
     <br>
     Sammanfattningsvis en stor andel ohållbara bolag - fonden får därför betyg 6/10 då många bolagen i fonden ändå är hållbara, över 400 stycken.
   </p>
-  <h2>CO2-utsläpp </h2>
+  <div class="row header-with-symbol">
+    <div class="header-symbol">
+      <img src="img/co2-symbol.png" alt="Koldioxitutsläpp-symbol" />
+    </div>
+    <h2>Koldioxid-utsläpp </h2>
+  </div>
+
   <p>
-    Företag mäter i CO2-utsläpp i en standard från Greenhouse gas protocol (GHG) som delats upp i tre delar: scope 1, 2, och 3.
+    Företag mäter i CO<sub>2</sub>-utsläpp i en standard från Greenhouse gas protocol (GHG) som delats upp i tre delar: scope 1, 2, och 3.
     Förenklat kan man säga att:
   </p>
   <ul>
@@ -184,7 +196,9 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
     </a>
   </p>
 
-  <p>I våra beräkningar väljer vi att ta med de utsläpp som är närmast företaget i sig genom att använda scope 1 och scope 2. Detta är siffror som de flesta börsnoterade företag själva tar fram och redovisar årligen, det finns stora ramverk för hur man kan revidera om mätningarna är korrekta bland annat Global Reporting Initiative(GRI) som gör det till en prestige för företag att nå upp till deras krav. GRIs kravnivåer har fler parametrar än bara CO2-utsläpp.</p>
+  <p>I våra beräkningar väljer vi att ta med de utsläpp som är närmast företaget i sig genom att använda scope 1 och scope 2. Detta är siffror som de flesta börsnoterade företag själva tar fram och redovisar årligen, det finns stora ramverk för hur man kan revidera om mätningarna är korrekta bland annat Global Reporting Initiative(GRI) som gör det till en prestige för företag att nå upp till deras krav. GRIs kravnivåer har fler parametrar än bara CO<sub>2</sub>-utsläpp.</p>
+
+    <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Gå till Fondsök</a>
 
 
     </div>
@@ -206,7 +220,13 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
 
     </div>
     <div class="row">
-      <div class="col-md-3 col-md-offset-2">
+      <address class="vcard col-md-2">
+        <strong><span class="fn">Stefan Carlsson</span></strong><br />
+        <span class="role">Sparekonom</span><br />
+        <a class="email" href="mailto:stefan@sparfabriken.se">stefan@sparfabriken.se</a><br />
+        <span class="tel">+46 70 - 227 12 50</span>
+      </address>
+      <div class="col-md-3">
         <div class="thumbnail">
           <img src='/img/people/stefan.png' alt="Stefan Carlsson">
           <div class="caption image-text">
@@ -215,14 +235,6 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
         </div>
       </div>
 
-      <div class="col-md-3 col-md-offset-2">
-        <div class="thumbnail">
-          <img src='/img/people/petter.png' alt="Petter Söderlund">
-          <div class="caption image-text">
-            <h4>Petter Söderlund</h4>
-          </div>
-        </div>
-      </div>
       <address class="vcard col-md-2">
         <strong><a class="url fn org" href="http://www.sparfabriken.se">Sparfabriken</a></strong><br />
         <a class="email" href="mailto:hej@sparfabriken.se">hej@sparfabriken.se</a><br />
@@ -233,7 +245,20 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-success bt
           <span class="region">Skåne</span>,
           <span class="country-name">Sverige</span>
         </div>
-        <span class="tel">+46 70 - 227 12 50</span>
+      </address>
+
+      <div class="col-md-3">
+        <div class="thumbnail">
+          <img src='/img/people/petter.png' alt="Petter Söderlund">
+          <div class="caption image-text">
+            <h4>Petter Söderlund</h4>
+          </div>
+        </div>
+      </div>
+      <address class="vcard col-md-2">
+        <strong><span class="fn">Petter Söderlund</span></strong><br />
+        <span class="role">Teknik</span><br />
+        <a class="email" href="mailto:petter@sparfabriken.se">petter@sparfabriken.se</a><br />
       </address>
     </div>
   </div>
