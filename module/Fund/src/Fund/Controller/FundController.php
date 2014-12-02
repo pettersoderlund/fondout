@@ -27,7 +27,7 @@ class FundController extends AbstractRestfulController
           'q'               => $params->fromQuery('q', ""),
           //Filter category
           'fondoutcategory' => $params->fromQuery('fondoutcategory', array()),
-          //Filter sustainability-score (1-5)
+          //Filter sustainability-score (1-10)
           'sustainabilityscore' => $params->fromQuery('sustainabilityscore', array())
         );
 
