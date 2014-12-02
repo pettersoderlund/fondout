@@ -14,7 +14,28 @@
     .fund-list .co2-meter {
         margin-right: 8%;
     }
+    .fund-list {
+      .co2-meter {
+        float: right;
+        // based on height of the co2-symbol image + co2 meter symbol margin-top
+        margin-top: -70px;
+      }
+    }
 }
+@media screen and (max-width: 768px) {
+  .fund-list {
+    .co2-meter {
+      float: right;
+      // based on height of the co2-symbol image + co2 meter symbol margin-top
+    }
+    .co2-meter-symbol {
+      width: 30px;
+      margin-right: 10px;
+    }
+  }
+}
+
+
 
 .sortby-header {
   float: left;
@@ -87,6 +108,7 @@
     border-bottom: 1px solid rgba(0,0,0, 0.1);
   }
 }
+
 
 /*.fund-list {
   .co2-header {
