@@ -5,37 +5,18 @@ $this->headScript()
 ->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
 ->appendFile($this->basePath() . '/js/fundprofile.js')
 ->appendFile($this->basePath() . '/js/sustainability-chart.js');
-
-$sform->setAttribute('method', 'POST');
-$sform->setAttribute('action', $this->url('change-sustainability-categories'));
-$sform->prepare();
-$submit = $sform->get('submit');
-$submit->setValue('Välj kategorier');
 ?>
 
 <section class="container fund-page">
   <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
   <div class="row">
     <div class="col-md-8">
-      <div class="sustainability-categories well clearfix">
-        <strong><?php echo $this->translate('Valda hållbarhetskategorier') ?></strong>
-        <br>
-        <?php echo implode(', ', $sustainability) ?>
-        <button type="button" class="btn btn-primary pull-right" data-toggle="collapse" data-target="#sustainability-form"><?php echo $this->translate('Ändra') ?></button>
-
-        <div id="sustainability-form" class="collapse">
-          <?php echo $this->form()->openTag($sform) ?>
-          <div class="checkbox">
-            <?php
-            $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-              echo $this->formMultiCheckbox($sform->get('sustainability'));
-              ?>
-          </div>
-          <br />
-          <?php echo $this->formSubmit($submit) ?>
-          <?php echo $this->form()->closeTag() ?>
-        </div>
-      </div>
+      <?php echo $this->partial('sustainability-categories',
+      array(
+      'sform' => $this->sform,
+      'sustainability' => $sustainability
+      )
+      ); ?>
 
       <div class="panel panel-default">
         <div class="panel-heading">

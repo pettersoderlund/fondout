@@ -38,7 +38,7 @@ return array(
                         'controller' => 'Application\Controller\Contact',
                         'action'     => 'index',
                     ),
-                ),  
+                ),
             ),
 
             // The following is a route to simplify getting started creating

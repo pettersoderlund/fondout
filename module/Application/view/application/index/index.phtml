@@ -1,8 +1,6 @@
 <?php
 $this->headScript()
-->appendFile($this->basePath() . '/js/index.js')
-->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
-->appendFile($this->basePath() . '/js/sustainability-chart.js');
+->appendFile($this->basePath() . '/js/index.js');
 
 $form->setAttribute('method', 'POST');
 $form->setAttribute('action', $this->url('change-sustainability-categories', array(), array('query' => array('redirect' => 'funds'))));
@@ -10,7 +8,7 @@ $form->setAttribute('class', 'sustainability-categories form-inline well');
 $form->prepare();
 $submit = $form->get('submit');
 $submit->setValue('Hitta fonder');
-$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary btn-block');
+$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary btn-block btn-lg');
 //$submit->setAttribute('class', $submit->getAttribute('class') . '');
 ?>
 
@@ -29,13 +27,7 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
               <a href="javascript://" data-toggle="popover" tabindex="0" data-placement="auto" data-trigger="focus"
               title="Hållbarhetsnivå"
               data-content="
-              <p>Hållbarhetsnivån på fonder bestäms från vilka kategorier du väljer.</p>
-                <ul>
-                  <li><strong>Förbjudna vapen</strong> - Företag som tillverkar vapen som anses som inhumana, där inräknas personminor och klusterbomber. Här har vi även räknat in företag som tillverkar kärnvapen. </li>
-                  <li><strong>Miljöförstöring</strong> - Företag som står skyldiga till allvarlig miljöförstöring. </li>
-                  <li><strong>Brott mot mänskliga rättigheter</strong> - Företag skyldiga till brott mot mänskliga rättigheter och i arbetsrättsliga frågor. </li>
-                  <li><strong>Fossila bränslen</strong> - Företag som tar upp olja, kol eller gas.</li>
-                <ul>
+              <?php echo $this->partial('sustainability-categories-explained'); ?>   
                 ">
                 <span class="glyphicon glyphicon-info-sign"></span>
                 </a>

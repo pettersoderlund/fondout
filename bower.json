@@ -17,7 +17,8 @@
     "respond": "~1.4.2",
     "html5shiv": "~3.7.2",
     "selectize": "~0.10.1",
-    "chartjs": "~0.2.0"
+    "chartjs": "~0.2.0",
+    "jquery": "~1.9.0"
   },
   "devDependencies": {}
 }
