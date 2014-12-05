@@ -52,7 +52,7 @@ deploy:
               shopt -s globstar
               rm -r ./**/.gitignore
               echo "/node_modules" > .gitignore
-              #echo "/vendor" > .gitignore
+              echo "/vendor" > .gitignore
       - script:
           name: create openshift webroot symlink
           code: |
