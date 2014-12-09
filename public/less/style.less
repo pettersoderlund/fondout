@@ -5,6 +5,42 @@
 @import "get-list.less";
 @import "get.less";
 
+.font-smoothing {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.navbar {
+  // Shadow
+
+  -webkit-box-shadow: 0px 1px 7px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 1px 7px rgba(0,0,0,0.3);
+  -ms-box-shadow: 0px 1px 7px rgba(0,0,0,0.3);
+  -o-box-shadow: 0px 1px 7px rgba(0,0,0,0.3);
+  box-shadow: 0px 1px 7px rgba(0,0,0,0.3);
+  background-color: white;
+}
+
+.nav li > a {
+  color: #777777;
+}
+
+.navbar-toggle {
+  //border: solid 1px #777777;
+  .icon-bar {
+    background-color: #777777;
+  }
+}
+
+
+.navbar-nav {
+  // text-transform: uppercase;
+}
+
+.navbar-brand {
+  padding: 15px;
+}
+
 section {
   padding: 30px;
 }
@@ -17,33 +53,29 @@ input[type="submit"] {
   text-transform: uppercase;
 }
 
+/*
 .dummy-chart .chart-container {
-    width: 100px;
-    height: 100px;
+    width: 75px;
+    height: 75px;
     //margin-top: 10px;
-    margin-bottom: 30px;
+    //margin-bottom: 30px;
     @media (max-width: @screen-sm-min) {
         width: 50px;
         height: 50px;
     }
 }
+*/
 
 .sustainability-categories {
-  //padding: 10px;
-  //background: #2b9c79;
-  //background: #00695c;
-  //background: @dark-primary;
-  //color: #fff;
-  // line-height: @input-height-base;
-
   button {
       text-transform: uppercase;
       display: inline-block;
   }
 }
 
-.checkbox {
+.form-inline .checkbox {
   padding-left: 2%;
+  font-size: 16px;
 }
 
 #front-sustainibility-form-label {
@@ -51,54 +83,10 @@ input[type="submit"] {
   margin-bottom: 15px;
 }
 
-
-// darker links when using lighter primary color
-/*a {
-  color: @dark-primary;
-  text-decoration: none;
-}*/
-
-.jumbotron {
-  margin-bottom: 0px;
-  padding-bottom: 0px;
-  padding-top: 0px;
-
-  h1 {
-    font-weight: 600;
-    margin-bottom: 20px;
-    // font-size:60px;
+@media screen and (min-width: @screen-lg-min) {
+    .container {
+      width: 970px;
   }
-  @media screen and (min-width: @screen-md-min) {
-    p {
-      position: absolute;
-      bottom: 10px;
-      right: 0px;
-      padding-right: 15px; // same as the menu options padding
-      // color: #EEFF41;
-    }
-
-    .container {  // why dont this work as &.container???
-      position: relative;
-    }
-  }
-
-  &.masthead {
-    /*padding-top: 100px;
-    padding-bottom: 100px;*/
-  }
-}
-
-// For the jumbotrons without a border of sustainability categories.
-// eg. Index page and about/contact page
-.no-sus-categories  {
-  border-bottom: 54px solid @dark-primary;
-  //border-bottom: 54px solid @brand-primary;
-}
-
-@media screen and (min-width: 768px) {
-    .jumbotron h1, .jumbotron .h1 {
-        font-size: ceil((@font-size-base * 4));
-    }
 }
 
 .featurette {
@@ -114,12 +102,13 @@ input[type="submit"] {
 
   .h1, h1:first-child {
     margin-top: 0px;
+    margin-bottom: 45px;
+    text-align: center;
+    font-weight: 600;
   }
 
     .sustainability-categories {
       text-align: center;
-      //background-color: @dark-primary;
-      //color: white;
       padding: 25px;
       margin-top: 30px;
       margin-bottom: 40px;
@@ -135,34 +124,98 @@ input[type="submit"] {
 
   &.callout {
     background-color: rgba(0,0,0,0.03);
-    border-bottom: 1px solid rgba(0,0,0,0.07);
-
-
-    @media screen and (min-width: @screen-md-min) {
-      .sustainability-categories {
-
-      }
-    }
+    // does not look good with border if you do double/followed/continuous callout sections
+    //border-bottom: 1px solid rgba(0,0,0,0.07);
   }
 }
+
+.callout + section {
+  border-top: 1px solid rgba(0,0,0,0.07);
+}
+
+
+// grey section preceded with a Grey section
+.callout + .callout {
+  padding-top: 0px;
+  border-top: 0px;
+}
+
 
 .first-section-landing-page {
   //padding-top: 30px;
   text-align: center;
+  background: url("/img/pinky-swear-329329.jpg"), no-repeat;
+  
+  h1,.h1,.h3,h3 {
+    color: white;
+  }
+  .header-row {
+    h1, .h1 {
+      font-size: floor(@font-size-base*4.6); // 64px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 0px;
+    }
+    margin-top: 9%;
+    margin-bottom: 9%;
+  }
+
+  .well {
+    h3, .h3 {
+      color: rgba(0, 0, 0, 0.8);
+    }
+    background-color: rgb(0, 0, 0);
+    /* RGBa with 0.7 opacity */
+    background-color: rgba(220, 220, 220, 0.7);
+  }
+    color: rgba(0, 0, 0, 0.8);
 }
 
-/*.fondout-logo {
-  font-family: Exo, 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  font-weight: 700;
-}*/
 
-.navbar-nav {
-  text-transform: uppercase;
+.glyph-explainations {
+  .glyphicon {
+    font-size: 85px;
+    margin:15px;
+  }
+
+  h4 {
+    //color: green;
+  }
+
+  text-align: center;
 }
 
-.navbar-brand {
-  padding: 15px;
+.section-chevron-down {
+  @media screen and (max-width: @screen-md-min) {
+    font-size: 32px;
+    margin-top: -20px;
+    margin-bottom: 10px;
+  }
+  @media screen and (min-width: @screen-md-min) {
+    font-size: 46px;
+    margin-top: -62px;
+    margin-bottom: 18px;
+  }
+  text-align: center;
 }
+
+
+// headers with symbols to the left explaining measures CO2 and Sust.
+.header-symbol {
+  float: left;
+  padding-left: 20px;
+  margin-top: 8px;
+  margin-bottom: 32px;
+}
+
+.header-with-symbol h2 {
+  padding-left: 100px;
+}
+
+.header-with-symbol {
+  margin-top: 20px;
+}
+
 
 // Footer
 // -------------------------
@@ -215,6 +268,13 @@ footer {
   color: #cecece;
 }
 
+.co2-meter-symbol {
+    float: left;
+    margin-right: 30px;
+    margin-top: 10px;
+}
+
+
 .panel-box {
     border: 1px solid rgba(0,0,0, 0.1);
     padding: 9px;
@@ -227,6 +287,14 @@ footer {
 .panel-heading > h3, .h3 {
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.sus-form-collapseable-holder {
+  margin-top: 40px;
+}
+
+.btn-sus-cat-collapse {
+  margin-top: 15px;
 }
 
 // About page

@@ -33,6 +33,12 @@ return array(
         ),
     ),
     'view_manager' => array(
+        'template_map' => array(
+          'sustainability-categories'    => __DIR__ . '/../view/fund/fund/sustainability-categories.phtml',
+          'sustainability-categories-explained'    => __DIR__ . '/../view/fund/fund/sustainability-categories-explained.phtml',
+
+        ),
+
         'template_path_stack' => array(
             'Fund' => __DIR__ . '/../view',
         ),

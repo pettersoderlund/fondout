@@ -32,4 +32,10 @@ class IndexController extends AbstractActionController
             )
         );
     }
+
+    public function productsAction()
+    {
+      return new ViewModel(array());
+  }
+
 }

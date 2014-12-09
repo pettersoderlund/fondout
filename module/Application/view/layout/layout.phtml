@@ -22,14 +22,14 @@
         <!-- Scripts -->
         <?php echo $this->headScript()
             ->prependFile($this->basePath() . '/vendor/bootstrap/dist/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/vendor/jquery/dist/jquery.min.js')
+            ->prependFile($this->basePath() . '/vendor/jquery/jquery.min.js')
             ->prependFile($this->basePath() . '/vendor/respond/dest/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/vendor/dist/html5shiv.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
 
     </head>
     <body>
-        <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <header class="navbar navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -37,13 +37,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="/img/sparfabriken-logo-white.png" alt='<?php echo $this->translate('Sparfabriken') ?>'></a>
+                    <a class="navbar-brand" href="<?php echo $this->url('home') ?>"><img src="/img/sparfabriken-logo-color-horizontal.png" alt='<?php echo $this->translate('Sparfabriken') ?>'></a>
                 </div>
                 <nav class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Hem') ?></a></li>
+                        <li><a href="<?php echo $this->url('home', array(), array('fragment' => 'products')) ?>"><?php echo $this->translate('Våra mått') ?></a></li>
                         <li><a href="<?php echo $this->url('funds') ?>"><?php echo $this->translate('Fondsök') ?></a></li>
-                        <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate('Om oss') ?></a></li>
+                        <li><a href="<?php echo $this->url('home', array(), array('fragment' => 'contact')) ?>"><?php echo $this->translate('Om oss') ?></a></li>
                     </ul>
                 </nav><!--/.nav-collapse -->
             </div>
@@ -56,9 +57,11 @@
                     <ul class="footer-links">
                         <li><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Hem') ?></a></li>
                         <li>&bull;</li>
+                        <li><a href="<?php echo $this->url('home', array(), array('fragment' => 'products')) ?>"><?php echo $this->translate('Våra mått') ?></a></li>
+                        <li>&bull;</li>
                         <li><a href="<?php echo $this->url('funds') ?>"><?php echo $this->translate('Fondsök') ?></a></li>
                         <li>&bull;</li>
-                        <li><a href="<?php echo $this->url('contact') ?>"><?php echo $this->translate('Om oss') ?></a></li>
+                        <li><a href="<?php echo $this->url('home', array(), array('fragment' => 'contact')) ?>"><?php echo $this->translate('Om oss') ?></a></li>
                     </ul>
 
                     <p class="disclaimer"><?php echo $this->translate('Detta material är producerat av Sparfabriken. De som arbetar med innehållet är inte analytiker och materialet är inte oberoende investeringsanalys. Syftet är att ge en allmän information till och utgör inte ett personligt investeringsråd eller en personlig rekommendation. Informationen ska inte ensamt utgöra underlag för investeringsbeslut. Informationen grundar sig på allmänt tillgänglig information och är hämtad från källor som bedöms som tillförlitliga, men riktigheten kan inte garanteras och informationen kan vara ofullständig eller nedkortad. Ingen del av materialet får reproduceras eller distribueras till någon annan person utan att Sparfabriken dessförinnan lämnat sitt skriftliga medgivande.') ?></p>

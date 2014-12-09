@@ -20,6 +20,16 @@ return array(
                     ),
                 ),
             ),
+            'products' => array(
+              'type' => 'Zend\Mvc\Router\Http\Literal',
+              'options' => array(
+                'route'    => '/products',
+                'defaults' => array(
+                  'controller' => 'Application\Controller\Index',
+                  'action'     => 'products',
+                ),
+              ),
+            ),
             'contact'=> array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

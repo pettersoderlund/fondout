@@ -1,0 +1,6 @@
+#!/bin/bash
+# .openshift/action_hooks/deploy
+
+unset GIT_DIR
+cd $OPENSHIFT_REPO_DIR
+/opt/rh/php54/root/usr/bin/php composer.phar install --no-dev --no-interaction
