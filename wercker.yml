@@ -61,7 +61,13 @@ deploy:
       - script:
           name: Add authentication to htaccess on the staging server.
           code: |
-              cd public
-              cat .htaccess-staging-addition-auth >> .htaccess
+              env | grep ^PRODUCTION= > /dev/null
+              then
+                echo "No password protection on production server. "
+              else
+                echo "Password protecting through htaccess"
+                cd public
+                cat .htaccess-staging-addition-auth >> .htaccess
+              fi
 
       - openshift-deploy
