@@ -61,6 +61,6 @@ deploy:
       - script:
           name: Add authentication to htaccess on the staging server.
           code: |
-              cat ./public/.htaccess_auth_$DEPLOY_TARGET >> ./public/.htaccess
+              cat "./public/.htaccess_auth_$DEPLOY_TARGET" >> ./public/.htaccess
 
       - openshift-deploy
