@@ -123,7 +123,7 @@ class Fund extends Entity
 
     protected $co2Coverage;
 
-    // This is supposed to be a constant. 
+    // This is supposed to be a constant.
     protected $co2CoverageLimit = 0.5;
 
     public function __construct($options = null)
@@ -327,6 +327,11 @@ class Fund extends Entity
     */
     public function getSustainability()
     {
+      return $this->sustainability;
+    }
+
+    public function getSustainabilityScore() {
+      $maxSustainabilityScore = 10;
       if ($this->sustainability == 1) {
         return 1;
       } elseif ($this->sustainability > 0.97) {
@@ -351,9 +356,7 @@ class Fund extends Entity
         // This should only happen if there is
         // no sustainability score calculated.
         return 0;
-
       }
-      return $this->sustainability;
     }
 
     /**

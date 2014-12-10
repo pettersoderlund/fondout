@@ -27,10 +27,10 @@ $this->headScript()
         <div class="panel-body">
           <div class="row">
             <div class="chart-container pull-left big-chart">
-              <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
+              <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainabilityScore() ?>"></canvas>
             </div>
             <div class="sustainability-number">
-              <?php echo $fund->getSustainability()*10; ?>/10
+              <?php echo $fund->getSustainabilityScore()*10; ?>/10
             </div>
           </div>
 
@@ -222,7 +222,7 @@ $this->headScript()
 
                     <td>
                       <div class="chart-container pull-left similar-chart">
-                        <canvas class="sustainability-chart" data-smallchart="1" data-percentage="<?php echo $fund->getSustainability(); ?>"></canvas>
+                        <canvas class="sustainability-chart" data-smallchart="1" data-percentage="<?php echo $fund->getSustainabilityScore(); ?>"></canvas>
                       </div>
 
                     </td>
