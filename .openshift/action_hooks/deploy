@@ -1,6 +1,10 @@
 #!/bin/bash
 # .openshift/action_hooks/deploy
 
+# Composer
 unset GIT_DIR
 cd $OPENSHIFT_REPO_DIR
 /opt/rh/php54/root/usr/bin/php composer.phar install --no-dev --no-interaction
+
+# Generate proxies
+vendor/bin/doctrine-module orm:generate-proxies
