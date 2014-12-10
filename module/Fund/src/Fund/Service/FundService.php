@@ -276,6 +276,7 @@ class FundService
 
         $paginator->setCurrentPageNumber((int)$currentPage);
         $paginator->setItemCountPerPage(10);
+        $paginator->setPageRange(7);
 
         return $paginator;
     }
