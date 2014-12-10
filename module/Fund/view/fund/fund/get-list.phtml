@@ -194,14 +194,14 @@ $submit->setValue('Välj kategorier');
         <div class="pull-right">
           <div class="pull-right sustainability-desc">
             <?php echo $this->translate('Hållbarhetsnivå') ?>
-            <span class="sustainability-score"><strong><?php echo $fund->getSustainability()*10 ?></strong>/10</span>
+            <span class="sustainability-score"><strong><?php echo $fund->getSustainabilityScore()*10 ?></strong>/10</span>
             <span class="hidden-xs">
                 <?php
-                if ($fund->getSustainability() == 1): echo $this->translate('Hållbar fond enligt din sökning.');
-                elseif ($fund->getSustainability() > 0.7): echo $this->translate('Fonden har ett fåtal ohållbara bolag.');
-                elseif ($fund->getSustainability() > 0.5): echo $this->translate('Fonden har en stor del ohållbara bolag.');
-                elseif ($fund->getSustainability() > 0.3): echo $this->translate('Fonden har en mycket stor del ohållbara bolag.');
-                elseif ($fund->getSustainability()): echo $this->translate('Denna fond stämmer inte in på dina hållbarhetskriterier.');
+                if ($fund->getSustainabilityScore() == 1): echo $this->translate('Hållbar fond enligt din sökning.');
+                elseif ($fund->getSustainabilityScore() > 0.7): echo $this->translate('Fonden har ett fåtal ohållbara bolag.');
+                elseif ($fund->getSustainabilityScore() > 0.5): echo $this->translate('Fonden har en stor del ohållbara bolag.');
+                elseif ($fund->getSustainabilityScore() > 0.3): echo $this->translate('Fonden har en mycket stor del ohållbara bolag.');
+                elseif ($fund->getSustainabilityScore()): echo $this->translate('Denna fond stämmer inte in på dina hållbarhetskriterier.');
                 else: echo $this->translate('Denna fond har inte kunnat granskas.');
                 endif;
               ?>
