@@ -58,8 +58,13 @@ $this->headScript()
             <?php endif; ?>
 
             <table class="table sustainability-grades-explained">
+
+
+              <thead>
               <th></th>
               <th><h4><?php echo $this->translate('Hållbarhetsnivåer') ?></h4></th>
+              </thead>
+              <tbody>
               <tr>
                 <td class="chart-cell">
                   <div class="chart-container pull-left small-chart">
@@ -110,6 +115,7 @@ $this->headScript()
                   <?php echo $this->translate('Denna fond stämmer inte in på dina hållbarhetskriterier.') ?>
                 </td>
               </tr>
+            </tbody>
 
             </table>
           </div>
