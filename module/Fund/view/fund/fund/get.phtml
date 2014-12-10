@@ -130,7 +130,7 @@ $this->headScript()
               <img class="co2-meter-symbol" src="/img/co2-symbol.png" alt="CO2-symbol" />
                 <div class="co2-meter">
                   <div class="co2-meter-number">
-                    <?php if ($fund->co2Coverage > 0.5):?>
+                    <?php if ($fund->co2Coverage > $fund->co2CoverageLimit):?>
                       <?php
                       if ($fund->co2 < 10):
                       echo number_format($fund->co2, 2, ',', ' ');
@@ -142,7 +142,7 @@ $this->headScript()
                       <?php echo $this->translate('N/A') ?>
                     <?php endif; ?>
                   </div>
-                  <div class="co2-meter-unit">gram CO2/kr</div>
+                  <div class="co2-meter-unit">gram CO<sub>2</sub>/kr</div>
                 </div>
               </div>
               <div class="co2-text">
@@ -161,7 +161,7 @@ $this->headScript()
                 ?>
                 </strong>
                 <?php echo $this->translate(' - andel av fonden som vi har CO<sub>2</sub>-utsläppsdata på.') ?>
-                <?php if ($fund->co2Coverage > 0.5):?>
+                <?php if ($fund->co2Coverage > $fund->co2CoverageLimit):?>
                 <?php else: ?>
                   <br>
                   <?php echo $this->translate('CO2 per krona räknas bara ut om täckningsgraden är över 50 procent för att ge ett rättvist värde.') ?>
@@ -212,7 +212,7 @@ $this->headScript()
                       </h4>
                       <p>
                       <?php
-                        if ($fund->getCo2Coverage() > 0.5) :
+                        if ($fund->getCo2Coverage() > $fund->co2CoverageLimit) :
                           echo $this->translate('CO<sub>2</sub>-utsläpp: ') . number_format($fund->getCo2(), 2) . "gram CO<sub>2</sub>/kr";
                         else:
                           echo $this->translate('CO<sub>2</sub>-utsläpp ej tillgängligt.');

@@ -123,6 +123,9 @@ class Fund extends Entity
 
     protected $co2Coverage;
 
+    // This is supposed to be a constant. 
+    protected $co2CoverageLimit = 0.5;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
@@ -489,5 +492,8 @@ class Fund extends Entity
       return $this;
     }
 
+    public function getCo2CoverageLimit() {
+      return $this->co2CoverageLimit;
+    }
 
 }

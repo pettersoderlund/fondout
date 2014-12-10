@@ -222,7 +222,7 @@ $submit->setValue('Välj kategorier');
           <div class="co2-meter">
 
             <div class="co2-header">CO<sub>2</sub>-utsläpp</div>
-            <?php if ($fund->co2Coverage > 0.5): ?>
+            <?php if ($fund->co2Coverage > $fund->co2CoverageLimit): ?>
             <div class="co2-meter-number">
               <?php
                 if ($fund->co2 > 100):

@@ -223,6 +223,8 @@ class FundService
         }
 
         //Condition removes results that doesnt have the right co2coverage level
+        // HOW CAN WE GET THE THRESHOLD / LIMIT VALUE FORM THE FUND ENTITY?
+
         if ($sort == 'co2') {
             $criteria->andWhere(Criteria::expr()->gt('co2Coverage', '0.5'));
         }
