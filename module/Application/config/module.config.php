@@ -20,26 +20,6 @@ return array(
                     ),
                 ),
             ),
-            'products' => array(
-              'type' => 'Zend\Mvc\Router\Http\Literal',
-              'options' => array(
-                'route'    => '/products',
-                'defaults' => array(
-                  'controller' => 'Application\Controller\Index',
-                  'action'     => 'products',
-                ),
-              ),
-            ),
-            'contact'=> array(
-                'type' => 'Zend\Mvc\Router\Http\Literal',
-                'options' => array(
-                    'route'    => '/contact',
-                    'defaults' => array(
-                        'controller' => 'Application\Controller\Contact',
-                        'action'     => 'index',
-                    ),
-                ),
-            ),
 
             // The following is a route to simplify getting started creating
             // new controllers and actions without needing to create a new
