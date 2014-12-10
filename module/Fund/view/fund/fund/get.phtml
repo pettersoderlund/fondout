@@ -25,8 +25,13 @@ $this->headScript()
           </h3>
         </div>
         <div class="panel-body">
-          <div class="chart-container pull-left big-chart">
-            <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
+          <div class="row">
+            <div class="chart-container pull-left big-chart">
+              <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainability() ?>"></canvas>
+            </div>
+            <div class="sustainability-number">
+              <?php echo $fund->getSustainability()*10; ?>/10
+            </div>
           </div>
 
           <?php if ($cCategoriesCount): ?>
@@ -115,25 +120,30 @@ $this->headScript()
             <h3><?php echo $this->translate('CO<sub>2</sub>-utsläpp') ?></h3>
           </div>
           <div class="panel-body">
-            <img class="co2-meter-symbol" src="/img/co2-symbol.png" alt="CO2-symbol" />
-            <?php if ($fund->co2Coverage > 0.5):?>
-
-              <div class="co2-meter">
-                <div class="co2-meter-number">
-                  <?php
-                    if ($fund->co2 < 10):
+            <div class="row">
+              <img class="co2-meter-symbol" src="/img/co2-symbol.png" alt="CO2-symbol" />
+                <div class="co2-meter">
+                  <div class="co2-meter-number">
+                    <?php if ($fund->co2Coverage > 0.5):?>
+                      <?php
+                      if ($fund->co2 < 10):
                       echo number_format($fund->co2, 2, ',', ' ');
-                    else:
+                      else:
                       echo number_format($fund->co2, 1, ',', ' ');
-                    endif;
-                  ?>
+                      endif;
+                      ?>
+                    <?php else: ?>
+                      <?php echo $this->translate('N/A') ?>
+                    <?php endif; ?>
+                  </div>
+                  <div class="co2-meter-unit">gram CO2/kr</div>
                 </div>
-                <div class="co2-meter-unit">gram CO2/kr</div>
               </div>
               <div class="co2-text">
                 <p><?php echo $this->translate('Företagen i fondens gemensamma CO<sub>2</sub>-utsläpp.') ?></p>
 
                 <?php echo $this->translate('Täckningsgrad: ') ?>
+
                 <strong>
                 <?php
                 echo $this->numberFormat(
@@ -145,10 +155,12 @@ $this->headScript()
                 ?>
                 </strong>
                 <?php echo $this->translate(' - andel av fonden som vi har CO<sub>2</sub>-utsläppsdata på.') ?>
+                <?php if ($fund->co2Coverage > 0.5):?>
+                <?php else: ?>
+                  <br>
+                  <?php echo $this->translate('CO2 per krona räknas bara ut om täckningsgraden är över 50 procent för att ge ett rättvist värde.') ?>
+                <?php endif; ?>
               </div>
-            <?php else: ?>
-              <?php echo $this->translate('Ej tillgängligt. <br>Vi saknar tillräckligt med underliggande data för att beräkna CO<sub>2</sub>-utsläpp på denna fond.') ?>
-            <?php endif; ?>
           </div>
         </div>
       </div>
