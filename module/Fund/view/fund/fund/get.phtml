@@ -187,10 +187,11 @@ $this->headScript()
         </div>
 
         <div class="panel panel-default">
-          <div class="panel-heading"><h3>Liknande fonder</h3></div>
+          <div class="panel-heading"><h3><?php echo $this->translate('Liknande fonder') ?></h3></div>
           <div class="panel-body">
 
             <table class="table table-hover">
+              <!--
               <thead>
                 <tr>
                   <th>
@@ -201,6 +202,8 @@ $this->headScript()
                   </th>
                 </tr>
               </thead>
+
+              -->
               <tbody>
                 <?php foreach ($funds as $fund): ?>
                   <tr>
@@ -210,19 +213,25 @@ $this->headScript()
                         <?php echo $this->translate($fund->name) ?>
                       </a>
                       </h4>
-                      <p>
-                      <?php
-                        if ($fund->getCo2Coverage() > $fund->co2CoverageLimit) :
-                          echo $this->translate('CO<sub>2</sub>-utsläpp: ') . number_format($fund->getCo2(), 2) . "gram CO<sub>2</sub>/kr";
-                        else:
-                          echo $this->translate('CO<sub>2</sub>-utsläpp ej tillgängligt.');
-                        endif;
-                      ?></p>
-                    </td>
+                      <div class="similar-funds-sustainability pull-right">
+                        <div class="chart-container similar-chart">
+                          <canvas class="sustainability-chart" data-smallchart="1" data-percentage="<?php echo $fund->getSustainabilityScore(); ?>"></canvas>
+                        </div>
+                        <span class="similar-sustianability-score"><?php echo $fund->getSustainabilityScore()*10; ?>/10 </span>
+                      </div>
 
-                    <td>
-                      <div class="chart-container pull-left similar-chart">
-                        <canvas class="sustainability-chart" data-smallchart="1" data-percentage="<?php echo $fund->getSustainabilityScore(); ?>"></canvas>
+                      <div class="similar-funds-co2  pull-left">
+                        <img class="similar-funds-co2-symbol" src="/img/co2-symbol.png" alt="CO2-symbol" />
+                        <span class="similar-co2-number">
+                          <?php
+                          if ($fund->getCo2Coverage() > $fund->co2CoverageLimit) :
+                          echo number_format($fund->getCo2(), 2) . "g/kr";
+                          else:
+                          /*echo $this->translate('CO<sub>2</sub>-utsläpp ej tillgängligt.');*/
+                          echo $this->translate('N/A');
+                          endif;
+                          ?>
+                        </span>
                       </div>
 
                     </td>
