@@ -1,7 +1,7 @@
 Fondout
 =======================
 
-[ ![Codeship Status for marcuslindfeldt/fondout](https://www.codeship.io/projects/d7481520-fee2-0131-5487-5eefab01992e/status)](https://www.codeship.io/projects/29624)
+[![wercker status](https://app.wercker.com/status/38da5829a241418599dc1709c21adcb4/m "wercker status")](https://app.wercker.com/project/bykey/38da5829a241418599dc1709c21adcb4)
 
 Introduction
 ------------
