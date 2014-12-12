@@ -79,6 +79,15 @@ class FundController extends AbstractRestfulController
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
         $banks = $service->getBanks($fund);
 
+        // Get average co2 from the category and co2Coverage category.
+        /*
+         * Would it be resonable to set the entity (fund->fondoutcategory)
+         * in this stage? for the values of co2?
+         */
+        $category_co2 = $service->getAverageCo2Category($fund);
+        $categoryCo2 = $category_co2[0][1];
+        $categoryCo2Coverage = $category_co2[0][2];
+
         list ($controversialCompaniesPaginator, $cCategoriesCount)
             = $service->findControversialCompanies(
                 $fund,
@@ -108,7 +117,9 @@ class FundController extends AbstractRestfulController
                 'sharesCount'            => $sharesCount, // total fund share count
                 'query'                  => $parameters->fromQuery(), // ??? ... not used?
                 //'form'                   => $form,
-                'sform'                  => $sform // Sustainability cat. form
+                'sform'                  => $sform, // Sustainability cat. form
+                'categoryCo2'            => $categoryCo2,
+                'categoryCo2Coverage'    => $categoryCo2Coverage
             )
         );
     }

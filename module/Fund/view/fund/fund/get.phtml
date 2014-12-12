@@ -149,7 +149,6 @@ $this->headScript()
                 <p><?php echo $this->translate('Företagen i fondens gemensamma CO<sub>2</sub>-utsläpp.') ?></p>
 
                 <?php echo $this->translate('Täckningsgrad: ') ?>
-
                 <strong>
                 <?php
                 echo $this->numberFormat(
@@ -160,12 +159,32 @@ $this->headScript()
                 );
                 ?>
                 </strong>
+
                 <?php echo $this->translate(' - andel av fonden som vi har CO<sub>2</sub>-utsläppsdata på.') ?>
                 <?php if ($fund->co2Coverage > $fund->co2CoverageLimit):?>
                 <?php else: ?>
                   <br>
-                  <?php echo $this->translate('CO2 per krona räknas bara ut om täckningsgraden är över 50 procent för att ge ett rättvist värde.') ?>
+                  <?php echo $this->translate('CO<sub>2</sub> per krona räknas bara ut om täckningsgraden är över 50 procent för att ge ett rättvist värde.') ?>
                 <?php endif; ?>
+
+                <br><br>
+                <p><?php echo $this->translate('
+                  Snittet på CO<sub>2</sub>utsläpp på fonder i samma kategori
+                  som ' . $this->fund->name . '(' .
+                  $this->fund->fondoutCategory->title . ')' . ' är ' .
+                  number_format($this->categoryCo2, 1, ',', ' ')
+                  . ' gram CO<sub>2</sub>/kr. Täckningsgraden i kategorin är '
+                  .
+                  $this->numberFormat(
+                  $this->categoryCo2Coverage,
+                  NumberFormatter::PERCENT,
+                  NumberFormatter::TYPE_DEFAULT,
+                  "en_US"
+                  ));
+                  ?>
+
+
+                </p>
               </div>
           </div>
         </div>

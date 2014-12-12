@@ -339,4 +339,16 @@ class FundService
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         return $repository->findBanks($fund);
     }
+
+    /**
+    * Get the average CO2 and total co2-coverage of the category.
+    *
+    * @param \Fund\Entity\FondoutCategory
+    * @return double (?) avgco2cateogry
+    */
+    public function getAverageCo2Category($fund) {
+      $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+      return $repository->findAverageCo2Category($fund);
+
+    }
 }

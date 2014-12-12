@@ -129,7 +129,32 @@ class FundRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    public function findAverageCo2Category(Fund $fund)
+    {
+      $qb=  $this->getEntityManager()
+      ->createQueryBuilder()
+      ->select(
+          'SUM((sh.marketValue/sc.marketValueSEK)*e.scope12)/SUM(sh.marketValue)*1000000,
+          SUM(sh.marketValue)/SUM(DISTINCT fi.totalMarketValue)'
+        )
+      ->from('Fund\Entity\Fund', 'f')
+      ->join('f.fundInstances', 'fi')
+      ->join('fi.shareholdings', 'sh')
+      ->join('sh.share', 's')
+      ->join('s.shareCompany', 'sc')
+      ->leftJoin('sc.emissions', 'e')
+      ->where('f.fondoutcategory = ?1')
+      ->andWhere('e.date is not null')
+      ->andWhere('sc.marketValueSEK is not null')
+      ->andWhere('e.scope12 is not null')
+      ->andWhere('f.active=1');
 
+      $qb->setParameter(1, $fund->fondoutCategory->id);
+
+
+      return $qb->getQuery()->getResult();
+
+    }
 
     public function findControversialValue(Fund $fund, $category = array())
     {
