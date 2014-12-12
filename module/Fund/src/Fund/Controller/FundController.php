@@ -79,6 +79,15 @@ class FundController extends AbstractRestfulController
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
         $banks = $service->getBanks($fund);
 
+        // Get average co2 from the category and co2Coverage category.
+        /*
+         * Would it be resonable to set the entity (fund->fondoutcategory)
+         * in this stage? for the values of co2?
+         */
+        $category_co2 = $service->getAverageCo2Category($fund);
+        $categoryCo2 = $category_co2[0][1];
+        $categoryCo2Coverage = $category_co2[0][2];
+
         list ($controversialCompaniesPaginator, $cCategoriesCount)
             = $service->findControversialCompanies(
                 $fund,
@@ -89,15 +98,6 @@ class FundController extends AbstractRestfulController
         $cSharesCount = $service->getCountControverisalShares($fund, $sustainability);
         $sharesCount = $service->getCountShares($fund);
 
-        /* Not USED Filter fund categories.
-        $form = $this->getServiceLocator()
-            ->get('FormElementManager')
-            ->get('\Fund\Form\FundPageFilterForm');
-
-        $form->setCategories($cCategoriesCount);
-        $form->setData($parameters->fromQuery());
-        */
-
         $sform = $this->getServiceLocator()
             ->get('FormElementManager')
             ->get('\Fund\Form\SustainabilityForm');
@@ -107,17 +107,19 @@ class FundController extends AbstractRestfulController
 
         return new ViewModel(
             array(
-                'fund'                   => $fund,
-                'funds'                  => $funds,
-                'banks'                  => $banks,
-                'sustainability'         => $sustainabilityNames,
-                'controversialCompanies' => $controversialCompaniesPaginator,
-                'cCategoriesCount'       => $cCategoriesCount,
-                'cSharesCount'           => $cSharesCount,
-                'sharesCount'            => $sharesCount,
-                'query'                  => $parameters->fromQuery(),
+                'fund'                   => $fund, // the fund of the fund page
+                'funds'                  => $funds, // funds in the same category
+                'banks'                  => $banks, // where to buy the fund
+                'sustainability'         => $sustainabilityNames, // Breached uniq. sust. categories
+                'controversialCompanies' => $controversialCompaniesPaginator, // Companies breaching sust. cat. (not used atm. dec 14.)
+                'cCategoriesCount'       => $cCategoriesCount, // number of company breaches of sust. cat. per category
+                'cSharesCount'           => $cSharesCount, // number of share breaches of sust. cat. per category
+                'sharesCount'            => $sharesCount, // total fund share count
+                'query'                  => $parameters->fromQuery(), // ??? ... not used?
                 //'form'                   => $form,
-                'sform'                  => $sform
+                'sform'                  => $sform, // Sustainability cat. form
+                'categoryCo2'            => $categoryCo2,
+                'categoryCo2Coverage'    => $categoryCo2Coverage
             )
         );
     }
