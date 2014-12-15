@@ -16,7 +16,7 @@ $(document).ready(function() {
       animationSteps : 350,
       animationEasing : "easeOutQuart",
       //Boolean - Whether we animate scaling the Doughnut from the centre
-      animateScale : false,
+      animateScale : false
     };
 
     var data = [
