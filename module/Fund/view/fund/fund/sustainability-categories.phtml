@@ -8,11 +8,16 @@ $submit = $sform->get('submit');
 $submit->setValue('Välj kategorier');
 ?>
 
-<div class="well sustainability-categories clearfix">
-  <strong><?php echo $this->translate('Valda hållbarhetskategorier:') ?></strong>
-
-  <?php echo implode(', ', $this->sustainability) ?>
-  <button type="button" class="btn btn-primary pull-right btn-sus-cat-collapse" data-toggle="collapse" data-target="#sustainability-form"><?php echo $this->translate('Ändra') ?></button>
+<div class="well sustainability-categories clearfix info-box">
+  <div class="row">
+  <p class="col-sm-10">
+    <strong><?php echo $this->translate('Valda hållbarhetskategorier:') ?></strong>
+    <?php echo implode(', ', $this->sustainability) ?>
+  </p>
+  <div class="col-sm-2">
+    <button type="button" class="btn btn-primary pull-right btn-sus-cat-collapse" data-toggle="collapse" data-target="#sustainability-form"><?php echo $this->translate('Ändra') ?></button>
+  </div>
+  </div>
 
   <div id="sustainability-form" class="collapse">
     <div class="sus-form-collapseable-holder">
@@ -30,7 +35,7 @@ $submit->setValue('Välj kategorier');
       </div>
       <div class="">
         <h3>Hållbarhetskategorier förklarade</h3>
-        <?php echo $this->partial('sustainability-categories-explained'); ?>   
+        <?php echo $this->partial('sustainability-categories-explained'); ?>
       </div>
     </div>
   </div>
