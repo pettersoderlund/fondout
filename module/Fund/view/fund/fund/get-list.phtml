@@ -261,7 +261,7 @@ $submit->setValue('Välj kategorier');
       <p class="hidden-xs"><?php echo $this->translate($fund->company->name) ?></p>
       <p>
         <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
-        <span class="label label-primary"><?php
+        <!--<span class="label label-primary"><?php
           if ($fund->totalMarketValue <= 600000000) {
             echo $this->translate('Liten fond');
           } elseif ($fund->totalMarketValue >= 2500000000) {
@@ -270,7 +270,7 @@ $submit->setValue('Välj kategorier');
             echo $this->translate('Mellanfond');
           }
           ?>
-        </span>
+        </span>-->
       </p>
     </li>
   <?php endforeach; ?>
