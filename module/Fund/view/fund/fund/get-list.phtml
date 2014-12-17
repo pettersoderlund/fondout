@@ -2,9 +2,9 @@
 
 $this->headScript()
 ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
-->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
-->appendFile($this->basePath() . '/js/funds.js')
-->appendFile($this->basePath() . '/js/sustainability-chart.js');
+//->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
+->appendFile($this->basePath() . '/js/funds.js');
+//->appendFile($this->basePath() . '/js/sustainability-chart.js');
 
 if (isset($query['order'])) {
   $order = $query['order'];
@@ -216,7 +216,7 @@ $submit->setValue('Välj kategorier');
           </div>
 
           <div class="chart-container pull-left">
-            <canvas class="sustainability-chart" data-percentage="<?php echo $fund->getSustainabilityScore() ?>"></canvas>
+            <img src="img/sustainability-score-symbol.png" alt="Hållbarhetsnivå-symbol" />
           </div>
         </div>
       <?php endif;?>
