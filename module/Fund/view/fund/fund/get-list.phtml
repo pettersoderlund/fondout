@@ -39,6 +39,7 @@ $submit->setValue('Välj kategorier');
           <p><?php echo $funds->getPages()->totalItemCount;?> fonder.</p>
         </div>
         <?php echo $this->form()->openTag($form) ?>
+
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -88,7 +89,7 @@ $submit->setValue('Välj kategorier');
             </h3>
           </div>
 
-          <div id="collapseFondoutCategory" class="panel-collapse collapse <?php if ($form->get('fondoutcategory')->getValue()) {echo " in ";} ?>">
+          <div id="collapseFondoutCategory" class="panel-collapse collapse in"><!--class="panel-collapse collapse <?php if ($form->get('fondoutcategory')->getValue()) {echo " in ";} ?>">-->
             <div class="panel-body">
               <p><?php echo $this->translate('Välj var i världen fonden äger sin majoritet av företag.') ?></p>
               <div class="checkbox">
