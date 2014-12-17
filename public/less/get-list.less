@@ -24,6 +24,13 @@
     }
 }
 
+@media screen and (min-width: 768px) {
+  .fund-list .co2-meter-symbol {
+    //to align with the sust. cake
+    margin-right: 38px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .fund-list {
     .co2-meter {
@@ -54,18 +61,19 @@
 
 }
 
-.sustainability-desc {
-    margin-top: 4px;
-    width:100px;
-    font-size: ceil(@font-size-base*0.8);
-    line-height: ceil(@font-size-base*0.8);
-  }
+.sustainability-desc .sust-header{
+    margin-left: 7px;
 
-  .sustainability-desc .sustainability-score {
+}
+
+.sustainability-desc .sustainability-number {
       font-size: 16px;
-      line-height: 20px;
-      margin: 30px;
-  }
+      line-height: ceil(@font-size-base*2.9);
+      margin-right: 7px;
+      margin-left: 7px;
+
+}
+
 
 @media screen and (min-width: 768px) {
   .sortby-buttons {
@@ -73,14 +81,11 @@
   }
 
   .sustainability-desc {
-      margin-top: 8px;
-      width:120px;
-      height:100px;
-      margin: 8px;
+
   }
-  .sustainability-desc .sustainability-score {
-      line-height: 30px;
-      margin: 32px;
+  .sustainability-desc .sustainability-number {
+      font-size: ceil(@font-size-base*2.9);
+
   }
 }
 

@@ -198,9 +198,11 @@ $submit->setValue('Välj kategorier');
       <?php if (strcmp($sortby,'sustainability') == 0): ?>
         <div class="pull-right">
           <div class="pull-right sustainability-desc">
-            <?php echo $this->translate('Hållbarhetsnivå') ?>
-            <span class="sustainability-score"><strong><?php echo $fund->getSustainabilityScore()*10 ?></strong>/10</span>
-            <span class="hidden-xs">
+            <div class="sust-header">
+              <?php echo $this->translate('Hållbarhetsnivå') ?>
+            </div>
+            <div class="sustainability-number"><?php echo $fund->getSustainabilityScore()*10 ?>/10</div>
+            <!--<span class="hidden-xs">
                 <?php
                 if ($fund->getSustainabilityScore() == 1): echo $this->translate('Hållbar fond enligt din sökning.');
                 elseif ($fund->getSustainabilityScore() > 0.7): echo $this->translate('Fonden har ett fåtal ohållbara bolag.');
@@ -210,7 +212,7 @@ $submit->setValue('Välj kategorier');
                 else: echo $this->translate('Denna fond har inte kunnat granskas.');
                 endif;
               ?>
-            </span>
+            </span>-->
           </div>
 
           <div class="chart-container pull-left">
