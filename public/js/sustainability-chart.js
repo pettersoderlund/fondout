@@ -3,9 +3,9 @@ $(document).ready(function() {
   // Sustainability score dougnut chart
   $('.chart-container').each(function(index, container) {
     var canvas = container.querySelector('.sustainability-chart');
-    var sustainability = canvas.dataset.percentage;
-    var smallchart = canvas.dataset.smallchart;
-    var rotation = canvas.dataset.rotation;
+    var sustainability = $(canvas).data("percentage");
+    var smallchart = $(canvas).data("smallchart");
+    var rotation = $(canvas).data("rotation");
 
     var options = {
       animateRotate : (rotation ? true : false),
