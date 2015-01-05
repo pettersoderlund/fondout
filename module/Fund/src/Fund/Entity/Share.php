@@ -69,6 +69,17 @@ class Share extends Entity
      **/
     protected $shareholdings = null;
 
+    /**
+    * @var \Fund\Entity\ShareCategory
+    *
+    * @ORM\ManyToOne(targetEntity="\Fund\Entity\FondoutCategory")
+    * @ORM\JoinColumns({
+    *   @ORM\JoinColumn(name="category", referencedColumnName="id")
+    * })
+    */
+    protected $category;
+
+
     public function __construct($options = null)
     {
         parent::__construct($options);
@@ -206,4 +217,29 @@ class Share extends Entity
     {
         return $this->shareCompany;
     }
+
+    /**
+    * Gets the category.
+    *
+    * @return \Fund\Entity\ShareCategory
+    */
+    public function getCategory()
+    {
+      return $this->category ? $this->category : new ShareCategory();
+    }
+
+    /**
+    * Sets the category.
+    *
+    * @param \Fund\Entity\ShareCategory $category the category
+    *
+    * @return self
+    */
+    public function setCategory(\Fund\Entity\ShareCategory $category)
+    {
+      $this->category = $category;
+      
+      return $this;
+    }
+
 }

@@ -70,6 +70,13 @@ class Fund extends Entity
     protected $active = 1;
 
     /**
+    * @var boolean
+    *
+    * @ORM\Column(name="fof", type="boolean", nullable=false)
+    */
+    protected $fof = 0;
+
+    /**
      * @var \Fund\Entity\FundCategory
      *
      * @ORM\ManyToOne(targetEntity="\Fund\Entity\FundCategory")
