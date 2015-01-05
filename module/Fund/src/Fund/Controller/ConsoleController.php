@@ -1121,6 +1121,12 @@ class ConsoleController extends AbstractActionController
         // Open CSV file
         $file = new SplFileObject($request->getParam('file'));
 
+        // dry-run should make no lasting changes to the database
+        $dryRun = $request->getParam('dry-run');
+        if ($dryRun == 1) {
+          echo "Dry run activiated, no lasting changes will be made. \n";
+        }
+
         // Company name column, defaults to 0
         $symbolColumn = $request->getParam('symbol-column');
         // Company name column, defaults to 1
@@ -1130,6 +1136,8 @@ class ConsoleController extends AbstractActionController
 
         $delimiter = $request->getParam('delimiter');
 
+        $headerRows = $request->getParam('header-rows');
+
         $file->setFlags(
             SplFileObject::READ_CSV |
             SplFileObject::READ_AHEAD |
@@ -1137,12 +1145,13 @@ class ConsoleController extends AbstractActionController
         );
         $file->setCsvControl($delimiter);
 
-        // Table has header rows
-        $fileIterator = new \LimitIterator($file, 1);
+        $fileIterator = new \LimitIterator($file, $headerRows);
 
         $i = 0;
         $j = 0;
         $h = 0;
+        $k = 0;
+        $l = 0;
 
         $se = $entityManager->getRepository('Fund\Entity\StockExchange')
             ->findOneByName($stockExchange);
@@ -1151,7 +1160,7 @@ class ConsoleController extends AbstractActionController
         }
 
         foreach ($fileIterator as $row) {
-            echo var_dump($row);
+            //echo var_dump($row);
             $i++;
             $companyName = $row[$companyNameColumn];
             $stockSymbol = $row[$symbolColumn];
@@ -1181,9 +1190,43 @@ class ConsoleController extends AbstractActionController
 
              if (sizeof($result) > 0) {
                // If were in here weve got a match! The stocklisting already exists.
-
+               echo "Listing of $companyName with symbol $stockSymbol on $stockExchange already exists.\n";
                $h++;
               continue;
+             }
+
+             // Check if the listing exists with another ticker/symbol
+             // Typically for updating tickers!
+             $result = $entityManager->getRepository('Fund\Entity\StockExchangeListing')
+             ->createQueryBuilder('sel')
+             ->leftJoin('sel.stockExchange', 'se')
+             ->leftJoin('sel.shareCompany', 'sc')
+             ->where('se.name LIKE :stockExchangeName')
+             ->andWhere('sc.name LIKE :companyName')
+             ->setParameter('stockExchangeName', $stockExchange)
+             ->setParameter('companyName', $companyName)
+             ->getQuery()
+             ->getResult();
+
+             if (sizeof($result) > 0) {
+
+               // If were in here weve got a match! The stocklisting already exists.
+               // we should update the listing.
+
+
+
+               $seListing = $result[0];
+               echo "Updating listing of $companyName from symbol $seListing->stockSymbol to $stockSymbol on $stockExhange. \n";
+               //UPDATE LISTING
+               $seListing->setSymbol($stockSymbol);
+
+               $k++;
+               //$entityManager->persist();
+               if ($dryRun == 0) {
+                 $entityManager->flush();
+               }
+
+               continue;
              }
 
              // Create stock listing
@@ -1193,15 +1236,27 @@ class ConsoleController extends AbstractActionController
              $seListing->setShareCompany($company);
 
              $entityManager->persist($seListing);
-             $entityManager->flush();
+             $l++;
+             if ($dryRun == 0) {
+               $entityManager->flush();
+             }
           }
-
-        $entityManager->flush();
+        if ($dryRun == 0) {
+          $entityManager->flush();
+        }
         $entityManager->clear();
 
+        echo "\n ---- Summary ---- \n";
         echo "$i rows handled.\n";
+        echo "$l new listings added. \n";
         echo "$j companies not found.\n";
         echo "$h stock listings already added. \n";
+        echo "$k stock listings updated with new symbols. \n";
+
+
+        if ($dryRun == 1) {
+          echo "\n ---- Dry run activiated, no changes made. ---- \n\n";
+        }
     }
 
 
@@ -1210,8 +1265,8 @@ class ConsoleController extends AbstractActionController
     *
     * Update market caps from stock exchanges files id on symbol
     * Nasdaq csv for nyse or nasdaq or
-    * monthly report from OMXS
-    *
+    * monthly report from OMXS.
+    * Data from the YQL is also possible to insert.
     *
     */
     public function addMarketCapBySymbolAction()
@@ -1394,3 +1449,6 @@ class ConsoleController extends AbstractActionController
         return $this->consoleService;
     }
 }
+
+
+//echo \Doctrine\Common\Util\Debug::dump();

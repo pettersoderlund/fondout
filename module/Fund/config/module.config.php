@@ -175,13 +175,15 @@ return array(
                 'add-stock-exchange-listing' => array(
                     'options' => array(
                         'route'    =>
-                            'add stock-exchange-listing <file> --stock-exchange= [--company-name-column=] [--symbol-column=]  [--delimiter=]',
+                            'add stock-exchange-listing <file> --stock-exchange= [--company-name-column=] [--symbol-column=]  [--delimiter=] [--dry-run] [--header-rows=]',
                         'defaults' => array(
                             'controller' => 'Fund\Controller\Console',
                             'action'     => 'addStockListing',
                             'company-name-column' => '1',
                             'symbol-column' => '0',
-                            'delimiter' => chr(9)
+                            'dry-run' => '0',
+                            'delimiter' => chr(9),
+                            'header-rows' => '0'
                         )
                     )
                 ),
