@@ -1268,9 +1268,15 @@ class ConsoleController extends AbstractActionController
     * monthly report from OMXS.
     * Data from the YQL is also possible to insert.
     *
+    * To do:
+    *
+    *
+    * Fixed:
+    *    - Enable date as a parameter 12 jan 2015
     */
     public function addMarketCapBySymbolAction()
     {
+
         $service = $this->getConsoleService();
         $entityManager = $service->getEM();
         $request = $this->getRequest();
@@ -1283,8 +1289,11 @@ class ConsoleController extends AbstractActionController
         // Open CSV file
         $file = new SplFileObject($request->getParam('file'));
 
-        // Company name column, defaults to 0
+        // Symbol column, defaults to 0
         $symbolColumn = $request->getParam('symbol-column');
+
+        // defaults to todays date
+        $date = $request->getParam('date');
 
         $mktCapColumn = $request->getParam('market-cap-column');
 
@@ -1361,11 +1370,21 @@ class ConsoleController extends AbstractActionController
                // update date
 
                $timezone = "Europe/Stockholm";
+
+               // if date isnt set default to todays date.
+               if(!$date) {
+                 $date = date('m/d/Y');
+               }
+
                $datetimev = \DateTime::createFromFormat(
                    'm/d/Y',
-                   date('m/d/Y'),
+                   $date, // enter datestring here
                    new \DateTimeZone($timezone)
                );
+
+               // set datetime h m s to 0 0 0
+               $datetimev->setTime(0, 0, 0);
+
                $shareCompany->setDate($datetimev);
                $entityManager->persist($shareCompany);
                $entityManager->flush();

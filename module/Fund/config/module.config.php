@@ -190,7 +190,7 @@ return array(
                 'add-market-cap-from-symbol' => array(
                     'options' => array(
                         'route'    =>
-                            'add market-cap-by-symbol <file> --stock-exchange= --exchange-rate= [--market-cap-column=] [--symbol-column=]  [--delimiter=]',
+                            'add market-cap-by-symbol <file> --stock-exchange= --exchange-rate= [--market-cap-column=] [--symbol-column=]  [--delimiter=] [--date=]',
                         'defaults' => array(
                             'controller' => 'Fund\Controller\Console',
                             'action'     => 'addMarketCapBySymbol',
