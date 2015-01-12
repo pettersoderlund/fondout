@@ -72,7 +72,7 @@ class Share extends Entity
     /**
     * @var \Fund\Entity\ShareCategory
     *
-    * @ORM\ManyToOne(targetEntity="\Fund\Entity\FondoutCategory")
+    * @ORM\ManyToOne(targetEntity="\Fund\Entity\ShareCategory")
     * @ORM\JoinColumns({
     *   @ORM\JoinColumn(name="category", referencedColumnName="id")
     * })
@@ -238,7 +238,7 @@ class Share extends Entity
     public function setCategory(\Fund\Entity\ShareCategory $category)
     {
       $this->category = $category;
-      
+
       return $this;
     }
 

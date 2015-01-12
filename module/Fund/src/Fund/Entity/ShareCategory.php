@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 * ShareCategory
 *
 * @ORM\Table(
-*     name="share_Category",
+*     name="share_category",
 *     uniqueConstraints={
 *         @ORM\UniqueConstraint(
 *             name="name",
@@ -21,30 +21,30 @@ use Doctrine\ORM\Mapping as ORM;
 
 class ShareCategory extends Entity
 {
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     */
-    private $id;
+  /**
+  * @ORM\Column(name="id", type="integer")
+  * @ORM\Id
+  * @ORM\GeneratedValue
+  */
+  private $id;
 
-    /**
-     * @ORM\Column(name="name", type="string", length=64)
-     */
-    private $name;
+  /**
+  * @ORM\Column(name="name", type="string", length=64)
+  */
+  private $name;
 
-    public function getId()
-    {
-        return $this->id;
-    }
+  public function getId()
+  {
+    return $this->id;
+  }
 
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
+  public function setName($name)
+  {
+    $this->name = $name;
+  }
 
-    public function getName()
-    {
-        return $this->name;
-    }
+  public function getName()
+  {
+    return $this->name;
+  }
 }
