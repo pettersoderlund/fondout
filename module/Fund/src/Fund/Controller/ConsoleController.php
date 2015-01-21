@@ -19,6 +19,8 @@ use Fund\Entity\Share;
 use Fund\Entity\BankFundListing;
 use Fund\Entity\Emissions;
 use Fund\Entity\StockExchangeListing;
+use Fund\Entity\Sector;
+use Fund\Entity\Industry;
 
 
 class ConsoleController extends AbstractActionController
@@ -89,7 +91,7 @@ class ConsoleController extends AbstractActionController
 
         // Check if the share exists
         if (!$share) {
-            echo "No share found with ISIN: $isin \n";
+            // echo "No share found with ISIN: $isin \n";
 
             // Maybe we should return an errorcode instead. throw exception?
             $em->clear();
@@ -104,8 +106,8 @@ class ConsoleController extends AbstractActionController
 
         // If the share has a sharecompany, is it the same as the one given?
         } elseif ($share->getShareCompany()->getName() == $name) {
-            echo "This share ($isin) $share->name already has the given "
-             . "sharecompany set: $name \n";
+            /*echo "This share ($isin) $share->name already has the given "
+             . "sharecompany set: $name \n";*/
             $em->clear();
             return null;
         } else {
@@ -1404,6 +1406,66 @@ class ConsoleController extends AbstractActionController
         echo "$i rows handled.\n";
         echo "$j companies not found.\n";
         echo "$h companies succesfully found on symbol.\n";
+    }
+    public function addIndustryBySymbolAction() {
+
+      $service = $this->getConsoleService();
+      $entityManager = $service->getEM();
+      $request = $this->getRequest();
+
+      if (!$request instanceof ConsoleRequest) {
+        throw new \RuntimeException('You can only use this action from a console!');
+      }
+
+      $symbol = $request->getParam('symbol');
+      $industryName = $request->getParam('industry');
+      $stockExchange = $request->getParam('stock-exchange');
+
+      // check SE
+      $se = $entityManager->getRepository('Fund\Entity\StockExchange')
+      ->findOneByName($stockExchange);
+      if (is_null($se)){
+        exit("\' $stockExchange \' stock exchange not found \n  Quitting. \n");
+      }
+
+      // Check symbol
+      // Check if the listings already exists
+      $result = $entityManager->getRepository('Fund\Entity\StockExchangeListing')
+      ->createQueryBuilder('sel')
+      ->leftJoin('sel.stockExchange', 'se')
+      ->leftJoin('sel.shareCompany', 'sc')
+      ->where('se.name LIKE :name')
+      ->andWhere('sel.symbol LIKE :symbol')
+      ->setParameter('name', $stockExchange)
+      ->setParameter('symbol', $symbol)
+      ->getQuery()
+      ->getResult();
+
+      if (sizeof($result) < 1) {
+        //exit ("$stockSymbol on $stockExchange does not exist.\n";)
+        // This will be very common, symbol not found.
+        exit();
+      }
+      $company = $result[0]->shareCompany;
+
+      // Check industry
+      $industry = $entityManager->getRepository('Fund\Entity\Industry')
+      ->findOneByName($industryName);
+
+      if (is_null($industry)){
+        exit("Industry: $industryName not found. \n");
+      }
+
+
+
+      // Update
+      $company->setIndustry($industry);
+
+      $entityManager->persist($company);
+      $entityManager->flush();
+      $entityManager->clear();
+      return 1;
+      //exit("Successfully set $industryName to " + $company->name + " by symbol $symbol.\n");
     }
 
     //Helper functions

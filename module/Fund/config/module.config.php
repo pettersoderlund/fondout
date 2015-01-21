@@ -200,6 +200,17 @@ return array(
                         )
                     )
                 ),
+                'add-industry-by-yahoo-symbol' => array(
+                  'options' => array(
+                    'route'    =>
+                    'add industry-by-symbol --symbol= --industry= [--stock-exchange=] ',
+                    'defaults' => array(
+                      'controller' => 'Fund\Controller\Console',
+                      'action'     => 'addIndustryBySymbol',
+                      'stock-exchange' => 'yahoo'
+                    )
+                  )
+                ),
             ),
         ),
     ),

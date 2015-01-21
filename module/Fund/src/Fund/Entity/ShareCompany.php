@@ -43,7 +43,7 @@ class ShareCompany extends Entity
     protected $shares = null;
 
     /**
-     * @var FundInstance[]
+     * @var Accusation[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\Accusation", mappedBy="shareCompany")
      **/
@@ -77,6 +77,16 @@ class ShareCompany extends Entity
      * @ORM\OneToOne(targetEntity="\Fund\Entity\Emissions", mappedBy="shareCompany")
      **/
     protected $emissions = null;
+
+    /**
+    * @var \Fund\Entity\Industry
+    *
+    * @ORM\ManyToOne(targetEntity="\Fund\Entity\Industry")
+    * @ORM\JoinColumns({
+    *   @ORM\JoinColumn(name="industry", referencedColumnName="id")
+    * })
+    */
+    protected $industry;
 
     public function __construct($options = null)
     {
@@ -251,6 +261,29 @@ class ShareCompany extends Entity
     public function getEmissions()
     {
         return $this->emissions;
+    }
+
+    /**
+    * Set industry
+    *
+    * @param \Fund\Entity\Industry $industry
+    * @return ShareCompany
+    */
+    public function setIndustry(\Fund\Entity\Industry $industry)
+    {
+      $this->industry = $industry;
+
+      return $this;
+    }
+
+    /**
+    * Get industry
+    *
+    * @return \Fund\Entity\Industry
+    */
+    public function getIndustry()
+    {
+      return $this->industry;
     }
 
     /**
