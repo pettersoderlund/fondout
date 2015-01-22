@@ -179,12 +179,23 @@ $this->headScript()
                   "en_US"
                   ));
                   ?>
-
-
                 </p>
               </div>
           </div>
         </div>
+
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3><?php echo $this->translate('CO<sub>2</sub>-reserver') ?></h3>
+          </div>
+          <div class="panel-body">
+            <div class="row">
+              <p>En investering i denna fond ger <?php echo ($this->fund->co2Reserve) ? (number_format($this->fund->co2Reserve, 2, ',', ' ' ). "kg CO<sub>2</sub>-reserv/kr")  : "fonden har inge"; ?></p>
+            </div>
+          </div>
+        </div>
+
+
       </div>
 
       <div class="col-md-4">
@@ -207,19 +218,6 @@ $this->headScript()
           <div class="panel-body">
 
             <table class="table table-hover">
-              <!--
-              <thead>
-                <tr>
-                  <th>
-                    <?php echo $this->translate('Fond') ?>
-                  </th>
-                  <th>
-                    <?php echo $this->translate('Hållbarhet') ?>
-                  </th>
-                </tr>
-              </thead>
-
-              -->
               <tbody>
                 <?php foreach ($funds as $fund): ?>
                   <tr>
