@@ -171,7 +171,7 @@ $submit->setValue('Välj kategorier');
 
       <li class="dropdown <?php if (strcmp($sortby,'co2reserve') == 0): echo ' active '; endif; ?>">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          CO<sub>2</sub>-utsläpp <?php if (strcmp($sortby,'co2reserve') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+          CO<sub>2</sub>-reserver <?php if (strcmp($sortby,'co2reserve') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
           </a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2reserve', 'order' => 'DESC')  + $query))); ?>">CO<sub>2</sub>-reserver (högst till lägst)</a></li>
