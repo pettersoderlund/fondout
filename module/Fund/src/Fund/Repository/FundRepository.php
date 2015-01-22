@@ -260,7 +260,6 @@ class FundRepository extends EntityRepository
         // Also add the coverage for the fund of co2 emissions that we know of
         $queryBuilder->select(
             'f.id, ' .
-            //'(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/fi.totalMarketValue)*1000000 as scope12weighted, ' .
             '(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/sum(sh.marketValue))*1000000 as scope12weighted, ' .
             'sum(sh.marketValue)/fi.totalMarketValue as coverage'
         )
@@ -281,8 +280,34 @@ class FundRepository extends EntityRepository
             }
         }
 
-        //echo \Doctrine\Common\Util\Debug::dump($funds);
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        // query: get the co2-reserves for the funds
+        // req mkt cap of companies
+        // base it on Carbon tracker
+        $queryBuilder->select(
+        'f.id, ' .
+        'sum(sh.marketValue) as fund_SEK_in_CT200, ' .
+        'sum((sh.marketValue/sc.marketValueSEK)*(ct.oil+ct.gas+ct.coal))*1000000000 as fund_tonnes_CO2, ' .
+        'sum(((sh.marketValue/sc.marketValueSEK)*(ct.oil+ct.gas+ct.coal))*1000000000000)/fi.totalMarketValue as kg_per_SEK '
+        )
+        ->from('Fund\Entity\Fund', 'f')
+        ->join('f.fundInstances', 'fi')
+        ->join('fi.shareholdings', 'sh')
+        ->join('sh.share', 's')
+        ->join('s.shareCompany', 'sc')
+        ->join('sc.carbonTracker', 'ct')
+        ->where(
+        $queryBuilder->expr()->in('f.id', array_keys($fundMap)))
+        ->andWhere('sh.marketValue > 0')
+        ->andWhere('sc.marketValueSEK is not null')
+        ->groupBy('f.id');
 
+        // map the co2 reserves to the related fund
+        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
+          if (isset($fundMap[$cv['id']])) {
+            $fundMap[$cv['id']]->setCo2Reserve($cv['kg_per_SEK']);
+          }
+        }
         return $funds;
     }
 }

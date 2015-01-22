@@ -163,11 +163,21 @@ $submit->setValue('Välj kategorier');
 
             <?php if (count($funds)): ?>
 
-
+<!-- START SORT -->
 <div class="well well-sm">
   <div class="row">
     <p class="sortby-header">Sortera efter</p>
     <ul class="nav nav-pills pull-right sortby-buttons">
+
+      <li class="dropdown <?php if (strcmp($sortby,'co2reserve') == 0): echo ' active '; endif; ?>">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          CO<sub>2</sub>-utsläpp <?php if (strcmp($sortby,'co2reserve') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2reserve', 'order' => 'DESC')  + $query))); ?>">CO<sub>2</sub>-reserver (högst till lägst)</a></li>
+            <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2reserve', 'order' => 'ASC')  + $query))); ?>">CO<sub>2</sub>-reserver (lägst till högst)</a></li>
+          </ul>
+        </li>
 
       <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -191,10 +201,12 @@ $submit->setValue('Välj kategorier');
     </ul>
   </div>
 </div>
+<!-- END SORT -->
 
 <ul class="results">
   <?php foreach ($funds as $fund): ?>
     <li>
+      <!-- START SUSTB -->
       <?php if (strcmp($sortby,'sustainability') == 0): ?>
         <div class="pull-right">
           <div class="pull-right sustainability-desc">
@@ -220,8 +232,9 @@ $submit->setValue('Välj kategorier');
           </div>
         </div>
       <?php endif;?>
+      <!-- END SUSTB -->
 
-
+      <!-- START CO2 emissions -->
         <?php if (strcmp($sortby,'co2') == 0): ?>
           <div class="pull-right">
           <img class="co2-meter-symbol" src="img/co2-symbol.png" alt="CO2-symbol" />
@@ -250,6 +263,30 @@ $submit->setValue('Välj kategorier');
           </div>
         </div>
         <?php endif;?>
+      <!-- END CO2 emissions -->
+
+      <!-- START CO2 reserves -->
+      <?php if (strcmp($sortby,'co2reserve') == 0): ?>
+        <div class="pull-right">
+
+
+
+            <div class="">CO<sub>2</sub>-reserver</div>
+
+            <?php if($fund->co2Reserve) {
+              echo number_format($fund->co2Reserve, 2, ',', ' ');
+            } else {
+              echo "0";
+            }  ?>
+            kg/kr
+
+
+
+
+        </div>
+
+      <?php endif;?>
+      <!-- END CO2 reserves -->
 
 
       <h3>

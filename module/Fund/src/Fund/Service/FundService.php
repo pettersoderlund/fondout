@@ -209,6 +209,9 @@ class FundService
             case 'co2':
                 $sortOrder['co2'] = $order;
                 break;
+            case 'co2reserve':
+                $sortOrder['co2reserve'] = $order;
+                break;
         }
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
