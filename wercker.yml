@@ -42,7 +42,9 @@ build:
             token: $SLACK_TOKEN
             channel: "#software"
             username: wercker
-            icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140deploy:
+            icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
+
+deploy:
     steps:
 #      Crashes with new update, try doing this in the deploy hook on openshift
 #      - script:
@@ -78,3 +80,4 @@ build:
             channel: "#software"
             username: wercker
             icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
+            
