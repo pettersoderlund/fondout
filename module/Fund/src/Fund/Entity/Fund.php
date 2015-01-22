@@ -130,6 +130,9 @@ class Fund extends Entity
 
     protected $co2Coverage;
 
+    // co2 reserves, tonnes
+    protected $co2Reserve;
+
     // This is supposed to be a constant.
     protected $co2CoverageLimit = 0.5;
 
@@ -504,6 +507,17 @@ class Fund extends Entity
 
     public function getCo2CoverageLimit() {
       return $this->co2CoverageLimit;
+    }
+
+    public function getCo2Reserve()
+    {
+      return $this->co2Reserve;
+    }
+
+    public function setCo2Reserve($co2Reserve)
+    {
+      $this->co2Reserve = $co2Reserve;
+      return $this;
     }
 
 }
