@@ -13,7 +13,7 @@ $settings = array(
      *
      * Accepted is something else
      */
-    'default' => 'sv-SE',
+    'default' => 'sv_SE',
 
     /**
      * Supported locales
@@ -22,7 +22,7 @@ $settings = array(
      *
      * Accepted is something else
      */
-    'supported' => array('sv-SE', 'en-GB', 'en'),
+    'supported' => array('sv_SE', 'en_US'),
 
     /**
      * Aliases for locales
@@ -31,7 +31,7 @@ $settings = array(
      *
      * Accepted is something else
      */
-    'aliases' => array('en' => 'en-GB'),
+    // 'aliases' => array('sv' => 'sv_SE'),
 
     /**
      * Strategies
@@ -40,8 +40,7 @@ $settings = array(
      *
      * Accepted is something else
      */
-    'strategies' => array('query', 'acceptlanguage'),
-
+     'strategies' => array(/*'SlmLocale\Strategy\UriPathStrategy',*/'SlmLocale\Strategy\QueryStrategy', 'SlmLocale\Strategy\CookieStrategy', 'SlmLocale\Strategy\HttpAcceptLanguageStrategy'), 
 
     /**
      * Throw exception when no locale is found
@@ -50,7 +49,7 @@ $settings = array(
      *
      * Accepted is something else
      */
-    'throw_exception' => true,
+    //'throw_exception' => true,
 
     /**
      * End of SlmLocale configuration

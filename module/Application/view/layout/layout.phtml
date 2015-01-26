@@ -1,6 +1,7 @@
 <?php echo $this->doctype(); ?>
 
-<html lang="en">
+<html lang="<?= Locale::getPrimaryLanguage(Locale::getDefault())?>">
+
     <head profile="http://www.w3.org/2005/10/profile">
 
         <meta charset="utf-8">
@@ -54,6 +55,8 @@
                         <li><a href="<?php echo $this->url('home', array(), array('fragment' => 'products')) ?>"><?php echo $this->translate('Våra mått') ?></a></li>
                         <li><a href="<?php echo $this->url('funds') ?>"><?php echo $this->translate('Fondsök') ?></a></li>
                         <li><a href="<?php echo $this->url('home', array(), array('fragment' => 'contact')) ?>"><?php echo $this->translate('Om oss') ?></a></li>
+                        <li><a href="<?php echo $this->url('home', array(), array('query' => array('lang' => 'sv_SE'))) ?>"><?php echo $this->translate('På svenska') ?></a></li>
+                        <li><a href="<?php echo $this->url('home', array(), array('query' => array('lang' => 'en_US'))) ?>"><?php echo $this->translate('In English') ?></a></li>
                     </ul>
                 </nav><!--/.nav-collapse -->
             </div>

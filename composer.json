@@ -10,7 +10,7 @@
         "zf-commons/zfc-base": "*",
         "zf-commons/zfc-user": "*",
         "aws/aws-sdk-php": "2.*",
-        "slm/locale": "dev-master"
+        "slm/locale": "*"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",
