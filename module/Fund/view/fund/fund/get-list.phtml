@@ -35,8 +35,8 @@ $submit->setValue('Välj kategorier');
     <div class="row">
       <div id="fund-filters" class="col-md-4 col-md-push-8 panel-group panel-box clearfix">
         <div class="filter-header">
-          <h3>Begränsa sökresultaten: </h3>
-          <p><?php echo $funds->getPages()->totalItemCount;?> fonder.</p>
+          <h3><?php echo $this->translate('Begränsa sökresultaten') ?>: </h3>
+          <p><?php echo $funds->getPages()->totalItemCount;?> <?php echo $this->translate('fonder')?>.</p>
         </div>
         <?php echo $this->form()->openTag($form) ?>
 
@@ -166,26 +166,26 @@ $submit->setValue('Välj kategorier');
 
 <div class="well well-sm">
   <div class="row">
-    <p class="sortby-header">Sortera efter</p>
+    <p class="sortby-header"><?php echo $this->translate('Sortera efter') ?></p>
     <ul class="nav nav-pills pull-right sortby-buttons">
 
       <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          CO<sub>2</sub>-utsläpp <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+          CO<sub>2</sub>-<?php echo $this->translate('utsläpp') ?> <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo $this->translate('(lägst till högst)'); else: echo $this->translate('(högst till lägst)'); endif; endif; ?><span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'DESC')  + $query))); ?>">CO<sub>2</sub>-utsläpp (högst till lägst)</a></li>
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO<sub>2</sub>-utsläpp (lägst till högst)</a></li>
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'DESC')  + $query))); ?>">CO<sub>2</sub>-<?php echo $this->translate('utsläpp') ?> <?php echo $this->translate('(högst till lägst)') ?></a></li>
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO<sub>2</sub>-<?php echo $this->translate('utsläpp') ?> <?php echo $this->translate('(lägst till högst)') ?></a></li>
         </ul>
       </li>
 
       <li class="dropdown <?php if (strcmp($sortby,'sustainability') == 0): echo ' active '; endif; ?>">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          Hållbarhetsnivå <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
+          <?php echo $this->translate('Hållbarhetsnivå') ?> <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo $this->translate('(lägst till högst)'); else: echo $this->translate('(högst till lägst)'); endif; endif; ?><span class="caret"></span>
         </a>
         <ul class="dropdown-menu" role="menu">
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">Hållbarhetsnivå (högst till lägst)</a></li>
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'ASC')  + $query))); ?>">Hållbarhetsnivå (lägst till högst)</a></li>
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>"><?php echo $this->translate('Hållbarhetsnivå') ?> <?php echo $this->translate('(högst till lägst)') ?></a></li>
+          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'ASC')  + $query))); ?>"><?php echo $this->translate('Hållbarhetsnivå') ?> <?php echo $this->translate('(lägst till högst)') ?></a></li>
         </ul>
       </li>
     </ul>
