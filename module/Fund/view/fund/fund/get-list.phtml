@@ -156,7 +156,7 @@ $submit->setValue('Välj kategorier');
               ); ?>
             <?php elseif (strcmp($sortby,'co2') == 0): ?>
               <div class="well info-box">
-                <p class="info-box-text"> <strong>Tips!</strong> Välj en fondkategori till vänster för att lättare kunna jämföra fonder. </p>
+                <p class="info-box-text"> <?php echo $this->translate('<strong>Tips!</strong> Välj en fondkategori till vänster för att lättare kunna jämföra fonder.') ?></p>
               </div>
             <?php endif; ?>
 

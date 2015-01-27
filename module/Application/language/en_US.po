@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Sparfabriken.se\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-27 14:29-0000\n"
-"PO-Revision-Date: 2015-01-27 16:28-0000\n"
+"POT-Creation-Date: 2015-01-27 19:52-0000\n"
+"PO-Revision-Date: 2015-01-27 19:54-0000\n"
 "Last-Translator: Petter Söderlund <pettersoderlund@gmail.com>\n"
 "Language-Team: Sparfabriken <petter@sparfabriken.se>\n"
 "Language: en_US\n"
@@ -32,7 +32,51 @@ msgstr ""
 msgid "Undvik att investera i"
 msgstr "Avoid investing in"
 
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:57
+msgid "Hållbarhetspreferenser"
+msgstr "Sustainability Preferences"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:60
+msgid ""
+"Välj dina hållbarhetspreferenser genom att klicka i de aktiviteter du vill "
+"undvika att investera i."
+msgstr ""
+"Choose your sustainability preferences by clicking the activities you want "
+"to avoid investing in."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:68
+msgid "Hållbarhetsnivå & CO<sub>2</sub>-utsläpp"
+msgstr "Sustainability Level & CO <sub>2</sub> emissions"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:72
+msgid ""
+"Dina val matchas med fonderna i vår databas och presenteras utifrån "
+"hållbarhetsnivå och CO<sub>2</sub>-utsläpp."
+msgstr ""
+"Your selections matched with funds in our database and presented based on "
+"the level of sustainability and CO <sub>2</sub> emissions."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:74
+msgid "Läs mer om våra mått här"
+msgstr "Learn more about our standards here"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:81
+msgid "Se fonder"
+msgstr "See funds"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:84
+msgid ""
+"Fonderna som visas ligger i linje med dina hållbarhetspreferenser. Nu är "
+"valet upp till dig."
+msgstr ""
+"Funds shown are in line with your preferences durability. Now the choice is "
+"up to you."
+
 #: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:95
+msgid "Upp till dig."
+msgstr "Up to you."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:96
 msgid ""
 "Som du säkert redan vet, innebär fondsparande att man äger små andelar av de "
 "företag som ingår i fonden. En del har koll på exakt vilka företag som "
@@ -43,7 +87,7 @@ msgstr ""
 "which companies are included, others not. This may not be the most "
 "interesting bit."
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:96
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:97
 msgid ""
 "Vad vi på <strong>Sparfabriken</strong> dock anser vara högintressant, "
 "utöver avkastning, är att försäkra sig om att fonden du sparar i förvaltar "
@@ -54,6 +98,10 @@ msgstr ""
 "with just your expectations for a sustainable future."
 
 #: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:104
+msgid "Sparande för framtiden."
+msgstr "Saving for the future."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:105
 msgid ""
 "När man hör ordet “sparande” tänker nog de flesta på att lägga undan pengar "
 "för att kunna använda dessa i framtiden. Det är självfallet även önskvärt "
@@ -64,7 +112,7 @@ msgstr ""
 "to use in the future. Obviously, it is also desirable that these put away "
 "money will increase in value. We fully agree."
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:105
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:106
 msgid ""
 "För oss innebär sparande dock mer än så. För oss innebär sparande att inte "
 "slösa på jordens resurser och att ta tillvara på sin etik och moral. För oss "
@@ -74,17 +122,17 @@ msgstr ""
 "earth's resources and to take advantage of their ethics and morals. For us, "
 "saving and sustainability go hand in hand."
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:106
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:107
 msgid "- Varför spara för framtiden om man inte bryr sig om hur den ser ut?"
 msgstr "- Why save for the future if you do not care about what it looks like?"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:118
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:119
 #: /Users/petter/projects/fondout2/module/Application/view/layout/layout.phtml:55
 #: /Users/petter/projects/fondout2/module/Application/view/layout/layout.phtml:71
 msgid "Våra mått"
 msgstr "Our measures"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:123
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:124
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:66
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:184
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:187
@@ -93,7 +141,7 @@ msgstr "Our measures"
 msgid "Hållbarhetsnivå"
 msgstr "Sustainability level"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:126
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:127
 msgid ""
 "Sparfabrikens fond-hållbarhetsnivå utgår ifrån till vilken grad fonden "
 "investerat i kontroversiella bolag och redovisas på en tiogradig skala. Den "
@@ -108,7 +156,7 @@ msgstr ""
 "distribution so you can easily see the difference between funds (so that not "
 "all the funds may 10/10)."
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:127
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:128
 msgid ""
 "De bolag vi valt ut som ohållbara kommer från andra fonders uteslutningar "
 "och är sorterade under fyra kategorier: Förbjudna vapen, Miljöförstöring, "
@@ -118,16 +166,16 @@ msgstr ""
 "exclusions and are arranged under four categories: Prohibited weapons, "
 "environmental pollution, violation of human rights and fossil fuels."
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:130
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:131
 msgid "Exempel på hållbarhetsnivå"
 msgstr "Examples of sustainability levels"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:132
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:133
 msgid "Swedbank Robur Ethica Sverige - har bara hållbara bolag - betyg 10/10"
 msgstr ""
 "Swedbank Robur Ethica Sweden - have only sustainable companies - Rating 10/10"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:134
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:135
 msgid ""
 "Länsförsäkringar Sverige Index -  har en investering i fossila bränslen "
 "nämligen Lundin Petroleum - betyg 9/10"
@@ -135,31 +183,31 @@ msgstr ""
 "Länsförsäkringar Sweden Index - an investment in fossil fuels, namely Lundin "
 "Petroleum - Rating 9/10"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:136
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:137
 msgid "Länsförsäkringar Europa Index - har många bolag som inte är hållbara."
 msgstr ""
 "Länsförsäkringar Europa Index -  holds many companies that are not "
 "sustainable."
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:137
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:138
 msgid "Kärnvapentillverkare:"
 msgstr "Nuclear weapons manufacturer:"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:138
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:139
 msgid "Företag som dömts för <strong>allvarlig miljöförstöring</strong>:"
 msgstr ""
-"Companies convicted of <strong> serious environmental pollution </ strong>:"
-
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:139
-msgid "Företag dömda för brott mot <strong>mänskliga rättigheter</strong>:"
-msgstr ""
-"Businesses convicted of crimes against <strong> Human Rights </ strong>:"
+"Companies convicted of <strong> serious environmental pollution </strong>:"
 
 #: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:140
-msgid "Företag som tar upp och säljer <strong>fossila bränslen</strong>:"
-msgstr "Companies that take up and sell <strong> fossil fuels </ strong>:"
+msgid "Företag dömda för brott mot <strong>mänskliga rättigheter</strong>:"
+msgstr ""
+"Businesses convicted of crimes against <strong> Human Rights </strong>:"
 
-#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:142
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:141
+msgid "Företag som tar upp och säljer <strong>fossila bränslen</strong>:"
+msgstr "Companies that take up and sell <strong> fossil fuels </strong>:"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:143
 msgid ""
 "Sammanfattningsvis en stor andel ohållbara bolag - fonden får därför betyg "
 "6/10 då många bolagen i fonden ändå är hållbara, över 400 stycken."
@@ -167,6 +215,115 @@ msgstr ""
 "In summary, a large proportion unsustainable companies - This fund is "
 "therefore rated 6/10 when many companies in the fund is still sustainable, "
 "over 400 of them."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:149
+msgid "Koldioxidutsläpp"
+msgstr "Carbon dioxide emissions"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:153
+msgid ""
+"Företag mäter i CO<sub>2</sub>-utsläpp i en standard från Greenhouse gas "
+"protocol (GHG) som delats upp i tre delar: scope 1, 2, och 3."
+msgstr ""
+"Companies measure the CO <sub> 2 </sub> emissions in a standard from the "
+"Greenhouse Gas Protocol (GHG) emissions divided into three parts: Scope 1, "
+"2, and 3."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:154
+msgid "Förenklat kan man säga att:"
+msgstr "Simplified one can say that:"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:157
+msgid ""
+"Scope 1 är direkta utsläpp som företaget ger upphov till genom exempelvis "
+"förbränning. "
+msgstr ""
+"Scope 1 emissions are direct that the company produces for example by "
+"combustion."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:158
+msgid ""
+"Scope 2 är indirekta utsläpp som köpt energi i form av elektricitet eller "
+"ånga."
+msgstr ""
+"Scope 2 is indirect emissions of purchased energy in the form of electricity "
+"or steam."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:159
+msgid ""
+"Scope 3 är övriga indirekta utsläpp från tex. energi som underkonsulter "
+"använder tex om man köper en budtjänst."
+msgstr ""
+"Scope 3 other indirect emissions such as energy used by subcontractors for "
+"example if you buy a courier."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:163
+msgid "Läs en bra förklaring på scope 1, 2, 3"
+msgstr "Read a good explanation of the scope 1, 2, 3"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:167
+msgid "Läs mer om GHG"
+msgstr "More about GHG"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:171
+msgid ""
+"I våra beräkningar väljer vi att ta med de utsläpp som är närmast företaget "
+"i sig genom att använda scope 1 och scope 2. Detta är siffror som de flesta "
+"börsnoterade företag själva tar fram och redovisar årligen, det finns stora "
+"ramverk för hur man kan revidera om mätningarna är korrekta bland annat "
+"Global Reporting Initiative(GRI) som gör det till en prestige för företag "
+"att nå upp till deras krav. GRIs kravnivåer har fler parametrar än bara "
+"CO<sub>2</sub>-utsläpp."
+msgstr ""
+"In our calculations, we choose to take the nearest outlet to the company "
+"itself by using the Scope 1 and Scope 2. These figures most listed companies "
+"themselves prepare and annually reports, there are great framework for how "
+"to revise for measurements are correct, including the Global Reporting "
+"Initiative (GRI), which makes it a prestige for companies to reach their "
+"requirements. GRI requirement levels have more parameters than just CO <sub> "
+"2 </sub> emissions."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:176
+msgid "Gå till Fondsök"
+msgstr "Go to Fund search"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:186
+msgid "Om Sparfabriken"
+msgstr "About Sparfabriken"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:194
+msgid ""
+"Sparfabriken har sin bas i Lund. Vår första produkt är ett "
+"fondjämförelseverktyg utifrån ett hållbarhetsperspektiv. Vi har även utfört "
+"ett flertal analyser och rapporter till ett antal välkända organisationer. "
+"Låter detta intressant? Kontakta oss."
+msgstr ""
+"Sparfabriken is based in Lund, Sweden. Our first product is a fund "
+"comparison tool from a sustainability perspective. We have also conducted "
+"several analyzes and reports to a number of well-known organizations. Sounds "
+"interesting? Contact us."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:197
+msgid ""
+"Sparfabrikens vision är att ge dig makten över ditt sparande. Detta vare sig "
+"det handlar om hållbarhet eller avkastning, privat fondsparande eller "
+"pensionssparande. Vi tillhandahåller informationen. Valen är upp till dig."
+msgstr ""
+"Sparfabrikens vision is to give you power over your savings. This is whether "
+"it is about sustainability or returns, private mutual fund or retirement "
+"savings. We provide the information. The choices are up to you."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:198
+msgid "Vi vill göra sparande enkelt, helt enkelt."
+msgstr "We want to make savings simple, real simple."
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:216
+msgid "VD/Sparekonom"
+msgstr "CEO / Saving Economist"
+
+#: /Users/petter/projects/fondout2/module/Application/view/application/index/index.phtml:232
+msgid "Analytiker"
+msgstr "Analyst"
 
 #: /Users/petter/projects/fondout2/module/Application/view/application/index/translations.phtml:2
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/sustainability-categories-explained.phtml:3
@@ -186,7 +343,7 @@ msgstr "Fossil fuels"
 #: /Users/petter/projects/fondout2/module/Application/view/application/index/translations.phtml:5
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/sustainability-categories-explained.phtml:5
 msgid "Brott mot mänskliga rättigheter"
-msgstr "Crimes to human rights"
+msgstr "Violations of human rights"
 
 #: /Users/petter/projects/fondout2/module/Application/view/application/index/translations.phtml:6
 msgid "Hitta fonder"
@@ -325,7 +482,7 @@ msgstr "Fund companies"
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:115
 msgid " Välj vilken bank eller fondbolags fonder du vill se."
-msgstr "Choose which banks' or fund companies fund would like to display."
+msgstr " Choose which banks' or fund companies fund would like to display."
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:125
 msgid "Fondstorlek"
@@ -336,6 +493,14 @@ msgid ""
 "Välj vilken storlek av fonder du vill se. Fonder som många personer äger är "
 "generellt större och nischade fonder mindre. "
 msgstr "Choose which fund size"
+
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:159
+msgid ""
+"<strong>Tips!</strong> Välj en fondkategori till vänster för att lättare "
+"kunna jämföra fonder."
+msgstr ""
+"<strong> Tip! </strong> Select a fund category to the left to make it easier "
+"to compare funds."
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:169
 msgid "Sortera efter"
@@ -371,12 +536,12 @@ msgstr "Sustainable fund according to your search."
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:208
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:76
 msgid "Fonden har ett fåtal ohållbara bolag."
-msgstr "This fund has a few unsustainable companies. "
+msgstr "This fund has a few unsustainable companies."
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:209
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:86
 msgid "Fonden har en stor del ohållbara bolag."
-msgstr "This fund has a large portion of unsustainable companies. "
+msgstr "This fund has a large portion of unsustainable companies."
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:210
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:96
@@ -406,7 +571,7 @@ msgstr "Middle sized fund"
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:280
 msgid "Vi kunde inte hitta några resultat med dina söktermer."
-msgstr "Sorry, we couldn't find any results from your search. "
+msgstr "Sorry, we couldn't find any results from your search."
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get-list.phtml:282
 msgid "Förslag"
@@ -447,7 +612,7 @@ msgid "Hållbarhetsnivåer"
 msgstr "Sustainability levels"
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:133
-#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:237
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:235
 msgid "N/A"
 msgstr "N/A"
 
@@ -457,42 +622,49 @@ msgstr "The funds invested companies collective"
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:142
 msgid "Täckningsgrad: "
-msgstr "Coverage:"
+msgstr "Coverage: "
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:154
 msgid " - andel av fonden som vi har CO<sub>2</sub>-utsläppsdata på."
-msgstr ""
-"- Share of the fund that we have CO <sub> 2 </ sub> -emissions data on."
+msgstr " - share of the fund that we have CO <sub>2</sub>-emissions data on."
 
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:158
 msgid ""
 "CO<sub>2</sub> per krona räknas bara ut om täckningsgraden är över 50 "
 "procent för att ge ett rättvist värde."
 msgstr ""
-"CO <sub> 2 </ sub> per dollar counts only if the coverage is over 50 per "
-"cent to give a fair value."
+"CO <sub>2</sub> per dollar counts only if the coverage is over 50 per cent "
+"to give a fair value."
 
-#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:162
-msgid "Snittet på CO<sub>2</sub>utsläpp på fonder i samma kategori som "
-msgstr ""
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:163
+msgid " tillhör kategorin "
+msgstr " belong to the category "
 
-#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:182
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:164
+msgid "Kategorins snitt är: "
+msgstr "Category average is: "
+
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:165
+msgid "Täckningsgraden i kategorin är "
+msgstr "Coverage in the category is "
+
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:180
 msgid "Köp fonden"
 msgstr "Buy this fund"
 
-#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:185
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:183
 msgid "Fonden finns tillgänglig att köpa på:"
 msgstr "Fund is sold from:"
 
-#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:196
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:194
 msgid "Liknande fonder"
 msgstr "Similar funds"
 
-#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:204
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:202
 msgid "Fond"
 msgstr "Fund"
 
-#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:207
+#: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/get.phtml:205
 msgid "Hållbarhet"
 msgstr "Sustainability"
 
@@ -537,6 +709,10 @@ msgstr "Change"
 #: /Users/petter/projects/fondout2/module/Fund/view/fund/fund/sustainability-categories.phtml:44
 msgid "Hållbarhetskategorier förklarade"
 msgstr "Sustainability categories explained"
+
+#~ msgid "Snittet på CO<sub>2</sub>utsläpp på fonder i samma kategori som "
+#~ msgstr ""
+#~ "The average of CO <sub> 2 </sub> emissions of funds in the same category"
 
 #~ msgid ""
 #~ "Förbjudna vapen, Miljöförstöring, Brott mot mänskliga rättigheter, "
