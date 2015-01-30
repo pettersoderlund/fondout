@@ -343,6 +343,8 @@ class ConsoleController extends AbstractActionController
 
             if (!is_null($shareCompany)) {
                 $carbonTrackerEntry->setShareCompany($shareCompany);
+            } else {
+              echo "WARNING: Sharecompany $companyName not found!\n";
             }
 
             $entityManager->persist($carbonTrackerEntry);
