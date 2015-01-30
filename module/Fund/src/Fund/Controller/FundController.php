@@ -67,13 +67,16 @@ class FundController extends AbstractRestfulController
     * TODO: Count controversial companies/securities and total number of securit
     *
     */
-    public function get($id)
+    public function get($url)
     {
 
         $container = new Container('fund');
         $service = $this->getFundService();
         $parameters = $this->params();
         $sustainability = $container->sustainability;
+
+        //get fund by url to get id. ugly but works.
+        $id = $service->getFundByUrl($url)->id;
         $fund = $service->getFund($id, $sustainability);
         $funds = $service->findSameCategoryFunds($fund, $sustainability);
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);

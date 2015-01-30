@@ -13,7 +13,7 @@ return array(
                 'options' => array(
                     'route'    => '/funds[/:id]',
                     'constraints' => array(
-                        'id' => '[0-9]+',
+                        'id' => '[a-zA-Z0-9_-]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Fund\Controller\Fund'

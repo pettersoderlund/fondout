@@ -225,7 +225,7 @@ $this->headScript()
                   <tr>
                     <td>
                       <h4>
-                      <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->id))) ?>" title="">
+                      <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="">
                         <?php echo $this->translate($fund->name) ?>
                       </a>
                       </h4>
