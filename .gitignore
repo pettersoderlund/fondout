@@ -19,3 +19,6 @@ public/css
 *.csv
 composer.phar
 output/
+*.xls
+*.xlsx
+
