@@ -9,7 +9,6 @@ $form->prepare();
 $submit = $form->get('submit');
 $submit->setValue('Hitta fonder');
 $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary btn-block btn-lg');
-//$submit->setAttribute('class', $submit->getAttribute('class') . '');
 ?>
 
 <section class="featurette first-section-landing-page">
@@ -91,23 +90,33 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
 <section class="featurette callout">
     <div class="container">
         <div class="row">
-          <h1>Upp till dig.</h1>
-          <p class="lead"><?php echo $this->translate('Som du säkert redan vet, innebär fondsparande att man äger små andelar av de företag som ingår i fonden. En del har koll på exakt vilka företag som ingår, andra inte.
-          Detta må inte heller vara det mest intressanta.
+          <h1>Vet du vad?</h1>
+          <p class="lead"><?php echo $this->translate('
+            Sannolikheten att du har pengar i fonder är väldigt hög – cirka 90% av svenska befolkningen har det i någon form. Även om du inte är en aktiv fondsparare så äger du fonder genom exempelvis ditt pensionssparande.
           ') ?></p>
-          <p class="lead"><?php echo $this->translate('Vad vi på <strong>Sparfabriken</strong> dock anser vara högintressant, utöver avkastning, är att försäkra sig om att fonden du sparar i förvaltar dina pengar i enighet med just dina förväntningar på en hållbar framtid.') ?></p>
+          <p class="lead"><?php echo $this->translate('
+            Som du kanske redan vet, innebär fondsparande att du indirekt äger andelar i de bolag som ingår i fonden.
+            Men vet du vad du sparar i? Vilka bolag du äger? Vad dem pysslar med? Förvaltas dina pengar i linje med dina förväntningar på en hållbar framtid?
+          ') ?></p>
+          <p class="lead"><strong>
+            <?php echo $this->translate('Sparfabriken låter dig veta vad. ') ?>
+            <br>
+            <?php echo $this->translate('Dina hållbarhetspreferenser och fondval är helt upp till dig.') ?>
+           </strong></p>
+
         </div>
     </div>
 </section>
-<section class="featurette callout double-callout">
+
+<section>
   <div class="container">
     <div class="row">
-      <h1>Sparande för framtiden.</h1>
-      <p class="lead"><?php echo $this->translate('När man hör ordet “sparande” tänker nog de flesta på att lägga undan pengar för att kunna använda dessa i framtiden. Det är självfallet även önskvärt att dessa undanlagda pengar ska öka i värde. Detta håller vi fullständigt med om.
-      ') ?></p>
-      <p class="lead"><?php echo $this->translate('För oss innebär sparande dock mer än så. För oss innebär sparande att inte slösa på jordens resurser och att ta tillvara på sin etik och moral. För oss går sparande och hållbarhet hand i hand.') ?></p>
-      <p class="lead"><?php echo $this->translate('<em><strong>- Varför spara för framtiden om man inte bryr sig om hur den ser ut?</strong></em>') ?> </p>
-
+      <div class="col-md-5 ">
+        <h3>Hållbarhet eller avkastning?</h3>
+        <p>
+          Oavsett vad folk säger så är sanningen –tyvärr- att ingen kan på förhand veta hur börsen kommer att gå. Det finns ingen garanti att en fond som tidigare har gått bra kommer att gå lika bra i framtiden. Det finns inte heller något som visar att en hållbar fond inte kan uppvisa lika hög (eller högre!) avkastning som en mindre hållbar fond. Du behöver alltså inte välja det ena eller det andra. Eller rättare sagt, du kan bara välja det ena. Det andra vet du inte förrän i efterhand.
+        </p>
+      <div>
     </div>
   </div>
 </section>
@@ -118,85 +127,41 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
       <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
     <div class="row">
-  <!--    <h1>Våra mått</h1>
-      <h2>Hållbarhetsnivå</h2>
-    -->
-        <!--
-        <div class="dummy-chart">
-          <div class="chart-container">
-            <canvas class="sustainability-chart" data-percentage="0.7"></canvas>
+
+      <h1>Våra mått</h1>
+      <div class ="row">
+        <div class="col-sm-6">
+          <div class="row header-with-symbol">
+            <div class="header-symbol">
+              <img src="img/sustainability-score-symbol.png" alt="Hållbarhetsnivå-symbol" />
+            </div>
+            <h2>Hållbarhetsnivå</h2>
+          </div>
+          <p>Sparfabrikens fond-hållbarhetsnivå utgår ifrån till vilken grad fonden investerat i kontroversiella bolag och redovisas på en tiogradig skala. Den 10-gradiga skalan är inte en direkt översättning av hur stor del hållbara bolag fonden har utan ett betyg som viktat från en normalfördelning för att enkelt kunna se skillnad på fonder (så att inte alla fonder får 10/10).
+
+            De bolag vi valt ut som ohållbara kommer från andra fonders uteslutningar och är sorterade under fyra kategorier: Förbjudna vapen, Miljöförstöring, Brott mot mänskliga rättigheter och  Fossila bränslen.</p>
+          </div>
+          <div class="col-sm-6">
+            <div class="row header-with-symbol">
+              <div class="header-symbol">
+                <img src="img/co2-symbol.png" alt="Koldioxitutsläpp-symbol" />
+              </div>
+              <h2>Koldioxidutsläpp </h2>
+            </div>
+            <p>
+              Företag mäter i CO<sub>2</sub>-utsläpp i en standard från Greenhouse gas protocol (GHG) som delats upp i tre delar: scope 1, 2, och 3.
+              Förenklat kan man säga att:
+            </p>
           </div>
         </div>
-        -->
-<!--
-      <p class="lead">Varje fond mäts av ett hållbarhetsnivå som räknas ut från de parametrar du tycker är viktiga,
-      vad är en hållbar fond? Se vilka fonder som investerar hållbart och väljer bort fossila bränslen.  </p>
-
-      <h2>Koldioxidutsläpp</h2>
-      <p class="lead">Varför inte jämföra koldioxidutsläpp på dina fonder när man redan gör det på så mycket annat? Detta kanske är den plats man kan påverka mest.</p>
--->
-
-
-<h1>Våra mått</h1>
-<div class="row header-with-symbol">
-  <div class="header-symbol">
-    <img src="img/sustainability-score-symbol.png" alt="Hållbarhetsnivå-symbol" />
-  </div>
-  <h2>Hållbarhetsnivå</h2>
-</div>
-<p>Sparfabrikens fond-hållbarhetsnivå utgår ifrån till vilken grad fonden investerat i kontroversiella bolag och redovisas på en tiogradig skala. Den 10-gradiga skalan är inte en direkt översättning av hur stor del hållbara bolag fonden har utan ett betyg som viktat från en normalfördelning för att enkelt kunna se skillnad på fonder (så att inte alla fonder får 10/10).
-
-  De bolag vi valt ut som ohållbara kommer från andra fonders uteslutningar och är sorterade under fyra kategorier: Förbjudna vapen, Miljöförstöring, Brott mot mänskliga rättigheter och  Fossila bränslen.</p>
-
-  <h3>Exempel på hållbarhetsnivå</h3>
-  <p>
-    Swedbank Robur Ethica Sverige - har bara hållbara bolag - betyg 10/10
-    <br>
-    Länsförsäkringar Sverige Index -  har en investering i fossila bränslen nämligen Lundin Petroleum - betyg 9/10
-    <br>
-    Länsförsäkringar Europa Index - har många bolag som inte är hållbara.
-    <strong>Kärnvapentillverkare</strong>: Babcock international group, Thales och Rolls-Royce.
-    Företag som dömts för <strong>allvarlig miljöförstöring</strong>: Shell, BP, Rio Tinto
-    Företag dömda för brott mot <strong>mänskliga rättigheter</strong>: Deutsche Telecom, Eutelsat, Communications, Heidelberg Cement.
-    Företag som tar upp och säljer <strong>fossila bränslen</strong>: BHP Billiton, BP, Total S.A., Royal Dutch Shell, ENI S.p.A., Repsol YPF S.A., BG Group PLC, Statoil, OMV AG, Tullow Oil PLC, GDF Suez S.A., Anglo American PLC, Rio Tinto Co. Ltd., RWE AG, ArcelorMittal, Lundin Petroleum.
-    <br>
-    Sammanfattningsvis en stor andel ohållbara bolag - fonden får därför betyg 6/10 då många bolagen i fonden ändå är hållbara, över 400 stycken.
-  </p>
-  <div class="row header-with-symbol">
-    <div class="header-symbol">
-      <img src="img/co2-symbol.png" alt="Koldioxitutsläpp-symbol" />
-    </div>
-    <h2>Koldioxidutsläpp </h2>
-  </div>
-
-  <p>
-    Företag mäter i CO<sub>2</sub>-utsläpp i en standard från Greenhouse gas protocol (GHG) som delats upp i tre delar: scope 1, 2, och 3.
-    Förenklat kan man säga att:
-  </p>
-  <ul>
-    <li>Scope 1 är direkta utsläpp som företaget ger upphov till genom exempelvis förbränning. </li>
-    <li>Scope 2 är indirekta utsläpp som köpt energi i form av elektricitet eller ånga.</li>
-    <li>Scope 3 är övriga indirekta utsläpp från tex. energi som underkonsulter använder tex om man köper en budtjänst.</li>
-  </ul>
-  <p>
-    <a href="http://coolclimate.berkeley.edu/node/405" target="_blank">
-      Läs en bra förklaring på scope 1, 2, 3
-    </a>
-    <br>
-    <a href="http://www.ghgprotocol.org/" target="_blank">
-    Läs mer om GHG
-    </a>
-  </p>
-
-  <p>I våra beräkningar väljer vi att ta med de utsläpp som är närmast företaget i sig genom att använda scope 1 och scope 2. Detta är siffror som de flesta börsnoterade företag själva tar fram och redovisar årligen, det finns stora ramverk för hur man kan revidera om mätningarna är korrekta bland annat Global Reporting Initiative(GRI) som gör det till en prestige för företag att nå upp till deras krav. GRIs kravnivåer har fler parametrar än bara CO<sub>2</sub>-utsläpp.</p>
-
-
-    </div>
+      </div>
     <div class="row">
       <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary btn-block">Gå till Fondsök</a>
     </div>
   </div>
 </section>
+
+
 <section id="contact" class="featurette callout">
   <div class="container">
     <div class="section-chevron-down">
@@ -204,12 +169,7 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
     </div>
     <div class="row">
       <h1>Om Sparfabriken</h1>
-      <!--
-      <p class="lead">
-        Sparfabriken har sin bas i Lund och jobbar med att tillgängliggöra information om sparande.
-        Vi arbetar kontinuerligt med att ta fram bättre sätt att jämföra och analysera fonder.
-      </p>
-      -->
+
       <p class="lead">
         Sparfabriken har sin bas i Lund. Vår första produkt är ett fondjämförelseverktyg utifrån ett hållbarhetsperspektiv. Vi har även utfört ett flertal analyser och rapporter till ett antal välkända organisationer. Låter detta intressant? Kontakta oss.
       </p>
@@ -218,8 +178,6 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
 
         Vi vill göra sparande enkelt, helt enkelt.
       </p>
-
-
     </div>
     <div class="row">
 
