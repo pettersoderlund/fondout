@@ -14,7 +14,6 @@ return array(
         'ZfcUserDoctrineORM',
         'Application',
         'Fund',
-        'User',
         'SlmLocale'
     ),
     'module_listener_options' => array(
