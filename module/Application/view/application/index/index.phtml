@@ -120,35 +120,42 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
     <div class="section-chevron-down">
       <span class="glyphicon glyphicon-chevron-down"></span>
     </div>
-    <div class="row">
+    <div id="index-measurements" class="row">
 
-      <h1>Våra mått</h1>
-      <div class ="row">
-        <div class="col-sm-6">
-          <div class="row header-with-symbol">
-            <div class="header-symbol">
-              <img src="img/sustainability-score-symbol.png" alt="Hållbarhetsnivå-symbol" />
-            </div>
-            <h2>Hållbarhetsnivå</h2>
-          </div>
-          <p>Sparfabrikens fond-hållbarhetsnivå utgår ifrån till vilken grad fonden investerat i kontroversiella bolag och redovisas på en tiogradig skala. Den 10-gradiga skalan är inte en direkt översättning av hur stor del hållbara bolag fonden har utan ett betyg som viktat från en normalfördelning för att enkelt kunna se skillnad på fonder (så att inte alla fonder får 10/10).
-
-            De bolag vi valt ut som ohållbara kommer från andra fonders uteslutningar och är sorterade under fyra kategorier: Förbjudna vapen, Miljöförstöring, Brott mot mänskliga rättigheter och  Fossila bränslen.</p>
-          </div>
-          <div class="col-sm-6">
-            <div class="row header-with-symbol">
-              <div class="header-symbol">
-                <img src="img/co2-symbol.png" alt="Koldioxitutsläpp-symbol" />
-              </div>
-              <h2>Koldioxidutsläpp </h2>
-            </div>
-            <p>
-              Företag mäter i CO<sub>2</sub>-utsläpp i en standard från Greenhouse gas protocol (GHG) som delats upp i tre delar: scope 1, 2, och 3.
-              Förenklat kan man säga att:
-            </p>
-          </div>
+      <h1>Hållbarhetsnivå</h1>
+      <div id="index-sustainability-measure" class ="row">
+        <div class="col-sm-4">
+          <h3>Förbjudna vapen</h3>
+          <p>
+              Innehåller din fond vapen som anses vara inhumana?
+          </p>
+          <h3>Miljöförstöring</h3>
+          <p>
+            Innehåller din fond företag som är anklagade och dömda för miljöförstöring?
+          </p>
         </div>
+
+        <div class="col-sm-4">
+              <img src="img/sustainability-score-symbol.png" alt="Hållbarhetsnivå-symbol" style="zoom: 4" />
+        </div>
+        <div class="col-sm-4">
+          <h3>Brott mot mänskliga rättigheter</h3>
+          <p>
+            Innehåller din fond företag dömda för brott mot mänskliga rättigheter och arbetsrättsliga mål?
+          </p>
+          <h3>Fossila bränslen</h3>
+          <p>
+            Innehåller din fond företag som äger och tar upp olja, kol och gas?
+          </p>
+        </div>
+
       </div>
+      <div id="index-co2-measure" class="row">
+        <img src="img/co2-symbol.png" alt="Koldioxitutsläpp-symbol" style="zoom:1.5" />
+        <h3>Koldioxidutsläpp</h3>
+        <p>Ett mått på fondens koldioxidutsläpp.</p>
+      </div>
+    </div>
     <div class="row">
       <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary btn-block">Gå till Fondsök</a>
     </div>
