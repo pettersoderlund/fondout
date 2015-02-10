@@ -29,11 +29,11 @@ class FundService
     {
         // get fund from repository
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $fund = $fundRepository->findOneBy(['url' => $url]);
+        echo $url;
+        $fund = $fundRepository->findOneBy(array('url' => $url));
         if (!$fund) {
             throw new \Exception();
         }
-
         return $fund;
     }
 
@@ -189,7 +189,7 @@ class FundService
         $sustainabilityScore = $params['sustainabilityscore'];
 
 
-        $sortOrder = [];
+        $sortOrder = array();
         switch ($sort) {
             case 'name':
                 $sortOrder['name'] = $order;

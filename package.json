@@ -1,29 +1,28 @@
 {
   "name": "fondout",
   "version": "0.0.1",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-copy": "*",
-    "grunt-contrib-less": "*",
+    "grunt": "^0.4.5",
     "grunt-contrib-clean": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-uglify": "*",
+    "grunt-contrib-copy": "*",
     "grunt-contrib-imagemin": "*",
     "grunt-contrib-jshint": "*",
-    "load-grunt-tasks": "*",
-    "time-grunt": "*",
+    "grunt-contrib-less": "*",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*",
     "grunt-phpcs": "*",
-    "grunt-phpunit": "*",
     "grunt-phplint": "*",
-    "jshint-stylish": "*"
+    "grunt-phpunit": "*",
+    "jshint-stylish": "*",
+    "load-grunt-tasks": "*",
+    "time-grunt": "*"
   },
   "engines": {
     "node": ">=0.8.0"
   },
   "repository": {
-  "type": "git",
-  "url": "git://github.com/pettersoderlund/fondout.git"
+    "type": "git",
+    "url": "git://github.com/pettersoderlund/fondout.git"
   }
 }

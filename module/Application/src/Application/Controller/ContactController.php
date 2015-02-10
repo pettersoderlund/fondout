@@ -73,13 +73,12 @@ class ContactController extends AbstractActionController
                 /*$app->log->addError($message);
                 $app->response()->status(400);
                 $app->response()->header('X-Status-Reason', $message);*/
-                echo json_encode(['error' => $message]);
+                echo json_encode(array('error' => $message));
             } catch (Exception $e) {
-            /*
-            $app->log->addError($e->getMessage());
-            $app->response()->status(500);
-            */
-
+                /*
+                $app->log->addError($e->getMessage());
+                $app->response()->status(500);
+                */
             }
         }
 
