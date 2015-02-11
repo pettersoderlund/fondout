@@ -75,10 +75,10 @@ class ConsoleController extends AbstractActionController
 
         // Get sharecompany
         $sharecompany = $em->getRepository('Fund\Entity\ShareCompany')
-            ->findOneBy(['name' => $name]);
+            ->findOneBy(array('name' => $name));
         //Get share
         $share = $em->getRepository('Fund\Entity\Share')
-            ->findOneBy(['isin' => $isin]);
+            ->findOneBy(array('isin' => $isin));
 
         // Create sharecompany if it does not already exist
         if (is_null($sharecompany)) {
@@ -169,7 +169,7 @@ class ConsoleController extends AbstractActionController
             //echo var_dump($row) . "\n";
 
             $name = $source;
-            $source = $sourceRepo->findOneBy(['name' => $source]);
+            $source = $sourceRepo->findOneBy(array('name' => $source));
             // Check if source exists
             if (is_null($source)) {
                 echo "Source not found: $source $name\n";
@@ -179,7 +179,7 @@ class ConsoleController extends AbstractActionController
 
             // Check if sharecompany exists
             $name = $shareCompany;
-            $shareCompany = $scRepo->findOneBy(['name' => $shareCompany]);
+            $shareCompany = $scRepo->findOneBy(array('name' => $shareCompany));
             if (is_null($shareCompany)) {
                 echo "Share company not found: $shareCompany $name\n";
                 $j++;
@@ -188,7 +188,7 @@ class ConsoleController extends AbstractActionController
 
             // Check category
             $name = $category;
-            $category = $categoryRepo->findOneBy(['name' => $category]);
+            $category = $categoryRepo->findOneBy(array('name' => $category));
             if (is_null($category)) {
                 echo "Category not found: $category $name\n";
                 echo "Create this category manually if you'd like.\n";
