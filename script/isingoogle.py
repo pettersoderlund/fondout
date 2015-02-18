@@ -12,7 +12,7 @@ import sys
 from random import randint
 
 
-def getBrowser():
+def get_browser():
     # Browser
     br = mechanize.Browser()
 
@@ -22,7 +22,7 @@ def getBrowser():
 
     # Browser options
     br.set_handle_equiv(True)
-    br.set_handle_gzip(True)
+    #    br.set_handle_gzip(True)
     br.set_handle_redirect(True)
     br.set_handle_referer(True)
     br.set_handle_robots(False)
@@ -37,19 +37,22 @@ def getBrowser():
     return br
 
 
-def searchgoogle(company, br):
+def search_google(company):
+    br = get_browser()
     tried=0
     while True:
         try:
             # Select the first (index zero) form
             br.select_form(nr=0)
             # Let's search
+            #Convert search string to unicode removing other characters
+            searchstring = ''.join([i if ord(i) < 128 else ' ' for i in company]) + ' isin'
             try:
-                br.form['q']= company + ' isin'
-            except:
-                print "EXPTIOEN 1"
+                br.form['q'] =  searchstring
+            except Exception as e:
+                print "EXPTION 1", e
                 br.select_form(nr=0)
-                br.form['q']= company + ' isin'
+                br.form['q'] = searchstring
 
             br.submit()
         except (mechanize.HTTPError,mechanize.URLError) as e:
@@ -61,12 +64,12 @@ def searchgoogle(company, br):
             if tried > 4:
                 return
             time.sleep(30)
-            br = getBrowser()
+            br = get_browser()
             continue
-        except:
-            print "Unexpected error:", sys.exc_info()[0]
+        except Exception as e:
+            print "Unexpected error:", sys.exc_info()[0], e
             tried += 1
-            print list(br.forms())
+            #print list(br.forms())
             time.sleep(30)
             if tried > 4:
                 return
@@ -77,8 +80,7 @@ def searchgoogle(company, br):
     for line in br.response().read().split('\n'):
         isinResult = re.search( r'[A-Z]{2}[0-9]{1}[0-9A-Z]{8}[0-9]{1}', line, flags=0)
         if isinResult:
-            print company, " : ", isinResult.group()
-
+            #print company, " : ", isinResult.group()
             if isinResult.group() in occurances:
                 occurances[isinResult.group()] += 1
             else:
@@ -93,9 +95,9 @@ def searchgoogle(company, br):
     # Find the most common ISIN result in the search
     if len(occurances) > 0:
         maxOccurences = max(occurances.values())
-        return max(occurances.iterkeys(), key=(lambda key: occurances[key])), maxOccurences
+        return max(occurances.iterkeys(), key=(lambda key: occurances[key])), maxOccurences, occurances
     else:
-        return "Not found", 0
+        return "Not found", 0, {}
 
 
 def writetocsvfile(file, name, isin, count, delimiter):
@@ -113,55 +115,54 @@ def writetocsvfile(file, name, isin, count, delimiter):
         print detail
 
 
-#Parse arguments
-filename = str(sys.argv[1])
+if __name__ == "__main__":
+    #Parse arguments
+    filename = str(sys.argv[1])
 
-if len(sys.argv) > 2:
-    sheetName = sys.argv[2]
-else:
-    sheetName = 'Sheet1'
+    if len(sys.argv) > 2:
+        sheetName = sys.argv[2]
+    else:
+        sheetName = 'Sheet1'
 
-# Output file
-timenow = datetime.datetime.now()
-# Write mode creates a new file or overwrites the existing content of the file.
-# Write mode will _always_ destroy the existing contents of a file.
-try:
-    # This will create a new file or **overwrite an existing file**.
-
-    f = codecs.open(filename + "_isincodes_" + timenow.isoformat() + ".csv", 'wb', "cp1252")
-except IOError as detail:
-    print "Error, problems writing to file: ", detail
-
-
-br = getBrowser()
-
-# Open import file
-
-
-workbook = openpyxl.load_workbook(filename = filename, use_iterators = True)
-worksheet = workbook.get_sheet_by_name(sheetName)
-data = []
-
-
-i = 0
-for row in worksheet.iter_rows():
+    # Output file
+    timenow = datetime.datetime.now()
+    # Write mode creates a new file or overwrites the existing content of the file.
+    # Write mode will _always_ destroy the existing contents of a file.
     try:
-        data = {
-            'name':  row[0].internal_value
-        }
-    except AttributeError as detail:
-        print "AttributeError", detail
-    except TypeError:
-        print "TypeError"
-    if(data):
-        name = data['name'].encode("utf-8").translate(None, '!@#$;,')
+        # This will create a new file or **overwrite an existing file**.
 
-        isin, count = searchgoogle(data['name'].encode("utf-8"), br)
-        writetocsvfile(f, data['name'], isin, count, "\t")
+        f = codecs.open(filename + "_isincodes_" + timenow.isoformat() + ".csv", 'wb', "cp1252")
+    except IOError as detail:
+        print "Error, problems writing to file: ", detail
 
-    if (i > 9999): # How many rows to handle?
-        break;
-    i=i+1
-    time.sleep(randint(0,15))
+    # Open import file
 
-f.close()
+    workbook = openpyxl.load_workbook(filename = filename, use_iterators = True)
+    worksheet = workbook.get_sheet_by_name(sheetName)
+    data = []
+
+    i = 0
+    for row in worksheet.iter_rows():
+        print row[0].internal_value
+        print row[1].internal_value
+        try:
+            data = {
+                'name':  row[0].internal_value
+            }
+        except AttributeError as detail:
+            print "AttributeError", detail
+        except TypeError:
+            print "TypeError"
+        if(data):
+            name = data['name'].encode("utf-8").translate(None, '!@#$;,')
+            print name
+
+            isin, count, occurances = search_google(data['name'].encode("utf-8"))
+            writetocsvfile(f, data['name'], isin, count, "\t")
+
+        if (i > 9999): # How many rows to handle?
+            break;
+        i=i+1
+        time.sleep(randint(0,15))
+
+    f.close()
