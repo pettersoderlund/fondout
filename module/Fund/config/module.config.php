@@ -8,18 +8,7 @@ return array(
     ),
     'router' => array(
         'routes' => array(
-            'funds' => array(
-                'type'    => 'Segment',
-                'options' => array(
-                    'route'    => '/funds[/:id]',
-                    'constraints' => array(
-                        'id' => '[a-zA-Z0-9_-]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Fund\Controller\Fund'
-                    ),
-                ),
-            ),
+            
             'change-sustainability-categories' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
