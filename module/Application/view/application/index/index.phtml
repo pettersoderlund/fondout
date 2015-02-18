@@ -18,30 +18,6 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
           <h1><?php echo $this->translate('Dags att fondera?') ?></h1>
           <h3><?php echo $this->translate('Fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare.') ?></h3>
         </div>
-
-        <div class="row">
-
-            <?php echo $this->form()->openTag($form) ?>
-            <h3 id="front-sustainibility-form-label">Undvik att investera i:
-              <a href="javascript://" data-toggle="popover" tabindex="0" data-placement="auto" data-trigger="focus"
-              title="Hållbarhetsnivå"
-              data-content="
-                <?php echo $this->partial('sustainability-categories-explained'); ?>
-                ">
-                <span class="glyphicon glyphicon-info-sign"></span>
-                </a>
-            </h3>
-            <div class="checkbox">
-                <?php
-                    $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-                    echo $this->formMultiCheckbox($form->get('sustainability'));
-                ?>
-            </div>
-
-            <?php echo $this->formSubmit($submit) ?>
-            <?php echo $this->form()->closeTag() ?>
-
-      </div>
     </div>
 </section>
 
@@ -115,54 +91,6 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
   </div>
 </section>
 
-<section id="products" class="featurette">
-  <div class="container">
-    <div class="section-chevron-down">
-      <span class="glyphicon glyphicon-chevron-down"></span>
-    </div>
-    <div id="index-measurements" class="row">
-
-      <h1>Hållbarhetsnivå</h1>
-      <div id="index-sustainability-measure" class ="row">
-        <div class="col-sm-4">
-          <h3>Förbjudna vapen</h3>
-          <p>
-              Innehåller din fond vapen som anses vara inhumana?
-          </p>
-          <h3>Miljöförstöring</h3>
-          <p>
-            Innehåller din fond företag som är anklagade och dömda för miljöförstöring?
-          </p>
-        </div>
-
-        <div class="col-sm-4">
-              <img src="img/sustainability-score-symbol-lg.gif" alt="Hållbarhetsnivå-symbol" style="width: 80%" />
-        </div>
-        
-        <div class="col-sm-4">
-          <h3>Brott mot mänskliga rättigheter</h3>
-          <p>
-            Innehåller din fond företag dömda för brott mot mänskliga rättigheter och arbetsrättsliga mål?
-          </p>
-          <h3>Fossila bränslen</h3>
-          <p>
-            Innehåller din fond företag som äger och tar upp olja, kol och gas?
-          </p>
-        </div>
-
-      </div>
-
-      <div id="index-co2-measure" class="row">
-        <img src="img/co2-symbol.png" alt="Koldioxitutsläpp-symbol" style="zoom:1.5" />
-        <h3>Koldioxidutsläpp</h3>
-        <p>Ett mått på fondens koldioxidutsläpp.</p>
-      </div>
-    </div>
-    <div class="row">
-      <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary btn-block">Gå till Fondsök</a>
-    </div>
-  </div>
-</section>
 
 
 <section id="contact" class="featurette callout">
