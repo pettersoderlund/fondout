@@ -17,7 +17,11 @@
 
     Olika resultatskoder skrivs ut i databasen. 
 
-    TODO: Snygga upp queries, slå ihop alla liknande find_by funktioner. 
+    TODO: 
+        - Snygga upp queries, slå ihop alla liknande find_by funktioner. 
+        - Bryta ut parametrar för gränsvärden i variabler
+        - Ange vilken range att uppdatera urval som argument eller option
+            tex. ALL, FUNDID=4, FUNDNAME = AP4, ISIN=NULL som default kanske
 """
 
 import sys
@@ -217,7 +221,7 @@ query_unidentified_shares = (
     "SELECT name from tmp_shareholding "
     "where isin IS NULL")
 # uncomment to enable Test list already caught share-isins / redo everything
-# query_unidentified_shares = ("SELECT name from tmp_shareholding ")
+query_unidentified_shares = ("SELECT name from tmp_shareholding where fund=4")
 
 cursorUp.execute(query_unidentified_shares)
 unidentifiedShares = cursorUp.fetchall()
@@ -230,8 +234,10 @@ for (share_name,) in unidentifiedShares:
 
     # --------------- Find section ---------------
 
+    # First db-search attempt
     found_share = find_share_routine(share_name)
 
+    # Second db-search attempt with alternated name
     if (found_share is None):
         used_names = []
         used_names.append(share_name)
@@ -251,7 +257,6 @@ for (share_name,) in unidentifiedShares:
                 if (new_name not in used_names):
                     found_share = find_share_routine(new_name)
                     used_names.append(new_name)
-
             if (found_share is not None):
                 break
 
@@ -262,7 +267,7 @@ for (share_name,) in unidentifiedShares:
     if (found_share is not None):
         (found_name, found_isin) = found_share
         print found_name, found_isin
-        if (googled_isin is not None):
+        if (googled_isin_matches > 0):
             if (found_isin == googled_isin):
                 # CASE 1: GOOGLE = DBMATCH --> SAME ISIN
                 # Database found matches top google result
@@ -273,32 +278,37 @@ for (share_name,) in unidentifiedShares:
                 # CASE 2: GOOGLE(>3) != DBMATCH --> CHOOSE GOOGLE
                 # No match google hits wins - take google result
                 found_method = ("2:" + str(googled_isin_matches)
-                    + " google hits, conflict search" + found_name 
+                    + " google hits, conflict search " + found_name + " "
                     + found_isin)
                 found_isin = googled_isin
                 found_name = "googled: "
                 result = share_by_isin(cnx, googled_isin)
                 if (result is not None):
-                    found_name = found_name + ' matched to ' + result[0]
-            elif (google_occurances is not None):
+                    found_name = found_name + ' ' + result[0]
+            elif (googled_isin_matches > 0):
                 if (found_isin in google_occurances): 
                     # CASE 3: GOOGLE(<3) != DBMATCH, DBMATCH in GOOG OCCURANC
                     # ---> CHOOSE DBMATCH
                     found_method = ("3: mismatch db. top google hit: " 
                                 + googled_isin + ":" + str(googled_isin_matches))
                 else: 
-                    # CASE 4: GOOGLE(<3) != DBMATCH, DBMATCH NOT in GOOG OCCURANC
+                    # CASE 4: GOOGLE(<4) != DBMATCH, DBMATCH NOT in GOOG OCCURANC
                     found_isin = ""
                     found_name = ""
                     found_method = ("4. mismatch db google(" 
-                        + str(googled_isin_matches) + ") not in google results."
+                        + str(googled_isin_matches) + ") not in google results. "
                         + googled_isin)
 
                     result = share_by_isin(cnx, googled_isin)
                     if (result is not None):
                         found_method = found_method + ' db-matched to ' + result[0]
+        else: 
+            # CASE 2: No google hits, but found in DB
+            # Make this a separate case?
+            found_method = "2: No google hits"
 
-    elif (googled_isin is not None):
+
+    elif (googled_isin_matches > 0):
         # min 3 google hits makes certain
         if (googled_isin_matches > 2):
             found_isin = googled_isin
@@ -333,6 +343,9 @@ for (share_name,) in unidentifiedShares:
         "WHERE name = %s")
 
     update_share_values = (found_name, found_isin, found_method, share_name)
+
+    
+
     # Update share in fund_search where name = share_name
     try: 
         cursorUp.execute(query_update_isin, update_share_values)
