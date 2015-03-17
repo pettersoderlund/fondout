@@ -322,7 +322,7 @@ class Fund extends Entity
      *
      * @param \Fund\Entity\FundInstance $fundInstances
      */
-    public function removeFundInstance(\Fund\Entity\FundInstance $fundInstances)
+    public function removeFundInstance($fundInstances)
     {
         $this->fundInstances->removeElement($fundInstances);
     }
