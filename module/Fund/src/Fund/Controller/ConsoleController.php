@@ -21,6 +21,8 @@ use Fund\Entity\Emissions;
 use Fund\Entity\StockExchangeListing;
 use Fund\Entity\Sector;
 use Fund\Entity\Industry;
+use Fund\Entity\CompanyAlias;
+use Fund\Entity\ShareAlias;
 
 
 class ConsoleController extends AbstractActionController
@@ -361,10 +363,6 @@ class ConsoleController extends AbstractActionController
 
     public function addfundAction()
     {
-
-        echo "Be very precise on parameters. Always enter --date. \n"
-          . "This action requires the use of php version >=5.4 \n";
-
         $service = $this->getConsoleService();
         // Get the entity manager straight up
         $entityManager = $service->getEM();
@@ -406,11 +404,14 @@ class ConsoleController extends AbstractActionController
 
         $fundAuM = str_replace(array(" ", ","), "", $fundAuM);
 
+        echo "AuM: ". $fundAuM . $fundCurrency . "\n";
 
-        echo $fundAuM . "\n";
-
-        $exchangeRate = $request->getParam('exchangerate');
-        $date = $request->getParam('date');
+        $exchangeRate       = $request->getParam('exchangerate');
+        $date               = $request->getParam('date');
+        // Double holdings means that a fund has several holdings of the 
+        // same security (same isin)
+        $doubleHoldings     = $request->getParam('doubleholdings');
+        $smallBatch         = $request->getParam('smallbatch');
 
         echo var_dump($fundInfo);
         echo "\n";
@@ -478,9 +479,24 @@ class ConsoleController extends AbstractActionController
             $fundInstance = new FundInstance();
         } else {
             // Fund obviously exists, fetch the instance
+            // Does this really work, what if the fundinstances are cleared?
             $fundInstance = $entityManager
                 ->getRepository('Fund\Entity\FundInstance')
                 ->findOneByFund($fund);
+        }
+
+        if ($doubleHoldings) {
+            echo "Using doubleholdings flag the shareholdings should be empty. \n";
+            echo "Printing shareholdings:\n" ;
+            echo \Doctrine\Common\Util\Debug::dump(
+                    $fundInstance->getShareholdings());
+            if (sizeof($fundInstance->getShareholdings()) != 0) {
+                echo "Share has shareholdings, quitting to prevent disaster.\n" .
+                 "Remove all shareholdings to manually to complete this action\n";
+                exit(0);
+            } else {
+                echo "No shareholdings, ok.\n";
+            }
         }
 
         // name, ISIN, \Fund\Entity\FundCompany
@@ -502,11 +518,22 @@ class ConsoleController extends AbstractActionController
             );
         }
 
-        $datetimev = \DateTime::createFromFormat(
-            'm/d/Y',
-            $date,
-            new \DateTimeZone($timezone)
-        );
+        do  {
+            $datetimev = \DateTime::createFromFormat(
+                'm/d/Y',
+                $date,
+                new \DateTimeZone($timezone)
+            );
+
+            if(!$datetimev) {
+                $date = \readline(
+                            "Date: $date entered. " .
+                            "Please enter date for the fund m/d/Y\n"
+                            );
+            }
+        
+        } while (!$datetimev);
+
         // Set hours minutes seconds to 0/midnight
         $datetimev->setTime(0, 0, 0);
         $fundInstance->setDate($datetimev);
@@ -518,6 +545,10 @@ class ConsoleController extends AbstractActionController
 
         $i = 0;
         $batchSize = 20;
+        if($doubleHoldings || $smallBatch) {
+            $batchSize = 1;
+        }
+
         foreach ($shares as $row) {
             $isin = $row[0];
             $market_value = $row[1];
@@ -540,8 +571,17 @@ class ConsoleController extends AbstractActionController
                     $share->setIsin($isin);
                 }
                 $entityManager->persist($share);
+            } else {
+                $shareAlias = $entityManager
+                    ->getRepository('Fund\Entity\ShareAlias')
+                    ->findOneByName($name);
+                if (is_null($shareAlias)) {
+                    $shareAlias = new ShareAlias();
+                    $shareAlias->setName($name);
+                }
+                $shareAlias->setShare($share);
+                $entityManager->persist($shareAlias);
             }
-
 
             // Shareholding exists?
             $shareHolding = $entityManager
@@ -556,7 +596,16 @@ class ConsoleController extends AbstractActionController
             }
 
             $shareHolding->setExchangeRate($exchangeRate);
-            $shareHolding->setMarketValue($market_value*$exchangeRate);
+
+            if(!$doubleHoldings) {
+                $shareHolding->setMarketValue($market_value*$exchangeRate);
+            } else {
+                $shareHolding->setMarketValue(
+                        $market_value*$exchangeRate 
+                        + $shareHolding->getMarketValue()
+                        );
+            }
+            
 
             $entityManager->persist($shareHolding);
 

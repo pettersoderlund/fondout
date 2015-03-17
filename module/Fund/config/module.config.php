@@ -109,10 +109,12 @@ return array(
                 'add-fund' => array(
                     'options' => array(
                         'route'    =>
-                            'add fund --date= [--exchangerate=] <file>',
+                            'add fund --date= [--exchangerate=] [--doubleholdings] [--smallbatch] <file>',
                         'defaults' => array(
-                            'controller' => 'Fund\Controller\Console',
-                            'action'     => 'addfund'
+                            'controller'     => 'Fund\Controller\Console',
+                            'action'         => 'addfund',
+                            'doubleholdings' => false,
+                            'smallbatch'     => false
                         )
                     )
                 ),
