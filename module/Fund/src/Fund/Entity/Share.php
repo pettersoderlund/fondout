@@ -79,11 +79,18 @@ class Share extends Entity
     */
     protected $category;
 
+    /**
+     * @var shareAlias[]
+     *
+     * @ORM\OneToMany(targetEntity="\Fund\Entity\ShareAlias", mappedBy="share")
+     **/
+    protected $shareAlias = null;
 
     public function __construct($options = null)
     {
         parent::__construct($options);
         $this->shareholdings = new ArrayCollection();
+        $this->shareAlias = new ArrayCollection();
     }
 
     /**

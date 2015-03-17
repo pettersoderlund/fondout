@@ -49,6 +49,12 @@ class ShareCompany extends Entity
      **/
     protected $accusations = null;
 
+    /**
+     * @var companyAlias[]
+     *
+     * @ORM\OneToMany(targetEntity="\Fund\Entity\CompanyAlias", mappedBy="shareCompany")
+     **/
+    protected $companyAlias = null;
 
     /**
      * @var integer
@@ -88,11 +94,23 @@ class ShareCompany extends Entity
     */
     protected $industry;
 
+    /**
+    * @var \Fund\Entity\Country
+    *
+    * @ORM\ManyToOne(targetEntity="\Fund\Entity\Country")
+    * @ORM\JoinColumns({
+    *   @ORM\JoinColumn(name="country", referencedColumnName="id")
+    * })
+    */
+    protected $country;
+
+
     public function __construct($options = null)
     {
         parent::__construct($options);
         $this->accusations = new ArrayCollection();
         $this->shares = new ArrayCollection();
+        $this->companyAlias = new ArrayCollection();
     }
 
     /**
