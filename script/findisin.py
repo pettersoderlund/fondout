@@ -18,349 +18,567 @@
     Olika resultatskoder skrivs ut i databasen. 
 
     TODO: 
-        - Snygga upp queries, slå ihop alla liknande find_by funktioner. 
         - Bryta ut parametrar för gränsvärden i variabler
-        - Ange vilken range att uppdatera urval som argument eller option
-            tex. ALL, FUNDID=4, FUNDNAME = AP4, ISIN=NULL som default kanske
+        - Bryt ut lösenord och användarnamn till ENV_VAR
 """
 
 import sys
 import mysql.connector
 import isingoogle
-
-def find_by_share_exact_name(connection, name):
-    cursor = connection.cursor(buffered=True)
-    query = ("SELECT name, isin FROM share "
-        "WHERE name = (%s) AND isin IS NOT NULL "
-        "AND (share.category is null or share.category = 1) "
-        "LIMIT 1")
-    try:
-        cursor.execute(query, (name, ))
-    except mysql.connector.errors.IntegrityError, e: 
-        print ('Find share by name exception:', e)
-    if (cursor is not None):
-        share = cursor.fetchone()
-    else:
-        share = None
-
-    cursor.close()
-    return share
+import argparse
+import time
+from random import randint
+import signal
 
 
-def find_by_share_company_exact_name(connection, name):
-    cursor = connection.cursor(buffered=True)
-    query = ("SELECT sc.name, s.isin " 
+class FindIsin:
+    def exit_procedure(): 
+        print "Exiting script..."
+        self.cnxUp.commit()
+        self.cursorUp.close()
+        self.cnxUp.close()
+        self.cursor.close()
+        self.connection.close()
+        sys.exit(0)
+
+    def signal_handler(signal, frame):
+            print('You pressed Ctrl+C!')
+            exit_procedure()
+
+    def _execute_share_search_query(self, query, name): 
+        cursor = self.connection.cursor(buffered=True)
+        try:
+            cursor.execute(query, (name, ))
+        except mysql.connector.errors.IntegrityError, e: 
+            print ('Find share by name exception:', e)
+        if (cursor is not None):
+            self.share = cursor.fetchone()
+        else:
+            self.share = None
+
+        cursor.close()
+        return self.share
+
+
+    def _execute_share_search_query_get_all(self, query, name): 
+        cursor = self.connection.cursor(buffered=True)
+        try:
+            cursor.execute(query, (name, ))
+        except mysql.connector.errors.IntegrityError, e: 
+            print ('Find all shares exception:', e)
+        if (cursor is not None):
+            self.share = cursor.fetchall()
+        else:
+            self.share = None
+
+        cursor.close()
+        return self.share
+
+
+
+    def _find_by_share_exact_name(self, name):
+        query = ("SELECT s.name, s.isin FROM share s "
+            "WHERE s.name = (%s) "
+            + self.QUERY_WHERE_AND + self.QUERY_ORDER +
+            "LIMIT 1")
+        return self._execute_share_search_query(query, name)
+
+    def _find_by_share_exact_alias(self, name):
+        query = ("SELECT sa.name, s.isin "
+            "FROM share s "
+            "JOIN share_alias sa on sa.share = s.id "
+            "WHERE sa.name = (%s) "
+            + self.QUERY_WHERE_AND + self.QUERY_ORDER + 
+            "LIMIT 1")
+        return self._execute_share_search_query(query, name)
+
+    def _find_by_share_company_exact_name(self, name):
+        query = ("SELECT sc.name, s.isin " 
             "FROM share_company sc "
             "JOIN share s on s.share_company = sc.id "
             "WHERE sc.name = (%s) "
-            "AND s.isin IS NOT NULL "
-            "AND (s.category = 1 or s.category is null) "
+            + self.QUERY_WHERE_AND + 
             "GROUP BY sc.name "
+            + self.QUERY_ORDER +
             "LIMIT 1")
-    try:
-        cursor.execute(query, (name, ))
-    except mysql.connector.errors.IntegrityError, e: 
-        print ('Find share by name exception:', e)
-    if (cursor is not None):
-        share = cursor.fetchone()
-    else:
-        share = None
+        return self._execute_share_search_query(query, name)
 
-    cursor.close()
-    return share
-
-def find_by_share_company_fuzzy_name(connection, name):
-    cursor = connection.cursor(buffered=True)
-    query = ("SELECT sc.name, s.isin " 
+    def _find_by_share_company_fuzzy_name(self, name):
+        query = ("SELECT sc.name, s.isin " 
             "FROM share_company sc "
             "JOIN share s on s.share_company = sc.id "
             "WHERE sc.name like CONCAT('%', %s, '%') "
-            "AND s.isin IS NOT NULL "
-            "AND (s.category = 1 or s.category is null) "
+            + self.QUERY_WHERE_AND + 
             "GROUP BY sc.name "
+            + self.QUERY_ORDER +
             "LIMIT 1")
-    try:
-        cursor.execute(query, (name, ))
-    except mysql.connector.errors.IntegrityError, e: 
-        print ('Find share by name exception:', e)
-    if (cursor is not None):
-        share = cursor.fetchone()
-    else:
-        share = None
+        return self._execute_share_search_query(query, name)
 
-    cursor.close()
-    return share
-
-def find_by_share_fuzzy_name(connection, name):
-    cursor = connection.cursor(buffered=True)
-    query = ("SELECT s.name, s.isin " 
+    def _find_by_share_fuzzy_name(self, name):
+        query = ("SELECT s.name, s.isin " 
             "FROM share s "
             "WHERE s.name like CONCAT('%', %s, '%') "
-            "AND s.isin IS NOT NULL "
-            "AND (s.category = 1 or s.category is null) "
+            + self.QUERY_WHERE_AND + self.QUERY_ORDER +
             "LIMIT 1")
-    try:
-        cursor.execute(query, (name, ))
-    except mysql.connector.errors.IntegrityError, e: 
-        print ('Find share by name exception:', e)
-    if (cursor is not None):
-        share = cursor.fetchone()
-    else:
-        share = None
+        return self._execute_share_search_query(query, name)
 
-    cursor.close()
-    return share
-
-def find_by_share_reverse_fuzzy_name(connection, name):
-    cursor = connection.cursor(buffered=True)
-    query = ("SELECT s.name, s.isin " 
+    def _find_by_share_reverse_fuzzy_name(self, name):
+        query = ("SELECT s.name, s.isin " 
             "FROM share s "
             "WHERE %s like CONCAT('%', s.name, '%') "
             "AND length(s.name) > 4 "
-            "AND s.isin IS NOT NULL "
-            "AND (s.category = 1 or s.category is null) "
+            + self.QUERY_WHERE_AND + self.QUERY_ORDER +
             "LIMIT 1")
-    try:
-        cursor.execute(query, (name, ))
-    except mysql.connector.errors.IntegrityError, e: 
-        print ('Find share by name exception:', e)
-    if (cursor is not None):
-        share = cursor.fetchone()
-    else:
-        share = None
+        return self._execute_share_search_query(query, name)
 
-    cursor.close()
-    return share
+    def _find_by_share_fuzzy_alias(self, name):
+        query = ("SELECT sa.name, s.isin "
+            "FROM share s "
+            "JOIN share_alias sa on sa.share = s.id "
+            "WHERE sa.name like CONCAT('%', %s, '%') "
+            + self.QUERY_WHERE_AND + self.QUERY_ORDER +
+            "LIMIT 1")
+        return self._execute_share_search_query(query, name)
 
-def find_by_share_company_reverse_fuzzy_name(connection, name):
-    cursor = connection.cursor(buffered=True)
-    query = ("SELECT s.name, s.isin " 
+    def _find_by_share_reverse_fuzzy_alias(self, name):
+        query = ("SELECT sa.name, s.isin "
+            "FROM share s "
+            "JOIN share_alias sa on sa.share = s.id "
+            "WHERE %s like CONCAT('%', sa.name, '%') "
+            "AND length(sa.name) > 4 "
+            + self.QUERY_WHERE_AND + self.QUERY_ORDER +
+            "LIMIT 1")
+        return self._execute_share_search_query(query, name)
+
+
+    def _find_by_share_company_reverse_fuzzy_name(self, name):
+        query = ("SELECT s.name, s.isin " 
             "FROM share_company sc "
             "JOIN share s on s.share_company = sc.id "
             "WHERE %s like CONCAT('%', sc.name, '%') "
             "AND length(s.name) > 4 "
-            "AND s.isin IS NOT NULL "
-            "AND (s.category = 1 or s.category is null) "
+            + self.QUERY_WHERE_AND + 
             "group by sc.name "
-            "order by s.id asc "
+            + self.QUERY_ORDER +
             "LIMIT 1")
-    try:
-        cursor.execute(query, (name, ))
-    except mysql.connector.errors.IntegrityError, e: 
-        print ('Find share by name exception:', e)
-    if (cursor is not None):
-        share = cursor.fetchone()
-    else:
+        return self._execute_share_search_query(query, name)
+
+    def share_by_isin(self, isin):
+        cursor = self.connection.cursor(buffered=True)
+        query = ("SELECT name FROM share s "
+            "WHERE isin = (%s) "
+            "AND (s.category = 1 or s.category is null) "
+            "LIMIT 1")
+        try:
+            cursor.execute(query, (isin, ))
+        except mysql.connector.errors.IntegrityError, e: 
+            print ('Find share by isin exception:', e)
+        if (cursor is not None):
+            share_name = cursor.fetchone()
+        else:
+            share_name = None
+
+        cursor.close()
+        return share_name
+
+    def share_company_by_isin(self, isin):
+        cursor = self.connection.cursor(buffered=True)
+        query = ("SELECT sc.name FROM share s "
+            "join share_company sc on s.share_company = sc.id "
+            "WHERE isin = %s ")
+        try:
+            cursor.execute(query, (isin, ))
+        except mysql.connector.errors.IntegrityError, e: 
+            print ('Find share_company by isin exception:', e)
+        if (cursor is not None):
+            self.share_company_name = cursor.fetchone()
+        else:
+            self.share_company_name = None
+
+        cursor.close()
+
+        if (self.share_company_name is not None):
+            self.share_company_name = self.share_company_name[0]
+
+        return self.share_company_name
+
+    def find_exact_share_routine(self, name): 
+        self.share = None
+
+        self.share = self._find_by_share_exact_name(name)
+        if (self.share is None):
+            self.share = self._find_by_share_exact_alias(name)
+        if (self.share is None):
+            self.share = self._find_by_share_company_exact_name(name)
+
+        return self.share
+
+    def find_share_routine(self, name):
+        self.share = None
+
+        self.share = self.find_exact_share_routine(name)
+
+        # Do not allow fuzzy search on search strings shorter than four letters!
+        if (len(name) > 3):
+            if (self.share is None): 
+                self.share = self._find_by_share_fuzzy_name(name)
+            if (self.share is None): 
+                self.share = self._find_by_share_company_fuzzy_name(name)
+            if (self.share is None): 
+                self.share = self._find_by_share_fuzzy_alias(name)
+            if (self.share is None): 
+                self.share = self._find_by_share_reverse_fuzzy_alias(name)
+            if (self.share is None): 
+                self.share = self._find_by_share_reverse_fuzzy_name(name)
+            if (self.share is None): 
+                self.share = self._find_by_share_company_reverse_fuzzy_name(
+                    name)
+        return self.share
+
+    def exact_and_fuzzy_routine(self, name):
         share = None
+        share = self.find_exact_share_routine(name)
+        if(share is None): 
+            share = self.find_share_routine(name)
+        return share
 
-    cursor.close()
-    return share
+    def all_exact(self, name): 
+        shares = []
 
-def share_by_isin(connection, isin):
-    cursor = connection.cursor(buffered=True)
-    query = ("SELECT name FROM share "
-        "WHERE isin = (%s) "
-        "LIMIT 1")
-    try:
-        cursor.execute(query, (isin, ))
-    except mysql.connector.errors.IntegrityError, e: 
-        print ('Find share by isin exception:', e)
-    if (cursor is not None):
-        share_name = cursor.fetchone()
-    else:
-        share_name = None
+        for query in self._exact_queries:
+            shares = shares + self._execute_share_search_query_get_all(query, name)
 
-    cursor.close()
-    return share_name
+        return shares
 
-def find_share_routine(name):
-    share = None
+    def all_fuzzy(self, name): 
+        shares = []
 
-    share = find_by_share_exact_name(cnx, name)
-    if (share is None):
-        share = find_by_share_company_exact_name(cnx, name)
-    
-    # Do not allow fuzzy search on search strings shorter than four letters!
-    if (len(name) > 3):
-        if (share is None): 
-            share = find_by_share_fuzzy_name(cnx, name)
-        if (share is None): 
-            share = find_by_share_company_fuzzy_name(cnx, name)
-        if (share is None): 
-            share = find_by_share_reverse_fuzzy_name(cnx, name)
-        if (share is None): 
-            share = find_by_share_company_reverse_fuzzy_name(
-                cnx, name)
-    return share
+        for query in self._fuzzy_queries:
+            shares = shares + self._execute_share_search_query_get_all(query, name)
 
-# --------------------------------------------------------------------------
-# Search database
-cnx = mysql.connector.connect(user='root', 
-                                password='root', 
-                                database='fondout')
-cursor = cnx.cursor()
+        return shares    
 
-# Update database
-cnxUp = mysql.connector.connect(
-                                user='root', 
-                                password='root', 
-                                database='fund_search')
-cursorUp = cnxUp.cursor()
+    def find_share_alt_name(self, name):
+        name = name.lower()
+        share = None
+        used_names = []
+        used_names.append(name)
+        for suffix in self.company_suffix:
+            new_name = name.replace(suffix, "")
+            if (new_name not in used_names):
+                share = self.exact_and_fuzzy_routine(new_name)
+                used_names.append(new_name)
+            if (share is None):
+                new_name = new_name.replace(",", "").replace(".", "")
+                if (new_name not in used_names):
+                    share = self.exact_and_fuzzy_routine(new_name)
+                    used_names.append(new_name)
+            if (share is None):
+                new_name = new_name.replace(" ", "")
+                if (new_name not in used_names):
+                    share = self.exact_and_fuzzy_routine(new_name)
+                    used_names.append(new_name)
+            if (share is not None):
+                break
+        return share
 
+    # --------------------------------------------------------------------------
+    # --------------------------------------------------------------------------
 
-company_suffix =[' group', '.', ',', ' corporation', ' group', ' plc', 
+    def __init__(self):
+        self.QUERY_WHERE_AND = ( "AND s.isin IS NOT NULL "
+                    "AND (s.category = 1 or s.category is null) ")
+        self.QUERY_ORDER     = "ORDER BY s.category desc, s.id asc "
+
+        self.company_suffix =[' group', '.', ',', ' corporation', ' group', ' plc', 
                 ' limited', ' & co.', 
                 ' ab', ' a/s', ' oyj', ' asa', ' hf', ' abp', 
                 ' incorporated', ' company', ' & company', 
                 ' ag', ' (the)', ' and company', ' holdings', 
                 ' financial', 'the ', ' corp', ' inc', ' hldgs', 
                 ' companies', ' nl', ' se', 's.p.a.', ' spa', 's.a.', 
-                'aktiengesellschaft', ', inc.', ' co. ltd.']
+                'aktiengesellschaft', ', inc.', ' co. ltd.', 'ltd', 'plc'
+                'company limited']
 
-query_unidentified_shares = (
-    "SELECT name from tmp_shareholding "
-    "where isin IS NULL")
-# uncomment to enable Test list already caught share-isins / redo everything
-query_unidentified_shares = ("SELECT name from tmp_shareholding where fund=4")
+        self.QUERY_LIMIT = ""
 
-cursorUp.execute(query_unidentified_shares)
-unidentifiedShares = cursorUp.fetchall()
+        self._find_by_share_exact_name_query = ("SELECT s.name, s.isin FROM share s "
+                "WHERE s.name = (%s) "
+                + self.QUERY_WHERE_AND + self.QUERY_ORDER + self.QUERY_LIMIT)
 
-# --------------------------------------------------------------------------
-for (share_name,) in unidentifiedShares:
-    # lowercase because MYSQL is not case sensitive, but python is. 
-    share_name = share_name.lower()
-    print "New share: ", share_name
+        self._find_by_share_exact_alias_query = ("SELECT s.name, s.isin "
+                "FROM share s "
+                "JOIN share_alias sa on sa.share = s.id "
+                "WHERE sa.name = (%s) "
+                + self.QUERY_WHERE_AND + self.QUERY_ORDER +  self.QUERY_LIMIT)
 
-    # --------------- Find section ---------------
+        self._find_by_share_company_exact_name_query = ("SELECT s.name, s.isin " 
+                "FROM share_company sc "
+                "JOIN share s on s.share_company = sc.id "
+                "WHERE sc.name = (%s) "
+                + self.QUERY_WHERE_AND + 
+                "GROUP BY sc.name "
+                + self.QUERY_ORDER + self.QUERY_LIMIT)
 
-    # First db-search attempt
-    found_share = find_share_routine(share_name)
+        self._find_by_share_company_fuzzy_name_query = ("SELECT s.name, s.isin " 
+                "FROM share_company sc "
+                "JOIN share s on s.share_company = sc.id "
+                "WHERE sc.name like CONCAT('%', %s, '%') "
+                + self.QUERY_WHERE_AND + 
+                "GROUP BY sc.name "
+                + self.QUERY_ORDER + self.QUERY_LIMIT)
 
-    # Second db-search attempt with alternated name
-    if (found_share is None):
-        used_names = []
-        used_names.append(share_name)
-        for suffix in company_suffix:
-            #print share_name.replace(suffix, "")
-            new_name = share_name.replace(suffix, "")
-            if (new_name not in used_names):
-                found_share = find_share_routine(new_name)
-                used_names.append(new_name)
+        self._find_by_share_fuzzy_name_query = ("SELECT s.name, s.isin " 
+                "FROM share s "
+                "WHERE s.name like CONCAT('%', %s, '%') "
+                + self.QUERY_WHERE_AND + self.QUERY_ORDER + self.QUERY_LIMIT)
+
+        self._find_by_share_reverse_fuzzy_name_query = ("SELECT s.name, s.isin " 
+                "FROM share s "
+                "WHERE %s like CONCAT('%', s.name, '%') "
+                "AND length(s.name) > 4 "
+                + self.QUERY_WHERE_AND + self.QUERY_ORDER + self.QUERY_LIMIT)
+
+        self._find_by_share_fuzzy_alias_query = ("SELECT s.name, s.isin "
+                "FROM share s "
+                "JOIN share_alias sa on sa.share = s.id "
+                "WHERE sa.name like CONCAT('%', %s, '%') "
+                + self.QUERY_WHERE_AND + self.QUERY_ORDER + self.QUERY_LIMIT)
+
+        self._find_by_share_reverse_fuzzy_alias_query = ("SELECT s.name, s.isin "
+                "FROM share s "
+                "JOIN share_alias sa on sa.share = s.id "
+                "WHERE %s like CONCAT('%', sa.name, '%') "
+                "AND length(sa.name) > 4 "
+                + self.QUERY_WHERE_AND + self.QUERY_ORDER + self.QUERY_LIMIT)
+
+        self._find_by_share_company_reverse_fuzzy_name_query = ("SELECT s.name, s.isin " 
+                "FROM share_company sc "
+                "JOIN share s on s.share_company = sc.id "
+                "WHERE %s like CONCAT('%', sc.name, '%') "
+                "AND length(s.name) > 4 "
+                + self.QUERY_WHERE_AND + 
+                "group by sc.name "
+                + self.QUERY_ORDER + self.QUERY_LIMIT)
+
+        self._exact_queries = (
+            self._find_by_share_exact_name_query, 
+            self._find_by_share_exact_alias_query)
+
+            # not including SC in exact match. 
+            #self._find_by_share_company_exact_name_query
+
+        self._fuzzy_queries = (
+            self._find_by_share_company_exact_name_query,
+            self._find_by_share_company_fuzzy_name_query,
+            self._find_by_share_fuzzy_name_query,
+            self._find_by_share_reverse_fuzzy_name_query,
+            self._find_by_share_fuzzy_alias_query,
+            self._find_by_share_reverse_fuzzy_alias_query,
+            self._find_by_share_company_reverse_fuzzy_name_query)
+
+        # Search database
+        self.connection = mysql.connector.connect(user='root', 
+                                        password='root', 
+                                        database='fondout')
+        self.cursor = self.connection.cursor()
+
+        # Update database
+        self.cnxUp = mysql.connector.connect(
+                                        user='root', 
+                                        password='root', 
+                                        database='fund_search')
+        self.cursorUp = self.cnxUp.cursor()
+
+
+    if __name__ == "__main__":
+        # Parse args from command line
+        parser = argparse.ArgumentParser()
+        parser.add_argument("-f", "--fund", help="Fund to use.")
+        args = parser.parse_args()
+
+        # Prepare script to listen to ctrl-c
+        signal.signal(signal.SIGINT, signal_handler)
+
+        # --------- Choose selection of shares from database
+        query_unidentified_shares = (
+            "SELECT name from tmp_shareholding "
+            "where isin IS NULL")
+        # uncomment to enable Test list already caught share-isins / redo everything
+        if args.fund is not None: 
+            print "Fund used : ", args.fund
+            query_unidentified_shares = (
+                "SELECT name from tmp_shareholding "
+                "where (select id from tmp_fund where name LIKE '%" 
+                + args.fund + "%')"
+                " AND isin IS NULL and false_positive = 0")
+
+        self.cursorUp.execute(query_unidentified_shares)
+        unidentifiedShares = self.cursorUp.fetchall()
+
+        # --------------------------------------------------------------------------
+        for (share_name,) in unidentifiedShares:
+            # lowercase because MYSQL is not case sensitive, but python is. 
+            share_name = share_name.lower()
+            print "New share: ", share_name
+
+            # --------------- Find section ---------------
+
+            # First db-search attempt, exact match
+            found_share = find_exact_share_routine(share_name)
+            if (found_share is not None): 
+                exact_match = True
+            else: 
+                exact_match = False
+
+            # Second db-search attempt, fuzzy search
             if (found_share is None):
-                new_name = new_name.replace(",", "").replace(".", "")
-                if (new_name not in used_names):
-                    found_share = find_share_routine(new_name)
-                    used_names.append(new_name)
+                found_share = find_share_routine(share_name)
+
+            # Third db-search attempt with alternated name
             if (found_share is None):
-                new_name = new_name.replace(" ", "")
-                if (new_name not in used_names):
-                    found_share = find_share_routine(new_name)
-                    used_names.append(new_name)
+                used_names = []
+                used_names.append(share_name)
+                for suffix in self.company_suffix:
+                    new_name = share_name.replace(suffix, "")
+                    if (new_name not in used_names):
+                        found_share = find_share_routine(new_name)
+                        used_names.append(new_name)
+                    if (found_share is None):
+                        new_name = new_name.replace(",", "").replace(".", "")
+                        if (new_name not in used_names):
+                            found_share = find_share_routine(new_name)
+                            used_names.append(new_name)
+                    if (found_share is None):
+                        new_name = new_name.replace(" ", "")
+                        if (new_name not in used_names):
+                            found_share = find_share_routine(new_name)
+                            used_names.append(new_name)
+                    if (found_share is not None):
+                        break
+
+            if (exact_match is not True): 
+                (googled_isin, 
+                    googled_isin_matches, 
+                    google_occurances) = isingoogle.search_google(share_name)
+            else: 
+                googled_isin_matches = 0
+                google_occurances = None
+                googled_isin = None
+
             if (found_share is not None):
-                break
+                (found_name, found_isin) = found_share
+                print found_name, found_isin
+                if (googled_isin_matches > 0):
+                    if (found_isin == googled_isin):
+                        # CASE 1: GOOGLE = DBMATCH --> SAME ISIN
+                        # Database found matches top google result
+                        print 'Found isin matches googled isin, gr8 success!'
+                        found_method = ("1: search and google match. Google hits: " 
+                             + str(googled_isin_matches))
+                    elif (googled_isin_matches > 3):
+                        # CASE 2: GOOGLE(>3) != DBMATCH --> CHOOSE GOOGLE
+                        # No match google hits wins - take google result
+                        found_method = ("2:" + str(googled_isin_matches)
+                            + " google hits, conflict search " + found_name + " "
+                            + found_isin)
+                        found_isin = googled_isin
+                        found_name = "googled: "
+                        result = share_by_isin(googled_isin)
+                        if (result is not None):
+                            found_name = found_name + ' ' + result[0]
+                    elif (googled_isin_matches > 0):
+                        if (found_isin in google_occurances): 
+                            # CASE 3: GOOGLE(<3) != DBMATCH, DBMATCH in GOOG OCCURANC
+                            # ---> CHOOSE DBMATCH
+                            found_method = ("3: mismatch db. top google hit: " 
+                                        + googled_isin + ":" + str(googled_isin_matches))
+                        else: 
+                            # CASE 4: GOOGLE(<4) != DBMATCH, DBMATCH NOT in GOOG OCCURANC
 
-    (googled_isin, 
-        googled_isin_matches, 
-        google_occurances) = isingoogle.search_google(share_name)
+                            # found_isin = ""
+                            # found_name = ""
+                            found_method = ("4. mismatch db google(" 
+                                + str(googled_isin_matches) + ") not in google results. "
+                                + googled_isin)
 
-    if (found_share is not None):
-        (found_name, found_isin) = found_share
-        print found_name, found_isin
-        if (googled_isin_matches > 0):
-            if (found_isin == googled_isin):
-                # CASE 1: GOOGLE = DBMATCH --> SAME ISIN
-                # Database found matches top google result
-                print 'Found isin matches googled isin, gr8 success!'
-                found_method = ("1: search and google match. Google hits: " 
-                     + str(googled_isin_matches))
-            elif (googled_isin_matches > 3):
-                # CASE 2: GOOGLE(>3) != DBMATCH --> CHOOSE GOOGLE
-                # No match google hits wins - take google result
-                found_method = ("2:" + str(googled_isin_matches)
-                    + " google hits, conflict search " + found_name + " "
-                    + found_isin)
-                found_isin = googled_isin
-                found_name = "googled: "
-                result = share_by_isin(cnx, googled_isin)
-                if (result is not None):
-                    found_name = found_name + ' ' + result[0]
-            elif (googled_isin_matches > 0):
-                if (found_isin in google_occurances): 
-                    # CASE 3: GOOGLE(<3) != DBMATCH, DBMATCH in GOOG OCCURANC
-                    # ---> CHOOSE DBMATCH
-                    found_method = ("3: mismatch db. top google hit: " 
-                                + googled_isin + ":" + str(googled_isin_matches))
+                            result = share_by_isin(googled_isin)
+                            if (result is not None):
+                                found_method = (found_method + ' db-matched to ' + 
+                                    result[0])
+                
+                elif (exact_match is True):
+                    # CASE 8: EXACT MATCH         
+                    found_method = "8: Exact match"
                 else: 
-                    # CASE 4: GOOGLE(<4) != DBMATCH, DBMATCH NOT in GOOG OCCURANC
-                    found_isin = ""
-                    found_name = ""
-                    found_method = ("4. mismatch db google(" 
-                        + str(googled_isin_matches) + ") not in google results. "
-                        + googled_isin)
+                    # CASE 2: No google hits, but found in DB
+                    # Make this a separate case?
+                    found_method = "2: No google hits"
 
-                    result = share_by_isin(cnx, googled_isin)
+
+            elif (googled_isin_matches > 0):
+                # min 3 google hits makes certain
+                if (googled_isin_matches > 2):
+                    found_isin = googled_isin
+                    # Search current db for found isin.
+                    result = share_by_isin(googled_isin)
+                    found_method = ("5:" + str(googled_isin_matches) 
+                                    + " results googled, faild db-search.")
+                    found_name = "googled: "
+                    if (result is not None):
+                        found_name = found_name + result[0]
+                else: 
+                    found_method = ("6. Google hits: " + str(googled_isin_matches) 
+                        + " : " + googled_isin)
+
+                    result = share_by_isin(googled_isin)
                     if (result is not None):
                         found_method = found_method + ' db-matched to ' + result[0]
-        else: 
-            # CASE 2: No google hits, but found in DB
-            # Make this a separate case?
-            found_method = "2: No google hits"
 
+                    found_isin = ""
+                    found_name = ""
 
-    elif (googled_isin_matches > 0):
-        # min 3 google hits makes certain
-        if (googled_isin_matches > 2):
-            found_isin = googled_isin
-            # Search current db for found isin.
-            result = share_by_isin(cnx, googled_isin)
-            found_method = ("5:" + str(googled_isin_matches) 
-                            + " results googled, faild db-search.")
-            found_name = "googled: "
-            if (result is not None):
-                found_name = found_name + result[0]
-        else: 
-            found_method = ("6. Google hits: " + str(googled_isin_matches) 
-                + " : " + googled_isin)
+            else:
+                found_isin = ""
+                found_name = ""
+                found_method = "7: Nothing found!"
 
-            result = share_by_isin(cnx, googled_isin)
-            if (result is not None):
-                found_method = found_method + ' db-matched to ' + result[0]
+            # Get share_company
+            found_share_company = ""
+            if(found_isin != ""):
+                found_share_company = share_company_by_isin(found_isin)
 
-            found_isin = ""
-            found_name = ""
+            
+            # --------------- Update section ---------------
+            query_update_isin = (
+                "UPDATE tmp_shareholding "
+                "SET matched_name=%s, isin=%s, method_found=%s, share_company=%s "
+                "WHERE name = %s")
 
-    else:
-        found_isin = ""
-        found_name = ""
-        found_method = "7: Nothing found!"
+            update_share_values = (found_name, found_isin, found_method, 
+                found_share_company, share_name)
 
-    
-    # --------------- Update section ---------------
-    query_update_isin = (
-        "UPDATE tmp_shareholding "
-        "SET matched_name=%s, isin=%s, method_found=%s "
-        "WHERE name = %s")
+            # If fund is specified add specific by fund.
+            # obs: Should really be the exact one pulled from the database
 
-    update_share_values = (found_name, found_isin, found_method, share_name)
+            if args.fund is not None: 
+                query_update_isin = (
+                    query_update_isin + 
+                    " and fund = (select id from tmp_fund "
+                    "where name like CONCAT('%', %s, '%'))")
+                update_share_values = update_share_values + (args.fund, )
 
-    
+            # Update share in fund_search where name = share_name
+            try: 
+                self.cursorUp.execute(query_update_isin, update_share_values)
+            except Exception as e:
+                print('Update execution error', e)
 
-    # Update share in fund_search where name = share_name
-    try: 
-        cursorUp.execute(query_update_isin, update_share_values)
-        #print cursorUp
-    except Exception as e:
-        print('Update execution error', e)
-    
-# Use commit for confirming modification of data. 
-# Rollback to undo.
+            # Use commit for confirming modification of data. 
+            # Rollback to undo.
 
-# Disable for test. 
-cnxUp.commit() 
+            # Disable for test. 
+            self.cnxUp.commit() 
+            time.sleep(randint(0,10))
 
-cursorUp.close()
-cnxUp.close()
-
-cursor.close()
-cnx.close()
+        exit_procedure()

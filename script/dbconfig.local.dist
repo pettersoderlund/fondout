@@ -1,0 +1,4 @@
+export DB_USER="mysqlusername"
+export DB_PASS="mysqlpassword"
+export DB_FONDOUT="fondout_database"
+export DB_FUNDSEARCH="fund_search_database"
