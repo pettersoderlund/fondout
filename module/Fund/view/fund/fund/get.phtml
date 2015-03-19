@@ -18,6 +18,11 @@ $this->headScript()
       )
       ); ?>
 
+      <?php 
+          echo "WEAPON <strong>" . $fund->getWeaponCount() . " </strong>" . 
+               "FOSSIL <strong>" . $fund->getFossilCount() . " </strong>" . 
+               "ALTOGA <strong>" . $fund->getAlToGaCount(). " </strong>"  ;
+        ?>    
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3>
