@@ -225,6 +225,7 @@ class FundRepository extends EntityRepository
 
         // subquery: select all distinct accusations that match the category criteria
         // and the share company ID
+        // NOTE 28/3 2015: Should be DISTINCT a.accusationCategory
         $subQueryBuilder->select('DISTINCT a.accusation')
             ->from('Fund\Entity\Accusation', 'a')
             ->join('a.category', 'c')
@@ -278,6 +279,41 @@ class FundRepository extends EntityRepository
             if (isset($fundMap[$cv['id']])) {
                 $fundMap[$cv['id']]->setCo2($cv['scope12weighted']);
                 $fundMap[$cv['id']]->setCo2Coverage($cv['coverage']);
+            }
+        }
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        // query: Get number of companies per fund per accusation category
+        $queryBuilder->select(
+            'f.id, ' .
+            'count(DISTINCT sc.name) as company_count, ' .
+            'ac.id as ac_id'
+        )
+            ->from('Fund\Entity\Fund', 'f')
+            ->join('f.fundInstances', 'fi')
+            ->join('fi.shareholdings', 'sh')
+            ->join('sh.share', 's')
+            ->join('s.shareCompany', 'sc')
+            ->join('sc.accusations', 'sca')
+            ->join('sca.category', 'ac')
+            ->where(
+                $queryBuilder->expr()->andx(
+                    $queryBuilder->expr()->in('f.id', array_keys($fundMap)),
+                    $queryBuilder->expr()->in('ac.name', 
+                        array("Fossila bränslen",
+                         "Kontroversiella vapen", 
+                         "Alkohol, tobak, spel")
+                    )
+                )
+            )
+            ->groupBy('f.id')
+            ->addGroupBy('ac.id');
+
+
+        // map the co2 value and co2coverage to the related fund
+        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
+            if (isset($fundMap[$cv['id']])) {
+                $fundMap[$cv['id']]->fillMeasure($cv['ac_id'], $cv['company_count']);
             }
         }
 

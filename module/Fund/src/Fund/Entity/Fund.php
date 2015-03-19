@@ -130,6 +130,11 @@ class Fund extends Entity
 
     protected $co2Coverage;
 
+    # Counts of the fund measurements.
+    protected $weaponCompanies = 0;
+    protected $alToGaCompanies = 0;
+    protected $fossilCompanies = 0;
+
     // This is supposed to be a constant.
     protected $co2CoverageLimit = 0.5;
 
@@ -506,4 +511,37 @@ class Fund extends Entity
       return $this->co2CoverageLimit;
     }
 
+    public function fillMeasure($accusationCategoryId, $count) {
+        switch ($accusationCategoryId) {
+            # Controversial weapons id = 1
+            case 1:
+                $this->weaponCompanies = $count;
+                break;
+            # Alcohol tobacco gambling id = 12
+            case 12:
+                $this->alToGaCompanies = $count;
+                break;
+            # Fossil fuels id = 11
+            case 11:
+                $this->fossilCompanies = $count;
+                break;
+
+            default:
+                break;
+
+            return $this;
+        }
+    }
+
+    public function getWeaponCount() {
+      return $this->weaponCompanies;
+    }
+
+    public function getAlToGaCount() {
+      return $this->alToGaCompanies;
+    }
+
+    public function getFossilCount() {
+      return $this->fossilCompanies;
+    }
 }

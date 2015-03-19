@@ -257,6 +257,11 @@ $submit->setValue('Välj kategorier');
           <?php echo $this->translate($fund->name) ?>
         </a>
       </h3>
+      <?php 
+        echo "WEAPON <strong>" . $fund->getWeaponCount() . " </strong>" . 
+             "FOSSIL <strong>" . $fund->getFossilCount() . " </strong>" . 
+             "ALTOGA <strong>" . $fund->getAlToGaCount(). " </strong>"  ;
+      ?>
 
       <p class="hidden-xs"><?php echo $this->translate($fund->company->name) ?></p>
       <p>
