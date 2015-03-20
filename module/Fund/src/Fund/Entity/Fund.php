@@ -515,15 +515,15 @@ class Fund extends Entity
         switch ($accusationCategoryId) {
             # Controversial weapons id = 1
             case 1:
-                $this->weaponCompanies = $count;
+                $this->setWeaponCompanies($count);
                 break;
             # Alcohol tobacco gambling id = 12
             case 12:
-                $this->alToGaCompanies = $count;
+                $this->setAlToGaCompanies($count);
                 break;
             # Fossil fuels id = 11
             case 11:
-                $this->fossilCompanies = $count;
+                $this->setFossilCompanies($count);
                 break;
 
             default:
@@ -533,15 +533,27 @@ class Fund extends Entity
         }
     }
 
-    public function getWeaponCount() {
+    public function setWeaponCompanies($count) {
+        $this->weaponCompanies = $count;
+    }
+
+    public function setAlToGaCompanies($count) {
+        $this->alToGaCompanies = $count;
+    }
+
+    public function setFossilCompanies($count) {
+      $this->fossilCompanies = $count;
+    }
+
+    public function getWeaponCompanies() {
       return $this->weaponCompanies;
     }
 
-    public function getAlToGaCount() {
+    public function getAlToGaCompanies() {
       return $this->alToGaCompanies;
     }
 
-    public function getFossilCount() {
+    public function getFossilCompanies() {
       return $this->fossilCompanies;
     }
 }

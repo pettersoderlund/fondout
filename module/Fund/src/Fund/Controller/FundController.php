@@ -127,20 +127,6 @@ class FundController extends AbstractRestfulController
         );
     }
 
-    public function create($data)
-    {
-        # code...
-    }
-
-    public function update($id, $data)
-    {
-        # code...
-    }
-
-    public function delete($id)
-    {
-        # code...
-    }
 
     public function getFundService()
     {

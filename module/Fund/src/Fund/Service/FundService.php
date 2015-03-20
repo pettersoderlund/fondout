@@ -194,20 +194,14 @@ class FundService
             case 'name':
                 $sortOrder['name'] = $order;
                 break;
-            case 'company':
-                $sortOrder['companyName'] = $order;
+            case 'weapon':
+                $sortOrder['weaponCompanies'] = $order;
                 break;
-            case 'fondoutcategory':
-                $sortOrder['fondoutCategoryTitle'] = $order;
+            case 'fossil':
+                $sortOrder['fossilCompanies'] = $order;
                 break;
-            case 'size':
-                $sortOrder['totalMarketValue'] = $order;
-                break;
-            case 'sustainability':
-                $sortOrder['sustainability'] = $order;
-                break;
-            case 'co2':
-                $sortOrder['co2'] = $order;
+            case 'altoga':
+                $sortOrder['alToGaCompanies'] = $order;
                 break;
         }
 
@@ -222,45 +216,6 @@ class FundService
             $criteria->andWhere(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
         }
 
-        //Condition removes results that doesnt have the right co2coverage level
-        // HOW CAN WE GET THE THRESHOLD / LIMIT VALUE FORM THE FUND ENTITY?
-
-        if ($sort == 'co2') {
-            $criteria->andWhere(Criteria::expr()->gt('co2Coverage', '0.5'));
-        }
-
-        if (count($size) > 0) {
-            $sizeCriteria = array();
-            foreach ($size as $s) {
-                switch ($s) {
-                    case "small":
-                        $sizeCriteria[] = Criteria::expr()->lte('totalMarketValue', 600000000);
-                        break;
-                    case "medium":
-                        $sizeCriteria[] = Criteria::expr()->andx(
-                            Criteria::expr()->gt('totalMarketValue', 600000000),
-                            Criteria::expr()->lt('totalMarketValue', 2500000000)
-                        );
-                        break;
-                    case "large":
-                        $sizeCriteria[] = Criteria::expr()->gte('totalMarketValue', 2500000000);
-                        break;
-                    default:
-                }
-            }
-            $criteria->andWhere(call_user_func_array(array(Criteria::expr(), "orx"), $sizeCriteria));
-        }
-
-        //Filter sustainability scores
-        if (count($sustainabilityScore) > 0) {
-            $susScoreCriteria = array();
-            $sustainibilityScoreScale = 10;
-            foreach ($sustainabilityScore as $s) {
-              $susScoreCriteria[] = Criteria::expr()->eq('sustainability', ($s/$sustainibilityScoreScale));
-            }
-            $criteria->andWhere(call_user_func_array(array(Criteria::expr(), "orx"), $susScoreCriteria));
-        }
-
         $q = trim($q);
         if (strlen($q) > 0) {
             $criteria->andWhere(Criteria::expr()->orX(
@@ -268,8 +223,6 @@ class FundService
                 Criteria::expr()->contains('name', strtoupper($q)),
                 Criteria::expr()->contains('url', strtolower($q))
             ));
-
-            //$criteria->andWhere(Criteria::expr()->contains('name', $q));
         }
 
         $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
@@ -277,8 +230,8 @@ class FundService
         $paginator    = new Paginator(new CollectionAdapter($orderedfunds));
 
         $paginator->setCurrentPageNumber((int)$currentPage);
-        $paginator->setItemCountPerPage(10);
-        $paginator->setPageRange(7);
+        $paginator->setItemCountPerPage(50);
+        $paginator->setPageRange(10);
 
         return $paginator;
     }

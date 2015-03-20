@@ -9,11 +9,19 @@ if (isset($query['order'])) {
 } else {
   $order = 'ASC';
 }
+
+if ($order == 'ASC') {
+  $reverseorder = 'DESC';
+} else {
+  $reverseorder = 'ASC';
+}
+
 if (isset($query['sort'])) {
   $sortby = $query['sort'];
 } else {
-  $sortby = "sustainability";
+  $sortby = "name";
 }
+
 
 /* Filter funds form */
 $form->setAttribute('method', 'GET');
@@ -83,29 +91,12 @@ $form->prepare();
 
 <div class="well well-sm">
   <div class="row">
-    <p class="sortby-header">Sortera efter</p>
-    <ul class="nav nav-pills pull-right sortby-buttons">
+    <p class="sortby-header">Ranka efter</p>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">WEAPON</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">FOSSIL</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'altoga', 'order' => ($sortby == 'altoga' ? $reverseorder : 'ASC'))  + $query))); ?>">ALTOGA</a></button>
 
-      <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          CO<sub>2</sub>-utsläpp <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'DESC')  + $query))); ?>">CO<sub>2</sub>-utsläpp (högst till lägst)</a></li>
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO<sub>2</sub>-utsläpp (lägst till högst)</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown <?php if (strcmp($sortby,'sustainability') == 0): echo ' active '; endif; ?>">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          Hållbarhetsnivå <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">Hållbarhetsnivå (högst till lägst)</a></li>
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'ASC')  + $query))); ?>">Hållbarhetsnivå (lägst till högst)</a></li>
-        </ul>
-      </li>
-    </ul>
   </div>
 </div>
 
@@ -115,9 +106,9 @@ $form->prepare();
   
       <div class="pull-right">
         <?php 
-          echo "WEAPON <strong>" . $fund->getWeaponCount() . " </strong>" . 
-               "FOSSIL <strong>" . $fund->getFossilCount() . " </strong>" . 
-               "ALTOGA <strong>" . $fund->getAlToGaCount(). " </strong>"  ;
+          echo "WEAPON <strong>" . $fund->getWeaponCompanies() . " </strong>" . 
+               "FOSSIL <strong>" . $fund->getFossilCompanies() . " </strong>" . 
+               "ALTOGA <strong>" . $fund->getAlToGaCompanies(). " </strong>"  ;
         ?>    
       </div>
 
@@ -128,7 +119,10 @@ $form->prepare();
       </h3>
       <p class="hidden-xs"><?php echo $this->translate($fund->company->name) ?></p>
       <p>
-        <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+        
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+          <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+        </a>
       </p>
 
     </li>

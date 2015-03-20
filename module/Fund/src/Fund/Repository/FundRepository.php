@@ -151,9 +151,7 @@ class FundRepository extends EntityRepository
 
       $qb->setParameter(1, $fund->fondoutCategory->id);
 
-
       return $qb->getQuery()->getResult();
-
     }
 
     public function findControversialValue(Fund $fund, $category = array())
@@ -225,7 +223,7 @@ class FundRepository extends EntityRepository
 
         // subquery: select all distinct accusations that match the category criteria
         // and the share company ID
-        // NOTE 28/3 2015: Should be DISTINCT a.accusationCategory
+        // NOTE 18/3 2015: Should be DISTINCT a.accusationCategory
         $subQueryBuilder->select('DISTINCT a.accusation')
             ->from('Fund\Entity\Accusation', 'a')
             ->join('a.category', 'c')
@@ -253,32 +251,6 @@ class FundRepository extends EntityRepository
         foreach ($queryBuilder->getQuery()->getResult() as $cv) {
             if (isset($fundMap[$cv['id']])) {
                 $fundMap[$cv['id']]->calculateSustainability($cv['score']);
-            }
-        }
-
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-        // query: add scope12 for all holdings wieghted to fund size and share proportion
-        // Also add the coverage for the fund of co2 emissions that we know of
-        $queryBuilder->select(
-            'f.id, ' .
-            //'(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/fi.totalMarketValue)*1000000 as scope12weighted, ' .
-            '(sum((sh.marketValue/sc.marketValueSEK)*e.scope12)/sum(sh.marketValue))*1000000 as scope12weighted, ' .
-            'sum(sh.marketValue)/fi.totalMarketValue as coverage'
-        )
-            ->from('Fund\Entity\Fund', 'f')
-            ->join('f.fundInstances', 'fi')
-            ->join('fi.shareholdings', 'sh')
-            ->join('sh.share', 's')
-            ->join('s.shareCompany', 'sc')
-            ->join('sc.emissions', 'e')
-            ->where($queryBuilder->expr()->in('f.id', array_keys($fundMap)))
-            ->groupBy('f.id');
-
-        // map the co2 value and co2coverage to the related fund
-        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
-            if (isset($fundMap[$cv['id']])) {
-                $fundMap[$cv['id']]->setCo2($cv['scope12weighted']);
-                $fundMap[$cv['id']]->setCo2Coverage($cv['coverage']);
             }
         }
 
