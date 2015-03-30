@@ -4,20 +4,20 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c5ee8d080445a01abb788e7825597ee9",
+    "hash": "3a320deaa2b5b24796c31232ed1ade8e",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "2.7.22",
+            "version": "2.7.23",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "7c97f11ca46c47209e597ebab6e74e164cdf6216"
+                "reference": "a31871763cef5e2d46ad793d994a46dc700d4d55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/7c97f11ca46c47209e597ebab6e74e164cdf6216",
-                "reference": "7c97f11ca46c47209e597ebab6e74e164cdf6216",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/a31871763cef5e2d46ad793d994a46dc700d4d55",
+                "reference": "a31871763cef5e2d46ad793d994a46dc700d4d55",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +71,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2015-03-12 19:51:58"
+            "time": "2015-03-19 21:42:28"
         },
         {
             "name": "behat/transliterator",
@@ -909,16 +909,16 @@
         },
         {
             "name": "guzzle/guzzle",
-            "version": "v3.9.2",
+            "version": "v3.9.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle3.git",
-                "reference": "54991459675c1a2924122afbb0e5609ade581155"
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/54991459675c1a2924122afbb0e5609ade581155",
-                "reference": "54991459675c1a2924122afbb0e5609ade581155",
+                "url": "https://api.github.com/repos/guzzle/guzzle3/zipball/0645b70d953bc1c067bbc8d5bc53194706b628d9",
+                "reference": "0645b70d953bc1c067bbc8d5bc53194706b628d9",
                 "shasum": ""
             },
             "require": {
@@ -959,6 +959,9 @@
                 "zendframework/zend-cache": "2.*,<2.3",
                 "zendframework/zend-log": "2.*,<2.3"
             },
+            "suggest": {
+                "guzzlehttp/guzzle": "Guzzle 5 has moved to a new package name. The package you have installed, Guzzle 3, is deprecated."
+            },
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -986,7 +989,7 @@
                     "homepage": "https://github.com/guzzle/guzzle/contributors"
                 }
             ],
-            "description": "Guzzle is a PHP HTTP client library and framework for building RESTful web service clients",
+            "description": "PHP HTTP client. This library is deprecated in favor of https://packagist.org/packages/guzzlehttp/guzzle",
             "homepage": "http://guzzlephp.org/",
             "keywords": [
                 "client",
@@ -997,67 +1000,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2014-08-11 04:32:36"
-        },
-        {
-            "name": "slm/locale",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/juriansluiman/SlmLocale.git",
-                "reference": "986835b965299ec09b11cbcadbc05e77be7e5797"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/juriansluiman/SlmLocale/zipball/986835b965299ec09b11cbcadbc05e77be7e5797",
-                "reference": "986835b965299ec09b11cbcadbc05e77be7e5797",
-                "shasum": ""
-            },
-            "require": {
-                "ext-intl": "*",
-                "php": ">=5.3.3.",
-                "zendframework/zend-eventmanager": "~2.1",
-                "zendframework/zend-http": "~2.1",
-                "zendframework/zend-servicemanager": "~2.1",
-                "zendframework/zend-stdlib": "~2.1"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "4.2.*",
-                "zendframework/zend-console": "~2.1",
-                "zendframework/zend-mvc": "~2.1"
-            },
-            "suggest": {
-                "zendframework/zend-mvc": "For using the router in the UriPath strategy"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "SlmLocale": "src/",
-                    "SlmLocaleTest": "tests/"
-                },
-                "classmap": [
-                    "./Module.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "authors": [
-                {
-                    "name": "Jurian Sluiman",
-                    "email": "jurian@juriansluiman.nl",
-                    "homepage": "http://juriansluiman.nl"
-                }
-            ],
-            "description": "Automatic detection of locales for Zend Framework 2",
-            "homepage": "https://github.com/juriansluiman/SlmLocale",
-            "keywords": [
-                "i18n",
-                "locale",
-                "zf2"
-            ],
-            "time": "2014-11-10 11:24:10"
+            "time": "2015-03-18 18:23:50"
         },
         {
             "name": "symfony/console",
@@ -2672,7 +2615,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "slm/locale": 20,
         "zendframework/zftool": 20
     },
     "prefer-stable": false,

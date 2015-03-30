@@ -9,8 +9,7 @@
         "zf-commons/zfc-user-doctrine-orm": "*",
         "zf-commons/zfc-base": "*",
         "zf-commons/zfc-user": "*",
-        "aws/aws-sdk-php": "2.*",
-        "slm/locale": "dev-master"
+        "aws/aws-sdk-php": "2.*"
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",

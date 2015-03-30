@@ -13,8 +13,7 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineORM',
         'Application',
-        'Fund',
-        'SlmLocale'
+        'Fund'
     ),
     'module_listener_options' => array(
         'module_paths' => array(
