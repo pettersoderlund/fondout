@@ -13,7 +13,9 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineORM',
         'Application',
-        'Fund'
+        'Fund',
+        'ZendDeveloperTools',
+        'BjyProfiler'
     ),
     'module_listener_options' => array(
         'module_paths' => array(

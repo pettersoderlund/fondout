@@ -10,10 +10,13 @@
         "zf-commons/zfc-base": "*",
         "zf-commons/zfc-user": "*",
         "aws/aws-sdk-php": "2.*"
+
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",
         "phpunit/phpunit": "*",
-        "squizlabs/php_codesniffer": "*"
+        "squizlabs/php_codesniffer": "*",
+        "zendframework/zend-developer-tools": "dev-master",
+        "bjyoungblood/bjy-profiler": "dev-master"
     }
 }
