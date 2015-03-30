@@ -9,14 +9,14 @@
         "zf-commons/zfc-user-doctrine-orm": "*",
         "zf-commons/zfc-base": "*",
         "zf-commons/zfc-user": "*",
-        "aws/aws-sdk-php": "2.*"
+        "aws/aws-sdk-php": "2.*",
+        "zendframework/zend-developer-tools": "dev-master",
 
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",
         "phpunit/phpunit": "*",
         "squizlabs/php_codesniffer": "*",
-        "zendframework/zend-developer-tools": "dev-master",
         "bjyoungblood/bjy-profiler": "dev-master"
     }
 }
