@@ -342,35 +342,6 @@ class Fund extends Entity
       return $this->sustainability;
     }
 
-    public function getSustainabilityScore() {
-      $maxSustainabilityScore = 10;
-      if ($this->sustainability == 1) {
-        return 1;
-      } elseif ($this->sustainability > 0.97) {
-        return 0.9;
-      } elseif ($this->sustainability > 0.94) {
-        return 0.8;
-      } elseif ($this->sustainability > 0.91) {
-        return 0.7;
-      } elseif ($this->sustainability > 0.87) {
-        return 0.6;
-      } elseif ($this->sustainability > 0.84) {
-        return 0.5;
-      } elseif ($this->sustainability > 0.81) {
-        return 0.4;
-      } elseif ($this->sustainability > 0.78) {
-        return 0.3;
-      } elseif ($this->sustainability > 0.76) {
-        return 0.2;
-      } elseif ($this->sustainability) {
-        return 0.1;
-      } else {
-        // This should only happen if there is
-        // no sustainability score calculated.
-        return 0;
-      }
-    }
-
     /**
      * Sets the total market value.
      *
@@ -556,4 +527,43 @@ class Fund extends Entity
     public function getFossilCompanies() {
       return $this->fossilCompanies;
     }
+
+    public function getMeasureScore($measureType) {
+      switch ($measureType) {
+        case "weapon":
+          $companyCount = $this->weaponCompanies;
+          break;
+        case "fossil":
+          $companyCount = $this->fossilCompanies;
+          break;
+        case "altoga":
+          $companyCount = $this->alToGaCompanies;
+          break;
+
+      }
+
+      if ($companyCount == 0) {
+        $score = 10;
+      } elseif ($companyCount == 1) {
+        $score = 9;
+      } elseif ($companyCount == 2) {
+        $score = 8;
+      } elseif ($companyCount < 5) {
+        $score = 7;
+      } elseif ($companyCount < 8) {
+        $score = 6;
+      } elseif ($companyCount < 13) {
+        $score = 5;
+      } elseif ($companyCount < 21) {
+        $score = 4;
+      } elseif ($companyCount < 34) {
+        $score = 3;
+      } elseif ($companyCount < 55) {
+        $score = 2;
+      } else {
+        $score = 1;
+      }
+      return $score;
+    }
+
 }

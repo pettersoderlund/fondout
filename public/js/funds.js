@@ -9,4 +9,8 @@ $(document).ready(function() {
     html: true,
     trigger: 'hover'
   });
+  $('[data-toggle=tooltip]').tooltip({
+    html: true,
+    trigger: 'hover'
+  });
 });

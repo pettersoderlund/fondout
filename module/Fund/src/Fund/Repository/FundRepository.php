@@ -271,9 +271,9 @@ class FundRepository extends EntityRepository
             ->where(
                 $queryBuilder->expr()->andx(
                     $queryBuilder->expr()->in('f.id', array_keys($fundMap)),
-                    $queryBuilder->expr()->in('ac.name', 
+                    $queryBuilder->expr()->in('ac.name',
                         array("Fossila bränslen",
-                         "Kontroversiella vapen", 
+                         "Kontroversiella vapen",
                          "Alkohol, tobak, spel")
                     )
                 )
@@ -282,7 +282,7 @@ class FundRepository extends EntityRepository
             ->addGroupBy('ac.id');
 
 
-        // map the co2 value and co2coverage to the related fund
+        // map the company accusation count to respective fund
         foreach ($queryBuilder->getQuery()->getResult() as $cv) {
             if (isset($fundMap[$cv['id']])) {
                 $fundMap[$cv['id']]->fillMeasure($cv['ac_id'], $cv['company_count']);

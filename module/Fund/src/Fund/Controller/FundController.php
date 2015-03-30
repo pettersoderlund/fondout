@@ -4,6 +4,9 @@ namespace Fund\Controller;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
+use Zend\Paginator\Paginator;
+use DoctrineModule\Paginator\Adapter\Collection as CollectionAdapter;
+
 
 class FundController extends AbstractRestfulController
 {
@@ -16,23 +19,30 @@ class FundController extends AbstractRestfulController
         $params         = $this->params();
 
         $parameters = array(
-          'sort'            => $params->fromQuery('sort', 'sustainability'),
-          'order'           => $params->fromQuery('order', 'DESC'),
+          'sort'            => $params->fromQuery('sort', 'name'),
+          'order'           => $params->fromQuery('order', 'ASC'),
           'page'     => $params->fromQuery('page', 1),
           //Filter fundcompany
           'company'         => $params->fromQuery('company', array()),
-          //Filter fundsize
-          'size'            => $params->fromQuery('size', array()),
           //Filter textsearch
           'q'               => $params->fromQuery('q', ""),
           //Filter category
-          'fondoutcategory' => $params->fromQuery('fondoutcategory', array()),
-          //Filter sustainability-score (1-10)
-          'sustainabilityscore' => $params->fromQuery('sustainabilityscore', array())
+          'fondoutcategory' => $params->fromQuery('fondoutcategory', array())
         );
 
         $sustainability = $container->sustainability;
-        $fundsPaginator = $service->findFunds($parameters, $sustainability);
+        $funds = $service->findFunds($parameters, $sustainability);
+
+        //Get averages
+        $measuredAverages = $service->findMeasuredAverages($funds);
+
+
+        //Paginate
+        $fundsPaginator = new Paginator(new CollectionAdapter($funds));
+        $fundsPaginator->setCurrentPageNumber((int)$parameters['page']);
+        $fundsPaginator->setItemCountPerPage(50);
+        $fundsPaginator->setPageRange(10);
+
         $names = $service->getSustainabilityCategories($sustainability);
 
 
@@ -54,17 +64,17 @@ class FundController extends AbstractRestfulController
         return new ViewModel(
             array(
                 'sustainability' => $names,
-                'query' => $parameters,
-                'funds' => $fundsPaginator,
-                'form' => $form,
-                'sform' => $sform
+                'query'   => $parameters,
+                'funds'   => $fundsPaginator,
+                'form'    => $form,
+                'sform'   => $sform,
+                'measuredAverages' => $measuredAverages,
             )
         );
     }
 
     /*
     * Get the individual fund page.
-    * TODO: Count controversial companies/securities and total number of securit
     *
     */
     public function get($url)

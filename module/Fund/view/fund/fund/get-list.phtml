@@ -27,7 +27,6 @@ if (isset($query['sort'])) {
 $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 $form->prepare();
-
 ?>
 
   <section class="container fund-list">
@@ -39,7 +38,7 @@ $form->prepare();
         </div>
         <?php echo $this->form()->openTag($form) ?>
 
-        
+
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -99,17 +98,29 @@ $form->prepare();
 
   </div>
 </div>
-
+---------------------------------------------------Snitt valda fonder
+<?php
+  echo "WEAPON " . $this->measuredAverages['weapon'] . " " .
+    "FOSSIL " . $this->measuredAverages['fossil'] . " " .
+    "ALTOGA " . $this->measuredAverages['altoga'];
+?>
 <ul class="results">
   <?php foreach ($funds as $fund): ?>
-    <li>  
-  
+    <li>
+
       <div class="pull-right">
-        <?php 
-          echo "WEAPON <strong>" . $fund->getWeaponCompanies() . " </strong>" . 
-               "FOSSIL <strong>" . $fund->getFossilCompanies() . " </strong>" . 
-               "ALTOGA <strong>" . $fund->getAlToGaCompanies(). " </strong>"  ;
-        ?>    
+        <?php
+          echo "WEAPON  <img data-toggle='tooltip' title='Snitt urvalet vapen: " . $this->measuredAverages['weapon'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
+               "FOSSIL  <img data-toggle='tooltip' title='Snitt urvalet fossil: " . $this->measuredAverages['fossil'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
+               "ALTOGA  <img data-toggle='tooltip' title='Snitt urvalet altoga: " . $this->measuredAverages['altoga'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('altoga'). ".png'>"  ;
+        ?>
+        <br>
+        <?php
+          echo "--------<strong>" . $fund->getWeaponCompanies() . " bolag </strong>" .
+               "-------- <strong>" . $fund->getFossilCompanies() . " bolag </strong>" .
+               "--------<strong>" . $fund->getAlToGaCompanies(). "  bolag</strong>"  ;
+        ?>
+
       </div>
 
       <h3>
@@ -119,7 +130,7 @@ $form->prepare();
       </h3>
       <p class="hidden-xs"><?php echo $this->translate($fund->company->name) ?></p>
       <p>
-        
+
         <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
           <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
         </a>
@@ -134,11 +145,9 @@ $form->prepare();
   <br>
   <h4><?php echo $this->translate('Förslag') ?>:</h4>
   <ul>
-    <li><?php echo $this->translate('Dubbelkolla din stavning') ?></li>
-    <li><?php echo $this->translate('Använd mer generella söktermer') ?></li>
-    <li><a href="/funds" class="btn btn-primary" role="button">Återställ sökning</a>
-
-
+    <li><?php echo $this->translate('Dubbelkolla din stavning') ?>        </li>
+    <li><?php echo $this->translate('Använd mer generella söktermer') ?>  </li>
+    <li><a href="/funds" class="btn btn-primary" role="button">Återställ sökning</a></li>
   </ul>
 
 <?php endif; ?>

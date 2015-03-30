@@ -4,7 +4,6 @@ namespace Fund\Service;
 
 use Doctrine\ORM\EntityManager;
 use DoctrineModule\Paginator\Adapter\Collection as CollectionAdapter;
-use Doctrine\ORM\Tools\Pagination\Paginator as ORMPaginator;
 use Zend\Paginator\Paginator;
 use Zend\Paginator\Adapter\ArrayAdapter;
 use Doctrine\Common\Collections\Criteria;
@@ -179,14 +178,10 @@ class FundService
         $currentPage     = $params['page'];
         //Filter fundcompany
         $company         = $params['company'];
-        //Filter fundsize
-        $size            = $params['size'];
         //Filter textsearch
         $q               = $params['q'];
         //Filter category
         $fondoutcategory = $params['fondoutcategory'];
-        //Filter sustainability-score (1-10)
-        $sustainabilityScore = $params['sustainabilityscore'];
 
 
         $sortOrder = array();
@@ -226,14 +221,10 @@ class FundService
         }
 
         $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
-        $orderedfunds = $funds->matching($criteria);
-        $paginator    = new Paginator(new CollectionAdapter($orderedfunds));
+        $orderedFunds = $funds->matching($criteria);
 
-        $paginator->setCurrentPageNumber((int)$currentPage);
-        $paginator->setItemCountPerPage(50);
-        $paginator->setPageRange(10);
+        return $orderedFunds;
 
-        return $paginator;
     }
 
     /**
@@ -302,6 +293,33 @@ class FundService
     public function getAverageCo2Category($fund) {
       $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
       return $repository->findAverageCo2Category($fund);
+    }
 
+    /**
+    * Get measure averages from given funds
+    * Give funds
+    * get averages for weapon, fossil and altoga
+    */
+    public function findMeasuredAverages($funds) {
+      sizeof($funds);
+      $weapon = 0;
+      $fossil = 0;
+      $alToGa = 0;
+
+      foreach ($funds as $fund) {
+        $weapon += $fund->getMeasureScore('weapon');
+        $fossil += $fund->getMeasureScore('fossil');
+        $alToGa += $fund->getMeasureScore('altoga');
+      }
+
+      $avgWeapon = (int)($weapon/sizeof($funds));
+      $avgFossil = (int)($fossil/sizeof($funds));
+      $avgAlToGa = (int)($alToGa/sizeof($funds));
+
+      return array(
+        "weapon" => $avgWeapon,
+        "fossil" => $avgFossil,
+        "altoga" =>$avgAlToGa
+      );
     }
 }
