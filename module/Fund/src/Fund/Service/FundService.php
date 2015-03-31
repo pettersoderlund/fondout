@@ -191,16 +191,25 @@ class FundService
                 break;
             case 'weapon':
                 $sortOrder['weaponCompanies'] = $order;
+                $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['alToGaCompanies'] = $order;
+
                 break;
             case 'fossil':
                 $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['weaponCompanies'] = $order;
+                $sortOrder['alToGaCompanies'] = $order;
                 break;
             case 'altoga':
                 $sortOrder['alToGaCompanies'] = $order;
+                $sortOrder['weaponCompanies'] = $order;
+                $sortOrder['fossilCompanies'] = $order;
                 break;
         }
 
+
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        var_dump($sortOrder);
         $criteria = Criteria::create()->orderBy($sortOrder);
 
         if (count($company) > 0) {
@@ -224,7 +233,6 @@ class FundService
         $orderedFunds = $funds->matching($criteria);
 
         return $orderedFunds;
-
     }
 
     /**
@@ -319,7 +327,7 @@ class FundService
       return array(
         "weapon" => $avgWeapon,
         "fossil" => $avgFossil,
-        "altoga" =>$avgAlToGa
+        "altoga" => $avgAlToGa
       );
     }
 }
