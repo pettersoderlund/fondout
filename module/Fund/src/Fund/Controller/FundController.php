@@ -88,8 +88,11 @@ class FundController extends AbstractRestfulController
         $sharesCount = $service->getCountShares($fund);
 
         // Category
-        $categoryFunds = $service->findSameCategoryFunds($fund, $sustainability);
+        $categoryFunds = $service->findSameCategoryFunds($fund);
         $categoryAverages = $service->findMeasuredAverages($categoryFunds);
+
+        // Fund Company funds
+        $fundCompanyFunds = $service->findSameFundCompanyFunds($fund);
 
         // All funds averages
         $allFundsAverages = $service->findAveragesAllFunds();
@@ -101,7 +104,8 @@ class FundController extends AbstractRestfulController
         return new ViewModel(
             array(
                 'fund'          => $fund, // current fund
-                'funds'         => $categoryFunds, // funds same category
+                'categoryFunds' => $categoryFunds, // funds same category
+                'fCompanyFunds' => $fundCompanyFunds, // same fcompany
                 'banks'         => $banks,   // where to buy the fund
                 'sharesCount'   => $sharesCount, // fund share count
                 'categoryAvg'   => $categoryAverages,

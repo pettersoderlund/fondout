@@ -196,7 +196,7 @@ class FundService
     }
 
     /**
-     * Get a list of funds, in a paginator with the specified order and filters.
+     * Get a list of funds of the same fundcategory as the given fund
      *
      * @param \Fund\Entity\Fund
      * @return Fund collection
@@ -208,6 +208,27 @@ class FundService
             array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',  'alToGaCompanies' => 'ASC')
         );
         $criteria->andWhere(Criteria::expr()->eq('fondoutcategoryId', $fund->fondoutcategory->id));
+        $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
+        //$criteria->setMaxResults(5);
+        $funds        = new ArrayCollection($repository->findAllFunds());
+        $orderedfunds = $funds->matching($criteria);
+
+        return $orderedfunds;
+    }
+
+    /**
+     * Get a list of funds of the same fund company as the given fund
+     *
+     * @param \Fund\Entity\Fund
+     * @return Fund collection
+     */
+    public function findSameFundCompanyFunds($fund)
+    {
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        $criteria = Criteria::create()->orderBy(
+            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',  'alToGaCompanies' => 'ASC')
+        );
+        $criteria->andWhere(Criteria::expr()->eq('fundCompanyId', $fund->company->id));
         $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
         //$criteria->setMaxResults(5);
         $funds        = new ArrayCollection($repository->findAllFunds());

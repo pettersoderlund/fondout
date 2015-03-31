@@ -69,7 +69,7 @@ $this->headScript()
 
             <table class="table table-hover">
               <tbody>
-                <?php foreach ($funds as $fund): ?>
+                <?php foreach ($categoryFunds as $fund): ?>
                   <tr>
                     <td>
                       <h4>
@@ -141,6 +141,48 @@ $this->headScript()
           </ul>
         </div>
       </div>
+
+
+        <div class="panel panel-default">
+         <div class="panel-heading">
+           <h3><?php echo $this->translate('Fonder från samma fondbolag')?>
+             <span class="label label-primary">
+               <?php echo $this->translate($this->fund->company->name) ?>
+             </span>
+           </h3>
+        </div>
+
+        <div class="panel-body">
+
+          <table class="table table-hover">
+            <tbody>
+              <?php foreach ($fCompanyFunds as $fund): ?>
+                <tr>
+                  <td>
+                    <h4>
+                    <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+                      <?php echo $this->translate($fund->name) ?>
+                    </a>
+                    </h4>
+                    <p>
+                      <?php
+                        echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
+                             "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
+                             "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('altoga') . ".png'>"  ;
+                      ?>
+                      <br>
+                      <?php
+                        echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
+                             "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
+                             "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
+                      ?>
+                    </p>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
 
     </div>
 
