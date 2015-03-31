@@ -36,15 +36,11 @@ class FundController extends AbstractRestfulController
         //Get averages
         $measuredAverages = $service->findMeasuredAverages($funds);
 
-
         //Paginate
         $fundsPaginator = new Paginator(new CollectionAdapter($funds));
         $fundsPaginator->setCurrentPageNumber((int)$parameters['page']);
         $fundsPaginator->setItemCountPerPage(50);
         $fundsPaginator->setPageRange(10);
-
-        $names = $service->getSustainabilityCategories($sustainability);
-
 
         $form = $this->getServiceLocator()
             ->get('FormElementManager')
@@ -63,7 +59,6 @@ class FundController extends AbstractRestfulController
 
         return new ViewModel(
             array(
-                'sustainability' => $names,
                 'query'   => $parameters,
                 'funds'   => $fundsPaginator,
                 'form'    => $form,
@@ -88,55 +83,28 @@ class FundController extends AbstractRestfulController
         //get fund by url to get id. ugly but works.
         $id = $service->getFundByUrl($url)->id;
         $fund = $service->getFund($id, $sustainability);
-        $funds = $service->findSameCategoryFunds($fund, $sustainability);
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
         $banks = $service->getBanks($fund);
-
-        // Get average co2 from the category and co2Coverage category.
-        /*
-         * Would it be resonable to set the entity (fund->fondoutcategory)
-         * in this stage? for the values of co2?
-         */
-        $category_co2 = $service->getAverageCo2Category($fund);
-        $categoryCo2 = $category_co2[0][1];
-        $categoryCo2Coverage = $category_co2[0][2];
-
-        list ($controversialCompaniesPaginator, $cCategoriesCount)
-            = $service->findControversialCompanies(
-                $fund,
-                $parameters,
-                $sustainability
-            );
-
-        $cSharesCount = $service->getCountControverisalShares($fund, $sustainability);
         $sharesCount = $service->getCountShares($fund);
 
-        $sform = $this->getServiceLocator()
-            ->get('FormElementManager')
-            ->get('\Fund\Form\SustainabilityForm');
+        // Category
+        $categoryFunds = $service->findSameCategoryFunds($fund, $sustainability);
+        $categoryAverages = $service->findMeasuredAverages($categoryFunds);
 
-        $value = isset($container->sustainability) ? $container->sustainability : true;
-        $sform->get('sustainability')->setValue($value);
+        // All funds averages
+        $allFundsAverages = $service->findAveragesAllFunds();
 
         return new ViewModel(
             array(
-                'fund'                   => $fund, // the fund of the fund page
-                'funds'                  => $funds, // funds in the same category
-                'banks'                  => $banks, // where to buy the fund
-                'sustainability'         => $sustainabilityNames, // Breached uniq. sust. categories
-                'controversialCompanies' => $controversialCompaniesPaginator, // Companies breaching sust. cat. (not used atm. dec 14.)
-                'cCategoriesCount'       => $cCategoriesCount, // number of company breaches of sust. cat. per category
-                'cSharesCount'           => $cSharesCount, // number of share breaches of sust. cat. per category
-                'sharesCount'            => $sharesCount, // total fund share count
-                'query'                  => $parameters->fromQuery(), // ??? ... not used?
-                //'form'                   => $form,
-                'sform'                  => $sform, // Sustainability cat. form
-                'categoryCo2'            => $categoryCo2,
-                'categoryCo2Coverage'    => $categoryCo2Coverage
+                'fund'          => $fund, // current fund
+                'funds'         => $categoryFunds, // funds same category
+                'banks'         => $banks,   // where to buy the fund
+                'sharesCount'   => $sharesCount, // fund share count
+                'categoryAvg'   => $categoryAverages,
+                'allFundsAvg'   => $allFundsAverages,
             )
         );
     }
-
 
     public function getFundService()
     {
@@ -157,7 +125,6 @@ class FundController extends AbstractRestfulController
         if ($redirect) {
             return $this->redirect()->toRoute($redirect);
         }
-
 
         $url = $this->getRequest()->getHeader('Referer')->getUri();
         $this->redirect()->toUrl($url);

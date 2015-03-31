@@ -48,11 +48,11 @@ class FundService
         return $fund;
     }
 
-    public function getFund($id, $sustainabilityCategories = array())
+    public function getFund($id)
     {
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         return current(
-            $fundRepository->mapControversialMarketValues($this->getFundById($id), $sustainabilityCategories)
+            $fundRepository->mapControversialMarketValues($this->getFundById($id))
         );
     }
 
@@ -132,22 +132,6 @@ class FundService
         return array($paginator, $controversialCategoriesCount);
     }
 
-
-    /**
-     * Similar funds sorted by blacklisted shares ratio
-     *
-     * This method returns a list of the funds with the lowest marketvalue
-     * of blacklisted funds from the same category of funds as the fund given.
-     *
-     * @param  \Fund\Entity\Fund $fund, string[] $categories, string[] $organizations
-     * @return \Fund\Entity\Fund[]
-     */
-    public function getSimilarFunds(\Fund\Entity\Fund $fund, $categories, $organizations)
-    {
-        $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return $fundRepository->findControversialValue($fund, $sustainability);
-    }
-
     public function setEntityManager(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -166,10 +150,10 @@ class FundService
     }
 
     /**
-     * Get a list of funds, in a paginator with the specified order and filters.
+     * Get a list of funds with the specified order and filters.
      *
      * @param string[] $parameters
-     * @return Zend\Paginator\Paginator
+     * @return Fund[]
      */
     public function findFunds($params, $sustainability = array())
     {
@@ -193,7 +177,6 @@ class FundService
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['fossilCompanies'] = $order;
                 $sortOrder['alToGaCompanies'] = $order;
-
                 break;
             case 'fossil':
                 $sortOrder['fossilCompanies'] = $order;
@@ -209,7 +192,6 @@ class FundService
 
 
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        var_dump($sortOrder);
         $criteria = Criteria::create()->orderBy($sortOrder);
 
         if (count($company) > 0) {
@@ -245,27 +227,15 @@ class FundService
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(
-            array('sustainability' => 'DESC', 'co2Coverage' => 'DESC',  'co2' => 'ASC')
+            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',  'alToGaCompanies' => 'ASC')
         );
         $criteria->andWhere(Criteria::expr()->eq('fondoutcategoryId', $fund->fondoutcategory->id));
         $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
-        $criteria->setMaxResults(5);
+        //$criteria->setMaxResults(5);
         $funds        = new ArrayCollection($repository->findAllFunds($sustainability));
         $orderedfunds = $funds->matching($criteria);
 
         return $orderedfunds;
-    }
-
-    /**
-    * Get the number of controversial shares for the given fund
-    *
-    * @param \Fund\Entity\Fund, string[] $sustainability
-    * @return int numberOfControversialShares
-    */
-    public function getCountControverisalShares($fund, $sustainability = array())
-    {
-        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return $repository->countControversialShares($fund, $sustainability);
     }
 
     /**
@@ -293,14 +263,15 @@ class FundService
     }
 
     /**
-    * Get the average CO2 and total co2-coverage of the category.
-    *
-    * @param \Fund\Entity\FondoutCategory
-    * @return double (?) avgco2cateogry
+    * Get measure averages for all funds.
+    * @param
+    * @return
     */
-    public function getAverageCo2Category($fund) {
-      $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-      return $repository->findAverageCo2Category($fund);
+    public function findAveragesAllFunds() {
+      $repository =
+        $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+      $funds = new ArrayCollection($repository->findAllFunds());
+      return $this->findMeasuredAverages($funds);
     }
 
     /**

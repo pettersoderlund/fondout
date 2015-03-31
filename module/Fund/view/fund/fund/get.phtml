@@ -1,31 +1,55 @@
 <?php
 
 $this->headScript()
-->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
-//->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
-->appendFile($this->basePath() . '/js/fundprofile.js');
-//->appendFile($this->basePath() . '/js/sustainability-chart.js');
+  ->prependFile($this->basePath() .
+  '/vendor/selectize/dist/js/standalone/selectize.min.js')
+  ->appendFile($this->basePath() . '/js/fundprofile.js');
 ?>
 
 <section class="container fund-page">
   <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
   <div class="row">
 
-      
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3>
-            <?php echo $this->translate('') ?>
+            <?php echo $this->translate('Mätvärden') ?>
           </h3>
         </div>
         <div class="panel-body">
           <div class="row">
+            <h4>Aktuell fond</h4>
             <p>
-              <?php 
-                  echo "WEAPON <strong>" . $fund->getWeaponCompanies() . " </strong>" . 
-                   "FOSSIL <strong>" . $fund->getFossilCompanies() . " </strong>" . 
-                   "ALTOGA <strong>" . $fund->getAlToGaCompanies(). " </strong>"  ;
-              ?>  
+              <?php
+                echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
+                     "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
+                     "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('altoga') . ".png'>"  ;
+              ?>
+              <br>
+              <?php
+                echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
+                     "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
+                     "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
+              ?>
+
+            </p>
+            <h4>Fondkategorin <?php echo $this->translate($fund->fondoutcategory->title) ?>s snitt</h4>
+            <p>
+            <?php
+              echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $this->categoryAvg['weapon'] . ".png'>" .
+                   "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $this->categoryAvg['fossil'] . ".png'>" .
+                   "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $this->categoryAvg['altoga'] . ".png'>"  ;
+            ?>
+
+            </p>
+            <h4>Alla fonders snitt</h4>
+            <p>
+            <?php
+              echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $this->allFundsAvg['weapon'] . ".png'>" .
+                   "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $this->allFundsAvg['fossil'] . ".png'>" .
+                   "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $this->allFundsAvg['altoga'] . ".png'>"  ;
+            ?>
+
             </p>
           </div>
         </div>
@@ -33,8 +57,13 @@ $this->headScript()
 
 
          <div class="panel panel-default">
-          <div class="panel-heading"><h3><?php echo $this->translate('Liknande fonder')?>
-          <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span></h3></div>
+          <div class="panel-heading">
+            <h3><?php echo $this->translate('Fonder i samma kategori')?>
+              <span class="label label-primary">
+                <?php echo $this->translate($fund->fondoutcategory->title) ?>
+              </span>
+            </h3>
+          </div>
           <div class="panel-body">
 
             <table class="table table-hover">
@@ -46,13 +75,21 @@ $this->headScript()
                       <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="">
                         <?php echo $this->translate($fund->name) ?>
                       </a>
-                      </h4>  
+                      </h4>
                       <p>
-                        <?php 
-                          echo "WEAPON <strong>" . $fund->getWeaponCompanies() . " </strong>" . 
-                             "FOSSIL <strong>" . $fund->getFossilCompanies() . " </strong>" . 
-                             "ALTOGA <strong>" . $fund->getAlToGaCompanies(). " </strong>"  ;
+                        <?php
+                          echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
+                               "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
+                               "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('altoga') . ".png'>"  ;
                         ?>
+                        <br>
+                        <?php
+                          echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
+                               "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
+                               "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
+                        ?>
+
+
                       </p>
                     </td>
                   </tr>
@@ -61,8 +98,6 @@ $this->headScript()
             </table>
           </div>
         </div>
-
-
 
         <div class="panel panel-default">
           <div class="panel-heading"><h3><?php echo $this->translate('Köp fonden') ?></h3></div>
@@ -77,8 +112,5 @@ $this->headScript()
             </ul>
           </div>
         </div>
-
-
-
     </div>
   </section>
