@@ -5,7 +5,6 @@ namespace Fund\Repository;
 use Doctrine\ORM\EntityRepository;
 
 use Fund\Entity\Fund;
-use Fund\Entity\ControversialValue;
 
 /**
 * FundRepository
@@ -46,29 +45,34 @@ class FundRepository extends EntityRepository
            ->getResult();
     }
 
-    public function findControversialCompanies(Fund $fund, $category = array())
+    /* This function is REALLY SLOW ~0.3 seconds. */
+    public function findControversialCompanies(Fund $fund, $accCategory)
     {
-        $qb = $this->getEntityManager()
+        $subqb = $this->getEntityManager()
             ->createQueryBuilder()
-            ->select('sc, b, accusation_category')
-            ->from('Fund\Entity\ShareCompany', 'sc')
-            ->join('sc.accusations', 'b')
-            ->join('sc.shares', 's')
-            ->join('s.shareholdings', 'sh')
-            ->join('sh.fundInstance', 'fi')
-            ->join('fi.fund', 'f')
-            ->join('b.category', 'accusation_category')
-            ->orderBy('sc.name', 'ASC')
-            ->where('f.name = ?1')
-            ->andWhere('sh.marketValue > 0')
-            ->setParameter(1, $fund->name)
+            ->select('scc.id')
+            ->from('Fund\Entity\ShareCompany', 'scc')
+            ->join('scc.accusations', 'accusations')
+            ->join('accusations.category', 'accusation_category')
+            ->where('accusation_category.name = ?2')
             ->distinct();
 
-        if (count($category) > 0) {
-            $qb->andWhere(
-                $qb->expr()->in('accusation_category.id', $category)
-            );
-        }
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('sc.name as name,
+              SUM(sh.marketValue)/fi.totalMarketValue as part')
+              ->from('Fund\Entity\ShareCompany', 'sc')
+              ->join('sc.shares', 's')
+              ->join('s.shareholdings', 'sh')
+              ->join('sh.fundInstance', 'fi')
+              ->join('fi.fund', 'f')
+              ->orderBy('sc.name', 'ASC')
+              ->where('f.name = ?1')
+              ->andWhere('sh.marketValue > 0')
+              ->andWhere($qb->expr()->in('sc.id', $subqb->getDql()))
+              ->groupBy('sc.name')
+              ->orderBy('part', 'desc')
+              ->setParameter(1, $fund->name)
+              ->setParameter(2, $accCategory->name);
 
         return $qb
             ->getQuery()
@@ -127,31 +131,6 @@ class FundRepository extends EntityRepository
 
         $qb->setParameter(1, $fund->id);
         return $qb->getQuery()->getResult();
-    }
-
-    public function findAverageCo2Category(Fund $fund)
-    {
-      $qb=  $this->getEntityManager()
-      ->createQueryBuilder()
-      ->select(
-          'SUM((sh.marketValue/sc.marketValueSEK)*e.scope12)/SUM(sh.marketValue)*1000000,
-          SUM(sh.marketValue)/SUM(DISTINCT fi.totalMarketValue)'
-        )
-      ->from('Fund\Entity\Fund', 'f')
-      ->join('f.fundInstances', 'fi')
-      ->join('fi.shareholdings', 'sh')
-      ->join('sh.share', 's')
-      ->join('s.shareCompany', 'sc')
-      ->leftJoin('sc.emissions', 'e')
-      ->where('f.fondoutcategory = ?1')
-      ->andWhere('e.date is not null')
-      ->andWhere('sc.marketValueSEK is not null')
-      ->andWhere('e.scope12 is not null')
-      ->andWhere('f.active=1');
-
-      $qb->setParameter(1, $fund->fondoutCategory->id);
-
-      return $qb->getQuery()->getResult();
     }
 
     public function findControversialValue(Fund $fund, $category = array())

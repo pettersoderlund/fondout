@@ -9,6 +9,7 @@ $this->headScript()
 <section class="container fund-page">
   <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
   <div class="row">
+    <div class="col-md-6">
 
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -88,8 +89,6 @@ $this->headScript()
                                "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
                                "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
                         ?>
-
-
                       </p>
                     </td>
                   </tr>
@@ -99,18 +98,51 @@ $this->headScript()
           </div>
         </div>
 
+
+
+      </div>
+      <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading"><h3><?php echo $this->translate('Köp fonden') ?></h3></div>
+          <div class="panel-heading">
+            <h3>
+              <?php echo $this->translate('Bolag i fonden') ?>
+            </h3>
+          </div>
           <div class="panel-body">
-            <p>
-              <?php echo $this->translate('Fonden finns tillgänglig att köpa på:') ?>
-            </p>
-            <ul>
-              <?php foreach ($banks as $bank): ?>
-                <li><?php echo $this->translate($bank['name']) ?></li>
+            <h4>WEAPONS</h4>
+              <?php foreach ($companies['weapon'] as $company): ?>
+                <?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?>
               <?php endforeach; ?>
-            </ul>
+
+            <h4>FOSSIL</h4>
+              <?php foreach ($companies['fossil'] as $company): ?>
+                <?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?>
+              <?php endforeach; ?>
+            <h4>ALTOGA</h4>
+              <?php foreach ($companies['altoga'] as $company): ?>
+                <?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?>
+              <?php endforeach; ?>
+
+
           </div>
         </div>
+
+
+      <div class="panel panel-default">
+        <div class="panel-heading"><h3><?php echo $this->translate('Köp fonden') ?></h3></div>
+        <div class="panel-body">
+          <p>
+            <?php echo $this->translate('Fonden finns tillgänglig att köpa på:') ?>
+          </p>
+          <ul>
+            <?php foreach ($banks as $bank): ?>
+              <li><?php echo $this->translate($bank['name']) ?></li>
+            <?php endforeach; ?>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
     </div>
   </section>

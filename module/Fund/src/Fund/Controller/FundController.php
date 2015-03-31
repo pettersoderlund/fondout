@@ -94,6 +94,10 @@ class FundController extends AbstractRestfulController
         // All funds averages
         $allFundsAverages = $service->findAveragesAllFunds();
 
+        // Fund held companies in measured categories w/ %
+        $controCompanies = $service->findControversialCompanies($fund);
+
+
         return new ViewModel(
             array(
                 'fund'          => $fund, // current fund
@@ -102,6 +106,7 @@ class FundController extends AbstractRestfulController
                 'sharesCount'   => $sharesCount, // fund share count
                 'categoryAvg'   => $categoryAverages,
                 'allFundsAvg'   => $allFundsAverages,
+                'companies'     => $controCompanies,
             )
         );
     }
