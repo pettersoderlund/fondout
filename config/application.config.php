@@ -14,7 +14,7 @@ return array(
         'ZfcUserDoctrineORM',
         'Application',
         'Fund',
-        'SlmLocale'
+        'ZendDeveloperTools',
     ),
     'module_listener_options' => array(
         'module_paths' => array(

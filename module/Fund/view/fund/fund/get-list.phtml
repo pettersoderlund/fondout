@@ -2,33 +2,31 @@
 
 $this->headScript()
 ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
-//->prependFile($this->basePath() . '/vendor/chartjs/Chart.min.js')
 ->appendFile($this->basePath() . '/js/funds.js');
-//->appendFile($this->basePath() . '/js/sustainability-chart.js');
 
 if (isset($query['order'])) {
   $order = $query['order'];
 } else {
   $order = 'ASC';
 }
+
+if ($order == 'ASC') {
+  $reverseorder = 'DESC';
+} else {
+  $reverseorder = 'ASC';
+}
+
 if (isset($query['sort'])) {
   $sortby = $query['sort'];
 } else {
-  $sortby = "sustainability";
+  $sortby = "name";
 }
+
 
 /* Filter funds form */
 $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 $form->prepare();
-
-/* Sustainability categories form */
-$sform->setAttribute('method', 'POST');
-$sform->setAttribute('action', $this->url('change-sustainability-categories'));
-$sform->prepare();
-$submit = $sform->get('submit');
-$submit->setValue('Välj kategorier');
-
 ?>
 
   <section class="container fund-list">
@@ -40,46 +38,7 @@ $submit->setValue('Välj kategorier');
         </div>
         <?php echo $this->form()->openTag($form) ?>
 
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseQ">
-                <?php echo $this->translate('Namnet innehåller') ?>
-              </a>
-            </h3>
-          </div>
 
-          <div id="collapseQ" class="panel-collapse collapse in">
-            <div class="panel-body">
-              <p><?php echo $this->translate('Sök på hela eller delar av fondnamnet.') ?></p>
-              <div class="input-group">
-                <?php echo $this->formRow($form->get('q')); ?>
-              </div><!-- /input-group -->
-            </div>
-          </div>
-        </div>
-<!--
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseSusScore">
-                <?php echo $this->translate('Hållbarhetsnivå') ?>
-              </a>
-            </h3>
-          </div>
-          <div id="collapseSusScore" class="panel-collapse collapse <?php if ($form->get('sustainabilityscore')->getValue()) {echo " in ";} ?>">
-            <div class="panel-body">
-              <p><?php echo $this->translate('Välj vilka hållbarhetsnivåer du vill visa. 10 är högsta hållbarhet. ') ?></p>
-              <div class="checkbox">
-                <?php
-                $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-                  echo $this->formMultiCheckbox($form->get('sustainabilityscore'));
-                  ?>
-                </div>
-              </div>
-            </div>
-          </div>
--->
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -117,28 +76,7 @@ $submit->setValue('Välj kategorier');
               </div>
             </div>
           </div>
-<!--
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseSize">
-                  <?php echo $this->translate('Fondstorlek') ?>
-                </a>
-              </h3>
-            </div>
-            <div id="collapseSize" class="panel-collapse collapse <?php if ($form->get('size')->getValue()) {echo " in ";} ?>">
-              <div class="panel-body">
-                <p><?php echo $this->translate('Välj vilken storlek av fonder du vill se. Fonder som många personer äger är generellt större och nischade fonder mindre. ') ?></p>
-                <div class="checkbox">
-                  <?php
-                  $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-                    echo $this->formMultiCheckbox($form->get('size'));
-                    ?>
-                  </div>
-                </div>
-              </div>
-            </div>
--->
+
           <?php echo $this->formHidden($form->get('category')) ?>
             <div class="search-fund-button pull-right">
               <?php echo $this->formSubmit($form->get('submit')->setValue('Uppdatera fondsökning')) ?>
@@ -147,131 +85,57 @@ $submit->setValue('Välj kategorier');
             <br />
           </div>
           <div class="col-md-8 col-md-pull-4">
-            <?php if (strcmp($sortby,'sustainability') == 0): ?>
-              <?php echo $this->partial('sustainability-categories',
-              array(
-              'sform' => $this->sform,
-              'sustainability' => $sustainability
-              )
-              ); ?>
-            <?php elseif (strcmp($sortby,'co2') == 0): ?>
-              <div class="well info-box">
-                <p class="info-box-text"> <strong>Tips!</strong> Välj en fondkategori till vänster för att lättare kunna jämföra fonder. </p>
-              </div>
-            <?php endif; ?>
-
-
             <?php if (count($funds)): ?>
 
 
 <div class="well well-sm">
   <div class="row">
-    <p class="sortby-header">Sortera efter</p>
-    <ul class="nav nav-pills pull-right sortby-buttons">
+    <p class="sortby-header">Ranka efter</p>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">WEAPON</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">FOSSIL</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'altoga', 'order' => ($sortby == 'altoga' ? $reverseorder : 'ASC'))  + $query))); ?>">ALTOGA</a></button>
 
-      <li class="dropdown <?php if (strcmp($sortby,'co2') == 0): echo ' active '; endif; ?>">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          CO<sub>2</sub>-utsläpp <?php if (strcmp($sortby,'co2') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'DESC')  + $query))); ?>">CO<sub>2</sub>-utsläpp (högst till lägst)</a></li>
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'co2', 'order' => 'ASC')  + $query))); ?>">CO<sub>2</sub>-utsläpp (lägst till högst)</a></li>
-        </ul>
-      </li>
-
-      <li class="dropdown <?php if (strcmp($sortby,'sustainability') == 0): echo ' active '; endif; ?>">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-          Hållbarhetsnivå <?php if (strcmp($sortby,'sustainability') == 0): if ($order=='ASC'): echo ' (lägst till högst)'; else: echo ' (högst till lägst)'; endif; endif; ?><span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'DESC')  + $query))); ?>">Hållbarhetsnivå (högst till lägst)</a></li>
-          <li><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'sustainability', 'order' => 'ASC')  + $query))); ?>">Hållbarhetsnivå (lägst till högst)</a></li>
-        </ul>
-      </li>
-    </ul>
   </div>
 </div>
-
+---------------------------------------------------Snitt valda fonder
+<?php
+  echo "WEAPON " . $this->measuredAverages['weapon'] . " " .
+    "FOSSIL " . $this->measuredAverages['fossil'] . " " .
+    "ALTOGA " . $this->measuredAverages['altoga'];
+?>
 <ul class="results">
   <?php foreach ($funds as $fund): ?>
     <li>
-      <?php if (strcmp($sortby,'sustainability') == 0): ?>
-        <div class="pull-right">
-          <div class="pull-right sustainability-desc">
-            <div class="sust-header">
-              <?php echo $this->translate('Hållbarhetsnivå') ?>
-            </div>
-            <div class="sustainability-number"><?php echo $fund->getSustainabilityScore()*10 ?>/10</div>
-            <!--<span class="hidden-xs">
-                <?php
-                if ($fund->getSustainabilityScore() == 1): echo $this->translate('Hållbar fond enligt din sökning.');
-                elseif ($fund->getSustainabilityScore() > 0.7): echo $this->translate('Fonden har ett fåtal ohållbara bolag.');
-                elseif ($fund->getSustainabilityScore() > 0.5): echo $this->translate('Fonden har en stor del ohållbara bolag.');
-                elseif ($fund->getSustainabilityScore() > 0.3): echo $this->translate('Fonden har en mycket stor del ohållbara bolag.');
-                elseif ($fund->getSustainabilityScore()): echo $this->translate('Denna fond stämmer inte in på dina hållbarhetskriterier.');
-                else: echo $this->translate('Denna fond har inte kunnat granskas.');
-                endif;
-              ?>
-            </span>-->
-          </div>
 
-          <div class="chart-container pull-left">
-            <img src="img/sustainability-score-symbol.png" alt="Hållbarhetsnivå-symbol" />
-          </div>
-        </div>
-      <?php endif;?>
+      <div class="pull-right">
+        <?php
+          echo "WEAPON  <img data-toggle='tooltip' title='Snitt urvalet vapen: " . $this->measuredAverages['weapon'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
+               "FOSSIL  <img data-toggle='tooltip' title='Snitt urvalet fossil: " . $this->measuredAverages['fossil'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
+               "ALTOGA  <img data-toggle='tooltip' title='Snitt urvalet altoga: " . $this->measuredAverages['altoga'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('altoga'). ".png'>"  ;
+        ?>
+        <br>
+        <?php
+          echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
+               "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
+               "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
+        ?>
 
-
-        <?php if (strcmp($sortby,'co2') == 0): ?>
-          <div class="pull-right">
-          <img class="co2-meter-symbol" src="img/co2-symbol.png" alt="CO2-symbol" />
-          <div class="co2-meter">
-
-            <div class="co2-header">CO<sub>2</sub>-utsläpp</div>
-            <?php if ($fund->co2Coverage > $fund->co2CoverageLimit): ?>
-            <div class="co2-meter-number">
-              <?php
-                if ($fund->co2 > 100):
-                  echo number_format($fund->co2, 0, ',', ' ');
-                elseif ($fund->co2 < 10):
-                  echo number_format($fund->co2, 2, ',', ' ');
-                else:
-                  echo number_format($fund->co2, 1, ',', ' ');
-                endif;
-              ?>
-            </div>
-            <div class="co2-meter-unit">gram CO<sub>2</sub>/kr</div>
-            <?php else: ?>
-            <div class="co2-meter-number co2-na">
-              -
-            </div>
-            <div class="co2-meter-unit">Ej tillgängligt</div>
-          <?php endif;?>
-          </div>
-        </div>
-        <?php endif;?>
-
+      </div>
 
       <h3>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="">
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
           <?php echo $this->translate($fund->name) ?>
         </a>
       </h3>
-
       <p class="hidden-xs"><?php echo $this->translate($fund->company->name) ?></p>
       <p>
-        <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
-        <!--<span class="label label-primary"><?php
-          if ($fund->totalMarketValue <= 600000000) {
-            echo $this->translate('Liten fond');
-          } elseif ($fund->totalMarketValue >= 2500000000) {
-            echo $this->translate('Stor fond');
-          } else {
-            echo $this->translate('Mellanfond');
-          }
-          ?>
-        </span>-->
+
+        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+          <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+        </a>
       </p>
+
     </li>
   <?php endforeach; ?>
 </ul>
@@ -281,11 +145,9 @@ $submit->setValue('Välj kategorier');
   <br>
   <h4><?php echo $this->translate('Förslag') ?>:</h4>
   <ul>
-    <li><?php echo $this->translate('Dubbelkolla din stavning') ?></li>
-    <li><?php echo $this->translate('Använd mer generella söktermer') ?></li>
-    <li><a href="/funds" class="btn btn-primary" role="button">Återställ sökning</a>
-
-
+    <li><?php echo $this->translate('Dubbelkolla din stavning') ?>        </li>
+    <li><?php echo $this->translate('Använd mer generella söktermer') ?>  </li>
+    <li><a href="/funds" class="btn btn-primary" role="button">Återställ sökning</a></li>
   </ul>
 
 <?php endif; ?>

@@ -8,7 +8,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Accusation
  *
- * @ORM\Table(name="accusation_category")
+ * @ORM\Table(
+ *     name="accusation_category",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(
+ *             name="name",
+ *             columns={"name"}
+ *         ),
+ *     }
+ *  )
  * @ORM\Entity
  */
 class AccusationCategory extends Entity
