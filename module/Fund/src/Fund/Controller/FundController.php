@@ -26,6 +26,8 @@ class FundController extends AbstractRestfulController
           'page'     => $params->fromQuery('page', 1),
           //Filter fundcompany
           'company'         => $params->fromQuery('company', array()),
+          //Filter fund
+          'fund'         => $params->fromQuery('fund', array()),
           //Filter textsearch
           'q'               => $params->fromQuery('q', ""),
           //Filter category

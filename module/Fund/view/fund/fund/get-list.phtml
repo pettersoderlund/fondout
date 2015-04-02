@@ -77,6 +77,23 @@ $form->prepare();
             </div>
           </div>
 
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFund">
+                  <?php echo $this->translate('Fonder') ?>
+                </a>
+              </h3>
+            </div>
+            <div id="collapseFund" class="panel-collapse collapse <?php if ($form->get('fund')->getValue()) {echo " in ";} ?>">
+              <div class="panel-body">
+                <p><?php echo $this->translate('Välj vilka fonder du vill se.') ?></p>
+                <?php echo $this->formSelect($form->get('fund')) ?>
+              </div>
+            </div>
+          </div>
+
+
           <?php echo $this->formHidden($form->get('category')) ?>
             <div class="search-fund-button pull-right">
               <?php echo $this->formSubmit($form->get('submit')->setValue('Uppdatera fondsökning')) ?>

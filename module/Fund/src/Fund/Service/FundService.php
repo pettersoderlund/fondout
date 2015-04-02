@@ -148,6 +148,8 @@ class FundService
         $currentPage     = $params['page'];
         //Filter fundcompany
         $company         = $params['company'];
+        //Filter specific funds
+        $fund            = $params['fund'];
         //Filter textsearch
         $q               = $params['q'];
         //Filter category
@@ -157,7 +159,13 @@ class FundService
         $sortOrder = array();
         switch ($sort) {
             case 'name':
-                $sortOrder['name'] = $order;
+                # Sorting az on critiria puts AMF before Ad
+                # Sorting depending on uppercase letters,
+                # Fixed by default sorting in the original query in fundrepo
+
+                if ($order == 'DESC') {
+                  $sortOrder['name'] = $order;
+                }
                 break;
             case 'weapon':
                 $sortOrder['weaponCompanies'] = $order;
@@ -202,6 +210,10 @@ class FundService
 
         if (count($company) > 0) {
             $criteria->andWhere(Criteria::expr()->in('companyId', $company));
+        }
+
+        if (count($fund) > 0) {
+            $criteria->andWhere(Criteria::expr()->in('id', $fund));
         }
 
         if (count($fondoutcategory) > 0) {
@@ -325,6 +337,7 @@ class FundService
         $gambling += $fund->getGamblingCompanies();
       }
 
+      # WARNING DIVISION BY ZRO _ SORT OUT
       $avgWeapon   = (int)($weapon/sizeof($funds));
       $avgFossil   = (int)($fossil/sizeof($funds));
       $avgAlcohol  = (int)($alcohol/sizeof($funds));

@@ -168,7 +168,7 @@ class FundRepository extends EntityRepository
             ->join('f.fundInstances', 'fi')
             ->join('f.company', 'c')
             ->join('f.fondoutcategory', 'fc')
-            ->orderBy('c.name', 'DESC')
+            ->orderBy('f.name', 'ASC')
             ->where('f.active = 1')
             ->getQuery()
             ->getResult();
