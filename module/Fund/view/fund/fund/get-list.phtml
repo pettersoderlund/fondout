@@ -178,6 +178,7 @@ $form->prepare();
         </a>
       </h3>
       <p class="hidden-xs"><?php echo $this->translate($fund->company->name) ?></p>
+      <?php echo  ($fund->fundCompany->premium) ? "<img src='/img/fund-company/logo/" . $fund->fundCompany->id . ".JPG' alt='" . $fund->fundCompany->name . " logo' style='width:100px'>" : "notimg" ?>
       <p>
 
         <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">

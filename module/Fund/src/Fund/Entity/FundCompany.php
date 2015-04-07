@@ -45,6 +45,13 @@ class FundCompany extends Entity
     protected $name;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="premium", type="boolean", nullable=false)
+     */
+    protected $premium=false;
+
+    /**
      * @var Fund[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\Fund", mappedBy="company")
@@ -142,6 +149,12 @@ class FundCompany extends Entity
     {
         return $this->funds;
     }
+
+    public function getPremium()
+    {
+        return $this->premium;
+    }
+
 
     /**
      * return the company name

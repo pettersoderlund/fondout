@@ -455,6 +455,16 @@ class Fund extends Entity
     }
 
     /**
+     * Gets the fund company
+     *
+     * @return \Fund\Entity\FundCompany
+     */
+    public function getFundCompany()
+    {
+        return $this->getCompany();
+    }
+
+    /**
      * Sets the fondout category.
      *
      * @param \Fund\Entity\FundCategory $category the category
