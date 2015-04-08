@@ -6,6 +6,8 @@ use Zend\View\Model\ViewModel;
 use Zend\Session\Container;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Collection as CollectionAdapter;
+use Fund\Entity\Fund;
+
 
 
 class FundController extends AbstractRestfulController
@@ -34,7 +36,8 @@ class FundController extends AbstractRestfulController
         $funds = $service->findFunds($parameters, $sustainability);
 
         //Get averages
-        $measuredAverages = $service->findMeasuredAverages($funds);
+
+        $avgFund = $service->findMeasuredAverages($funds, new Fund());
 
         //Paginate
         $fundsPaginator = new Paginator(new CollectionAdapter($funds));
@@ -63,7 +66,7 @@ class FundController extends AbstractRestfulController
                 'funds'   => $fundsPaginator,
                 'form'    => $form,
                 'sform'   => $sform,
-                'measuredAverages' => $measuredAverages,
+                'avgfund' => $avgFund
             )
         );
     }
@@ -89,13 +92,13 @@ class FundController extends AbstractRestfulController
 
         // Category
         $categoryFunds = $service->findSameCategoryFunds($fund);
-        $categoryAverages = $service->findMeasuredAverages($categoryFunds);
+        $avgCatFund = $service->findMeasuredAverages($categoryFunds, new Fund());
 
         // Fund Company funds
         $fundCompanyFunds = $service->findSameFundCompanyFunds($fund);
 
         // All funds averages
-        $allFundsAverages = $service->findAveragesAllFunds();
+        $avgAllFund = $service->findAveragesAllFunds(new Fund());
 
         // Fund held companies in measured categories w/ %
         $controCompanies = $service->findControversialCompanies($fund);
@@ -108,8 +111,8 @@ class FundController extends AbstractRestfulController
                 'fCompanyFunds' => $fundCompanyFunds, // same fcompany
                 'banks'         => $banks,   // where to buy the fund
                 'sharesCount'   => $sharesCount, // fund share count
-                'categoryAvg'   => $categoryAverages,
-                'allFundsAvg'   => $allFundsAverages,
+                'avgcategory'   => $avgCatFund,
+                'avgallfunds'   => $avgAllFund,
                 'companies'     => $controCompanies,
             )
         );

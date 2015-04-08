@@ -131,9 +131,11 @@ class Fund extends Entity
     protected $co2Coverage;
 
     # Counts of the fund measurements.
-    protected $weaponCompanies = 0;
-    protected $alToGaCompanies = 0;
-    protected $fossilCompanies = 0;
+    protected $weaponCompanies   = 0;
+    protected $fossilCompanies   = 0;
+    protected $alcoholCompanies  = 0;
+    protected $tobaccoCompanies  = 0;
+    protected $gamblingCompanies = 0;
 
     // This is supposed to be a constant.
     protected $co2CoverageLimit = 0.5;
@@ -498,9 +500,17 @@ class Fund extends Entity
             case 1:
                 $this->setWeaponCompanies($count);
                 break;
-            # Alcohol tobacco gambling id = 12
-            case 12:
-                $this->setAlToGaCompanies($count);
+            # Alcohol  id = 14
+            case 14:
+                $this->setAlcoholCompanies($count);
+                break;
+            # Tobacco id = 15
+            case 15:
+                $this->setTobaccoCompanies($count);
+                break;
+            # Gambling id = 16
+            case 16:
+                $this->setGamblingCompanies($count);
                 break;
             # Fossil fuels id = 11
             case 11:
@@ -518,20 +528,36 @@ class Fund extends Entity
         $this->weaponCompanies = $count;
     }
 
-    public function setAlToGaCompanies($count) {
-        $this->alToGaCompanies = $count;
+    public function setAlcoholCompanies($count) {
+        $this->alcoholCompanies = $count;
+    }
+
+    public function getAlcoholCompanies() {
+        return $this->alcoholCompanies;
+    }
+
+    public function setTobaccoCompanies($count) {
+        $this->tobaccoCompanies = $count;
+    }
+
+    public function getTobaccoCompanies() {
+        return $this->tobaccoCompanies;
     }
 
     public function setFossilCompanies($count) {
       $this->fossilCompanies = $count;
     }
 
-    public function getWeaponCompanies() {
-      return $this->weaponCompanies;
+    public function setGamblingCompanies($count) {
+        $this->gamblingCompanies = $count;
     }
 
-    public function getAlToGaCompanies() {
-      return $this->alToGaCompanies;
+    public function getGamblingCompanies() {
+        return $this->gamblingCompanies;
+    }
+
+    public function getWeaponCompanies() {
+      return $this->weaponCompanies;
     }
 
     public function getFossilCompanies() {
@@ -546,8 +572,14 @@ class Fund extends Entity
         case "fossil":
           $companyCount = $this->fossilCompanies;
           break;
-        case "altoga":
-          $companyCount = $this->alToGaCompanies;
+        case "alcohol":
+          $companyCount = $this->alcoholCompanies;
+          break;
+        case "tobacco":
+          $companyCount = $this->tobaccoCompanies;
+          break;
+        case "gambling":
+          $companyCount = $this->gamblingCompanies;
           break;
 
       }
