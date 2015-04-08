@@ -253,7 +253,7 @@ class FundRepository extends EntityRepository
                     $queryBuilder->expr()->in('ac.name',
                         array("Fossila bränslen",
                          "Kontroversiella vapen",
-                         "Alkohol, tobak, spel")
+                         "Alkohol", "Tobak", "Spel")
                     )
                 )
             )

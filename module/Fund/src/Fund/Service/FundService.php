@@ -78,7 +78,7 @@ class FundService
 
     /**
      * Get three lists of companies of the funds holdings of
-     * companies with weapons, fossils and altogas w/
+     * companies with weapons, fossils and alcohol, tobacco, gambling w/
      * a percentage of how large the holding is.
      *
      * @param Fund $fund
@@ -99,14 +99,22 @@ class FundService
         $fossilCompanies = $fundRepository
           ->findControversialCompanies($fund, $acr
             ->findOneByName('Fossila bränslen'));
-        $altogaCompanies = $fundRepository
+        $alcoholCompanies = $fundRepository
           ->findControversialCompanies($fund, $acr
-            ->findOneByName('Alkohol, tobak, spel'));
+            ->findOneByName('Alkohol'));
+        $tobaccoCompanies = $fundRepository
+          ->findControversialCompanies($fund, $acr
+            ->findOneByName('Tobak'));
+        $gamblingCompanies = $fundRepository
+          ->findControversialCompanies($fund, $acr
+            ->findOneByName('Spel'));
 
         return array(
-            "weapon" => $weaponCompanies,
-            "fossil" => $fossilCompanies,
-            "altoga" => $altogaCompanies
+            "weapon"   => $weaponCompanies,
+            "fossil"   => $fossilCompanies,
+            "alcohol"  => $alcoholCompanies,
+            "tobacco"  => $tobaccoCompanies,
+            "gambling" => $gamblingCompanies
           );
     }
 
@@ -154,15 +162,35 @@ class FundService
             case 'weapon':
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['alToGaCompanies'] = $order;
+                $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
                 break;
             case 'fossil':
                 $sortOrder['fossilCompanies'] = $order;
                 $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['alToGaCompanies'] = $order;
+                $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
                 break;
-            case 'altoga':
-                $sortOrder['alToGaCompanies'] = $order;
+            case 'alcohol':
+                $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['weaponCompanies'] = $order;
+                $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
+                break;
+            case 'tobacco':
+                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['weaponCompanies'] = $order;
+                $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                break;
+            case 'gambling':
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['alcoholCompanies'] = $order;
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['fossilCompanies'] = $order;
                 break;
@@ -205,7 +233,9 @@ class FundService
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(
-            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',  'alToGaCompanies' => 'ASC')
+            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
+              'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
+              'gamblingCompanies' => 'ASC')
         );
         $criteria->andWhere(Criteria::expr()->eq('fondoutcategoryId', $fund->fondoutcategory->id));
         $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
@@ -226,7 +256,9 @@ class FundService
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(
-            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',  'alToGaCompanies' => 'ASC')
+            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
+              'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
+              'gamblingCompanies' => 'ASC')
         );
         $criteria->andWhere(Criteria::expr()->eq('fundCompanyId', $fund->company->id));
         $criteria->andWhere(Criteria::expr()->neq('id', $fund->id));
@@ -266,40 +298,45 @@ class FundService
     * @param
     * @return
     */
-    public function findAveragesAllFunds() {
+    public function findAveragesAllFunds($avgFund) {
       $repository =
         $this->getEntityManager()->getRepository('Fund\Entity\Fund');
       $funds = new ArrayCollection($repository->findAllFunds());
-      return $this->findMeasuredAverages($funds);
+      return $this->findMeasuredAverages($funds, $avgFund);
     }
 
     /**
     * Get measure averages from given funds
     * Give funds
-    * get averages for weapon, fossil and altoga
+    * get averages for weapon, fossil and alcohol, tobacco, gambling
     */
-    public function findMeasuredAverages($funds) {
-      sizeof($funds);
-      $weapon = 0;
-      $fossil = 0;
-      $alToGa = 0;
+    public function findMeasuredAverages($funds, $avgFund) {
+      $weapon   = 0;
+      $fossil   = 0;
+      $alcohol  = 0;
+      $tobacco  = 0;
+      $gambling = 0;
 
       foreach ($funds as $fund) {
-        $weapon += $fund->getMeasureScore('weapon');
-        $fossil += $fund->getMeasureScore('fossil');
-        $alToGa += $fund->getMeasureScore('altoga');
+        $weapon   += $fund->getWeaponCompanies();
+        $fossil   += $fund->getFossilCompanies();
+        $alcohol  += $fund->getAlcoholCompanies();
+        $tobacco  += $fund->getTobaccoCompanies();
+        $gambling += $fund->getGamblingCompanies();
       }
 
-      $avgWeapon = (int)($weapon/sizeof($funds));
-      $avgFossil = (int)($fossil/sizeof($funds));
-      $avgAlToGa = (int)($alToGa/sizeof($funds));
+      $avgWeapon   = (int)($weapon/sizeof($funds));
+      $avgFossil   = (int)($fossil/sizeof($funds));
+      $avgAlcohol  = (int)($alcohol/sizeof($funds));
+      $avgTobacco  = (int)($tobacco/sizeof($funds));
+      $avgGambling = (int)($gambling/sizeof($funds));
 
-      return array(
-        "weapon" => $avgWeapon,
-        "fossil" => $avgFossil,
-        "altoga" => $avgAlToGa
-      );
+      $avgFund->setWeaponCompanies($avgWeapon);
+      $avgFund->setFossilCompanies($avgFossil);
+      $avgFund->setAlcoholCompanies($avgAlcohol);
+      $avgFund->setTobaccoCompanies($avgTobacco);
+      $avgFund->setGamblingCompanies($avgGambling);
+
+      return $avgFund;
     }
-
-
 }

@@ -94,33 +94,34 @@ $form->prepare();
     <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>
     <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">WEAPON</a></button>
     <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">FOSSIL</a></button>
-    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'altoga', 'order' => ($sortby == 'altoga' ? $reverseorder : 'ASC'))  + $query))); ?>">ALTOGA</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">ALCOHOL</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">TOBACCO</a></button>
+    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">GAMBLING</a></button>
 
   </div>
 </div>
----------------------------------------------------Snitt valda fonder
-<?php
-  echo "WEAPON " . $this->measuredAverages['weapon'] . " " .
-    "FOSSIL " . $this->measuredAverages['fossil'] . " " .
-    "ALTOGA " . $this->measuredAverages['altoga'];
-?>
+
 <ul class="results">
   <?php foreach ($funds as $fund): ?>
     <li>
 
       <div class="pull-right">
-        <?php
-          echo "WEAPON  <img data-toggle='tooltip' title='Snitt urvalet vapen: " . $this->measuredAverages['weapon'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
-               "FOSSIL  <img data-toggle='tooltip' title='Snitt urvalet fossil: " . $this->measuredAverages['fossil'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
-               "ALTOGA  <img data-toggle='tooltip' title='Snitt urvalet altoga: " . $this->measuredAverages['altoga'] .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('altoga'). ".png'>"  ;
-        ?>
-        <br>
-        <?php
-          echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
-               "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
-               "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
-        ?>
-
+        <table class="table" style="text-align:center">
+          <tr>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
+          </tr>
+          <tr>
+            <td><img style="width:36px;" src="/img/symbols/weapon.png"></td>
+            <td><img style="width:36px;" src="/img/symbols/fossil.png"></td>
+            <td><img style="width:15px;" src="/img/symbols/alcohol.png"></td>
+            <td><img style="width:15px;" src="/img/symbols/tobacco.png"></td>
+            <td><img style="width:15px;" src="/img/symbols/gambling.png"></td>
+          </tr>
+        </table>
       </div>
 
       <h3>

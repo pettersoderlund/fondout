@@ -5,7 +5,6 @@ $this->headScript()
   '/vendor/selectize/dist/js/standalone/selectize.min.js')
   ->appendFile($this->basePath() . '/js/fundprofile.js');
 ?>
-
 <section class="container fund-page">
   <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
   <div class="row">
@@ -20,38 +19,51 @@ $this->headScript()
         <div class="panel-body">
           <div class="row">
             <h4>Aktuell fond</h4>
-            <p>
-              <?php
-                echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
-                     "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
-                     "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('altoga') . ".png'>"  ;
-              ?>
-              <br>
-              <?php
-                echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
-                     "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
-                     "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
-              ?>
+            <table class="table" style="text-align:center">
+              <tr>
+                <td>WEAPON</td>
+                <td>FOSSIL</td>
+                <td>ALCOHOL</td>
+                <td>TOBACCO</td>
+                <td>GAMLBING</td>
+              </tr>
+              <tr>
+                <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
+                <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
+                <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
+                <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
+                <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $fund->getWeaponCompanies() . " bolag"; ?></td>
+                <td><?php echo $fund->getFossilCompanies() . " bolag"; ?></td>
+                <td><?php echo $fund->getAlcoholCompanies().  " bolag"; ?></td>
+                <td><?php echo $fund->getTobaccoCompanies() . " bolag"; ?></td>
+                <td><?php echo $fund->getGamblingCompanies() . " bolag"; ?></td>
+              </tr>
+              <tr>
+                <td>Kategori</td>
+              </tr>
+              <tr>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgcategory->getMeasureScore('weapon') . ".png'>"    ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgcategory->getMeasureScore('fossil') . ".png'>"    ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgcategory->getMeasureScore('alcohol') . ".png'>" ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgcategory->getMeasureScore('tobacco') . ".png'>"   ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgcategory->getMeasureScore('gambling'). ".png'>"   ?></td>
+              </tr>
+              <tr>
+                <td>Alla fonder</td>
+              </tr>
+              <tr>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgallfunds->getMeasureScore('weapon') . ".png'>"    ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgallfunds->getMeasureScore('fossil') . ".png'>"    ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgallfunds->getMeasureScore('alcohol') . ".png'>" ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgallfunds->getMeasureScore('tobacco') . ".png'>"   ?></td>
+                <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $avgallfunds->getMeasureScore('gambling'). ".png'>"   ?></td>
+              </tr>
 
-            </p>
-            <h4>Fondkategorin <?php echo $this->translate($fund->fondoutcategory->title) ?>s snitt</h4>
-            <p>
-            <?php
-              echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $this->categoryAvg['weapon'] . ".png'>" .
-                   "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $this->categoryAvg['fossil'] . ".png'>" .
-                   "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $this->categoryAvg['altoga'] . ".png'>"  ;
-            ?>
 
-            </p>
-            <h4>Alla fonders snitt</h4>
-            <p>
-            <?php
-              echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $this->allFundsAvg['weapon'] . ".png'>" .
-                   "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $this->allFundsAvg['fossil'] . ".png'>" .
-                   "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $this->allFundsAvg['altoga'] . ".png'>"  ;
-            ?>
-
-            </p>
+            </table>
           </div>
         </div>
         </div>
@@ -67,7 +79,7 @@ $this->headScript()
           </div>
           <div class="panel-body">
 
-            <table class="table table-hover">
+            <table class="">
               <tbody>
                 <?php foreach ($categoryFunds as $fund): ?>
                   <tr>
@@ -77,19 +89,29 @@ $this->headScript()
                         <?php echo $this->translate($fund->name) ?>
                       </a>
                       </h4>
-                      <p>
-                        <?php
-                          echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
-                               "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
-                               "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('altoga') . ".png'>"  ;
-                        ?>
-                        <br>
-                        <?php
-                          echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
-                               "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
-                               "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
-                        ?>
-                      </p>
+                      <table class="table" style="text-align:center">
+                        <tr>
+                          <td>WEAPON</td>
+                          <td>FOSSIL</td>
+                          <td>ALCOHOL</td>
+                          <td>TOBACCO</td>
+                          <td>GAMLBING</td>
+                        </tr>
+                        <tr>
+                          <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
+                          <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
+                          <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
+                          <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
+                          <td><?php echo "<img  style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
+                        </tr>
+                        <tr>
+                          <td><?php echo $fund->getWeaponCompanies() . " bolag"; ?></td>
+                          <td><?php echo $fund->getFossilCompanies() . " bolag"; ?></td>
+                          <td><?php echo $fund->getAlcoholCompanies().  " bolag"; ?></td>
+                          <td><?php echo $fund->getTobaccoCompanies() . " bolag"; ?></td>
+                          <td><?php echo $fund->getGamblingCompanies() . " bolag"; ?></td>
+                        </tr>
+                      </table>
                     </td>
                   </tr>
                 <?php endforeach; ?>
@@ -109,20 +131,12 @@ $this->headScript()
             </h3>
           </div>
           <div class="panel-body">
-            <h4>WEAPONS</h4>
-              <?php foreach ($companies['weapon'] as $company): ?>
+            <?php foreach ($companies as $category => $ccompanies): ?>
+              <h4><?php echo $category ?></h4>
+              <?php foreach ($ccompanies as $company): ?>
                 <?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?>
               <?php endforeach; ?>
-
-            <h4>FOSSIL</h4>
-              <?php foreach ($companies['fossil'] as $company): ?>
-                <?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?>
-              <?php endforeach; ?>
-            <h4>ALTOGA</h4>
-              <?php foreach ($companies['altoga'] as $company): ?>
-                <?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?>
-              <?php endforeach; ?>
-
+            <?php endforeach; ?>
 
           </div>
         </div>
@@ -154,7 +168,7 @@ $this->headScript()
 
         <div class="panel-body">
 
-          <table class="table table-hover">
+          <table class="">
             <tbody>
               <?php foreach ($fCompanyFunds as $fund): ?>
                 <tr>
@@ -164,19 +178,30 @@ $this->headScript()
                       <?php echo $this->translate($fund->name) ?>
                     </a>
                     </h4>
-                    <p>
-                      <?php
-                        echo "WEAPON  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>" .
-                             "FOSSIL  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>" .
-                             "ALTOGA  <img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('altoga') . ".png'>"  ;
-                      ?>
-                      <br>
-                      <?php
-                        echo "--------<strong>" . $fund->getWeaponCompanies()  . " bolag </strong>" .
-                             "--------<strong>" . $fund->getFossilCompanies()  . " bolag </strong>" .
-                             "--------<strong>" . $fund->getAlToGaCompanies()  . " bolag </strong>"  ;
-                      ?>
-                    </p>
+                    <table class="table" style="text-align:center">
+                      <tr>
+                        <td>WEAPON</td>
+                        <td>FOSSIL</td>
+                        <td>ALCOHOL</td>
+                        <td>TOBACCO</td>
+                        <td>GAMLBING</td>
+                      </tr>
+                      <tr>
+                        <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
+                        <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
+                        <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
+                        <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
+                        <td><?php echo "<img data-toggle='tooltip' style='width:20px' src='/img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
+                      </tr>
+                      <tr>
+                        <td><?php echo $fund->getWeaponCompanies() . " bolag"; ?></td>
+                        <td><?php echo $fund->getFossilCompanies() . " bolag"; ?></td>
+                        <td><?php echo $fund->getAlcoholCompanies().  " bolag"; ?></td>
+                        <td><?php echo $fund->getTobaccoCompanies() . " bolag"; ?></td>
+                        <td><?php echo $fund->getGamblingCompanies() . " bolag"; ?></td>
+                      </tr>
+                    </table>
+
                   </td>
                 </tr>
               <?php endforeach; ?>
