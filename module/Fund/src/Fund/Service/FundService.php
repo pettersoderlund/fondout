@@ -163,18 +163,37 @@ class FundService
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['fossilCompanies'] = $order;
                 $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
                 break;
             case 'fossil':
                 $sortOrder['fossilCompanies'] = $order;
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
                 break;
             case 'alcohol':
                 $sortOrder['alcoholCompanies'] = $order;
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
                 break;
-            /* Add tobacco and gambling... */
+            case 'tobacco':
+                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['weaponCompanies'] = $order;
+                $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['gamblingCompanies'] = $order;
+                break;
+            case 'gambling':
+                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['alcoholCompanies'] = $order;
+                $sortOrder['weaponCompanies'] = $order;
+                $sortOrder['fossilCompanies'] = $order;
+                break;
         }
 
 

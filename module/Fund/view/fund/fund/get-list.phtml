@@ -108,25 +108,18 @@ $form->prepare();
       <div class="pull-right">
         <table class="table" style="text-align:center">
           <tr>
-            <td>WEAPON</td>
-            <td>FOSSIL</td>
-            <td>ALCOHOL</td>
-            <td>TOBACCO</td>
-            <td>GAMLBING</td>
-          </tr>
-          <tr>
             <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
             <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
+            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
           </tr>
           <tr>
-            <td><?php echo $fund->getWeaponCompanies() . " bolag"; ?></td>
-            <td><?php echo $fund->getFossilCompanies() . " bolag"; ?></td>
-            <td><?php echo $fund->getAlcoholCompanies().  " bolag"; ?></td>
-            <td><?php echo $fund->getTobaccoCompanies() . " bolag"; ?></td>
-            <td><?php echo $fund->getGamblingCompanies() . " bolag"; ?></td>
+            <td><img style="width:36px;" src="/img/symbols/weapon.png"></td>
+            <td><img style="width:36px;" src="/img/symbols/fossil.png"></td>
+            <td><img style="width:15px;" src="/img/symbols/alcohol.png"></td>
+            <td><img style="width:15px;" src="/img/symbols/tobacco.png"></td>
+            <td><img style="width:15px;" src="/img/symbols/gambling.png"></td>
           </tr>
         </table>
       </div>
