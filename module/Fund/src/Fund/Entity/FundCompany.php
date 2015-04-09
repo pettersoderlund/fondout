@@ -52,6 +52,13 @@ class FundCompany extends Entity
     protected $premium=false;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     */
+    protected $url;
+
+    /**
      * @var Fund[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\Fund", mappedBy="company")
