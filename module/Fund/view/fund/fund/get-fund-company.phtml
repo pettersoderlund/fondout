@@ -1,0 +1,48 @@
+<section class="container">
+  <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
+    Tillbaka till fondsök
+  </a>
+  <h1><?php echo $fundcompany->name ?></h1>
+
+  <ul class="results">
+    <?php foreach ($funds as $fund): ?>
+      <li>
+
+        <div class="pull-right">
+          <table class="table" style="text-align:center">
+            <tr>
+              <td><?php echo "<img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
+              <td><?php echo "<img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
+              <td><?php echo "<img style='width:15px; height:16.5%' src='/img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
+              <td><?php echo "<img style='width:15px; height:16.5%' src='/img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
+              <td><?php echo "<img style='width:15px; height:16.5%' src='/img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
+            </tr>
+            <tr>
+              <td><img style="width:36px;" src="/img/symbols/weapon.png"></td>
+              <td><img style="width:36px;" src="/img/symbols/fossil.png"></td>
+              <td><img style="width:15px;" src="/img/symbols/alcohol.png"></td>
+              <td><img style="width:15px;" src="/img/symbols/tobacco.png"></td>
+              <td><img style="width:15px;" src="/img/symbols/gambling.png"></td>
+            </tr>
+          </table>
+        </div>
+
+        <h3>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+            <?php echo $this->translate($fund->name) ?>
+          </a>
+        </h3>
+
+        <?php echo  ($fund->fundCompany->premium) ? "<img src='/img/fund-company/logo/" . $fund->fundCompany->id . ".JPG' alt='" . $fund->fundCompany->name . " logo' style='width:100px'>" : "" ?>
+        <p>
+
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+            <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+          </a>
+        </p>
+
+      </li>
+    <?php endforeach; ?>
+  </ul>
+
+</section>

@@ -162,6 +162,11 @@ class FundCompany extends Entity
         return $this->premium;
     }
 
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
 
     /**
      * return the company name
