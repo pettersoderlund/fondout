@@ -26,6 +26,8 @@ class FundController extends AbstractRestfulController
           'page'     => $params->fromQuery('page', 1),
           //Filter fundcompany
           'company'         => $params->fromQuery('company', array()),
+          //Filter fund
+          'fund'         => $params->fromQuery('fund', array()),
           //Filter textsearch
           'q'               => $params->fromQuery('q', ""),
           //Filter category
@@ -103,6 +105,22 @@ class FundController extends AbstractRestfulController
         // Fund held companies in measured categories w/ %
         $controCompanies = $service->findControversialCompanies($fund);
 
+        // To create a back link
+        $referer = $this->getRequest()->getHeader('Referer');
+        $backuri = "";
+        if ($referer) {
+          $backuri = $referer->getUri();
+        }
+
+        // is it a search q backlink?
+        if(!strpos($backuri, "funds?")) {
+          $backuri = "/funds";
+        }
+
+
+        echo $backuri . "<br>";
+
+
 
         return new ViewModel(
             array(
@@ -114,6 +132,7 @@ class FundController extends AbstractRestfulController
                 'avgcategory'   => $avgCatFund,
                 'avgallfunds'   => $avgAllFund,
                 'companies'     => $controCompanies,
+                'backuri'       => $backuri
             )
         );
     }

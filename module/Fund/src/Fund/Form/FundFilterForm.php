@@ -43,6 +43,32 @@ class FundFilterForm extends Form
         $this->add(
             array(
                 'type' => 'objectselect',
+                'name' => 'fund',
+                'options' => array(
+                    'target_class'   => 'Fund\Entity\Fund',
+                    'property'       => 'name',
+                    'display_empty_item' => true,
+                    'empty_item_label'   => 'Välj fonder..',
+                    'find_method'    => array(
+                        'name'   => 'findBy',
+                        'params' => array(
+                            'criteria' => array('active' => 1),
+                            // Use key 'orderBy' if using ORM
+                            // 'orderBy'  => array('lastname' => 'ASC'),
+                        ),
+                    ),
+                ),
+                'attributes' => array(
+                    'multiple' => 'multiple',
+                    'class' => 'form-control',
+                    'id' => 'filter-fund'
+                )
+            )
+        );
+
+        $this->add(
+            array(
+                'type' => 'objectselect',
                 'name' => 'company',
                 'options' => array(
                     'target_class'   => 'Fund\Entity\FundCompany',
@@ -108,7 +134,7 @@ class FundFilterForm extends Form
                 'type' => 'Submit',
                 'attributes' => array(
                     'value' => 'Filtrera',
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary btn-sm'
                 )
             )
         );

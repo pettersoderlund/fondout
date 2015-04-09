@@ -5,6 +5,11 @@ $(document).ready(function() {
       sortField: 'text'
   });
 
+  $('#filter-fund').selectize({
+      plugins: ['remove_button'],
+      sortField: 'text'
+  });
+
   $('[data-toggle=popover]').popover({
     html: true,
     trigger: 'hover'
