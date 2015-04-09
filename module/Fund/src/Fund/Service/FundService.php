@@ -28,7 +28,7 @@ class FundService
     {
         // get fund from repository
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        echo $url;
+        //echo $url;
         $fund = $fundRepository->findOneBy(array('url' => $url));
         if (!$fund) {
             throw new \Exception();

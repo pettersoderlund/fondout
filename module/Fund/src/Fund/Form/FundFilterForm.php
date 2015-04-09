@@ -134,7 +134,7 @@ class FundFilterForm extends Form
                 'type' => 'Submit',
                 'attributes' => array(
                     'value' => 'Filtrera',
-                    'class' => 'btn btn-primary'
+                    'class' => 'btn btn-primary btn-sm'
                 )
             )
         );

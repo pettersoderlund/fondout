@@ -57,7 +57,30 @@ $form->prepare();
                   echo $this->formMultiCheckbox($form->get('fondoutcategory'));
                   ?>
                 </div>
+                <div class="search-fund-button pull-right">
+                  <?php echo $this->formSubmit($form->get('submit')->setValue('Uppdatera fondsökning')) ?>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFund">
+                  <?php echo $this->translate('Jämför mina fonder') ?>
+                </a>
+              </h3>
+            </div>
+            <div id="collapseFund" class="panel-collapse collapse <?php if ($form->get('fund')->getValue()) {echo " in ";} ?>">
+              <div class="panel-body">
+                <p><?php echo $this->translate('Välj vilka fonder du vill se.') ?></p>
+                <?php echo $this->formSelect($form->get('fund')) ?>
+                <div class="search-fund-button pull-right">
+                  <?php echo $this->formSubmit($form->get('submit')->setValue('Jämför mina fonder')) ?>
+                </div>
+              </div>
+
             </div>
           </div>
 
@@ -73,31 +96,39 @@ $form->prepare();
               <div class="panel-body">
                 <p><?php echo $this->translate(' Välj vilken bank eller fondbolags fonder du vill se.') ?></p>
                 <?php echo $this->formSelect($form->get('company')) ?>
+                <div class="search-fund-button pull-right">
+                  <?php echo $this->formSubmit($form->get('submit')->setValue('Uppdatera fondsökning')) ?>
+                </div>
               </div>
+
             </div>
           </div>
+
+
 
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapseFund">
-                  <?php echo $this->translate('Fonder') ?>
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseQ">
+                  <?php echo $this->translate('Snabbsök') ?>
                 </a>
               </h3>
             </div>
-            <div id="collapseFund" class="panel-collapse collapse <?php if ($form->get('fund')->getValue()) {echo " in ";} ?>">
+
+            <div id="collapseQ" class="panel-collapse collapse <?php if ($form->get('q')->getValue()) {echo " in ";}?>">
               <div class="panel-body">
-                <p><?php echo $this->translate('Välj vilka fonder du vill se.') ?></p>
-                <?php echo $this->formSelect($form->get('fund')) ?>
+                <p><?php echo $this->translate('Sök på hela eller delar av fondnamnet.') ?></p>
+                <div class="input-group">
+                  <?php echo $this->formRow($form->get('q')); ?>
+                </div><!-- /input-group -->
+                <div class="search-fund-button pull-right">
+                  <?php echo $this->formSubmit($form->get('submit')->setValue('Sök fonder')) ?>
+                </div>
               </div>
             </div>
           </div>
 
-
           <?php echo $this->formHidden($form->get('category')) ?>
-            <div class="search-fund-button pull-right">
-              <?php echo $this->formSubmit($form->get('submit')->setValue('Uppdatera fondsökning')) ?>
-            </div>
             <?php echo $this->form()->closeTag() ?>
             <br />
           </div>
@@ -159,13 +190,18 @@ $form->prepare();
 </ul>
 
 <?php else: ?>
-  <h3><?php echo $this->translate('Vi kunde inte hitta några resultat med dina söktermer.') ?></h3>
+  <h3>
+    <?php echo $this->translate(
+      'Vi kunde inte hitta några resultat med dina söktermer.') ?>
+  </h3>
   <br>
   <h4><?php echo $this->translate('Förslag') ?>:</h4>
   <ul>
     <li><?php echo $this->translate('Dubbelkolla din stavning') ?>        </li>
     <li><?php echo $this->translate('Använd mer generella söktermer') ?>  </li>
-    <li><a href="/funds" class="btn btn-primary" role="button">Återställ sökning</a></li>
+    <li><a href="/funds" class="btn btn-primary" role="button">
+      Återställ sökning
+    </a></li>
   </ul>
 
 <?php endif; ?>
@@ -175,7 +211,12 @@ $form->prepare();
     <!-- Previous page link -->
     <?php if (isset($funds->getPages()->previous)): ?>
       <li>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->previous) + $query))); ?>">
+        <a href="<?php echo $this->escapeHtmlAttr(
+        $this->url(
+        'funds',
+        array(),
+        array('query' => array('page' => $funds->getPages()->previous) + $query
+        ))); ?>">
           &laquo;
         </a>
       </li>
@@ -191,7 +232,13 @@ $form->prepare();
     <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
       <?php if ($page != $funds->getPages()->current): ?>
         <li>
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $page)  + $query))); ?>">
+          <a href="<?php echo $this->escapeHtmlAttr(
+            $this->url(
+              'funds',
+              array(),
+              array('query' => array('page' => $page)  + $query
+            )
+          )); ?>">
             <?php echo $page; ?>
           </a>
         </li>
@@ -205,7 +252,12 @@ $form->prepare();
     <!-- Next page link -->
     <?php if (isset($funds->getPages()->next)): ?>
       <li>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('page' => $funds->getPages()->next) + $query))); ?>">
+        <a href="<?php echo $this->escapeHtmlAttr(
+        $this->url(
+        'funds',
+        array(),
+        array('query' => array('page' => $funds->getPages()->next) + $query
+        ))); ?>">
           &raquo;
         </a>
       </li>
