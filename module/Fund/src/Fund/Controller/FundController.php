@@ -105,22 +105,7 @@ class FundController extends AbstractRestfulController
         // Fund held companies in measured categories w/ %
         $controCompanies = $service->findControversialCompanies($fund);
 
-        // To create a back link
-        $referer = $this->getRequest()->getHeader('Referer');
-        $backuri = "";
-        if ($referer) {
-          $backuri = $referer->getUri();
-        }
-
-        // is it a search q backlink?
-        if(!strpos($backuri, "funds?")) {
-          $backuri = "/funds";
-        }
-
-
-        echo $backuri . "<br>";
-
-
+        $backuri = $this->getBackLink();
 
         return new ViewModel(
             array(
@@ -137,6 +122,24 @@ class FundController extends AbstractRestfulController
         );
     }
 
+    public function getFundCompanyAction()
+    {
+      $service     = $this->getFundService();
+      $uri         =  $this->params()->fromRoute('name');
+      $fundCopmany = $service->getFundCompanyByUrl($uri);
+      $funds       = $service->findFundCompanyFunds($fundCopmany);
+      $backuri     = $this->getBackLink();
+
+      return new ViewModel(
+          array(
+            'fundcompany' => $fundCopmany,
+            'funds'       => $funds,
+            'backuri'     => $backuri
+          )
+      );
+
+    }
+
     public function getFundService()
     {
         if (!$this->fundService) {
@@ -145,6 +148,22 @@ class FundController extends AbstractRestfulController
 
         return $this->fundService;
     }
+
+    public function getBackLink() {
+      // To create a back link
+      $referer = $this->getRequest()->getHeader('Referer');
+      $backuri = "";
+      if ($referer) {
+        $backuri = $referer->getUri();
+      }
+
+      // is it a search q backlink?
+      if(!strpos($backuri, "funds?")) {
+        $backuri = "/funds";
+      }
+      return $backuri;
+    }
+
 
     public function changeCategoriesAction()
     {

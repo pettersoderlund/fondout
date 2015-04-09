@@ -28,12 +28,29 @@ class FundService
     {
         // get fund from repository
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        //echo $url;
         $fund = $fundRepository->findOneBy(array('url' => $url));
         if (!$fund) {
             throw new \Exception();
         }
         return $fund;
+    }
+
+    /**
+     * Get fundcompany by url relative to /fundcompany
+     *
+     * @param  string $url
+     * @return \Fund\Entity\FundCompany
+     */
+    public function getFundCompanyByUrl($url)
+    {
+        // get fund from repository
+        $repository = $this->getEntityManager()
+          ->getRepository('Fund\Entity\FundCompany');
+        $fundCompany = $repository->findOneBy(array('url' => $url));
+        if (!$fundCompany) {
+            throw new \Exception();
+        }
+        return $fundCompany;
     }
 
     public function getFundById($id)
@@ -44,7 +61,6 @@ class FundService
         if (!$fund) {
             throw new \Exception();
         }
-
         return $fund;
     }
 
@@ -260,6 +276,7 @@ class FundService
 
     /**
      * Get a list of funds of the same fund company as the given fund
+     * w/out the fund given.
      *
      * @param \Fund\Entity\Fund
      * @return Fund collection
@@ -280,6 +297,28 @@ class FundService
 
         return $orderedfunds;
     }
+
+    /**
+     * Get a list of funds of the same fund company
+     *
+     * @param \Fund\Entity\FundCompany
+     * @return Fund collection
+     */
+    public function findFundCompanyFunds($fundCompany)
+    {
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        $criteria = Criteria::create()->orderBy(
+            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
+              'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
+              'gamblingCompanies' => 'ASC')
+        );
+        $criteria->andWhere(Criteria::expr()->eq('fundCompanyId', $fundCompany->id));
+        $funds        = new ArrayCollection($repository->findAllFunds());
+        $orderedfunds = $funds->matching($criteria);
+
+        return $orderedfunds;
+    }
+
 
     /**
     * Get the total count of shares w/ marketvalue>0 for the given fund

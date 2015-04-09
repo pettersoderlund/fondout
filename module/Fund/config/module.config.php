@@ -20,6 +20,19 @@ return array(
                     ),
                 ),
             ),
+            'fundcompany' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/fundcompany/:name',
+                    'constraints' => array(
+                        'name' => '[a-zA-Z0-9_-]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getFundCompany'
+                    ),
+                ),
+            ),
             'change-sustainability-categories' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
