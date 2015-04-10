@@ -28,10 +28,82 @@ $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 $form->prepare();
 ?>
+<section class="fund-search-intro">
+  <div class="container">
+    <div class="intro-section">
+      <h2>Så här enkelt är det</h2>
+      <div class="row">
+        <div class="col-md-3">
+          <strong>1. Välj vilka fonder du vill se.</strong>
+          <p>Fondkategori/Fondbolag/Snabbsök</p>
+        </div>
+        <div class="col-md-3">
+          <strong>2. Välj vad du vill ranka efter.</strong>
+          <p>Fossila bränslen/Förbjudna Vapen/Tobak/Alkohol/Spel</p>
+          <img class="roundintrosymbols" src="/img/symbols/weapon.png" alt="Weapon symbol">
+          <img class="roundintrosymbols" src="/img/symbols/fossil.png" alt="Fossil symbol">
+          <img class="sqintrosymbols" src="/img/symbols/alcohol.png" alt="Alcohol symbol">
+          <img class="sqintrosymbols" src="/img/symbols/tobacco.png" alt="Tobacco symbol">
+          <img class="sqintrosymbols" src="/img/symbols/gambling.png" alt="Gambling symbol">
 
-  <section class="container fund-list">
+        </div>
+        <div class="col-md-3">
+          <strong>3. Se resultat</strong>
+          <p>Hållbarhet</p>
+          <img id="introBar" src="/img/bar/bar10.png" alt="10/10 mätare.">
+        </div>
+        <div class="col-md-3">
+          <strong>4. Fördjupa dig</strong>
+          <p>Genom att klicka på respektive fond får du mer information...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<nav class="navbar sort-menu">
+  <div class="container">
     <div class="row">
-      <div id="fund-filters" class="col-md-4 col-md-push-8 panel-group panel-box clearfix">
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-md-4">
+          <p id="fund-header">Fond</p>
+          <p id="sort-header">Ranka efter</p>
+          </div>
+          <div class="col-md-1 centered-column">
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
+              <img class="sort-button" src="/img/gray-symbols/fossil.png" alt="Fossil sort button">
+            </a>
+          </div>
+          <div class="col-md-1 centered-column">
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
+              <img class="sort-button" src="/img/gray-symbols/weapon.png" alt="Weapon sort button">
+            </a>
+          </div>
+          <div class="col-md-2 centered-column">
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">
+              <img class="sort-button" src="/img/gray-symbols/alcohol.png" alt="Alcohol sort button">
+            </a>
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">
+              <img class="sort-button" src="/img/gray-symbols/tobacco.png" alt="Tobacco sort button">
+            </a>
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">
+              <img class="sort-button" src="/img/gray-symbols/gambling.png" alt="Gamlbing sort button">
+            </a>
+
+          </div>
+          <div class="col-md-4 centered-column">
+            Fondinformation
+          </div>
+          <!--<button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>-->
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <section class="container fund-list content">
+    <div class="row">
+      <div id="fund-filters" class="col-md-3 col-md-push-9 panel-group panel-box clearfix">
         <div class="filter-header">
           <h3>Begränsa sökresultaten: </h3>
           <p><?php echo $funds->getPages()->totalItemCount;?> fonder.</p>
@@ -132,63 +204,61 @@ $form->prepare();
             <?php echo $this->form()->closeTag() ?>
             <br />
           </div>
-          <div class="col-md-8 col-md-pull-4">
+          <div class="col-md-9 col-md-pull-3">
             <?php if (count($funds)): ?>
-
-
-<div class="well well-sm">
-  <div class="row">
-    <p class="sortby-header">Ranka efter</p>
-    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>
-    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">WEAPON</a></button>
-    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">FOSSIL</a></button>
-    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">ALCOHOL</a></button>
-    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">TOBACCO</a></button>
-    <button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">GAMBLING</a></button>
-
-  </div>
-</div>
 
 <ul class="results">
   <?php foreach ($funds as $fund): ?>
     <li>
-
+      <div class="row">
+        <div class="col-md-4">
+          <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".JPG' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+          <h3>
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+              <?php echo $this->translate($fund->name) ?>
+            </a>
+          </h3>
+        </div>
+        <div class="col-md-1 centered-column">
+          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+          <img style="width:36px;" src="/img/symbols/fossil.png">
+        </div>
+        <div class="col-md-1 centered-column">
+          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+          <img style="width:36px;" src="/img/symbols/weapon.png">
+        </div>
+        <div class="col-md-2 centered-column">
+          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' style='width:15px; height:45px' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
+          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' style='width:15px; height:45px' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
+          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' style='width:15px; height:45px' src='img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+          <br>
+          <img style="width:15px;" src="/img/symbols/alcohol.png">
+          <img style="width:15px;" src="/img/symbols/tobacco.png">
+          <img style="width:15px;" src="/img/symbols/gambling.png">
+        </div>
+        <div class="col-md-4 centered-column">
+          <a href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
+            <span class="label label-primary">
+              <?php echo $this->translate($fund->company->name) ?>
+            </span>
+          </a>
+          <br>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+            <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+          </a>
+        </div>
+      </div>
       <div class="pull-right">
-        <table class="table" style="text-align:center">
-          <tr>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
-            <td><?php echo "<img data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' style='width:15px; height:16.5%' src='img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
-          </tr>
-          <tr>
-            <td><img style="width:36px;" src="/img/symbols/weapon.png"></td>
-            <td><img style="width:36px;" src="/img/symbols/fossil.png"></td>
-            <td><img style="width:15px;" src="/img/symbols/alcohol.png"></td>
-            <td><img style="width:15px;" src="/img/symbols/tobacco.png"></td>
-            <td><img style="width:15px;" src="/img/symbols/gambling.png"></td>
-          </tr>
-        </table>
+
+
+
+
+
       </div>
 
-      <h3>
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
-          <?php echo $this->translate($fund->name) ?>
-        </a>
-      </h3>
-      <a href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
-        <span class="label label-primary">
-          <?php echo $this->translate($fund->company->name) ?>
-        </span>
-      </a>
-      <?php echo  ($fund->fundCompany->premium) ? "<img src='/img/fund-company/logo/" . $fund->fundCompany->id . ".JPG' alt='" . $fund->fundCompany->name . " logo' style='width:100px'>" : "" ?>
-      <p>
 
-        <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
-          <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
-        </a>
-      </p>
+
+
 
     </li>
   <?php endforeach; ?>
