@@ -279,21 +279,21 @@ $form->prepare();
           </h3>
         </div>
         <div class="col-md-1 centered-column">
-          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
-          <img style="width:36px;" src="/img/symbols/fossil.png">
+          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+          <img class="round-symbol" src="/img/symbols/fossil.png">
         </div>
         <div class="col-md-1 centered-column">
-          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' style='width:30px' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
-          <img style="width:36px;" src="/img/symbols/weapon.png">
+          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+          <img class="round-symbol" src="/img/symbols/weapon.png">
         </div>
         <div class="col-md-2 centered-column">
-          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' style='width:15px; height:45px' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
-          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' style='width:15px; height:45px' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
-          <?php echo "<img data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' style='width:15px; height:45px' src='img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
           <br>
-          <img style="width:15px;" src="/img/symbols/alcohol.png">
-          <img style="width:15px;" src="/img/symbols/tobacco.png">
-          <img style="width:15px;" src="/img/symbols/gambling.png">
+          <img class="thin-symbol" src="/img/symbols/alcohol.png">
+          <img class="thin-symbol" src="/img/symbols/tobacco.png">
+          <img class="thin-symbol" src="/img/symbols/gambling.png">
         </div>
         <div class="col-md-4 centered-column">
           <a href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
@@ -307,18 +307,6 @@ $form->prepare();
           </a>
         </div>
       </div>
-      <div class="pull-right">
-
-
-
-
-
-      </div>
-
-
-
-
-
     </li>
   <?php endforeach; ?>
 </ul>
