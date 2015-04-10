@@ -119,14 +119,14 @@ $form->prepare();
     </div>
   </div>
 </section>
-<nav class="navbar sort-menu">
+<nav class="sort-menu">
   <div class="container">
     <div class="row">
       <div class="col-md-9">
         <div class="row">
           <div class="col-md-4">
           <p id="fund-header">Fond</p>
-          <p id="sort-header">Ranka efter</p>
+          <p id="sort-header"><small>Ranka efter</small></p>
           </div>
           <div class="col-md-1 centered-column">
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
@@ -151,10 +151,13 @@ $form->prepare();
 
           </div>
           <div class="col-md-4 centered-column">
-            Fondinformation
+            <p>Fondinformation</p>
           </div>
           <!--<button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>-->
         </div>
+      </div>
+      <div class="col-md-3 centered-column">
+        <p>Sökalternativ</p>
       </div>
     </div>
   </div>
@@ -296,15 +299,14 @@ $form->prepare();
           <img class="thin-symbol" src="/img/symbols/gambling.png">
         </div>
         <div class="col-md-4 centered-column">
-          <a href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
-            <span class="label label-primary">
+          <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
               <?php echo $this->translate($fund->company->name) ?>
-            </span>
           </a>
-          <br>
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
-            <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
+
+          <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+            <?php echo $this->translate($fund->fondoutcategory->title) ?>
           </a>
+
         </div>
       </div>
     </li>
