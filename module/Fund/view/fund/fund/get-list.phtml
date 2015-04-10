@@ -31,30 +31,89 @@ $form->prepare();
 <section class="fund-search-intro">
   <div class="container">
     <div class="intro-section">
-      <h2>Så här enkelt är det</h2>
+      <h2 class="centered-header">Så här enkelt är det</h2>
       <div class="row">
-        <div class="col-md-3">
-          <strong>1. Välj vilka fonder du vill se.</strong>
-          <p>Fondkategori/Fondbolag/Snabbsök</p>
-        </div>
-        <div class="col-md-3">
-          <strong>2. Välj vad du vill ranka efter.</strong>
-          <p>Fossila bränslen/Förbjudna Vapen/Tobak/Alkohol/Spel</p>
-          <img class="roundintrosymbols" src="/img/symbols/weapon.png" alt="Weapon symbol">
-          <img class="roundintrosymbols" src="/img/symbols/fossil.png" alt="Fossil symbol">
-          <img class="sqintrosymbols" src="/img/symbols/alcohol.png" alt="Alcohol symbol">
-          <img class="sqintrosymbols" src="/img/symbols/tobacco.png" alt="Tobacco symbol">
-          <img class="sqintrosymbols" src="/img/symbols/gambling.png" alt="Gambling symbol">
+        <div class="col-md-2 col-md-offset-1">
+          <h4>1. Välj vad du vill se</h4>
+          <p><strong>Fondkategori</strong> - Välj var i världen/ inom vilken bransch fonden
+            primärt investerar. Det går även att välja flera fondkategorier
+            samtidigt.
+          </p>
+          <p><strong>Dina fonder</strong> -
+            Lägg till de fonder du har idag eller de fonder du är intresserad
+            av.
+          </p>
+          <p><strong>Fondbolag</strong> -
+            Visa endast fonder från ett specifikt fondbolag.
+          </p>
+          <p><strong>Snabbsök</strong> -
+            Gör en snabbsökning efter en specifik fond.
+          </p>
 
         </div>
-        <div class="col-md-3">
-          <strong>3. Se resultat</strong>
-          <p>Hållbarhet</p>
-          <img id="introBar" src="/img/bar/bar10.png" alt="10/10 mätare.">
+        <div class="col-md-2">
+          <h4>2. Välj hur du vill ranka</h4>
+          <p>Du kan ranka fonderna efter följande mått:</p>
+          <ul class="sort-by-explainations">
+            <li>
+              <img class="roundintrosymbols" src="/img/symbols/fossil.png" alt="Fossil symbol">
+              Fossila bränslen
+            </li>
+            <li>
+              <img class="roundintrosymbols" src="/img/symbols/weapon.png" alt="Weapon symbol">
+              Förbjudna Vapen
+            </li>
+            <li>
+              <img class="sqintrosymbols" src="/img/symbols/alcohol.png" alt="Alcohol symbol">
+              Alkohol
+            </li>
+            <li>
+              <img class="sqintrosymbols" src="/img/symbols/tobacco.png" alt="Tobacco symbol">
+              Tobak
+            </li>
+            <li>
+              <img class="sqintrosymbols" src="/img/symbols/gambling.png" alt="Gambling symbol">
+              Spel
+            </li>
+          </ul>
         </div>
-        <div class="col-md-3">
-          <strong>4. Fördjupa dig</strong>
-          <p>Genom att klicka på respektive fond får du mer information...</p>
+        <div class="col-md-2">
+          <h4>3. Se resultat & jämför</h4>
+          <p>Låt oss säga att du valt att ranka efter <span class="red">fossila bränslen</span>. De fonder som visas högst upp i listan är de fonder som investerat i minst antal bolag med <span class="red">fossila bränslen</span>.  </p>
+          <p>För en bättre överblick visas även fondens resultat för de övriga måtten. Du kan när som helst välja att ranka efter ett nytt mått.</p>
+          <div class="row bars-explained">
+            <div class="col-md-4">
+              <div class="centered-column">
+                <img id="introBar" src="/img/bar/bar10.png" alt="10/10 mätare.">
+              </div>
+              <p><small>Inga/väldigt få bolag med <span class="red">fossila bränslen</span> i fonden. </small></p>
+            </div>
+            <div class="col-md-4">
+              <div class="centered-column">
+                <img id="introBar" src="/img/bar/bar7.png" alt="7/10 mätare.">
+              </div>
+              <p><small>Ganska många bolag med <span class="red">fossila bränslen</span> i fonden. </small></p>
+            </div>
+            <div class="col-md-4">
+              <div class="centered-column">
+                <img id="introBar" src="/img/bar/bar3.png" alt="3/10 mätare.">
+              </div>
+              <p><small>Väldigt många bolag med <span class="red">fossila bränslen</span> i fonden.</small></p>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-2">
+          <h4>4. Fördjupa dig</h4>
+          <p>Genom att klicka på en fond kommer du till fondens fördjupningssida. </p>
+          <p>Här hittar du mer information om våra mått, hur fondens investeringar står sig i relation till dess fondkategori och övriga fonder. Du hittar även mer information om fonden och fondbolaget. </p>
+          <span class="label label-primary">Fonden är bättre än snittet för fondkategorin. </span>
+          <span class="label label-primary">Fonden är bättre än snittet för alla fonder. </span>
+        </div>
+        <div class="col-md-2">
+          <h4>5. Välj fonder</h4>
+          <p>Grattis! Nu har du kunskapen för att kunna föra ett medvetet fondval som ligger i linje med dina hållbarhetspreferenser. </p>
+          <p><strong>Vilken eller vilka fonder du väljer är så klart helt upp till dig.</strong> </p>
         </div>
       </div>
     </div>
