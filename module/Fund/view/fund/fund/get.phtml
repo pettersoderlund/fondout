@@ -4,12 +4,112 @@ $this->headScript()
   ->prependFile($this->basePath() .
   '/vendor/selectize/dist/js/standalone/selectize.min.js')
   ->appendFile($this->basePath() . '/js/fundprofile.js');
+
+$thincategory = array("alcohol", "tobacco", "gambling")
 ?>
 <section class="container fund-page">
-  <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
-    Tillbaka till fondsök
-  </a>
-  <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
+  <div class="row centered-column header">
+    <div class="col-md-4">
+      <p>Fond</p>
+    </div>
+    <div class="col-md-3">
+      <p>Hållbarhet</p>
+    </div>
+    <div class="col-md-3">
+      <p>Fondinformation</p>
+    </div>
+    <div class="col-md-2">
+      <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
+        Tillbaka till fondsök
+      </a>
+    </div>
+  </div>
+
+  <div role="tabpanel">
+
+    <!-- Nav tabs -->
+    <div class="row info">
+      <div class="col-md-4">
+        <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".JPG' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+        <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
+      </div>
+      <div class="col-md-3 bar-tabs">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="active"><a href="#fossil" aria-controls="fossil" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('fossil')?>.png" class="bar"><br><img class="round-symbol" src="/img/symbols/fossil.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li><a href="#weapon" aria-controls="weapon" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('weapon')?>.png" class="bar"><br><img class="round-symbol" src="/img/symbols/weapon.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li class="thintab"><a href="#alcohol" aria-controls="alcohol" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('alcohol')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/alcohol.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li class="thintab"><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/tobacco.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li class="thintab"><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/gambling.png"></a><div class="arrow-up arrow-box"></div></li>
+        </ul>
+      </div>
+      <div class="col-md-3 centered-column">
+        <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
+            <?php echo $this->translate($fund->company->name) ?>
+        </a>
+        <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+          <?php echo $this->translate($fund->fondoutcategory->title) ?>
+        </a>
+      </div>
+      <div class="col-md-2">
+      </div>
+    </div>
+
+
+    <!-- Tab panes -->
+    <div class="row content">
+      <div class="tab-content measure-tabs">
+
+        <?php foreach ($companies as $category => $ccompanies): ?>
+          <div role="tabpanel" class="tab-pane <?php echo ($category == 'fossil') ? 'active' : '' ?>" id="<?php echo $category ?>">
+            <div class="row">
+              <div class="col-sm-6">
+                <h3>Ditt valda mått är: <strong><?php echo $category ?></strong></h3>
+                <div class="row">
+                  <div class="col-md-4 centered-column">
+                    <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $fund->getMeasureScore($category);?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
+                    <br>
+                    <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png">
+                    <br>
+                    <p><?php echo $this->escapeHtml($fund->name) ?></p>
+                  </div>
+                  <div class="col-md-4 centered-column">
+                    <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $avgcategory->getMeasureScore($category)?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
+                    <br>
+                    <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png">
+                    <br>
+                    <p>Snitt <?php echo $this->translate($fund->fondoutcategory->title) ?></p>
+                  </div>
+                  <div class="col-md-4 centered-column">
+                    <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $avgallfunds->getMeasureScore($category)?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
+                    <br>
+                    <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png">
+                    <p>Snitt alla fonder</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <h4>Exempel på bolag med <?php echo $category ?> som ingår i fonden</h4>
+                <ol>
+                <?php foreach ($ccompanies as $company): ?>
+                  <small><li><?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?></li></small>
+                <?php endforeach; ?>
+                </ol>
+              </div>
+            </div>
+
+
+
+          </div>
+        <?php endforeach; ?>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+
 
 
   <div class="row">
