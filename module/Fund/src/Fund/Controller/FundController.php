@@ -92,6 +92,8 @@ class FundController extends AbstractRestfulController
         $banks = $service->getBanks($fund);
         $sharesCount = $service->getCountShares($fund);
 
+        $accusationCategories = $service->findAccusationCategories();
+
         // Category
         $categoryFunds = $service->findSameCategoryFunds($fund);
         $avgCatFund = $service->findMeasuredAverages($categoryFunds, new Fund());
@@ -114,10 +116,16 @@ class FundController extends AbstractRestfulController
                 'fCompanyFunds' => $fundCompanyFunds, // same fcompany
                 'banks'         => $banks,   // where to buy the fund
                 'sharesCount'   => $sharesCount, // fund share count
+                // Avg company count all same category
                 'avgcategory'   => $avgCatFund,
+                // Avg company count all funds
                 'avgallfunds'   => $avgAllFund,
+                // Companies from accusation categories
                 'companies'     => $controCompanies,
-                'backuri'       => $backuri
+                // Backlink to fundsearch uri
+                'backuri'       => $backuri,
+                //accusation category array
+                'accCat'        => $accusationCategories
             )
         );
     }

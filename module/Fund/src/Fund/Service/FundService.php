@@ -391,4 +391,22 @@ class FundService
 
       return $avgFund;
     }
+
+    /**
+    * Retreive an array with accusation categories as value
+    * with the english shortname as key.
+    */
+
+    public function findAccusationCategories() {
+      $accCat = array();
+      $repository = $this->getEntityManager()
+        ->getRepository('Fund\Entity\AccusationCategory');
+      $accCat['fossil'] = $repository->findOneByName('Fossila bränslen');
+      $accCat['weapon'] = $repository->findOneByName('Kontroversiella vapen');
+      $accCat['alcohol'] = $repository->findOneByName('Alkohol');
+      $accCat['tobacco'] = $repository->findOneByName('Tobak');
+      $accCat['gambling'] = $repository->findOneByName('Spel');
+
+      return $accCat;
+    }
 }

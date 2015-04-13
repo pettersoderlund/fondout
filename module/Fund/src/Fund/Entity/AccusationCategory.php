@@ -38,6 +38,13 @@ class AccusationCategory extends Entity
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=9999, nullable=true)
+     */
+    private $description;
+
+    /**
      * @var Accusation[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\Accusation", mappedBy="category")
@@ -68,6 +75,16 @@ class AccusationCategory extends Entity
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Gets the value of description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 
     /**

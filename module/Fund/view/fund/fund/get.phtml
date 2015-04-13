@@ -63,7 +63,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           <div role="tabpanel" class="tab-pane <?php echo ($category == 'fossil') ? 'active' : '' ?>" id="<?php echo $category ?>">
             <div class="row">
               <div class="col-sm-6">
-                <h3>Ditt valda mått är: <strong><?php echo $category ?></strong></h3>
+                <h3>Ditt valda mått är: <strong><?php echo mb_strtoupper($accCat[$category]->name, 'UTF-8') ?></strong></h3>
                 <div class="row">
                   <div class="col-md-4 centered-column">
                     <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $fund->getMeasureScore($category);?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
@@ -88,7 +88,8 @@ $thincategory = array("alcohol", "tobacco", "gambling")
                 </div>
               </div>
               <div class="col-sm-6">
-                <h4>Exempel på bolag med <?php echo $category ?> som ingår i fonden</h4>
+                <p><?php echo $accCat[$category]->description ?></p>
+                <h4>Exempel på bolag med <?php echo strtolower($accCat[$category]->name) ?> som ingår i fonden</h4>
                 <ol>
                 <?php foreach ($ccompanies as $company): ?>
                   <small><li><?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?></li></small>
