@@ -61,7 +61,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <?php foreach ($companies as $category => $ccompanies): ?>
           <div role="tabpanel" class="tab-pane <?php echo ($category == 'fossil') ? 'active' : '' ?>" id="<?php echo $category ?>">
             <div class="row">
-              <div class="col-sm-6 centered-column">
+              <div class="col-sm-6 centered-column measure-tabs-first-column">
                 <h3>Ditt valda mått är: <strong><?php echo mb_strtoupper($accCat[$category]->name, 'UTF-8') ?></strong></h3>
                 <div class="row">
                   <div class="col-md-4 centered-column">
@@ -89,17 +89,12 @@ $thincategory = array("alcohol", "tobacco", "gambling")
                   <span class='label <?php if($fund->getMeasureScore($category) > $avgcategory->getMeasureScore($category)) { echo "label-primary'>" . "Fonden är bättre än snittet för fondkategorin."; } elseif ($fund->getMeasureScore($category) == $avgcategory->getMeasureScore($category)) { echo "label-primary'>" . "Fonden är samma som snittet för fondkategorin."; } else { echo "label-danger'>" . "Fonden är sämre än snittet för fondkategorin."; }?></span>
                   <br>
                   <span class='label <?php if($fund->getMeasureScore($category) > $avgallfunds->getMeasureScore($category)) { echo "label-primary'>" . "Fonden är bättre än snittet för alla fonder."; } elseif ($fund->getMeasureScore($category) == $avgallfunds->getMeasureScore($category)) { echo "label-primary'>" . "Fonden är samma som snittet för alla fonder."; } else { echo "label-danger'>" . "Fonden är sämre än snittet för alla fonder."; }?></span>
-
                 </div>
+                <?php echo ($fund->fundCompany->premium) ? $this->partial('example-companies', array('category' => $category, 'accCat' => $accCat, 'ccompanies' => $ccompanies)) : "" ?>
+
               </div>
               <div class="col-sm-6 measure-tabs-second-column">
-                <p><?php echo $accCat[$category]->description ?></p>
-                <h4>Exempel på bolag med <?php echo strtolower($accCat[$category]->name) ?> som ingår i fonden</h4>
-                <ol>
-                <?php foreach ($ccompanies as $company): ?>
-                  <small><li><?php echo $company['name'] . " " . number_format($company['part']*100, 2) . "%" . "<br>" ?></li></small>
-                <?php endforeach; ?>
-                </ol>
+                <?php echo ($fund->fundCompany->premium) ? "" : $this->partial('example-companies', array('category' => $category, 'accCat' => $accCat, 'ccompanies' => $ccompanies)); ?>
               </div>
             </div>
           </div>
