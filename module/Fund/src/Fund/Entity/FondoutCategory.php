@@ -62,6 +62,14 @@ class FondoutCategory extends Entity
      */
     private $children;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="long_name", type="string", length=255, nullable=true)
+     */
+    private $longName;
+
+
     public function getId()
     {
         return $this->id;
@@ -75,6 +83,11 @@ class FondoutCategory extends Entity
     public function getTitle()
     {
         return ucfirst($this->title);
+    }
+
+    public function getLongName()
+    {
+        return ucfirst($this->longName);
     }
 
     public function setParent(FondoutCategory $parent = null)
