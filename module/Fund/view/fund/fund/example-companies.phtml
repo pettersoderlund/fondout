@@ -1,20 +1,21 @@
-
+<div class="example-section">
   <p><?php echo $this->accCat[$category]->description ?></p>
   <h4>Exempel på bolag med <?php echo strtolower($accCat[$category]->name) ?> som ingår i fonden</h4>
 
-<div class="row">
-  <div class="col-md-6">
-    <ol class="example-companies">
-    <?php foreach (array_slice($ccompanies, 0, 10) as $company): ?>
-      <small><li><?php echo $company['name'] . " <span class='example-percent'>" . number_format($company['part']*100, 2) . "%</span>" ?></li></small>
-    <?php endforeach; ?>
-    </ol>
-  </div>
-  <div class="col-md-6">
-    <ol class="example-companies" start=11>
-    <?php foreach (array_slice($ccompanies, 10, 10) as $company): ?>
-      <small><li><?php echo $company['name'] . " <span class='example-percent'>" . number_format($company['part']*100, 2) . "%</span>" ?></li></small>
-    <?php endforeach; ?>
-    </ol>
+  <div class="row">
+    <div class="col-md-6">
+      <ol class="example-companies">
+      <?php foreach (array_slice($ccompanies, 0, 10) as $company): ?>
+        <small><li><?php echo $company['name'] . " <span class='example-percent'>" . number_format($company['part']*100, 2) . "%</span>" ?></li></small>
+      <?php endforeach; ?>
+      </ol>
+    </div>
+    <div class="col-md-6">
+      <ol class="example-companies" start=11>
+      <?php foreach (array_slice($ccompanies, 10, 10) as $company): ?>
+        <small><li><?php echo $company['name'] . " <span class='example-percent'>" . number_format($company['part']*100, 2) . "%</span>" ?></li></small>
+      <?php endforeach; ?>
+      </ol>
+    </div>
   </div>
 </div>

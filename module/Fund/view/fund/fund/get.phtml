@@ -108,6 +108,8 @@ $thincategory = array("alcohol", "tobacco", "gambling")
     <div class="alternate-funds-header col-md-12">
       <h3 class="centered-column"><?php echo  ($fund->fundCompany->premium) ? "Andra fonder från " . $fund->fundCompany->name : "Andra fonder i kategori " . $fund->fondoutCategory->title  ?></h3>
     </div>
+
+    <?php $i = 1; ?>
     <?php foreach ($altFunds as $fund): ?>
       <div class="col-md-6 alternate-fund">
         <div class="row">
@@ -137,6 +139,8 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           </div>
         </div>
       </div>
+
+      <?php if ($i++ == 8) break; ?> <!-- Limit to 8 funds in list -->
     <?php endforeach; ?>
   </div>
 </section>
