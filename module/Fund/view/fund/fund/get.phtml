@@ -30,7 +30,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
     <!-- Nav tabs -->
     <div class="row info">
       <div class="col-md-4">
-        <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".JPG' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+        <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
         <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
       </div>
       <div class="col-md-3 bar-tabs">
@@ -91,16 +91,26 @@ $thincategory = array("alcohol", "tobacco", "gambling")
                   <br>
                   <span class='label <?php if($fund->getMeasureScore($category) > $avgallfunds->getMeasureScore($category)) { echo "label-primary'>" . "Fonden är bättre än snittet för alla fonder."; } elseif ($fund->getMeasureScore($category) == $avgallfunds->getMeasureScore($category)) { echo "label-primary'>" . "Fonden är samma som snittet för alla fonder."; } else { echo "label-danger'>" . "Fonden är sämre än snittet för alla fonder."; }?></span>
                 </div>
-                <?php echo ($fund->fundCompany->premium) ? $this->partial('example-companies', array('category' => $category, 'accCat' => $accCat, 'ccompanies' => $ccompanies)) : "" ?>
-
               </div>
               <div class="col-sm-6 measure-tabs-second-column">
-                <?php echo ($fund->fundCompany->premium) ? "" : $this->partial('example-companies', array('category' => $category, 'accCat' => $accCat, 'ccompanies' => $ccompanies)); ?>
+                <?php echo $this->partial('example-companies', array('category' => $category, 'accCat' => $accCat, 'ccompanies' => $ccompanies)); ?>
               </div>
             </div>
           </div>
         <?php endforeach; ?>
       </div>
+      <div class="col-md-12 premium-fund-info">
+        <?php if ($fund->fundCompany->premium): ?>
+          <h3>Om fonden </h3>
+          <p>
+            <?php echo $fund->info ?>
+          </p>
+          <h3>Om fondbolaget </h3>
+          <p>
+            <?php echo $fund->company->info ?>
+          </p>
+        <?php endif;?>
+    </div>
     </div>
   </div>
 

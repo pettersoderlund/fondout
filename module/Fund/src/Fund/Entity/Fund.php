@@ -114,6 +114,14 @@ class Fund extends Entity
     protected $company;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="info", type="string", length=9999, nullable=true)
+     */
+    protected $info;
+
+
+    /**
      * @var FundInstance[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\FundInstance", mappedBy="fund")
@@ -618,4 +626,13 @@ class Fund extends Entity
       return $score;
     }
 
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
 }

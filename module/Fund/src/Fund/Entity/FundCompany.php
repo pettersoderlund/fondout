@@ -59,6 +59,14 @@ class FundCompany extends Entity
     protected $url;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="info", type="string", length=9999, nullable=true)
+     */
+    protected $info;
+
+
+    /**
      * @var Fund[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\Fund", mappedBy="company")
@@ -167,6 +175,15 @@ class FundCompany extends Entity
         return $this->url;
     }
 
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
 
     /**
      * return the company name
