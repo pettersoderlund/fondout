@@ -304,7 +304,7 @@ $form->prepare();
           </a>
 
           <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
-            <?php echo $this->translate($fund->fondoutcategory->title) ?>
+            <?php echo $this->translate($fund->fondoutcategory->longName) ?>
           </a>
 
         </div>

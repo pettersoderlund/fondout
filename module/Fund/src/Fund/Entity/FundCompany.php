@@ -61,10 +61,51 @@ class FundCompany extends Entity
     /**
      * @var string
      *
-     * @ORM\Column(name="info", type="string", length=9999, nullable=true)
+     * @ORM\Column(name="info", type="string", length=999, nullable=true)
      */
     protected $info;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cite", type="string", length=999, nullable=true)
+     */
+    protected $cite;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="section1", type="string", length=999, nullable=true)
+     */
+    protected $section1;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="section2", type="string", length=999, nullable=true)
+     */
+    protected $section2;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="section3", type="string", length=999, nullable=true)
+     */
+    protected $section3;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bullets", type="string", length=999, nullable=true)
+     */
+    protected $bullets;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contact", type="string", length=255, nullable=true)
+     */
+    protected $contact;
 
     /**
      * @var Fund[]
@@ -193,5 +234,35 @@ class FundCompany extends Entity
     public function __toString()
     {
         return $this->getName();
+    }
+
+    public function getCite()
+    {
+      return $this->cite;
+    }
+
+    public function getSection1()
+    {
+      return $this->section1;
+    }
+
+    public function getSection2()
+    {
+      return $this->section2;
+    }
+
+    public function getSection3()
+    {
+      return $this->section3;
+    }
+
+    public function getBullets()
+    {
+      return $this->bullets;
+    }
+
+    public function getContact()
+    {
+      return $this->contact;
     }
 }

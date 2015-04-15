@@ -1,48 +1,130 @@
-<section class="container">
-  <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
-    Tillbaka till fondsök
-  </a>
-  <h1><?php echo $fundcompany->name ?></h1>
+<div class="fund-company-page">
+  <div class="fund-company-header">
+    <div class="container">
+      <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
+        Tillbaka till fondsök
+      </a>
+      <h6 class="pull-left">
+        /Fondbolagssida/<strong><?php echo $fundCompany->name ?></strong>
+      </h6>
+    </div>
+  </div>
 
-  <ul class="results">
-    <?php foreach ($funds as $fund): ?>
-      <li>
 
-        <div class="pull-right">
-          <table class="table" style="text-align:center">
-            <tr>
-              <td><?php echo "<img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?></td>
-              <td><?php echo "<img style='width:30px' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?></td>
-              <td><?php echo "<img style='width:15px; height:16.5%' src='/img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png'>" ?></td>
-              <td><?php echo "<img style='width:15px; height:16.5%' src='/img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?></td>
-              <td><?php echo "<img style='width:15px; height:16.5%' src='/img/bar/bar" . $fund->getMeasureScore('gambling'). ".png'>"   ?></td>
-            </tr>
-            <tr>
-              <td><img style="width:36px;" src="/img/symbols/weapon.png"></td>
-              <td><img style="width:36px;" src="/img/symbols/fossil.png"></td>
-              <td><img style="width:15px;" src="/img/symbols/alcohol.png"></td>
-              <td><img style="width:15px;" src="/img/symbols/tobacco.png"></td>
-              <td><img style="width:15px;" src="/img/symbols/gambling.png"></td>
-            </tr>
-          </table>
+<?php if ($this->fundCompany->premium): ?>
+  <section class="fund-company-picture" style="background: url('/img/fund-company/background/<?php echo $this->fundCompany->id ?>.jpg') 50% 50%;">
+    <div class="container">
+      <table>
+        <tr>
+          <td class="col-thin"></td>
+          <td class="col-middle">
+            <h3 class="cite"><mark><em><?php echo $this->fundCompany->cite ?></em></mark></h3>
+          </td>
+          <td class="col-thin"></td>
+        </tr>
+        <tr>
+          <td><?php echo "<img class='fund-logo' src='/img/fund-company/logo/" . $this->fundCompany->id . ".jpg' alt='" . $this->fundCompany->name . " logo'>" ?></td>
+          <td></td>
+          <td><div class="organizations">
+            <p><?php echo $fundCompany->name ?> är med i följande organisationer...</p>
+            <!--
+            <ul>
+              <li>
+                UNPRI
+              </li>
+              <li>
+                Hållbarhetsprofilen
+              </li>
+              <li>
+                CDP
+              </li>
+            </ul>
+            -->
+          </div></td>
+        </tr>
+      </table>
+    </div>
+  </section>
+  <section class="fund-company-content">
+    <div class="container">
+
+      <div class="row well">
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-md-12">
+              <p><?php echo $this->fundCompany->section1 ?></p>
+            </div>
+            <div class="col-md-6">
+              <p><?php echo $this->fundCompany->section2 ?></p>
+            </div>
+            <div class="col-md-6">
+              <p><?php echo $this->fundCompany->section3 ?></p>
+            </div>
+          </div>
         </div>
+        <div class="col-md-4">
+          <div class="well">
+            Visste du att...
+            <ul>
+              <?php echo $this->fundCompany->bullets ?>
+            </ul>
+          </div>
+          <p>
+            <?php echo $this->fundCompany->contact ?>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+<?php endif; ?>
 
-        <h3>
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
-            <?php echo $this->translate($fund->name) ?>
-          </a>
-        </h3>
+  <section class="fund-company-funds">
+    <div class="container">
 
-        <?php echo  ($fund->fundCompany->premium) ? "<img src='/img/fund-company/logo/" . $fund->fundCompany->id . ".JPG' alt='" . $fund->fundCompany->name . " logo' style='width:100px'>" : "" ?>
-        <p>
+      <div class="row">
+        <div class="col-md-12 centered-column header">
+          <h2><mark>Våra fonder</mark></h2>
+        </div>
+        <?php foreach ($funds as $fund): ?>
+          <div class="col-md-6 fund-company-fund">
+            <div class="row">
+              <div class="col-md-7">
+                <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+                <h4>
+                  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+                    <?php echo $this->translate($fund->name) ?>
+                  </a>
+                </h4>
+                <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
+                    <?php echo $this->translate($fund->company->name) ?>
+                </a>
+                <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+                  <?php echo $this->translate($fund->fondoutcategory->longName) ?>
+                </a>
 
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
-            <span class="label label-primary"><?php echo $this->translate($fund->fondoutcategory->title) ?></span>
-          </a>
-        </p>
+              </div>
+              <div class="col-md-1 centered-column">
+                <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+                <img class="round-symbol" src="/img/symbols/fossil.png">
+              </div>
+              <div class="col-md-1 centered-column">
+                <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+                <img class="round-symbol" src="/img/symbols/weapon.png">
+              </div>
+              <div class="col-md-3">
+                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
+                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
+                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+                <br>
+                <img class="thin-symbol" src="/img/symbols/alcohol.png">
+                <img class="thin-symbol" src="/img/symbols/tobacco.png">
+                <img class="thin-symbol" src="/img/symbols/gambling.png">
+              </div>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
 
-      </li>
-    <?php endforeach; ?>
-  </ul>
-
-</section>
+    </div>
+  </section>
+</div>

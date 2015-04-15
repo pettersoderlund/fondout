@@ -140,7 +140,7 @@ class FundController extends AbstractRestfulController
 
       return new ViewModel(
           array(
-            'fundcompany' => $fundCopmany,
+            'fundCompany' => $fundCopmany,
             'funds'       => $funds,
             'backuri'     => $backuri
           )
