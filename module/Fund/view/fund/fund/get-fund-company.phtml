@@ -25,22 +25,17 @@
         <tr>
           <td><?php echo "<img class='fund-logo' src='/img/fund-company/logo/" . $this->fundCompany->id . ".jpg' alt='" . $this->fundCompany->name . " logo'>" ?></td>
           <td></td>
-          <td><div class="organizations">
-            <p><?php echo $fundCompany->name ?> är med i följande organisationer...</p>
-            <!--
-            <ul>
-              <li>
-                UNPRI
-              </li>
-              <li>
-                Hållbarhetsprofilen
-              </li>
-              <li>
-                CDP
-              </li>
-            </ul>
-            -->
-          </div></td>
+          <td>
+            <div class="organizations">
+              <p><?php echo $fundCompany->name ?> är med i följande organisationer...</p>
+              <ul>
+                <?php foreach($fundCompany->organisations as $organisation): ?>
+                  <li><?php echo $organisation->name; ?></li>
+                <?php endforeach; ?>
+
+              </ul>
+            </div>
+          </td>
         </tr>
       </table>
     </div>

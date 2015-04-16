@@ -365,12 +365,20 @@ class FundService
         $gambling += $fund->getGamblingCompanies();
       }
 
-      # WARNING DIVISION BY ZRO _ SORT OUT
-      $avgWeapon   = (int)($weapon/sizeof($funds));
-      $avgFossil   = (int)($fossil/sizeof($funds));
-      $avgAlcohol  = (int)($alcohol/sizeof($funds));
-      $avgTobacco  = (int)($tobacco/sizeof($funds));
-      $avgGambling = (int)($gambling/sizeof($funds));
+
+      //To remove division by zero risk
+      //set all avg to 0 if 0 funds given. 
+      if(sizeof($funds) == 0) {
+        $fundCount = 1;
+      } else {
+        $fundCount = sizeof($funds);
+      }
+
+      $avgWeapon   = (int)($weapon/$fundCount);
+      $avgFossil   = (int)($fossil/$fundCount);
+      $avgAlcohol  = (int)($alcohol/$fundCount);
+      $avgTobacco  = (int)($tobacco/$fundCount);
+      $avgGambling = (int)($gambling/$fundCount);
 
       $avgFund->setWeaponCompanies($avgWeapon);
       $avgFund->setFossilCompanies($avgFossil);

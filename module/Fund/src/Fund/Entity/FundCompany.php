@@ -114,10 +114,18 @@ class FundCompany extends Entity
      **/
     protected $funds = null;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Organisation", inversedBy="fund_companies")
+     * @ORM\JoinTable(name="organisation_member")
+     **/
+    private $organisations;
+
     public function __construct($options = null)
     {
         parent::__construct($options);
         $this->funds = new ArrayCollection();
+        $this->organisations = new ArrayCollection();
     }
 
     /**
@@ -264,5 +272,15 @@ class FundCompany extends Entity
     public function getContact()
     {
       return $this->contact;
+    }
+
+    /**
+     * Get organisations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOrganisations()
+    {
+        return $this->organisations;
     }
 }
