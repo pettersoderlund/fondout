@@ -49,6 +49,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
           <?php echo $this->translate($fund->fondoutcategory->longName) ?>
         </a>
+        <?php echo (in_array('Nordnet', $fund->getBankArray())) ? "<p>Fonden finns att köpa på Nordnet.</p>" : "" ?>
       </div>
       <div class="col-md-2">
       </div>

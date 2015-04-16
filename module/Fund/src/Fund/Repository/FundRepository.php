@@ -119,20 +119,6 @@ class FundRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function findBanks(Fund $fund)
-    {
-         $qb=  $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('b.name as name, bf.url')
-            ->from('Fund\Entity\BankFundListing', 'bf')
-            ->join('bf.bank', 'b')
-            ->join('bf.fund', 'f')
-            ->where('f.id = ?1');
-
-        $qb->setParameter(1, $fund->id);
-        return $qb->getQuery()->getResult();
-    }
-
     public function findControversialValue(Fund $fund, $category = array())
     {
 

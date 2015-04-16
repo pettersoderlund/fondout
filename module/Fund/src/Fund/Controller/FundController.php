@@ -89,7 +89,6 @@ class FundController extends AbstractRestfulController
         $id = $service->getFundByUrl($url)->id;
         $fund = $service->getFund($id, $sustainability);
         $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
-        $banks = $service->getBanks($fund);
         $sharesCount = $service->getCountShares($fund);
 
         $accusationCategories = $service->findAccusationCategories();
@@ -114,7 +113,6 @@ class FundController extends AbstractRestfulController
                 'fund'          => $fund, // current fund
                 'categoryFunds' => $categoryFunds, // funds same category
                 'fCompanyFunds' => $fundCompanyFunds, // same fcompany
-                'banks'         => $banks,   // where to buy the fund
                 'sharesCount'   => $sharesCount, // fund share count
                 // Avg company count all same category
                 'avgcategory'   => $avgCatFund,

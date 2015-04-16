@@ -120,6 +120,14 @@ class Fund extends Entity
      */
     protected $info;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="\Fund\Entity\Bank")
+     * @ORM\JoinTable(name="bank_fund_listing",
+     *      joinColumns={@ORM\JoinColumn(name="fund", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="bank", referencedColumnName="id")}
+     *      )
+     **/
+    private $banks;
 
     /**
      * @var FundInstance[]
@@ -152,6 +160,7 @@ class Fund extends Entity
     {
         parent::__construct($options);
         $this->fundInstances = new ArrayCollection();
+        $this->banks = new ArrayCollection();
     }
 
     /**
@@ -634,5 +643,29 @@ class Fund extends Entity
     public function getInfo()
     {
         return $this->info;
+    }
+
+    /**
+     * Get banks
+     *
+     * @return ArrayCollection \Entity\Bank
+     */
+    public function getBanks()
+    {
+        return $this->banks;
+    }
+
+    /**
+     * Get banks in array
+     *
+     * @return Array String
+     */
+    public function getBankArray()
+    {
+      $bankArray = array();
+        foreach($this->banks as $bank) {
+          array_push($bankArray, $bank->name);
+        };
+      return $bankArray;
     }
 }
