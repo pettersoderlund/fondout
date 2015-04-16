@@ -109,6 +109,12 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           <p>
             <?php echo $fund->company->info ?>
           </p>
+          <h3>Fondbolaget är med i följande organisationer</h3>
+          <ul>
+            <?php foreach($this->fund->fundCompany->organisations as $organisation): ?>
+              <li><?php echo $organisation->name; ?></li>
+            <?php endforeach; ?>
+          </ul>
         <?php endif;?>
     </div>
     </div>
@@ -125,6 +131,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
       <div class="col-md-6 alternate-fund">
         <div class="row">
           <div class="col-md-7">
+            <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
             <h4>
               <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
                 <?php echo $this->translate($fund->name) ?>
