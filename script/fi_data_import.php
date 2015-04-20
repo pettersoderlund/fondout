@@ -178,7 +178,7 @@ try {
         if (strcasecmp(trim($type), 'info') == 0) {
 
             $skip = false;
-            $sql  = "INSERT INTO fund_company VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE name = ?";
+            $sql  = "INSERT INTO fund_company(id, institution_number, name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE name = ?";
 
             $stmt = $db->prepare($sql);
             $stmt->execute(
