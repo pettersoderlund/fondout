@@ -141,7 +141,7 @@ input[type="submit"] {
   background: url('/img/whiteplanks.jpg'), no-repeat;
 
   h1,.h1,.h3,h3, p, .p {
-    color: steelblue;
+    color: @brand-blue;
   }
   .header-row {
     h1, .h1 {
@@ -261,36 +261,6 @@ footer {
   }
 }
 
-// Dougnut chart
-.chart-container {
-  position: relative;
-}
-
-// CO2 meter
-@media (min-width: @screen-sm-min) {
-  .co2-header {
-    margin-bottom: -18px;
-  }
-  .co2-meter-number {
-      margin-top: 10px;
-      font-size: ceil(@font-size-base*2.9);
-  }
-  .co2-meter-unit {
-      margin-top:-5px;
-  }
-}
-
-.co2-na {
-  color: #cecece;
-}
-
-.co2-meter-symbol {
-    float: left;
-    margin-right: 30px;
-    margin-top: 10px;
-}
-
-
 .panel-box {
     border: 1px solid rgba(0,0,0, 0.1);
     padding: 9px;
@@ -333,24 +303,6 @@ footer {
   }
 }
 
-.finish-words {
-  font-weight: 800;
-  text-align: center;
-}
-
-#index-measurements {
-  text-align: center;
-}
-
-#index-sustainability-measure {
-  border-bottom: 3px @brand-light solid;
-  padding-bottom: 20px;
-}
-
-#index-co2-measure {
-  margin-top:31px;
-}
-
 .bank-logo {
   max-width: 80px;
   margin-top: -10px;
@@ -367,7 +319,7 @@ footer {
   min-height: 300px;
   mark, .mark {
     background-color: white;
-    color: steelblue;
+    color: @brand-blue;
     line-height: 2em;
   }
   .h3, h3 {

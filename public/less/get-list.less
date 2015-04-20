@@ -8,39 +8,7 @@
 .results {
   h3 {
       a {
-      color: #777777;
-    }
-  }
-}
-
-@media screen and (min-width: 768px) {
-    .fund-list .co2-meter {
-        margin-right: 30px;
-    }
-    .fund-list {
-      .co2-meter {
-        float: right;
-        // based on height of the co2-symbol image + co2 meter symbol margin-top
-      }
-    }
-}
-
-@media screen and (min-width: 768px) {
-  .fund-list .co2-meter-symbol {
-    //to align with the sust. cake
-    margin-right: 15px;
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .fund-list {
-    .co2-meter {
-      float: right;
-      // based on height of the co2-symbol image + co2 meter symbol margin-top
-    }
-    .co2-meter-symbol {
-      width: 30px;
-      margin-right: 10px;
+      color: black;
     }
   }
 }
@@ -83,14 +51,6 @@
 @media screen and (min-width: 768px) {
   .sortby-buttons {
     margin-right: 25px;
-  }
-
-  .sustainability-desc {
-
-  }
-  .sustainability-desc .sustainability-number {
-      font-size: ceil(@font-size-base*2.9);
-
   }
 }
 
@@ -182,7 +142,7 @@
 
 #sort-header {
   float:right;
-  color: cornflowerblue;
+  color: @brand-blue;
 }
 
 .sort-menu {
@@ -196,7 +156,6 @@
   }
 
 }
-
 
 .centered-column {
   text-align: center;
@@ -238,34 +197,21 @@
 .fundinfo-btn {
   margin-top: 20px;
   width: 80%;
-  background-color: steelblue;
+  background-color: @brand-blue;
   color: #ffffff;
 }
 .fundinfo-btn:hover {
   color: #ffffff;
-  background-color: darkblue;
+  background-color: lightgray;
 }
-
-
 
 .fundinfo-btn + .fundinfo-btn {
   margin-top: 18px;
 }
 
-
 /*     MOBILE SETTINGS     */
 /*     EXTRA SMALL DEVICES */
 @media (max-width: @screen-sm-min) {
-  .fund-list .chart-container {
-    width: 30px;
-    height: 30px;
-    img {
-      width: 100%;
-
-
-    }
-
-  }
 
   .results h3, .h3 {
     font-size: 18px;
