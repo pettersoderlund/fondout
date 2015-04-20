@@ -49,7 +49,7 @@ class FundCompany extends Entity
      *
      * @ORM\Column(name="premium", type="boolean", nullable=false)
      */
-    protected $premium=false;
+    protected $premium = 0;
 
     /**
      * @var string
