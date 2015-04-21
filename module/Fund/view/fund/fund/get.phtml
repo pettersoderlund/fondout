@@ -120,14 +120,58 @@ $thincategory = array("alcohol", "tobacco", "gambling")
     </div>
   </div>
 
+  <!-- Start fund company funds -->
+  <?php if($fund->fundCompany->premium): ?>
+    <div class="row alternate-funds">
+      <div class="alternate-funds-header col-md-12">
+        <h3 class="centered-column"><?php echo mb_strtoupper("Andra fonder från " . $fund->fundCompany->name, 'UTF-8')  ?></h3>
+      </div>
+
+      <?php $i = 1; ?>
+      <?php foreach ($fCompanyFunds as $fund): ?>
+        <div class="col-md-6 alternate-fund">
+          <div class="row">
+            <div class="col-md-7">
+              <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+              <h4>
+                <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+                  <?php echo $this->translate($fund->name) ?>
+                </a>
+              </h4>
+            </div>
+            <div class="col-md-1 centered-column">
+              <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+              <img class="round-symbol" src="/img/symbols/fossil.png">
+            </div>
+            <div class="col-md-1 centered-column">
+              <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+              <img class="round-symbol" src="/img/symbols/weapon.png">
+            </div>
+            <div class="col-md-3">
+              <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
+              <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
+              <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+              <br>
+              <img class="thin-symbol" src="/img/symbols/alcohol.png">
+              <img class="thin-symbol" src="/img/symbols/tobacco.png">
+              <img class="thin-symbol" src="/img/symbols/gambling.png">
+            </div>
+          </div>
+        </div>
+
+        <?php if ($i++ == 8) break; ?> <!-- Limit to 8 funds in list -->
+      <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+  <!-- End fund company funds -->
+  <!-- Start category funds -->
   <div class="row alternate-funds">
-    <?php $altFunds = ($fund->fundCompany->premium) ? $fCompanyFunds : $categoryFunds ?>
     <div class="alternate-funds-header col-md-12">
-      <h3 class="centered-column"><?php echo  ($fund->fundCompany->premium) ? mb_strtoupper("Andra fonder från " . $fund->fundCompany->name, 'UTF-8') : mb_strtoupper("Andra " . $fund->fondoutCategory->longName . "er", 'UTF-8')  ?></h3>
+      <h3 class="centered-column"><?php echo mb_strtoupper("Andra " . $fund->fondoutCategory->longName . "er", 'UTF-8')  ?></h3>
     </div>
 
     <?php $i = 1; ?>
-    <?php foreach ($altFunds as $fund): ?>
+    <?php foreach ($categoryFunds as $fund): ?>
       <div class="col-md-6 alternate-fund">
         <div class="row">
           <div class="col-md-7">
@@ -161,4 +205,5 @@ $thincategory = array("alcohol", "tobacco", "gambling")
       <?php if ($i++ == 8) break; ?> <!-- Limit to 8 funds in list -->
     <?php endforeach; ?>
   </div>
+  <!-- End fund category funds -->
 </section>
