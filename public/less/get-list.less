@@ -91,7 +91,7 @@
 }
 
 .fund-search-intro {
-  background:url('/img/whiteplanks.jpg')
+  background: #f9f9f9;
 }
 
 .centered-header {
@@ -99,12 +99,10 @@
 }
 
 .intro-section {
-  min-height: 20px;
-  padding: 19px;
-  margin-bottom: 20px;
-  background-color: rgba(255,255,255, 0.8);
 
-  font-size: 80%;
+  .h2, h2 {
+    margin-bottom: 40px;
+  }
 
   .col-md-2 {
     padding-left: 10px;
@@ -115,6 +113,48 @@
       padding-left: 4px;
       padding-right: 4px;
     }
+  }
+
+  .intro-symbol {
+    max-width: 100px;
+    max-height: 90px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .intro-box {
+    background-color: white;
+    padding: 15px;
+    position: relative;
+    margin-top: 50px;
+  }
+
+  .intro-symbol-box {
+    min-height: 110px;
+    white-space: nowrap;
+    text-align: center; margin: 1em 0;
+  }
+
+  .intro-box:after {
+  	bottom: 100%;
+  	left: 50%;
+  	border: solid transparent;
+  	content: " ";
+  	height: 0;
+  	width: 0;
+  	position: absolute;
+  	pointer-events: none;
+  	border-color: rgba(255, 255, 255, 0);
+  	border-bottom-color: #ffffff;
+  	border-width: 25px;
+  	margin-left: -25px;
+  }
+
+  .intro-symbol-helper {
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
   }
 
 }
@@ -155,7 +195,6 @@
     margin-top: 9px;
     margin-bottom: 9px;
   }
-
 }
 
 .centered-column {
@@ -209,6 +248,7 @@
 .fundinfo-btn + .fundinfo-btn {
   margin-top: 18px;
 }
+
 
 /*     MOBILE SETTINGS     */
 /*     EXTRA SMALL DEVICES */

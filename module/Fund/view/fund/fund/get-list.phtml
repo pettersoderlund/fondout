@@ -33,87 +33,99 @@ $form->prepare();
     <div class="intro-section">
       <h2 class="centered-header">Så här enkelt är det</h2>
       <div class="row">
-        <div class="col-md-2 col-md-offset-1">
+        <div class="col-md-3">
+          <div class="intro-symbol-box">
+            <span class="intro-symbol-helper"></span>
+            <img class="intro-symbol" src='/img/intro-symbols/eye.png' alt='Ögon-symbol'>
+          </div>
           <h4>1. Välj vad du vill se</h4>
-          <p><strong>Fondkategori</strong> - Välj var i världen/ inom vilken bransch fonden
-            primärt investerar. Det går även att välja flera fondkategorier
-            samtidigt.
-          </p>
-          <p><strong>Dina fonder</strong> -
-            Lägg till de fonder du har idag eller de fonder du är intresserad
-            av.
-          </p>
-          <p><strong>Fondbolag</strong> -
-            Visa endast fonder från ett specifikt fondbolag.
-          </p>
-          <p><strong>Snabbsök</strong> -
-            Gör en snabbsökning efter en specifik fond.
-          </p>
-
+          <div class="intro-box">
+            <p><strong>Fondkategori</strong> - Välj var fonden
+              primärt investerar. Det går även att se mer än en fondkategori åt gången.
+            </p>
+            <p><strong>Dina fonder</strong> -
+              Lägg till de fonder du har idag eller de fonder du är intresserad
+              av.
+            </p>
+            <p><strong>Fondbolag</strong> -
+              Visa endast fonder från ett specifikt fondbolag.
+            </p>
+            <p><strong>Snabbsök</strong> -
+              Gör en snabbsökning efter en specifik fond.
+            </p>
+          </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+          <div class="intro-symbol-box">
+            <span class="intro-symbol-helper"></span>
+            <img class="intro-symbol" src='/img/intro-symbols/question-mark.png' alt='Frågetecken'>
+          </div>
           <h4>2. Välj hur du vill ranka</h4>
-          <p>Du kan ranka fonderna efter följande mått:</p>
-          <ul class="sort-by-explainations">
-            <li>
-              <img class="roundintrosymbols" src="/img/symbols/fossil.png" alt="Fossil symbol">
-              Fossila bränslen
-            </li>
-            <li>
-              <img class="roundintrosymbols" src="/img/symbols/weapon.png" alt="Weapon symbol">
-              Förbjudna Vapen
-            </li>
-            <li>
-              <img class="sqintrosymbols" src="/img/symbols/alcohol.png" alt="Alcohol symbol">
-              Alkohol
-            </li>
-            <li>
-              <img class="sqintrosymbols" src="/img/symbols/tobacco.png" alt="Tobacco symbol">
-              Tobak
-            </li>
-            <li>
-              <img class="sqintrosymbols" src="/img/symbols/gambling.png" alt="Gambling symbol">
-              Spel
-            </li>
-          </ul>
+          <div class="intro-box">
+
+            <p>Du kan välja att ranka fonderna efter hur stor del i de investerar i:</p>
+            <ul class="sort-by-explainations">
+              <li>
+                <img class="roundintrosymbols" src="/img/symbols/fossil.png" alt="Fossil symbol">
+                Fossila bränslen
+              </li>
+              <li>
+                <img class="roundintrosymbols" src="/img/symbols/weapon.png" alt="Weapon symbol">
+                Förbjudna Vapen
+              </li>
+              <li>
+                <img class="sqintrosymbols" src="/img/symbols/alcohol.png" alt="Alcohol symbol">
+                Alkohol
+              </li>
+              <li>
+                <img class="sqintrosymbols" src="/img/symbols/tobacco.png" alt="Tobacco symbol">
+                Tobak
+              </li>
+              <li>
+                <img class="sqintrosymbols" src="/img/symbols/gambling.png" alt="Gambling symbol">
+                Spel
+              </li>
+            </ul>
+          </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+          <div class="intro-symbol-box">
+            <span class="intro-symbol-helper"></span>
+            <img class="intro-symbol" src='/img/intro-symbols/exclamation-mark.png' alt='Frågetecken'>
+          </div>
           <h4>3. Se resultat & jämför</h4>
-          <p>Låt oss säga att du valt att ranka efter <span class="red">fossila bränslen</span>. De fonder som visas högst upp i listan är de fonder som investerat i minst antal bolag med <span class="red">fossila bränslen</span>.  </p>
-          <p>För en bättre överblick visas även fondens resultat för de övriga måtten. Du kan när som helst välja att ranka efter ett nytt mått.</p>
-          <div class="row bars-explained">
-            <div class="col-md-4">
-              <div class="centered-column">
-                <img id="introBar" src="/img/bar/bar10.png" alt="10/10 mätare.">
+          <div class="intro-box">
+
+            <p>Om du valt att ranka efter exempelvis <em>fossila bränslen</em> är de fonder som visas högst upp i listan de fonder som investerar i minst antal bolag med <em>fossil bränslen</em>.</p>
+            <p>För att ge en överblick visas även fondens resultat gällande de övriga mätten. Du kan när som helst välja att ranka efter ett nytt mått.</p>
+            <div class="row bars-explained">
+              <div class="col-md-2">
+                <div class="centered-column">
+                  <img id="introBar" src="/img/bar/bar10.png" alt="10/10 mätare.">
+                </div>
+
               </div>
-              <p><small>Inga/väldigt få bolag med <span class="red">fossila bränslen</span> i fonden. </small></p>
-            </div>
-            <div class="col-md-4">
-              <div class="centered-column">
-                <img id="introBar" src="/img/bar/bar7.png" alt="7/10 mätare.">
+              <div class="col-md-10">
+                <p><small><em>Inga/väldigt få bolag med fossila bränslen i fonden. </em></small></p>
               </div>
-              <p><small>Ganska många bolag med <span class="red">fossila bränslen</span> i fonden. </small></p>
-            </div>
-            <div class="col-md-4">
-              <div class="centered-column">
-                <img id="introBar" src="/img/bar/bar3.png" alt="3/10 mätare.">
-              </div>
-              <p><small>Väldigt många bolag med <span class="red">fossila bränslen</span> i fonden.</small></p>
+
             </div>
           </div>
 
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
+          <div class="intro-symbol-box">
+            <span class="intro-symbol-helper"></span>
+            <img class="intro-symbol" src='/img/intro-symbols/glasses.png' alt='Glasögon'>
+          </div>
           <h4>4. Fördjupa dig</h4>
-          <p>Genom att klicka på en fond kommer du till fondens fördjupningssida. </p>
-          <p>Här hittar du mer information om våra mått, hur fondens investeringar står sig i relation till dess fondkategori och övriga fonder. Du hittar även mer information om fonden och fondbolaget. </p>
-          <span class="label label-primary">Fonden är bättre än snittet för fondkategorin. </span>
-          <span class="label label-primary">Fonden är bättre än snittet för alla fonder. </span>
-        </div>
-        <div class="col-md-2">
-          <h4>5. Välj fonder</h4>
-          <p>Grattis! Nu har du kunskapen för att kunna föra ett medvetet fondval som ligger i linje med dina hållbarhetspreferenser. </p>
-          <p><strong>Vilken eller vilka fonder du väljer är så klart helt upp till dig.</strong> </p>
+          <div class="intro-box">
+            <p>Genom att klicka på en fond kommer du till <em>fondens fördjupningssida</em>. Här hittar du mer information om fonden och dess investeringar i jämförelse med andra fonder.</p>
+            <p>Du kan även få mer information om fondbolagen fenom att gå in på dess respektive <em>fondbolagssida</em>.</p>
+            <span class="better-worse better">Fonden är bättre än snittet för fondkategorin. </span>
+            <br>
+            <span class="better-worse better">Fonden är bättre än snittet för alla fonder. </span>
+          </div>
         </div>
       </div>
     </div>
