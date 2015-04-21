@@ -274,7 +274,7 @@ $form->prepare();
     <li>
       <div class="row">
         <div class="col-md-4">
-          <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+          <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
           <h3>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
               <?php echo $this->translate($fund->name) ?>

@@ -30,7 +30,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
     <!-- Nav tabs -->
     <div class="row info">
       <div class="col-md-4">
-        <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+        <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
         <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
       </div>
       <div class="col-md-3 bar-tabs">
@@ -132,7 +132,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <div class="col-md-6 alternate-fund">
           <div class="row">
             <div class="col-md-7">
-              <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+              <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
               <h4>
                 <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
                   <?php echo $this->translate($fund->name) ?>
@@ -175,7 +175,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
       <div class="col-md-6 alternate-fund">
         <div class="row">
           <div class="col-md-7">
-            <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+            <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
             <h4>
               <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
                 <?php echo $this->translate($fund->name) ?>

@@ -12,7 +12,7 @@
 
 
 <?php if ($this->fundCompany->premium): ?>
-  <section class="fund-company-picture" style="background: url('/img/fund-company/background/<?php echo $this->fundCompany->id ?>.jpg') 50% 50%;">
+  <section class="fund-company-picture" style="background: url('/img/fund-company/background/<?php echo $this->fundCompany->id ?>.png') 50% 50%;">
     <div class="container">
       <table>
         <tr>
@@ -23,7 +23,7 @@
           <td class="col-thin"></td>
         </tr>
         <tr>
-          <td><?php echo "<img class='fund-logo' src='/img/fund-company/logo/" . $this->fundCompany->id . ".jpg' alt='" . $this->fundCompany->name . " logo'>" ?></td>
+          <td><?php echo "<img class='fund-logo' src='/img/fund-company/logo/" . $this->fundCompany->id . ".png' alt='" . $this->fundCompany->name . " logo'>" ?></td>
           <td></td>
           <td>
             <div class="organizations">
@@ -83,7 +83,7 @@
           <div class="col-md-6 fund-company-fund">
             <div class="row">
               <div class="col-md-7">
-                <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".jpg' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+                <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
                 <h4>
                   <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
                     <?php echo $this->translate($fund->name) ?>
