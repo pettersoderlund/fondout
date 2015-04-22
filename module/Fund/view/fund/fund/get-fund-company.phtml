@@ -5,7 +5,7 @@
         Tillbaka till fondsök
       </a>
       <h6 class="pull-left">
-        /Fondbolagssida/<strong><?php echo $fundCompany->name ?></strong>
+        <strong><?php echo $fundCompany->name ?></strong>
       </h6>
     </div>
   </div>
@@ -23,15 +23,17 @@
           <td class="col-thin"></td>
         </tr>
         <tr>
-          <td><?php echo "<img class='fund-logo' src='/img/fund-company/logo/" . $this->fundCompany->id . ".png' alt='" . $this->fundCompany->name . " logo'>" ?></td>
+          <td>
+            <div class="logo-container">
+              <?php echo "<img class='fund-logo' src='/img/fund-company/logo/" . $this->fundCompany->id . ".png' alt='" . $this->fundCompany->name . " logo'>" ?>
+            </div>
+            </td>
           <td></td>
           <td>
             <div class="organizations">
-              <p><?php echo $fundCompany->name ?> är med i följande organisationer...</p>
+              <p><strong><?php echo $fundCompany->name ?></strong></p>
               <ul>
-                <?php foreach($fundCompany->organisations as $organisation): ?>
-                  <li><?php echo $organisation->name; ?></li>
-                <?php endforeach; ?>
+                <?php echo $this->fundCompany->bullets ?>
               </ul>
             </div>
           </td>
@@ -58,9 +60,11 @@
         </div>
         <div class="col-sm-4 col-lg-3">
           <div class="well">
-            Visste du att...
+            <p><?php echo $fundCompany->name ?> är med i följande organisationer...</p>
             <ul>
-              <?php echo $this->fundCompany->bullets ?>
+              <?php foreach($fundCompany->organisations as $organisation): ?>
+                <li><?php echo $organisation->name; ?></li>
+              <?php endforeach; ?>
             </ul>
           </div>
           <p>
