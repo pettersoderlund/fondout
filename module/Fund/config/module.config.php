@@ -33,6 +33,17 @@ return array(
                     ),
                 ),
             ),
+            'qa' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/qa',
+                    'constraints' => array(),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getQA'
+                    ),
+                ),
+            ),
             'change-sustainability-categories' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

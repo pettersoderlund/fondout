@@ -8,8 +8,6 @@ use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Collection as CollectionAdapter;
 use Fund\Entity\Fund;
 
-
-
 class FundController extends AbstractRestfulController
 {
     protected $fundService;
@@ -143,7 +141,18 @@ class FundController extends AbstractRestfulController
             'backuri'     => $backuri
           )
       );
+    }
 
+    public function getQAAction()
+    {
+      $service     = $this->getFundService();
+      $accusationCategories = $service->findAccusationCategories();
+
+      return new ViewModel(
+          array(
+            'accCategories' => $accusationCategories
+          )
+      );
     }
 
     public function getFundService()

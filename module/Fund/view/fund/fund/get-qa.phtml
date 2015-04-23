@@ -1,0 +1,15 @@
+<section class="qa-section container">
+
+  <div class="row">
+    <h2>Vanliga frågor</h2>
+    <h3>Kategorier</h3>
+    <?php foreach($accCategories as $category): ?>
+      <h4>
+        <?php echo $category->name ?>
+      </h4>
+      <p>
+        <?php echo $category->description ?>
+      </p>
+    <?php endforeach ?>
+  </div>
+</section>
