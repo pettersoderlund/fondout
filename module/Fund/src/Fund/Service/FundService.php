@@ -111,7 +111,7 @@ class FundService
         // $allControversialCompanies is for counting categories
         $weaponCompanies = $fundRepository
           ->findControversialCompanies($fund, $acr
-            ->findOneByName('Kontroversiella vapen'));
+            ->findOneByName('Förbjudna vapen'));
         $fossilCompanies = $fundRepository
           ->findControversialCompanies($fund, $acr
             ->findOneByName('Fossila bränslen'));
@@ -367,7 +367,7 @@ class FundService
 
 
       //To remove division by zero risk
-      //set all avg to 0 if 0 funds given. 
+      //set all avg to 0 if 0 funds given.
       if(sizeof($funds) == 0) {
         $fundCount = 1;
       } else {
@@ -399,7 +399,7 @@ class FundService
       $repository = $this->getEntityManager()
         ->getRepository('Fund\Entity\AccusationCategory');
       $accCat['fossil'] = $repository->findOneByName('Fossila bränslen');
-      $accCat['weapon'] = $repository->findOneByName('Kontroversiella vapen');
+      $accCat['weapon'] = $repository->findOneByName('Förbjudna vapen');
       $accCat['alcohol'] = $repository->findOneByName('Alkohol');
       $accCat['tobacco'] = $repository->findOneByName('Tobak');
       $accCat['gambling'] = $repository->findOneByName('Spel');

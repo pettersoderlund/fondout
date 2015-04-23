@@ -238,7 +238,7 @@ class FundRepository extends EntityRepository
                     $queryBuilder->expr()->in('f.id', array_keys($fundMap)),
                     $queryBuilder->expr()->in('ac.name',
                         array("Fossila bränslen",
-                         "Kontroversiella vapen",
+                         "Förbjudna vapen",
                          "Alkohol", "Tobak", "Spel")
                     )
                 )
