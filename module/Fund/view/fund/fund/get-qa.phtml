@@ -5,8 +5,10 @@
     <ul>
       <li><a href="#categories">Kategorier</a></li>
       <li><a href="#levels">Nivå</a></li>
+      <!--
       <li><a href="#cat">Organisationer</a></li>
       <li><a href="#cat">Fondkategorier</a></li>
+      -->
     </ul>
     </div>
     <div class="col-sm-9">
@@ -27,10 +29,7 @@
         <?php if ($rowCount++ % 2 == 1 ) echo "</div>"; ?>
       <?php endforeach; ?>
       <?php if ($rowCount % 2 == 1 ) echo "</div>"; ?>
-
       <hr>
-
-
       <div class="row">
         <div class="col-sm-9">
           <h3 id="levels">Nivå</h3>
@@ -40,22 +39,20 @@
         </div>
         <div class="col-sm-3 well">
           <h4>Nivåer</h4>
-          <ul>
-            <li>Nivå 10 - 0 bolag</li>
-            <li>Nivå 9 - 1 bolag</li>
-            <li>Nivå 8 - 2 bolag</li>
-            <li>Nivå 7 - 3 bolag</li>
-            <li>Nivå 6 - 4 bolag</li>
-            <li>Nivå 5 - 5-9 bolag</li>
-            <li>Nivå 4 - 10-19 bolag</li>
-            <li>Nivå 3 - 20-29 bolag</li>
-            <li>Novå 2 - 30-49 bolag</li>
-            <li>Nivå 1 - 50- bolag</li>
-          </ul>
+          <ol reversed start="10">
+            <li>0 bolag</li>
+            <li>1 bolag</li>
+            <li>2 bolag</li>
+            <li>3 bolag</li>
+            <li>5-7 bolag</li>
+            <li>8-12 bolag</li>
+            <li>13-20 bolag</li>
+            <li>21-33 bolag</li>
+            <li>34-54 bolag</li>
+            <li>55+ bolag</li>
+          </ol>
         </div>
       </div>
     </div>
-
   </div>
-
 </section>
