@@ -315,7 +315,7 @@ $form->prepare();
           <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
             <?php echo $this->translate($fund->fondoutcategory->longName) ?>
           </a>
-          <?php echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/avanza.png' alt='Avanza logo' class='bank-logo'></p>" : "" ?>
+          <?php echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/demo-bank.png' alt='Bank logo' class='bank-logo'></p>" : "" ?>
         </div>
       </div>
     </li>
