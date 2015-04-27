@@ -186,6 +186,7 @@ class FundRepository extends EntityRepository
             $fundMap[$fund->id] = $fund;
         }
 
+        /*
         // subquery: select all distinct accusations that match the category criteria
         // and the share company ID
         // NOTE 18/3 2015: Should be DISTINCT a.accusationCategory
@@ -218,6 +219,7 @@ class FundRepository extends EntityRepository
                 $fundMap[$cv['id']]->calculateSustainability($cv['score']);
             }
         }
+        */
 
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
         // query: Get number of companies per fund per accusation category

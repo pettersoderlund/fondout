@@ -136,8 +136,6 @@ class Fund extends Entity
      **/
     protected $fundInstances = null;
 
-    protected $sustainability = 1;
-
     protected $totalMarketValue = 0;
 
     protected $controversialValue;
@@ -352,16 +350,6 @@ class Fund extends Entity
     }
 
     /**
-    * Gets the value of sustainability.
-    *
-    * @return mixed
-    */
-    public function getSustainability()
-    {
-      return $this->sustainability;
-    }
-
-    /**
      * Sets the total market value.
      *
      * @return self
@@ -383,23 +371,6 @@ class Fund extends Entity
     public function getTotalMarketValue()
     {
         return $this->totalMarketValue;
-    }
-
-    /**
-     * Sets the value of sustainability.
-     *
-     * @param mixed $sustainability the sustainability
-     *
-     * @return self
-     */
-    public function calculateSustainability($controversialValue)
-    {
-        // NOTE: ugly hack, breaks if we have more then one fund instance.
-        $totalMarketValue     = current($this->getFundInstances()->toArray())->totalMarketValue;
-        $this->controversialValue = $controversialValue;
-        $this->sustainability = ($totalMarketValue - $controversialValue) / $totalMarketValue;
-
-        return $this;
     }
 
     public function getControversialValue()
