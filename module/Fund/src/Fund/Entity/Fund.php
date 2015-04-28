@@ -144,6 +144,10 @@ class Fund extends Entity
 
     protected $co2Coverage;
 
+    protected $nav1year;
+    protected $nav3year;
+    protected $nav5year;
+
     # Counts of the fund measurements.
     protected $weaponCompanies   = 0;
     protected $fossilCompanies   = 0;
@@ -357,8 +361,8 @@ class Fund extends Entity
     public function setTotalMarketValue()
     {
         // NOTE: ugly hack, breaks if we have more then one fund instance.
-
-        $this->totalMarketValue = current($this->getFundInstances()->toArray())->totalMarketValue;
+        $fund_instances = $this->getFundInstances()->toArray();
+        $this->totalMarketValue = array_pop($fund_instances)->totalMarketValue;
 
         return $this;
     }
@@ -638,5 +642,89 @@ class Fund extends Entity
           array_push($bankArray, $bank->name);
         };
       return $bankArray;
+    }
+
+  /*  public function getCurrentFundInstance()
+    {
+      $mostrecent = new \DateTime('2000-01-01');
+      $fiCurrent = null;
+      foreach($this->fundInstances as $fi) {
+        if($mostrecent < $fi->date) {
+          $mostrecent = $fi->date;
+          $fiCurrent = $fi;
+        }
+      }
+      return $fiCurrent;
+    }
+
+    public function getOldFundInstance($lagYears)
+    {
+      $currfi = $this->getCurrentFundInstance();
+      $oldfi = null;
+      $dateprior = clone $currfi->date;
+      $dateprior->modify('last day of -6 months');
+      //$dateprior->modify('last day of '. $lagYears .' years');
+      foreach($this->fundInstances as $fi) {
+        if($dateprior == $fi->date) {
+          $oldfi = $fi;
+        }
+      }
+      return $oldfi;
+    }
+
+    public function getNavPercent()
+    //public function getNavPercent($lagYears)
+    {
+
+      $currfi = $this->getCurrentFundInstance();
+      $oldfi  = $this->getOldFundInstance(0);
+
+      if (!is_null($currfi) && !is_null($oldfi)) {
+        echo "<br>";
+        echo $currfi->date->format('Y-m-d');
+        echo "<br>";
+        echo $currfi->netAssetValue;
+        echo "<br>";
+        echo $oldfi->netAssetValue;
+        echo "<br>";
+        return (($currfi->netAssetValue/$oldfi->netAssetValue)-1)*100;
+      } else {
+          return null;
+      }
+    }*/
+
+    private function navToPercent($ratio)
+    {
+      return !is_null($ratio) ? ($ratio-1)*100 : null;
+    }
+
+    public function getNav1year()
+    {
+      return $this->navToPercent($this->nav1year);
+    }
+
+    public function getNav3year()
+    {
+      return $this->navToPercent($this->nav3year);
+    }
+
+    public function getNav5year()
+    {
+      return $this->navToPercent($this->nav5year);
+    }
+
+    public function setNav1year($percent)
+    {
+      $this->nav1year = $percent;
+    }
+
+    public function setNav3year($percent)
+    {
+      $this->nav3year = $percent;
+    }
+
+    public function setNav5year($percent)
+    {
+      $this->nav5year = $percent;
     }
 }

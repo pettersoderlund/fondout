@@ -47,14 +47,14 @@ class FundCompany extends Entity
     /**
      * @var boolean
      *
-     * @ORM\Column(name="premium", type="boolean", nullable=false)
+     * @ORM\Column(name="premium", type="boolean", nullable=false, options={"default" = 0})
      */
     protected $premium = 0;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="url", type="string", length=255, nullable=false)
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
      */
     protected $url;
 

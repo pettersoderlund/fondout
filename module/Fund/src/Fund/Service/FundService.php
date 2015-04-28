@@ -218,6 +218,15 @@ class FundService
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['fossilCompanies'] = $order;
                 break;
+            case 'nav1year':
+                $sortOrder['nav1year'] = $order;
+                break;
+            case 'nav3year':
+                $sortOrder['nav3year'] = $order;
+                break;
+            case 'nav5year':
+                $sortOrder['nav5year'] = $order;
+                break;
         }
 
 

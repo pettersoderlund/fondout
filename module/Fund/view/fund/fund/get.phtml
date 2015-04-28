@@ -52,6 +52,9 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <?php echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/demo-bank.png' alt='Bank logo' class='bank-logo'></p>" : "" ?>
       </div>
       <div class="col-md-2">
+        1 år <span class="<?php echo ($fund->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav1year) ? '-' : ((($fund->nav1year < 0) ? "" : "+") . number_format($fund->nav1year, 0) . "%") ?> </span><br>
+        3 år <span class="<?php echo ($fund->nav3year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav3year) ? '-' : ((($fund->nav3year < 0) ? "" : "+") . number_format($fund->nav3year, 0) . "%") ?> </span><br>
+        5 år <span class="<?php echo ($fund->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav5year) ? '-' : ((($fund->nav5year < 0) ? "" : "+") . number_format($fund->nav5year, 0) . "%") ?> </span><br>
       </div>
     </div>
 
@@ -181,7 +184,9 @@ $thincategory = array("alcohol", "tobacco", "gambling")
                 <?php echo $this->translate($fund->name) ?>
               </a>
             </h4>
-          </div>
+            1 år <span class="<?php echo ($fund->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav1year) ? '-' : ((($fund->nav1year < 0) ? "" : "+") . number_format($fund->nav1year, 0) . "%") ?> </span><br>
+            3 år <span class="<?php echo ($fund->nav3year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav3year) ? '-' : ((($fund->nav3year < 0) ? "" : "+") . number_format($fund->nav3year, 0) . "%") ?> </span><br>
+            5 år <span class="<?php echo ($fund->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav5year) ? '-' : ((($fund->nav5year < 0) ? "" : "+") . number_format($fund->nav5year, 0) . "%") ?> </span><br>          </div>
           <div class="col-md-1 centered-column">
             <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
             <img class="round-symbol" src="/img/symbols/fossil.png">
@@ -206,4 +211,12 @@ $thincategory = array("alcohol", "tobacco", "gambling")
     <?php endforeach; ?>
   </div>
   <!-- End fund category funds -->
+</section>
+<section class="container">
+  <h2>Utveckling</h2>
+  <ul>
+  <?php foreach ($this->fund->fundInstances as $fi): ?>
+    <li><?php echo $fi->date->format('Y-m-d') . " NAV: " .  number_format($fi->netAssetValue, 0) . " SEK"; ?></li>
+  <?php endforeach ?>
+  </ul>
 </section>
