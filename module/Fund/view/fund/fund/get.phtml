@@ -26,9 +26,13 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         </a>
 
       </div>
+
       <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-4">
         <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
           Tillbaka till fondsök
+          1 år <span class="<?php echo ($fund->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav1year) ? '-' : ((($fund->nav1year < 0) ? "" : "+") . number_format($fund->nav1year, 0) . "%") ?> </span><br>
+          3 år <span class="<?php echo ($fund->nav3year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav3year) ? '-' : ((($fund->nav3year < 0) ? "" : "+") . number_format($fund->nav3year, 0) . "%") ?> </span><br>
+          5 år <span class="<?php echo ($fund->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav5year) ? '-' : ((($fund->nav5year < 0) ? "" : "+") . number_format($fund->nav5year, 0) . "%") ?> </span><br>
         </a>
       </div>
 
@@ -40,6 +44,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/tobacco.png"></a><div class="arrow-up arrow-box"></div></li>
           <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/gambling.png"></a><div class="arrow-up arrow-box"></div></li>
         </ul>
+
       </div>
     </div>
 
@@ -122,5 +127,14 @@ $thincategory = array("alcohol", "tobacco", "gambling")
       <h3 class="centered-column"><?php echo "Andra " . mb_strtolower($fund->fondoutCategory->longName, 'UTF-8') . "er"  ?></h3>
     </div>
     <?php echo $this->partial('alternate-funds', array('funds' => $categoryFunds, 'limit' => 8)); ?>
+
   </div>
+</section>
+<section class="container">
+  <h2>Utveckling</h2>
+  <ul>
+  <?php foreach ($this->fund->fundInstances as $fi): ?>
+    <li><?php echo $fi->date->format('Y-m-d') . " NAV: " .  number_format($fi->netAssetValue, 0) . " SEK"; ?></li>
+  <?php endforeach ?>
+  </ul>
 </section>

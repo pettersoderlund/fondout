@@ -133,7 +133,7 @@ $form->prepare();
     <div class="row">
       <div class="col-md-9">
         <div class="row">
-          <div class="col-md-4 hidden-xs">
+          <div class="col-md-3 hidden-xs">
           <p id="fund-header">Fond</p>
           <p id="sort-header"><small>Ranka efter</small></p>
           </div>
@@ -153,7 +153,17 @@ $form->prepare();
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt="Gamlbing sort button">
             </a>
-
+          </div>
+          <div class="col-md-1 centered-column">
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'nav1year', 'order' => ($sortby == 'nav1year' ? $reverseorder : 'DESC'))  + $query))); ?>">
+              1år
+            </a>
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'nav3year', 'order' => ($sortby == 'nav3year' ? $reverseorder : 'DESC'))  + $query))); ?>">
+              3år
+            </a>
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'nav5year', 'order' => ($sortby == 'nav5year' ? $reverseorder : 'DESC'))  + $query))); ?>">
+              5år
+            </a>
           </div>
           <div class="col-md-4 centered-column hidden-xs">
             <p>Fondinformation</p>
@@ -278,7 +288,7 @@ $form->prepare();
   <?php foreach ($funds as $fund): ?>
     <li>
       <div class="row well">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
           <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
           <h3>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
@@ -298,6 +308,11 @@ $form->prepare();
           <img class="thin-symbol" src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png">
           <img class="thin-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png">
           <img class="thin-symbol" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png">
+        </div>
+        <div class="col-sm-1 centered-column">
+          1 år <span class="<?php echo ($fund->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav1year) ? '-' : ((($fund->nav1year < 0) ? "" : "+") . number_format($fund->nav1year, 0) . "%") ?> </span><br>
+          3 år <span class="<?php echo ($fund->nav3year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav3year) ? '-' : ((($fund->nav3year < 0) ? "" : "+") . number_format($fund->nav3year, 0) . "%") ?> </span><br>
+          5 år <span class="<?php echo ($fund->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav5year) ? '-' : ((($fund->nav5year < 0) ? "" : "+") . number_format($fund->nav5year, 0) . "%") ?> </span><br>
         </div>
         <div class="col-sm-4 centered-column">
           <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
