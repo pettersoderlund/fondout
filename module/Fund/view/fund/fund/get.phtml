@@ -49,9 +49,12 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
           <?php echo $this->translate($fund->fondoutcategory->longName) ?>
         </a>
-        <?php echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/demo-bank.png' alt='Bank logo' class='bank-logo'></p>" : "" ?>
+        <?php echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/avanza.png' alt='Avanza logo' class='bank-logo'></p>" : "" ?>
       </div>
       <div class="col-md-2">
+        <br>
+        <img class="round-symbol" src="/img/gray-symbols/value.png" alt="Value">
+        <br>
         1 år <span class="<?php echo ($fund->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav1year) ? '-' : ((($fund->nav1year < 0) ? "" : "+") . number_format($fund->nav1year, 0) . "%") ?> </span><br>
         3 år <span class="<?php echo ($fund->nav3year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav3year) ? '-' : ((($fund->nav3year < 0) ? "" : "+") . number_format($fund->nav3year, 0) . "%") ?> </span><br>
         5 år <span class="<?php echo ($fund->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav5year) ? '-' : ((($fund->nav5year < 0) ? "" : "+") . number_format($fund->nav5year, 0) . "%") ?> </span><br>
@@ -213,7 +216,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
   <!-- End fund category funds -->
 </section>
 <section class="container">
-  <h2>Utveckling</h2>
+  <h2>Värdeutveckling</h2>
   <ul>
   <?php foreach ($this->fund->fundInstances as $fi): ?>
     <li><?php echo $fi->date->format('Y-m-d') . " NAV: " .  number_format($fi->netAssetValue, 0) . " SEK"; ?></li>
