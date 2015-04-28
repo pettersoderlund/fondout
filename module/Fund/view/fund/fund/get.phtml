@@ -24,7 +24,6 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
           <?php echo $this->translate($fund->fondoutcategory->longName) ?>
         </a>
-
       </div>
 
       <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-4">
@@ -44,6 +43,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/tobacco.png"></a><div class="arrow-up arrow-box"></div></li>
           <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/gambling.png"></a><div class="arrow-up arrow-box"></div></li>
         </ul>
+
 
       </div>
     </div>
@@ -131,7 +131,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
   </div>
 </section>
 <section class="container">
-  <h2>Utveckling</h2>
+  <h2>Värdeutveckling</h2>
   <ul>
   <?php foreach ($this->fund->fundInstances as $fi): ?>
     <li><?php echo $fi->date->format('Y-m-d') . " NAV: " .  number_format($fi->netAssetValue, 0) . " SEK"; ?></li>
