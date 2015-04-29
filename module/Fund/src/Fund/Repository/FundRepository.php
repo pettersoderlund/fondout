@@ -196,76 +196,51 @@ class FundRepository extends EntityRepository
         //$conn = $this->getConnection();
         $conn = $this->getEntityManager()->getConnection();
         $sql =
-        "select current.fid as fundid, current.nav/old.nav as percent " .
-        "from  " .
-        "(select f.id as fid, fi.net_asset_value as nav " .
-        "from fund f " .
-        "join fund_instance fi on fi.fund = f.id  " .
-        "where date = (select max(date) from fund_instance) " .
-        ") as current " .
-        "join " .
-        "(select f.id as fid, fi.net_asset_value as nav " .
+        "select f.id as id, fi.net_asset_value as nav " .
         "from fund f " .
         "join fund_instance fi on fi.fund = f.id  " .
         "where date = (select DATE_ADD(max(date), INTERVAL -1 year) from fund_instance) " .
-        ") as old on old.fid = current.fid " .
-        "where current.nav != 0 and old.nav != 0";
+        "and fi.net_asset_value != 0";
         $stmt = $conn->query($sql); // Simple, but has several drawbacks
 
         // map the company accusation count to respective fund
         foreach ($stmt->fetchAll() as $cv) {
-            if (isset($fundMap[$cv['fundid']])) {
-                $fundMap[$cv['fundid']]->setNav1year($cv['percent']);
+            if (isset($fundMap[$cv['id']])) {
+                $fundMap[$cv['id']]->setNav1year($cv['nav']);
             }
         }
 
         $sql =
-        "select current.fid as fundid, current.nav/old.nav as percent " .
-        "from  " .
-        "(select f.id as fid, fi.net_asset_value as nav " .
-        "from fund f " .
-        "join fund_instance fi on fi.fund = f.id  " .
-        "where date = (select max(date) from fund_instance) " .
-        ") as current " .
-        "join " .
-        "(select f.id as fid, fi.net_asset_value as nav " .
+        "select f.id as id, fi.net_asset_value as nav " .
         "from fund f " .
         "join fund_instance fi on fi.fund = f.id  " .
         "where date = (select DATE_ADD(max(date), INTERVAL -3 year) from fund_instance) " .
-        ") as old on old.fid = current.fid " .
-        "where current.nav != 0 and old.nav != 0";
+        "and fi.net_asset_value != 0";
         $stmt = $conn->query($sql); // Simple, but has several drawbacks
 
         // map the company accusation count to respective fund
         foreach ($stmt->fetchAll() as $cv) {
-            if (isset($fundMap[$cv['fundid']])) {
-                $fundMap[$cv['fundid']]->setNav3year($cv['percent']);
+            if (isset($fundMap[$cv['id']])) {
+                $fundMap[$cv['id']]->setNav3year($cv['nav']);
             }
         }
 
+
         $sql =
-        "select current.fid as fundid, current.nav/old.nav as percent " .
-        "from  " .
-        "(select f.id as fid, fi.net_asset_value as nav " .
-        "from fund f " .
-        "join fund_instance fi on fi.fund = f.id  " .
-        "where date = (select max(date) from fund_instance) " .
-        ") as current " .
-        "join " .
-        "(select f.id as fid, fi.net_asset_value as nav " .
+        "select f.id as id, fi.net_asset_value as nav " .
         "from fund f " .
         "join fund_instance fi on fi.fund = f.id  " .
         "where date = (select DATE_ADD(max(date), INTERVAL -5 year) from fund_instance) " .
-        ") as old on old.fid = current.fid " .
-        "where current.nav != 0 and old.nav != 0";
+        "and fi.net_asset_value != 0";
         $stmt = $conn->query($sql); // Simple, but has several drawbacks
 
         // map the company accusation count to respective fund
         foreach ($stmt->fetchAll() as $cv) {
-            if (isset($fundMap[$cv['fundid']])) {
-                $fundMap[$cv['fundid']]->setNav5year($cv['percent']);
+            if (isset($fundMap[$cv['id']])) {
+                $fundMap[$cv['id']]->setNav5year($cv['nav']);
             }
         }
+
 
         //echo \Doctrine\Common\Util\Debug::dump($this);
 
