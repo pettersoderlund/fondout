@@ -644,7 +644,7 @@ class Fund extends Entity
       return $bankArray;
     }
 
-  /*  public function getCurrentFundInstance()
+    public function getCurrentFundInstance()
     {
       $mostrecent = new \DateTime('2000-01-01');
       $fiCurrent = null;
@@ -657,21 +657,26 @@ class Fund extends Entity
       return $fiCurrent;
     }
 
+    /*
     public function getOldFundInstance($lagYears)
     {
       $currfi = $this->getCurrentFundInstance();
       $oldfi = null;
       $dateprior = clone $currfi->date;
-      $dateprior->modify('last day of -6 months');
-      //$dateprior->modify('last day of '. $lagYears .' years');
+
+      //$dateprior->modify('last day of -6 months');
+      $dateprior->modify('-'. $lagYears .' years');
+      //echo "hello" . $dateprior->format('ymd');
       foreach($this->fundInstances as $fi) {
         if($dateprior == $fi->date) {
+
           $oldfi = $fi;
         }
       }
       return $oldfi;
     }
-
+    */
+    /*
     public function getNavPercent()
     //public function getNavPercent($lagYears)
     {
@@ -693,9 +698,17 @@ class Fund extends Entity
       }
     }*/
 
-    private function navToPercent($ratio)
+    private function navToPercent($oldNav)
     {
-      return !is_null($ratio) ? ($ratio-1)*100 : null;
+      if (!is_null($oldNav)) {
+        $fi = $this->getCurrentFundInstance();
+        $currNav = $fi->netAssetValue;
+        $ratio = $currNav/$oldNav;
+        return !is_null($ratio) ? ($ratio-1)*100 : null;
+      } else {
+        return null;
+      }
+
     }
 
     public function getNav1year()
