@@ -22,6 +22,16 @@ class FundRepository extends EntityRepository
           ->from('Fund\Entity\FundInstance', 'fi0');
     }
 
+    public function getOldFIDateSubQ($monthlag)
+    {
+      // QUERY TO IDENTIFY THE LATEST DATE AVAILIBLE AMONG FUND INSTANCES
+      // TO ONLY COMPARE AMONG THE FI's IN THIS DATE.
+      return $this->getEntityManager()
+          ->createQueryBuilder()
+          ->select("DATE_SUB(MAX(fi1.date), " . $monthlag . ", 'month')")
+          ->from('Fund\Entity\FundInstance', 'fi1');
+    }
+
     /* This function is REALLY SLOW ~0.3 seconds. */
     public function findControversialCompanies(Fund $fund, $accCategory)
     {
@@ -194,7 +204,21 @@ class FundRepository extends EntityRepository
         // NAV calculations
         //$conn = $this->getServiceLocator()->get('doctrine.connection.orm_default');
         //$conn = $this->getConnection();
-        $conn = $this->getEntityManager()->getConnection();
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
+        ->from('Fund\Entity\Fund', 'f')
+        ->join('f.fundInstances', 'fi')
+        ->where($queryBuilder->expr()->in('fi.date', $this->getOldFIDateSubQ(12)->getDql()))
+        ->andWhere($queryBuilder->expr()->neq('fi.netAssetValue', 0));
+
+        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
+            if (isset($fundMap[$cv['id']])) {
+              $fundMap[$cv['id']]->setNav1year($cv['nav']);
+            }
+        }
+
+        /*$conn = $this->getEntityManager()->getConnection();
         $sql =
         "select f.id as id, fi.net_asset_value as nav " .
         "from fund f " .
@@ -209,7 +233,8 @@ class FundRepository extends EntityRepository
                 $fundMap[$cv['id']]->setNav1year($cv['nav']);
             }
         }
-
+        */
+        /*
         $sql =
         "select f.id as id, fi.net_asset_value as nav " .
         "from fund f " .
@@ -240,6 +265,7 @@ class FundRepository extends EntityRepository
                 $fundMap[$cv['id']]->setNav5year($cv['nav']);
             }
         }
+        */
 
 
         //echo \Doctrine\Common\Util\Debug::dump($this);
