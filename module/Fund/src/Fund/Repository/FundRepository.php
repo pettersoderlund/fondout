@@ -218,6 +218,35 @@ class FundRepository extends EntityRepository
             }
         }
 
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
+        ->from('Fund\Entity\Fund', 'f')
+        ->join('f.fundInstances', 'fi')
+        ->where($queryBuilder->expr()->in('fi.date', $this->getOldFIDateSubQ(36)->getDql()))
+        ->andWhere($queryBuilder->expr()->neq('fi.netAssetValue', 0));
+
+        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
+            if (isset($fundMap[$cv['id']])) {
+              $fundMap[$cv['id']]->setNav3year($cv['nav']);
+            }
+        }
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+
+        $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
+        ->from('Fund\Entity\Fund', 'f')
+        ->join('f.fundInstances', 'fi')
+        ->where($queryBuilder->expr()->in('fi.date', $this->getOldFIDateSubQ(60)->getDql()))
+        ->andWhere($queryBuilder->expr()->neq('fi.netAssetValue', 0));
+
+        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
+            if (isset($fundMap[$cv['id']])) {
+              $fundMap[$cv['id']]->setNav5year($cv['nav']);
+            }
+        }
+
+
         /*$conn = $this->getEntityManager()->getConnection();
         $sql =
         "select f.id as id, fi.net_asset_value as nav " .
