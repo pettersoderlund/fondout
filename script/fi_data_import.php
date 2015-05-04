@@ -28,7 +28,7 @@ $fileIterator = new LimitIterator($file, 1);
 
 // Create db connection
 $dsn  = 'mysql:host=' . '127.0.0.1' . ';';
-$dsn .= 'dbname=' . 'fondout_test' . ';';
+$dsn .= 'dbname=' . 'fondout' . ';';
 $dsn .= 'charset=' . 'utf8' . ';';
 $db = new \PDO(
     $dsn,

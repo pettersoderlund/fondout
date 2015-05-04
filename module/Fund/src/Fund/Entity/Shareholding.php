@@ -34,46 +34,11 @@ class Shareholding extends Entity
     protected $id;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="quantity", type="decimal", precision=30, scale=15, nullable=true)
-     */
-    protected $quantity;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="interest_rate", type="decimal", precision=30, scale=15, nullable=true)
-     */
-    protected $interestRate;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="exchange_rate", type="decimal", precision=30, scale=15, nullable=true)
-     */
-    protected $exchangeRate;
-
-    /**
      * @var integer
      *
-     * @ORM\Column(name="market_value",  type="decimal", precision=30, scale=15, nullable=true)
+     * @ORM\Column(name="market_value",  type="decimal", precision=15, scale=3, nullable=true)
      */
     protected $marketValue;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="unlisted", type="string", length=10, nullable=true)
-     */
-    protected $unlisted;
-
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="status", type="boolean", nullable=true)
-     */
-    protected $status;
 
     /**
      * @var \Fund\Entity\FundInstance

@@ -36,21 +36,14 @@ class FundInstance extends Entity
     /**
      * @var integer
      *
-     * @ORM\Column(name="total_market_value",  type="decimal", precision=30, scale=15, nullable=true)
+     * @ORM\Column(name="total_market_value",  type="decimal", precision=15, scale=3, nullable=true)
      */
     protected $totalMarketValue;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="capital",  type="decimal", precision=30, scale=15, nullable=true)
-     */
-    protected $capital;
-
-    /**
      * @var string
      *
-     * @ORM\Column(name="net_asset_value", type="decimal", precision=30, scale=15, nullable=true)
+     * @ORM\Column(name="net_asset_value", type="decimal", precision=15, scale=3, nullable=true)
      */
     protected $netAssetValue;
 
