@@ -86,8 +86,8 @@ class FundController extends AbstractRestfulController
         //get fund by url to get id. ugly but works.
         $id = $service->getFundByUrl($url)->id;
         $fund = $service->getFund($id, $sustainability);
-        $sustainabilityNames = $service->getSustainabilityCategories($sustainability);
-        $sharesCount = $service->getCountShares($fund);
+        //$sustainabilityNames = $service->getSustainabilityCategories($sustainability);
+        //$sharesCount = $service->getCountShares($fund);
 
         $accusationCategories = $service->findAccusationCategories();
 
@@ -96,7 +96,13 @@ class FundController extends AbstractRestfulController
         $avgCatFund = $service->findMeasuredAverages($categoryFunds, new Fund());
 
         // Fund Company funds
-        $fundCompanyFunds = $service->findSameFundCompanyFunds($fund);
+        // ONly if fund is premium
+        if ($fund->fundCompany->premium) {
+        } else {
+          $fundCompanyFunds = null;
+        }
+
+
 
         // All funds averages
         $avgAllFund = $service->findAveragesAllFunds(new Fund());
@@ -111,7 +117,7 @@ class FundController extends AbstractRestfulController
                 'fund'          => $fund, // current fund
                 'categoryFunds' => $categoryFunds, // funds same category
                 'fCompanyFunds' => $fundCompanyFunds, // same fcompany
-                'sharesCount'   => $sharesCount, // fund share count
+                //'sharesCount'   => $sharesCount, // fund share count
                 // Avg company count all same category
                 'avgcategory'   => $avgCatFund,
                 // Avg company count all funds
