@@ -16,7 +16,6 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
         <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
       </div>
-
       <div class="col-md-3 centered-column col-md-push-3 col-sm-4 col-sm-push-4 col-xs-8">
         <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
             <?php echo $this->translate($fund->company->name) ?>
@@ -25,6 +24,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           <?php echo $this->translate($fund->fondoutcategory->longName) ?>
         </a>
       </div>
+
 
       <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-4">
         <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
@@ -43,8 +43,6 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/tobacco.png"></a><div class="arrow-up arrow-box"></div></li>
           <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/gambling.png"></a><div class="arrow-up arrow-box"></div></li>
         </ul>
-
-
       </div>
     </div>
 
@@ -80,9 +78,9 @@ $thincategory = array("alcohol", "tobacco", "gambling")
                   </div>
                 </div>
                 <div class="row better-worse-row">
-                  <span class='better-worse <?php if($fund->getMeasureScore($category) > $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för fondkategorin."; } elseif ($fund->getMeasureScore($category) == $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för fondkategorin."; } else { echo "worse'>" . "Fonden är sämre än snittet för fondkategorin."; }?></span>
+                  <span class='better-worse <?php if($fund->measures->getMeasureScore($category) > $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för fondkategorin."; } elseif ($fund->measures->getMeasureScore($category) == $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för fondkategorin."; } else { echo "worse'>" . "Fonden är sämre än snittet för fondkategorin."; }?></span>
                   <br>
-                  <span class='better-worse <?php if($fund->getMeasureScore($category) > $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för alla fonder."; } elseif ($fund->getMeasureScore($category) == $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för alla fonder."; } else { echo "worse'>" . "Fonden är sämre än snittet för alla fonder."; }?></span>
+                  <span class='better-worse <?php if($fund->measures->getMeasureScore($category) > $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för alla fonder."; } elseif ($fund->measures->getMeasureScore($category) == $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för alla fonder."; } else { echo "worse'>" . "Fonden är sämre än snittet för alla fonder."; }?></span>
                 </div>
               </div>
               <div class="col-sm-6 measure-tabs-second-column">
@@ -127,7 +125,6 @@ $thincategory = array("alcohol", "tobacco", "gambling")
       <h3 class="centered-column"><?php echo "Andra " . mb_strtolower($fund->fondoutCategory->longName, 'UTF-8') . "er"  ?></h3>
     </div>
     <?php echo $this->partial('alternate-funds', array('funds' => $categoryFunds, 'limit' => 8)); ?>
-
   </div>
 </section>
 <section class="container">

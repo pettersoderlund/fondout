@@ -129,6 +129,14 @@ class Fund extends Entity
      **/
     private $banks;
 
+
+    /**
+     * @var \Fund\Entity\FundMeasures
+     *
+     * @ORM\OneToOne(targetEntity="\Fund\Entity\FundMeasures", mappedBy="fund", fetch="EAGER")
+     **/
+    protected $measures = null;
+
     /**
      * @var FundInstance[]
      *
@@ -739,5 +747,28 @@ class Fund extends Entity
     public function setNav5year($percent)
     {
       $this->nav5year = $percent;
+    }
+
+    /**
+     * Set measures
+     *
+     * @param \Fund\Entity\FundMeasures $measures
+     * @return Fund
+     */
+    public function setMeasures(\Fund\Entity\FundMeasures $measures = null)
+    {
+        $this->measures = $measures;
+
+        return $this;
+    }
+
+    /**
+     * Get measures
+     *
+     * @return \Fund\Entity\FundMeasures
+     */
+    public function getMeasures()
+    {
+        return $this->measures;
     }
 }

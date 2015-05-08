@@ -23,6 +23,7 @@ use Fund\Entity\Sector;
 use Fund\Entity\Industry;
 use Fund\Entity\CompanyAlias;
 use Fund\Entity\ShareAlias;
+use Fund\Entity\FundMeasures;
 
 
 class ConsoleController extends AbstractActionController
@@ -408,7 +409,7 @@ class ConsoleController extends AbstractActionController
 
         $exchangeRate       = $request->getParam('exchangerate');
         $date               = $request->getParam('date');
-        // Double holdings means that a fund has several holdings of the 
+        // Double holdings means that a fund has several holdings of the
         // same security (same isin)
         $doubleHoldings     = $request->getParam('doubleholdings');
         $smallBatch         = $request->getParam('smallbatch');
@@ -531,7 +532,7 @@ class ConsoleController extends AbstractActionController
                             "Please enter date for the fund m/d/Y\n"
                             );
             }
-        
+
         } while (!$datetimev);
 
         // Set hours minutes seconds to 0/midnight
@@ -601,11 +602,11 @@ class ConsoleController extends AbstractActionController
                 $shareHolding->setMarketValue($market_value*$exchangeRate);
             } else {
                 $shareHolding->setMarketValue(
-                        $market_value*$exchangeRate 
+                        $market_value*$exchangeRate
                         + $shareHolding->getMarketValue()
                         );
             }
-            
+
 
             $entityManager->persist($shareHolding);
 
@@ -1517,6 +1518,47 @@ class ConsoleController extends AbstractActionController
       $entityManager->clear();
       return 1;
       //exit("Successfully set $industryName to " + $company->name + " by symbol $symbol.\n");
+    }
+
+    public function updateFundMeasuresAction() {
+      $service = $this->getConsoleService();
+      $em = $service->getEM();
+      $request = $this->getRequest();
+
+      if (!$request instanceof ConsoleRequest) {
+        throw new \RuntimeException('You can only use this action from a console!');
+      }
+
+      $fr = $em->getRepository('Fund\Entity\Fund');
+
+      $funds = $fr->findAllFunds();
+      $funds = $fr->mapControversialMarketValues($funds);
+      
+      echo count($funds);
+      foreach ($funds as $fund) {
+        #echo $fund->name . "\t". $fund->getNav1year() . "\n";
+
+        $measures = $fund->measures;
+        if (is_null($measures)) {
+          $measures = new FundMeasures();
+        }
+
+        $measures->setNav1year($fund->getNav1year());
+        $measures->setNav3year($fund->getNav3year());
+        $measures->setNav5year($fund->getNav5year());
+        $measures->setWeaponCompanies($fund->getWeaponCompanies());
+        $measures->setFossilCompanies($fund->getFossilCompanies());
+        $measures->setAlcoholCompanies($fund->getAlcoholCompanies());
+        $measures->setTobaccoCompanies($fund->getTobaccoCompanies());
+        $measures->setGamblingCompanies($fund->getGamblingCompanies());
+
+        $measures->setFund($fund);
+
+        $em->persist($measures);
+      }
+      $em->flush();
+      $em->clear();
+
     }
 
     //Helper functions

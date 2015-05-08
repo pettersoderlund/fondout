@@ -28,7 +28,7 @@ $fileIterator = new LimitIterator($file, 1);
 
 // Create db connection
 $dsn  = 'mysql:host=' . '127.0.0.1' . ';';
-$dsn .= 'dbname=' . 'fondout' . ';';
+$dsn .= 'dbname=' . 'fondout_test' . ';';
 $dsn .= 'charset=' . 'utf8' . ';';
 $db = new \PDO(
     $dsn,
@@ -202,15 +202,14 @@ try {
                   $fundName ]
             );
 
-            $sql  = "INSERT IGNORE INTO fund_instance (id, fund, date, total_market_value, capital, net_asset_value) ";
-            $sql .= "SELECT ?, id, ?, ?, ?, ? FROM fund WHERE institution_number = ?";
+            $sql  = "INSERT IGNORE INTO fund_instance (id, fund, date, total_market_value, net_asset_value) ";
+            $sql .= "SELECT ?, id, ?, ?, ? FROM fund WHERE institution_number = ?";
 
             $stmt = $db->prepare($sql);
             $stmt->execute(
                 [ 'NULL',
                   $date,
                   $marketValueTotal,
-                  $capital,
                   $nav,
                   $fundInstitutionNbr ]
             );
@@ -231,35 +230,17 @@ try {
             }
 
 
-
         } elseif (strcasecmp(trim($type), 'data') == 0 && !$skip) {
-            $sql  = "INSERT INTO shareholding (id, fund_instance, share, quantity, ";
-            $sql .= "interest_rate, exchange_rate, market_value, unlisted, status) ";
-            $sql .= "SELECT DISTINCT ?, ?, id, ?, ?, ?, ?, ?, ? FROM share ";
+            $sql  = "INSERT INTO shareholding (id, fund_instance, share, ";
+            $sql .= "market_value) ";
+            $sql .= "SELECT DISTINCT ?, ?, id, ? FROM share ";
             $sql .= "WHERE " . ((trim($isin) == '') ? 'name = ? AND isin IS NULL' : 'isin = ?') . " LIMIT 1";
-
-            switch ($status) {
-                case 'U':
-                    $status = 1;
-                    break;
-                case 'I':
-                    $status = 2;
-                    break;
-                default:
-                    $status = 0;
-                    break;
-            }
 
             $stmt = $db->prepare($sql);
             $stmt->execute(
                 [ 'NULL',
                   $currentFundInstance,
-                  $quantity,
-                  $interestRate,
-                  $exchangeRate,
                   $marketValue,
-                  $unlisted,
-                  $status,
                   ((trim($isin) == '') ? $shareName : $isin) ]
             );
         }
