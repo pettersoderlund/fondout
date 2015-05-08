@@ -299,25 +299,25 @@ $form->prepare();
           </h3>
         </div>
         <div class="col-md-1 centered-column">
-          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' src='img/bar/bar" . $fund->measures->getMeasureScore('fossil') . ".png'>"    ?>
           <img class="round-symbol" src="/img/symbols/fossil.png">
         </div>
         <div class="col-md-1 centered-column">
-          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' src='img/bar/bar" . $fund->measures->getMeasureScore('weapon') . ".png'>"    ?>
           <img class="round-symbol" src="/img/symbols/weapon.png">
         </div>
         <div class="col-md-2 centered-column">
-          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
-          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
-          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' src='img/thin-bar/thinbar" . $fund->measures->getMeasureScore('alcohol') . ".png'>" ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' src='img/thin-bar/thinbar" . $fund->measures->getMeasureScore('tobacco') . ".png'>"   ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' src='img/thin-bar/thinbar" . $fund->measures->getMeasureScore('gambling'). ".png'>"   ?>
           <br>
           <img class="thin-symbol" src="/img/symbols/alcohol.png">
           <img class="thin-symbol" src="/img/symbols/tobacco.png">
           <img class="thin-symbol" src="/img/symbols/gambling.png">
         </div>
         <div class="col-md-1 centered-column">
-          <br><p>1 år <span class="<?php echo ($fund->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav1year) ? '-' : ((($fund->nav1year < 0) ? "" : "+") . number_format($fund->nav1year, 0) . "%") ?> </span></p>
-          <p>5 år <span class="<?php echo ($fund->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav5year) ? '-' : ((($fund->nav5year < 0) ? "" : "+") . number_format($fund->nav5year, 0) . "%") ?> </span></p>
+          <br><p>1 år <span class="<?php echo ($fund->measures->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->measures->nav1year) ? '-' : ((($fund->measures->nav1year < 0) ? "" : "+") . number_format($fund->measures->nav1year, 0) . "%") ?> </span></p>
+          <p>5 år <span class="<?php echo ($fund->measures->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->measures->nav5year) ? '-' : ((($fund->measures->nav5year < 0) ? "" : "+") . number_format($fund->measures->nav5year, 0) . "%") ?> </span></p>
         </div>
         <div class="col-md-4 centered-column">
           <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">

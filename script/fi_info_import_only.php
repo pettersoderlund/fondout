@@ -136,15 +136,14 @@ try {
                   $fundName ]
             );
 
-            $sql  = "INSERT IGNORE INTO fund_instance (id, fund, date, total_market_value, capital, net_asset_value) ";
-            $sql .= "SELECT ?, id, ?, ?, ?, ? FROM fund WHERE institution_number = ?";
+            $sql  = "INSERT IGNORE INTO fund_instance (id, fund, date, total_market_value,  net_asset_value) ";
+            $sql .= "SELECT ?, id, ?, ?, ? FROM fund WHERE institution_number = ?";
 
             $stmt = $db->prepare($sql);
             $stmt->execute(
                 [ 'NULL',
                   $date,
                   $marketValueTotal,
-                  $capital,
                   $nav,
                   $fundInstitutionNbr ]
             );

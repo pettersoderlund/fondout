@@ -102,17 +102,17 @@
 
               </div>
               <div class="col-md-1 centered-column">
-                <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+                <?php echo "<img class='bar' src='/img/bar/bar" . $fund->measures->getMeasureScore('fossil') . ".png'>"    ?>
                 <img class="round-symbol" src="/img/symbols/fossil.png">
               </div>
               <div class="col-md-1 centered-column">
-                <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+                <?php echo "<img class='bar' src='/img/bar/bar" . $fund->measures->getMeasureScore('weapon') . ".png'>"    ?>
                 <img class="round-symbol" src="/img/symbols/weapon.png">
               </div>
               <div class="col-md-3">
-                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
-                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
-                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->measures->getMeasureScore('alcohol') . ".png'>" ?>
+                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->measures->getMeasureScore('tobacco') . ".png'>"   ?>
+                <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->measures->getMeasureScore('gambling'). ".png'>"   ?>
                 <br>
                 <img class="thin-symbol" src="/img/symbols/alcohol.png">
                 <img class="thin-symbol" src="/img/symbols/tobacco.png">

@@ -35,6 +35,11 @@ class FundRepository extends EntityRepository
     /* This function is REALLY SLOW ~0.3 seconds. */
     public function findControversialCompanies(Fund $fund, $accCategory)
     {
+        /*
+        This was used for sc.id in subq earlier. Very slow with large tables.
+        New version does not allow the same sc to have several accusations in
+        the same category.
+
         $subqb = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('scc.id')
@@ -43,7 +48,7 @@ class FundRepository extends EntityRepository
             ->join('accusations.category', 'accusation_category')
             ->where('accusation_category.name = ?2')
             ->distinct();
-
+        */
 
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('sc.name as name,
@@ -53,11 +58,13 @@ class FundRepository extends EntityRepository
               ->join('s.shareholdings', 'sh')
               ->join('sh.fundInstance', 'fi')
               ->join('fi.fund', 'f')
+              ->leftJoin('sc.accusations', 'accusations')
+              ->leftJoin('accusations.category', 'accusation_category')
               ->orderBy('sc.name', 'ASC')
               ->where('f.name = ?1')
               ->andWhere('sh.marketValue > 0')
-              ->andWhere($qb->expr()->in('sc.id', $subqb->getDql()))
               ->andWhere($qb->expr()->in('fi.date', $this->getCurrentFIDateSubQ()->getDql()))
+              ->andWhere('accusation_category.name = ?2')
               ->groupBy('sc.name')
               ->orderBy('part', 'desc')
               ->setParameter(1, $fund->name)
@@ -87,14 +94,16 @@ class FundRepository extends EntityRepository
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function findAllFunds($category = array())
+    public function findAllFunds()
     {
         $qb = $this->getEntityManager()
             ->createQueryBuilder();
 
-        $dql = $qb->select('f, c, fi, fc')
+        $dql = $qb->select('f, c, fi, fc, fm, b')
             ->from('Fund\Entity\Fund', 'f')
             ->join('f.fundInstances', 'fi')
+            ->leftJoin('f.measures', 'fm')
+            ->leftJoin('f.banks', 'b')
             ->join('f.company', 'c')
             ->join('f.fondoutcategory', 'fc')
             ->orderBy('f.name', 'ASC')
@@ -103,14 +112,14 @@ class FundRepository extends EntityRepository
 
         $funds = $dql->getQuery()->getResult();
 
-        return $this->mapControversialMarketValues($funds, $category);
+        return $funds;
     }
 
     /**
     *
     * Second argument is an array of sustainability categories identified by id.
     */
-    public function mapControversialMarketValues($funds, $category = array())
+    public function mapControversialMarketValues($funds)
     {
 
         if ($funds instanceof Fund) {
@@ -205,7 +214,6 @@ class FundRepository extends EntityRepository
         //$conn = $this->getServiceLocator()->get('doctrine.connection.orm_default');
         //$conn = $this->getConnection();
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-
         $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
         ->from('Fund\Entity\Fund', 'f')
         ->join('f.fundInstances', 'fi')
@@ -300,5 +308,19 @@ class FundRepository extends EntityRepository
         //echo \Doctrine\Common\Util\Debug::dump($this);
 
         return $funds;
+    }
+
+
+    // Return array of all funds with nav from now minus $months
+    public function findNavDiffAllFunds($months) {
+      $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+      $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
+      ->from('Fund\Entity\Fund', 'f')
+      ->join('f.fundInstances', 'fi')
+      ->where($queryBuilder->expr()->in('fi.date', $this->getOldFIDateSubQ($months)->getDql()))
+      ->andWhere($queryBuilder->expr()->neq('fi.netAssetValue', 0));
+
+      return $queryBuilder->getQuery()->getResult();
+
     }
 }
