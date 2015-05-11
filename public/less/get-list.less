@@ -1,10 +1,5 @@
 // Fund list
 
-.fund-list .chart-container {
-  width: 67px;
-  height: 67px;
-  margin-top: 5px;
-}
 .results {
   h3 {
       a {
@@ -21,8 +16,9 @@
 
 
 .sort-button {
-  max-width: 36px;
+  max-width: 30px;
   opacity: 1;
+  margin: 5px 1px;
 }
 
 .sort-button:hover {
@@ -71,6 +67,7 @@
       margin-top: 4px;
       margin-bottom: 4px;
   }
+  padding-top: 20px;
 }
 
 .results {
@@ -79,21 +76,13 @@
   padding: 0;
 
   li {
-    border-bottom: 1px solid rgba(0,0,0, 0.1);
-    min-height: 166px;
+    //border-bottom: 1px solid rgba(0,0,0, 0.1);
+    //min-height: 166px;
   }
-}
 
-// Box above sorting holding sust category choice or info on co2
-@media (min-width: @screen-sm-min) {
-  .fund-list {
-    .info-box {
-      min-height: 90px;
-      .info-box-text {
-        //max-width: 80%;
-        margin: 13px 0px 0px;
-      }
-    }
+  h3, .h3 {
+    margin-top: 0px;
+    font-size: 18px;
   }
 }
 
@@ -112,7 +101,7 @@
 .intro-section {
 
   .h2, h2 {
-    margin-bottom: 40px;
+    margin-top: 40px;
   }
 
   .col-md-2 {
@@ -229,38 +218,37 @@
   margin-top: 20px;
 }
 
-.red {
-  color: red;
-}
-
 .bar {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  width: 35px;
+  margin: 0px 5px 10px;
+  width: 25px;
 }
 
 .thin-bar {
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-right: 8px;
-  margin-left: 8px;
-  width: 15.5px;
+  //margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  width: 11px;
 }
 
 .thin-symbol {
-  width: 30px;
-  margin-top: 4px;
+  width: 15px;
+  margin: 0px 8px;
+  //margin-top: 4px;
 }
 
 .round-symbol {
-  width:40px;
+  width:18px;
+  margin: 0px 8px;
 }
 
 .fundinfo-btn {
-  margin-top: 20px;
+  //margin-top: 20px;
   width: 80%;
   background-color: @brand-blue;
   color: #ffffff;
+  font-size: 8px;
+  padding: 4px 5px;
 }
 .fundinfo-btn:hover {
   color: #ffffff;
@@ -268,7 +256,7 @@
 }
 
 .fundinfo-btn + .fundinfo-btn {
-  margin-top: 18px;
+  margin-top: 10px;
 }
 
 /*     MOBILE SETTINGS     */
