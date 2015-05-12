@@ -7,24 +7,7 @@ $this->headScript()
 
 $thincategory = array("alcohol", "tobacco", "gambling")
 ?>
-<section class="container fund-page">
-  <div class="row centered-column header">
-    <div class="col-md-4">
-      <p>Fond</p>
-    </div>
-    <div class="col-md-3">
-      <p>Hållbarhet</p>
-    </div>
-    <div class="col-md-3">
-      <p>Fondinformation</p>
-    </div>
-    <div class="col-md-2">
-      <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
-        Tillbaka till fondsök
-      </a>
-    </div>
-  </div>
-
+<section class="container well fund-page">
   <div role="tabpanel">
 
     <!-- Nav tabs -->
@@ -52,6 +35,9 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <?php echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/demo-bank.png' alt='Bank logo' class='bank-logo'></p>" : "" ?>
       </div>
       <div class="col-md-2">
+        <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
+          Tillbaka till fondsök
+        </a>
       </div>
     </div>
 
@@ -119,12 +105,13 @@ $thincategory = array("alcohol", "tobacco", "gambling")
     </div>
     </div>
   </div>
-
+</section>
+<section class="container fund-page">
   <!-- Start fund company funds -->
   <?php if($fund->fundCompany->premium): ?>
     <div class="row alternate-funds">
       <div class="alternate-funds-header col-md-12">
-        <h3 class="centered-column"><?php echo mb_strtoupper("Andra fonder från " . $fund->fundCompany->name, 'UTF-8')  ?></h3>
+        <h3 class="centered-column"><?php echo "Andra fonder från " . $fund->fundCompany->name  ?></h3>
       </div>
 
       <?php $i = 1; ?>
@@ -167,13 +154,13 @@ $thincategory = array("alcohol", "tobacco", "gambling")
   <!-- Start category funds -->
   <div class="row alternate-funds">
     <div class="alternate-funds-header col-md-12">
-      <h3 class="centered-column"><?php echo mb_strtoupper("Andra " . $fund->fondoutCategory->longName . "er", 'UTF-8')  ?></h3>
+      <h3 class="centered-column"><?php echo "Andra " . $fund->fondoutCategory->longName . "er"  ?></h3>
     </div>
 
     <?php $i = 1; ?>
     <?php foreach ($categoryFunds as $fund): ?>
       <div class="col-md-6 alternate-fund">
-        <div class="row">
+        <div class="row well">
           <div class="col-md-7">
             <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
             <h4>
