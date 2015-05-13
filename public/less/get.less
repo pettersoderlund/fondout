@@ -37,7 +37,7 @@
 
 .bar-tabs {
   text-align:center;
-  padding-top: 20px;
+
 
   .nav > li > a {
     padding: 5px 5px;
@@ -48,6 +48,11 @@
   }
   .thin-symbol {
     margin: 5px 0px;
+    width: 20px;
+  }
+
+  .round-symbol {
+    width: 30px;
   }
 }
 
@@ -63,8 +68,7 @@
   }
   .thin-symbol {
     width: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 13px 0px;
   }
   .symbol {
     width: 34px;
@@ -80,6 +84,9 @@
 .measure-tabs-first-column {
   padding-bottom: 15px;
   min-height: 330px;
+  h3 + div {
+    margin-top: 20px;
+  }
 }
 
 .nav-tabs > .active > .arrow-up {
@@ -99,9 +106,18 @@
   opacity: 0.5;
 }
 
+.nav > li > a:hover, .nav > li > a:focus {
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.nav-tabs > li > a:hover {
+  border-color: transparent;
+}
+
 .arrow-box {
   min-height: 17px;
-  margin: 0px 15px;
+  margin: 0px 16px;
 }
 
 .thintab > .arrow-box {
@@ -115,7 +131,15 @@
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   border: 1px solid transparent;
+  background: none;
 }
+
+.tab-content > .active {
+  margin: 0px -4px -20px;
+  padding: 20px;
+  border: 5px solid @brand-blue;
+}
+
 
 
 .alternate-funds {
@@ -125,15 +149,12 @@
     width: 27px;
   }
   .thin-bar {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 4px;
-    margin-left: 4px;
+    margin: 10px 6px;
     width: 12px;
   }
   .thin-symbol {
     width: 20px;
-    margin-top: 1px;
+    margin: 1px 2px 0px;
   }
   .round-symbol {
     width:25px;
@@ -145,6 +166,10 @@
 
 .example-section {
   text-align: left;
+
+  .well {
+    background-color: lightyellow;
+  }
 }
 
 .example-companies {
