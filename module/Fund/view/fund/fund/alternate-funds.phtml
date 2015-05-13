@@ -1,0 +1,44 @@
+<div class="alternate-funds">
+  <?php $i = 1; ?>
+  <?php foreach ($funds as $fund): ?>
+    <div class="col-md-6 alternate-fund">
+      <div class="row well">
+        <div class="col-md-4 ">
+          <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+          <h4>
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+              <?php echo $this->translate($fund->name) ?>
+            </a>
+          </h4>
+        </div>
+        <div class="col-md-4 centered-column">
+          <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+
+          <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+
+          <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
+          <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
+          <?php echo "<img class='thin-bar' src='/img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+          <br>
+          <img class="round-symbol" src="/img/symbols/fossil.png">
+          <img class="round-symbol" src="/img/symbols/weapon.png">
+          <img class="thin-symbol" src="/img/symbols/alcohol.png">
+          <img class="thin-symbol" src="/img/symbols/tobacco.png">
+          <img class="thin-symbol" src="/img/symbols/gambling.png">
+        </div>
+        <div class="col-md-4 centered-column">
+          <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
+              <?php echo $this->translate($fund->company->name) ?>
+          </a>
+          <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+            <?php echo $this->translate($fund->fondoutcategory->longName) ?>
+          </a>
+
+
+        </div>
+      </div>
+    </div>
+
+    <?php if ($i++ == $limit) break; ?> <!-- Limit to 8 funds in list -->
+  <?php endforeach; ?>
+</div>
