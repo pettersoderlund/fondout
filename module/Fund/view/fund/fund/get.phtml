@@ -12,20 +12,12 @@ $thincategory = array("alcohol", "tobacco", "gambling")
 
     <!-- Nav tabs -->
     <div class="row info">
-      <div class="col-md-4">
+      <div class="col-md-4 col-sm-12">
         <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
         <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
       </div>
-      <div class="col-md-3 bar-tabs">
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="active" data-toggle='tooltip' title='<?php echo $accCat['fossil']->name ?>'><a href="#fossil" aria-controls="fossil" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('fossil')?>.png" class="bar"><br><img class="round-symbol" src="/img/symbols/fossil.png"></a><div class="arrow-up arrow-box"></div></li>
-          <li data-toggle='tooltip' title='<?php echo $accCat['weapon']->name ?>'><a href="#weapon" aria-controls="weapon" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('weapon')?>.png" class="bar"><br><img class="round-symbol" src="/img/symbols/weapon.png"></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['alcohol']->name ?>'><a href="#alcohol" aria-controls="alcohol" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('alcohol')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/alcohol.png"></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/tobacco.png"></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/gambling.png"></a><div class="arrow-up arrow-box"></div></li>
-        </ul>
-      </div>
-      <div class="col-md-3 centered-column">
+
+      <div class="col-md-3 centered-column col-md-push-3 col-sm-4 col-sm-push-4 col-xs-8">
         <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
             <?php echo $this->translate($fund->company->name) ?>
         </a>
@@ -34,10 +26,20 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         </a>
 
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-4">
         <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
           Tillbaka till fondsök
         </a>
+      </div>
+
+      <div class="col-md-3 col-md-pull-5 bar-tabs col-sm-4 col-sm-pull-8 col-xs-12">
+        <ul class="nav nav-tabs" role="tablist">
+          <li class="active" data-toggle='tooltip' title='<?php echo $accCat['fossil']->name ?>'><a href="#fossil" aria-controls="fossil" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('fossil')?>.png" class="bar"><br><img class="round-symbol" src="/img/symbols/fossil.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li data-toggle='tooltip' title='<?php echo $accCat['weapon']->name ?>'><a href="#weapon" aria-controls="weapon" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('weapon')?>.png" class="bar"><br><img class="round-symbol" src="/img/symbols/weapon.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['alcohol']->name ?>'><a href="#alcohol" aria-controls="alcohol" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('alcohol')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/alcohol.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/tobacco.png"></a><div class="arrow-up arrow-box"></div></li>
+          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" class="thin-bar"><br><img class="thin-symbol" src="/img/symbols/gambling.png"></a><div class="arrow-up arrow-box"></div></li>
+        </ul>
       </div>
     </div>
 
@@ -50,7 +52,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
               <div class="col-sm-6 centered-column measure-tabs-first-column">
                 <h3>Ditt valda mått är: <strong><?php echo mb_strtoupper($accCat[$category]->name, 'UTF-8') ?></strong></h3>
                 <div class="row">
-                  <div class="col-md-4 centered-column" data-toggle='tooltip' title='<?php echo $fund->getMeasureScore($category) ."/10. " ?>Fonden har investerat i <?php echo (call_user_func(array($this->fund, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
+                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $fund->getMeasureScore($category) ."/10. " ?>Fonden har investerat i <?php echo (call_user_func(array($this->fund, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
                     <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $fund->getMeasureScore($category);?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
                     <br>
                     <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png">
@@ -58,14 +60,14 @@ $thincategory = array("alcohol", "tobacco", "gambling")
                     <p><?php echo $this->escapeHtml($fund->name) ?></p>
                   </div>
 
-                  <div class="col-md-4 centered-column" data-toggle='tooltip' title='<?php echo $avgcategory->getMeasureScore($category) ."/10. " ?>Fondkategorin <?php echo $this->fund->fondoutCategory->longName ?>er har i snitt investerat i <?php echo (call_user_func(array($this->avgcategory, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
+                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $avgcategory->getMeasureScore($category) ."/10. " ?>Fondkategorin <?php echo $this->fund->fondoutCategory->longName ?>er har i snitt investerat i <?php echo (call_user_func(array($this->avgcategory, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
                     <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $avgcategory->getMeasureScore($category)?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
                     <br>
                     <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png">
                     <br>
                     <p>Snitt <?php echo $this->translate($fund->fondoutcategory->longName) ?>er</p>
                   </div>
-                  <div class="col-md-4 centered-column" data-toggle='tooltip' title='<?php echo $avgallfunds->getMeasureScore($category) ."/10. " ?>Snittet för alla fonder är att ha investerat i <?php echo (call_user_func(array($this->avgallfunds, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
+                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $avgallfunds->getMeasureScore($category) ."/10. " ?>Snittet för alla fonder är att ha investerat i <?php echo (call_user_func(array($this->avgallfunds, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
                     <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $avgallfunds->getMeasureScore($category)?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
                     <br>
                     <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png">
