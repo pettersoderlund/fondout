@@ -14,10 +14,12 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
 <section class="featurette first-section-landing-page">
     <div class="container">
         <div class="row header-row font-smoothing">
-          <h1><strong><?php echo $this->translate('Fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare.') ?></strong></h1>
-          <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
+          <div class="col-md-12">
+            <h1><strong><?php echo $this->translate('Fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare.') ?></strong></h1>
+            <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
+          </div>
 
-          <div class="row fund-category-buttons">
+          <div class="col-md-12 fund-category-buttons">
             <p><strong>Eller gå direkt till:</strong></p>
             <a class="" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => 5)))); ?>">
               Sverigefonder
