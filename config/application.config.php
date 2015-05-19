@@ -14,7 +14,7 @@ return array(
         'ZfcUserDoctrineORM',
         'Application',
         'Fund',
-        'ZendDeveloperTools',
+        //'ZendDeveloperTools',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
