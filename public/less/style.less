@@ -159,6 +159,9 @@ input[type="submit"] {
       @media screen and (min-width: @screen-sm-min) {
         font-size: floor(@font-size-base*2.8);
       }
+      @media screen and (max-width: @screen-sm-min) {
+        font-size: floor(@font-size-base*1.6);
+      }
     }
     /*margin-top: 9%;
     margin-bottom: 9%;*/
@@ -167,10 +170,16 @@ input[type="submit"] {
       a {
         font-size: 1em;
         font-weight: 700;
-        margin: 0px 20px;
+        margin: 0px 1px;
         background-color: rgba(255, 255, 255, 0.8);
         color: @gray-dark;
-        padding: 0.8em;
+        padding: 0.4em;
+        line-height: 2.4em;
+        @media screen and (min-width: @screen-sm-min) {
+          padding: 0.8em;
+          margin: 0px 20px;
+
+        }
       }
     }
 
@@ -178,6 +187,7 @@ input[type="submit"] {
   }
 
   .fund-category-buttons {
+
     margin-top: 125px;
     p, .p {
       margin-bottom: 2em;

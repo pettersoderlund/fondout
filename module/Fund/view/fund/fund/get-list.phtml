@@ -133,7 +133,7 @@ $form->prepare();
     <div class="row">
       <div class="col-md-9">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4 hidden-xs">
           <p id="fund-header">Fond</p>
           <p id="sort-header"><small>Ranka efter</small></p>
           </div>
@@ -155,13 +155,13 @@ $form->prepare();
             </a>
 
           </div>
-          <div class="col-md-4 centered-column">
+          <div class="col-md-4 centered-column hidden-xs">
             <p>Fondinformation</p>
           </div>
           <!--<button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>-->
         </div>
       </div>
-      <div class="col-md-3 centered-column">
+      <div class="col-md-3 centered-column hidden-xs">
         <p>Sökalternativ</p>
       </div>
     </div>
