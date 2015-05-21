@@ -309,7 +309,7 @@ $form->prepare();
         </div>
 
         <div class="col-md-1 centered-column">
-          <br><p>1 år <span class="<?php echo ($fund->measures->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->measures->nav1year) ? '-' : ((($fund->measures->nav1year < 0) ? "" : "+") . number_format($fund->measures->nav1year, 0) . "%") ?> </span></p>
+          <p>1 år <span class="<?php echo ($fund->measures->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->measures->nav1year) ? '-' : ((($fund->measures->nav1year < 0) ? "" : "+") . number_format($fund->measures->nav1year, 0) . "%") ?> </span></p>
           <p>5 år <span class="<?php echo ($fund->measures->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->measures->nav5year) ? '-' : ((($fund->measures->nav5year < 0) ? "" : "+") . number_format($fund->measures->nav5year, 0) . "%") ?> </span></p>
         </div>
         <div class="col-sm-4 centered-column">
