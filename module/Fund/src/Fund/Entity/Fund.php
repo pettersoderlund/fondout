@@ -130,12 +130,6 @@ class Fund extends Entity
     private $banks;
 
 
-    /**
-     * @var \Fund\Entity\FundMeasures
-     *
-     * @ORM\OneToOne(targetEntity="\Fund\Entity\FundMeasures", mappedBy="fund", fetch="EAGER")
-     **/
-    protected $measures = null;
 
     /**
      * @var FundInstance[]
@@ -148,23 +142,6 @@ class Fund extends Entity
 
     protected $controversialValue;
 
-    protected $co2;
-
-    protected $co2Coverage;
-
-    protected $nav1year;
-    protected $nav3year;
-    protected $nav5year;
-
-    # Counts of the fund measurements.
-    protected $weaponCompanies   = 0;
-    protected $fossilCompanies   = 0;
-    protected $alcoholCompanies  = 0;
-    protected $tobaccoCompanies  = 0;
-    protected $gamblingCompanies = 0;
-
-    // This is supposed to be a constant.
-    protected $co2CoverageLimit = 0.5;
 
     public function __construct($options = null)
     {
@@ -476,32 +453,6 @@ class Fund extends Entity
         $this->fondoutcategory = $category;
 
         return $this;
-    }
-
-    public function getCo2()
-    {
-      return $this->co2;
-    }
-
-    public function setCo2($co2)
-    {
-      $this->co2 = $co2;
-      return $this;
-    }
-
-    public function getCo2Coverage()
-    {
-      return $this->co2Coverage;
-    }
-
-    public function setCo2Coverage($co2Coverage)
-    {
-      $this->co2Coverage = $co2Coverage;
-      return $this;
-    }
-
-    public function getCo2CoverageLimit() {
-      return $this->co2CoverageLimit;
     }
 
     public function fillMeasure($accusationCategoryId, $count) {
