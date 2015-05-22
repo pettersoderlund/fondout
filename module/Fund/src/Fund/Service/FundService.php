@@ -370,11 +370,11 @@ class FundService
       $gambling = 0;
 
       foreach ($funds as $fund) {
-        $weapon   += $fund->measures->getWeaponCompanies();
-        $fossil   += $fund->measures->getFossilCompanies();
-        $alcohol  += $fund->measures->getAlcoholCompanies();
-        $tobacco  += $fund->measures->getTobaccoCompanies();
-        $gambling += $fund->measures->getGamblingCompanies();
+        $weapon   += $fund->getWeaponCompanies();
+        $fossil   += $fund->getFossilCompanies();
+        $alcohol  += $fund->getAlcoholCompanies();
+        $tobacco  += $fund->getTobaccoCompanies();
+        $gambling += $fund->getGamblingCompanies();
       }
 
 

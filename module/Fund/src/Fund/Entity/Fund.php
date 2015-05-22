@@ -129,6 +129,75 @@ class Fund extends Entity
      **/
     private $banks;
 
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav;
+
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav1year", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav1year;
+
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav3year", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav3year;
+
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav5year", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav5year;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="weapon_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $weaponCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="fossil_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $fossilCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="alcohol_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $alcoholCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="tobacco_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $tobaccoCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="gambling_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $gamblingCompanies = 0;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date", nullable=true)
+     */
+    private $date;
 
 
     /**
@@ -616,110 +685,118 @@ class Fund extends Entity
       return $fiCurrent;
     }
 
-    /*
-    public function getOldFundInstance($lagYears)
-    {
-      $currfi = $this->getCurrentFundInstance();
-      $oldfi = null;
-      $dateprior = clone $currfi->date;
-
-      //$dateprior->modify('last day of -6 months');
-      $dateprior->modify('-'. $lagYears .' years');
-      //echo "hello" . $dateprior->format('ymd');
-      foreach($this->fundInstances as $fi) {
-        if($dateprior == $fi->date) {
-
-          $oldfi = $fi;
-        }
-      }
-      return $oldfi;
-    }
-    */
-    /*
-    public function getNavPercent()
-    //public function getNavPercent($lagYears)
-    {
-
-      $currfi = $this->getCurrentFundInstance();
-      $oldfi  = $this->getOldFundInstance(0);
-
-      if (!is_null($currfi) && !is_null($oldfi)) {
-        echo "<br>";
-        echo $currfi->date->format('Y-m-d');
-        echo "<br>";
-        echo $currfi->netAssetValue;
-        echo "<br>";
-        echo $oldfi->netAssetValue;
-        echo "<br>";
-        return (($currfi->netAssetValue/$oldfi->netAssetValue)-1)*100;
-      } else {
-          return null;
-      }
-    }*/
-
     private function navToPercent($oldNav)
     {
-      if (!is_null($oldNav)) {
-        $fi = $this->getCurrentFundInstance();
-        $currNav = $fi->netAssetValue;
+      $currNav = $this->nav;
+      if (!is_null($oldNav) && !is_null($currNav)) {
         $ratio = $currNav/$oldNav;
         return !is_null($ratio) ? ($ratio-1)*100 : null;
       } else {
         return null;
       }
-
     }
 
-    public function getNav1year()
+    public function getNav()
     {
-      return $this->navToPercent($this->nav1year);
+      return $this->nav;
     }
 
-    public function getNav3year()
+    public function setNav($nav)
     {
-      return $this->navToPercent($this->nav3year);
-    }
-
-    public function getNav5year()
-    {
-      return $this->navToPercent($this->nav5year);
-    }
-
-    public function setNav1year($percent)
-    {
-      $this->nav1year = $percent;
-    }
-
-    public function setNav3year($percent)
-    {
-      $this->nav3year = $percent;
-    }
-
-    public function setNav5year($percent)
-    {
-      $this->nav5year = $percent;
+      $this->nav = $nav;
     }
 
     /**
-     * Set measures
+     * Set nav1year
      *
-     * @param \Fund\Entity\FundMeasures $measures
+     * @param string $nav1year
      * @return Fund
      */
-    public function setMeasures(\Fund\Entity\FundMeasures $measures = null)
+    public function setNav1year($nav1year)
     {
-        $this->measures = $measures;
+        $this->nav1year = $this->navToPercent($nav1year);
 
         return $this;
     }
 
     /**
-     * Get measures
+     * Get nav1year
      *
-     * @return \Fund\Entity\FundMeasures
+     * @return string
      */
-    public function getMeasures()
+    public function getNav1year()
     {
-        return $this->measures;
+        return $this->nav1year;
     }
+
+    /**
+     * Set nav3year
+     *
+     * @param string $nav3year
+     * @return Fund
+     */
+    public function setNav3year($nav3year)
+    {
+        $this->nav3year = $this->navToPercent($nav3year);
+
+        return $this;
+    }
+
+    /**
+     * Get nav3year
+     *
+     * @return string
+     */
+    public function getNav3year()
+    {
+        return $this->nav3year;
+    }
+
+    /**
+     * Set nav5year
+     *
+     * @param string $nav5year
+     * @return Fund
+     */
+    public function setNav5year($nav5year)
+    {
+        $this->nav5year = $this->navToPercent($nav5year);
+
+        return $this;
+    }
+
+    /**
+     * Get nav5year
+     *
+     * @return string
+     */
+    public function getNav5year()
+    {
+        return $this->nav5year;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return self
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+
 }

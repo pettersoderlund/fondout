@@ -80,9 +80,9 @@ $thincategory = array("alcohol", "tobacco", "gambling")
                   </div>
                 </div>
                 <div class="row better-worse-row">
-                  <span class='better-worse <?php if($fund->measures->getMeasureScore($category) > $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för fondkategorin."; } elseif ($fund->measures->getMeasureScore($category) == $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för fondkategorin."; } else { echo "worse'>" . "Fonden är sämre än snittet för fondkategorin."; }?></span>
+                  <span class='better-worse <?php if($fund->getMeasureScore($category) > $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för fondkategorin."; } elseif ($fund->getMeasureScore($category) == $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för fondkategorin."; } else { echo "worse'>" . "Fonden är sämre än snittet för fondkategorin."; }?></span>
                   <br>
-                  <span class='better-worse <?php if($fund->measures->getMeasureScore($category) > $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för alla fonder."; } elseif ($fund->measures->getMeasureScore($category) == $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för alla fonder."; } else { echo "worse'>" . "Fonden är sämre än snittet för alla fonder."; }?></span>
+                  <span class='better-worse <?php if($fund->getMeasureScore($category) > $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för alla fonder."; } elseif ($fund->getMeasureScore($category) == $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för alla fonder."; } else { echo "worse'>" . "Fonden är sämre än snittet för alla fonder."; }?></span>
                 </div>
               </div>
               <div class="col-sm-6 measure-tabs-second-column">

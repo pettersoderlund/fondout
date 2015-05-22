@@ -10,6 +10,10 @@
               <?php echo $this->translate($fund->name) ?>
             </a>
           </h4>
+          <small>
+          1 år <span class="<?php echo ($fund->nav1year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav1year) ? '-' : ((($fund->nav1year < 0) ? "" : "+") . number_format($fund->nav1year, 0) . "%") ?> </span>
+          5 år <span class="<?php echo ($fund->nav5year < 0) ? "negative" : "positive";?> "><?php echo is_null($fund->nav5year) ? '-' : ((($fund->nav5year < 0) ? "" : "+") . number_format($fund->nav5year, 0) . "%") ?> </span>
+        </small>
         </div>
         <div class="col-sm-4 col-xs-7 centered-column">
           <?php echo "<img class='bar' src='/img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>

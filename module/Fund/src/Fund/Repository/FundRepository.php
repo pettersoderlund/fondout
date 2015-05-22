@@ -14,8 +14,7 @@ class FundRepository extends EntityRepository
 
     public function getCurrentFIDateSubQ()
     {
-      // QUERY TO IDENTIFY THE LATEST DATE AVAILIBLE AMONG FUND INSTANCES
-      // TO ONLY COMPARE AMONG THE FI's IN THIS DATE.
+      // QUERY TO IDENTIFY THE LATEST DATE AVAILIBLE AMONG _ALL_ FUND INSTANCES
       return $this->getEntityManager()
           ->createQueryBuilder()
           ->select('MAX(fi0.date)')
@@ -24,8 +23,8 @@ class FundRepository extends EntityRepository
 
     public function getOldFIDateSubQ($monthlag)
     {
-      // QUERY TO IDENTIFY THE LATEST DATE AVAILIBLE AMONG FUND INSTANCES
-      // TO ONLY COMPARE AMONG THE FI's IN THIS DATE.
+      // QUERY TO IDENTIFY THE A DATE PRIOR TO THE LATEST DATE
+      // AVAILIBLE AMONG _ALL_ FUND INSTANCES
       return $this->getEntityManager()
           ->createQueryBuilder()
           ->select("DATE_SUB(MAX(fi1.date), " . $monthlag . ", 'month')")
@@ -35,21 +34,6 @@ class FundRepository extends EntityRepository
     /* This function is REALLY SLOW ~0.3 seconds. */
     public function findControversialCompanies(Fund $fund, $accCategory)
     {
-        /*
-        This was used for sc.id in subq earlier. Very slow with large tables.
-        New version does not allow the same sc to have several accusations in
-        the same category.
-
-        $subqb = $this->getEntityManager()
-            ->createQueryBuilder()
-            ->select('scc.id')
-            ->from('Fund\Entity\ShareCompany', 'scc')
-            ->join('scc.accusations', 'accusations')
-            ->join('accusations.category', 'accusation_category')
-            ->where('accusation_category.name = ?2')
-            ->distinct();
-        */
-
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb->select('sc.name as name,
               SUM(sh.marketValue)/fi.totalMarketValue as part')
@@ -99,10 +83,9 @@ class FundRepository extends EntityRepository
         $qb = $this->getEntityManager()
             ->createQueryBuilder();
 
-        $dql = $qb->select('f, c, fi, fc, fm, b')
+        $dql = $qb->select('f, c, fi, fc, b')
             ->from('Fund\Entity\Fund', 'f')
             ->join('f.fundInstances', 'fi')
-            ->leftJoin('f.measures', 'fm')
             ->leftJoin('f.banks', 'b')
             ->join('f.company', 'c')
             ->join('f.fondoutcategory', 'fc')
@@ -179,7 +162,9 @@ class FundRepository extends EntityRepository
         $queryBuilder->select(
             'f.id, ' .
             'count(DISTINCT sc.name) as company_count, ' .
-            'ac.id as ac_id'
+            'ac.id as ac_id',
+            'fi.date as date',
+            'fi.netAssetValue as nav'
         )
             ->from('Fund\Entity\Fund', 'f')
             ->join('f.fundInstances', 'fi')
@@ -206,13 +191,14 @@ class FundRepository extends EntityRepository
         foreach ($queryBuilder->getQuery()->getResult() as $cv) {
             if (isset($fundMap[$cv['id']])) {
                 $fundMap[$cv['id']]->fillMeasure($cv['ac_id'], $cv['company_count']);
+
+                $fundMap[$cv['id']]->setNav($cv['nav']);
+                $fundMap[$cv['id']]->setDate($cv['date']);
             }
         }
 
 
         // NAV calculations
-        //$conn = $this->getServiceLocator()->get('doctrine.connection.orm_default');
-        //$conn = $this->getConnection();
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
         $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
         ->from('Fund\Entity\Fund', 'f')
@@ -311,7 +297,7 @@ class FundRepository extends EntityRepository
     }
 
 
-    // Return array of all funds with nav from now minus $months
+    // Return array of all funds with nav from (now-$months)
     public function findNavDiffAllFunds($months) {
       $queryBuilder = $this->getEntityManager()->createQueryBuilder();
       $queryBuilder->select('f.id as id, fi.netAssetValue as nav')

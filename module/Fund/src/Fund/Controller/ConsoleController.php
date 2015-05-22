@@ -23,7 +23,6 @@ use Fund\Entity\Sector;
 use Fund\Entity\Industry;
 use Fund\Entity\CompanyAlias;
 use Fund\Entity\ShareAlias;
-use Fund\Entity\FundMeasures;
 
 
 class ConsoleController extends AbstractActionController
@@ -1533,32 +1532,13 @@ class ConsoleController extends AbstractActionController
 
       $funds = $fr->findAllFunds();
       $funds = $fr->mapControversialMarketValues($funds);
-      
+
       echo count($funds);
       foreach ($funds as $fund) {
-        #echo $fund->name . "\t". $fund->getNav1year() . "\n";
-
-        $measures = $fund->measures;
-        if (is_null($measures)) {
-          $measures = new FundMeasures();
-        }
-
-        $measures->setNav1year($fund->getNav1year());
-        $measures->setNav3year($fund->getNav3year());
-        $measures->setNav5year($fund->getNav5year());
-        $measures->setWeaponCompanies($fund->getWeaponCompanies());
-        $measures->setFossilCompanies($fund->getFossilCompanies());
-        $measures->setAlcoholCompanies($fund->getAlcoholCompanies());
-        $measures->setTobaccoCompanies($fund->getTobaccoCompanies());
-        $measures->setGamblingCompanies($fund->getGamblingCompanies());
-
-        $measures->setFund($fund);
-
-        $em->persist($measures);
+        $em->persist($fund);
       }
       $em->flush();
       $em->clear();
-
     }
 
     //Helper functions
