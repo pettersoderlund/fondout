@@ -77,9 +77,27 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
     <div class="col-sm-4 col-lg-3">
       <p class="learn-more">Lär dig mer</p>
       <img class="sparahallbart-school" src="/img/sparahallbartskolan.png">
-      <div class="school-link" id="chart"><h3><a href="#"><mark>Vad är fondsparande?</mark></a></h3></div>
-      <div class="school-link" id="pond"><h3><a href="#"><mark>Vad är hållbart sparande?</mark></a></h3></div>
-      <div class="school-link" id="building"><h3><a href="#"><mark>Våra mått</mark></a></h3></div>
+      <div class="school-link" id="chart">
+        <h3>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('qa', array(), array('fragment' => 'part1'))); ?>">
+            <mark>Vad är fondsparande?</mark>
+          </a>
+        </h3>
+      </div>
+      <div class="school-link" id="pond">
+        <h3>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('qa', array(), array('fragment' => 'part2'))); ?>">
+            <mark>Vad är hållbart sparande?</mark>
+          </a>
+        </h3>
+      </div>
+      <div class="school-link" id="building">
+        <h3>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('qa', array(), array('fragment' => 'measures'))); ?>">
+            <mark>Våra mått</mark>
+          </a>
+        </h3>
+      </div>
 
     </div>
   </div>
