@@ -90,19 +90,23 @@ input[type="submit"] {
 
 .featurette {
 
+  .h3, h3 {
+    color: @gray;
+  }
+
   @media screen and (max-width: @screen-md-min) {
     padding-top: 30px;
     padding-bottom: 30px;
   }
   @media screen and (min-width: @screen-md-min) {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 50px;
+    padding-bottom: 50px;
   }
 
   .h1, h1:first-child {
     margin-top: 0px;
     margin-bottom: 45px;
-    text-align: center;
+    /*text-align: center;*/
     font-weight: 600;
   }
 
@@ -137,46 +141,45 @@ input[type="submit"] {
   border-top: 0px;
 }
 
-#sea-info-text-section {
-  background: url("/img/Dollarphotoclub_56193039.jpg"), no-repeat;
-  background-size: 245%;
-  background-position-x: 15%;
-  background-position-y: 100%;
-}
-
 .first-section-landing-page {
   //padding-top: 30px;
-  text-align: center;
-  background: url('/img/whiteplanks.jpg'), no-repeat;
+  text-align: left;
+  background: url('/img/landing-page/windmills.jpg'), no-repeat;
+  background-position: 50% 0%;
 
-  h1,.h1,.h3,h3, p, .p {
-    color: @brand-blue;
+  h1,.h1,.h3,h3, p, .p, h2, .h2 {
+    color: white;
   }
   .header-row {
+    text-align: left;
     h1, .h1 {
 
       font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 0px;
+      /*margin-bottom: 0px;*/
       @media screen and (min-width: @screen-sm-min) {
-        font-size: floor(@font-size-base*5.6);
+        font-size: floor(@font-size-base*2.8);
+      }
+      @media screen and (max-width: @screen-sm-min) {
+        font-size: floor(@font-size-base*1.6);
       }
     }
-
-    h3, .h3 {
-      margin-bottom: 35px;
-    }
-
     /*margin-top: 9%;
     margin-bottom: 9%;*/
     .fund-category-buttons {
+      text-align: center;
       a {
-        font-size: 1.4em;
+        font-size: 1em;
         font-weight: 700;
-        margin: 0px 20px;
-        background-color: white;
-        color: @brand-primary;
-        padding: 0.2em;
+        margin: 0px 1px;
+        background-color: rgba(255, 255, 255, 0.8);
+        color: @gray-dark;
+        padding: 0.4em;
+        line-height: 2.4em;
+        @media screen and (min-width: @screen-sm-min) {
+          padding: 0.8em;
+          margin: 0px 20px;
+
+        }
       }
     }
 
@@ -184,7 +187,11 @@ input[type="submit"] {
   }
 
   .fund-category-buttons {
-    margin-top: 65px;
+
+    margin-top: 125px;
+    p, .p {
+      margin-bottom: 2em;
+    }
   }
 
   .well {
@@ -249,11 +256,11 @@ input[type="submit"] {
 footer {
   .center-block();
   padding-top: 20px;
+  margin-top: 3em;
   padding-bottom: 15px;
   color: @gray-light;
-
+  background-color: @gray-lighter;
   text-align: center;
-  font-size: @font-size-large;
 
   .footer-links {
     .list-inline();
@@ -268,6 +275,10 @@ footer {
 
   .disclaimer {
     font-size: @font-size-small;
+  }
+  img, .img {
+    max-width: 166px;
+    margin: 10px;
   }
 }
 
@@ -324,12 +335,15 @@ footer {
 
 
 #bananas {
-  background: url('/img/landing-page/bananas.jpg');
+  background: url('/img/landing-page/banana.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 100%;
   text-align: center;
   min-height: 300px;
+  margin-top: 3em;
   mark, .mark {
-    background-color: white;
-    color: @brand-blue;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: @gray;
     line-height: 2em;
   }
   .h3, h3 {
@@ -339,7 +353,6 @@ footer {
 
 
 .better-worse {
-  font-size: 75%;
   font-weight: bold;
 }
 
@@ -354,4 +367,48 @@ footer {
 .landing-page-side-ad {
   width: 100%;
   max-width: 270px;
+}
+
+.learn-more {
+  font-size: 80%;
+  margin: 3em 0px 0.5em;
+}
+
+.sparahallbart-school {
+  width: 260px;
+  max-width: 100%;
+}
+
+.school-link {
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  text-align: center;
+  min-height: 190px;
+  h3, .h3 {
+    padding: 80px 0px;
+    font-size: @font-size-base*1.2;
+
+  }
+  mark, .mark {
+    background-color: rgba(255,255,255, 0.8);
+    color: @gray-dark;
+    line-height: 2em;
+    padding: 0.5em;
+  }
+}
+
+#chart {
+  background-image: url("/img/landing-page/chart.jpg");
+}
+
+#pond {
+  background-image: url("/img/landing-page/pond.jpg");
+}
+
+#building {
+  background-image: url("/img/landing-page/building.jpg");
+}
+
+#to-fund-search-button {
+  margin-top: 3em;
 }

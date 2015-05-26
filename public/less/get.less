@@ -5,19 +5,19 @@
 }
 
 .fund-page > .header {
-  border: gainsboro 1px solid;
+  /*border: gainsboro 1px solid;
   min-height: 40px;
-  padding: 20px 0px 10px;
+  padding: 20px 0px 10px;*/
 }
 
 .fund-page  > div > .info {
-  border: gainsboro 1px solid;
-  border-top: transparent;
+  /*border: gainsboro 1px solid;
+  border-top: transparent;*/
 }
 
 .fund-page  > div > .content {
-  border: gainsboro 1px solid;
-  border-top: transparent;
+  /*border: gainsboro 1px solid;
+  border-top: transparent;*/
 }
 
 .nav {
@@ -29,15 +29,13 @@
 
   .thin-bar {
     height: 58px;
-    margin-top: 0px;
-    margin-bottom: 15px;
-
+    margin: 0px 9px 15px;
   }
 }
 
 .bar-tabs {
   text-align:center;
-  padding-top: 20px;
+
 
   .nav > li > a {
     padding: 5px 5px;
@@ -47,7 +45,12 @@
     padding: 5px 0px;
   }
   .thin-symbol {
-    margin: 5px 0px;
+    margin: 1px 0px;
+    width: 28px;
+  }
+
+  .round-symbol {
+    width: 30px;
   }
 }
 
@@ -63,8 +66,7 @@
   }
   .thin-symbol {
     width: 30px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 13px 0px;
   }
   .symbol {
     width: 34px;
@@ -80,6 +82,9 @@
 .measure-tabs-first-column {
   padding-bottom: 15px;
   min-height: 330px;
+  h3 + div {
+    margin-top: 20px;
+  }
 }
 
 .nav-tabs > .active > .arrow-up {
@@ -90,9 +95,27 @@
   border-bottom: 17px solid @brand-blue;
 }
 
+.nav-tabs > li:hover > .arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 17px solid @brand-blue;
+  opacity: 0.5;
+}
+
+.nav > li > a:hover, .nav > li > a:focus {
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.nav-tabs > li > a:hover {
+  border-color: transparent;
+}
+
 .arrow-box {
   min-height: 17px;
-  margin: 0px 15px;
+  margin: 0px 16px;
 }
 
 .thintab > .arrow-box {
@@ -106,33 +129,77 @@
 
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
   border: 1px solid transparent;
+  background: none;
+}
+
+.tab-content > .active {
+  margin: 0px -4px -20px;
+  padding: 20px;
+  border: 5px solid @brand-blue;
 }
 
 
+
 .alternate-funds {
+  .h4, h4 {
+    font-size: 13px;
+  }
+
   .bar {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    width: 27px;
+    width: 18px;
+    margin: 0px 1px 5px;
+
   }
   .thin-bar {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    margin-right: 4px;
-    margin-left: 4px;
-    width: 12px;
+    margin: 0px 4px 5px;
+    width: 8px;
   }
   .thin-symbol {
-    width: 20px;
-    margin-top: 1px;
+    width: 14px;
+    margin: 1px 1px 0px;
   }
+
   .round-symbol {
-    width:25px;
+    width: 15px;
+    margin: 0px 2px;
+  }
+  @media screen and (min-width: @screen-lg-min) {
+    .bar {
+      margin: 0px 5px 5px;
+      width: 20px;
+    }
+    .thin-bar {
+      margin: 0px 6px 5px;
+      width: 9px;
+    }
+    .thin-symbol {
+      width: 18px;
+      margin: 1px 2px 0px;
+    }
+
+    .round-symbol {
+      width: 21px;
+      margin: 0px 4px;
+    }
+  }
+
+
+
+  .well {
+    margin: 10px 0px;
+  }
+  .fundinfo-btn {
+    width: 100%;
+    color: white;
   }
 }
 
 .example-section {
   text-align: left;
+
+  .well {
+    background-color: lightyellow;
+  }
 }
 
 .example-companies {
@@ -152,13 +219,13 @@
 }
 
 .premium-fund-info {
-  border-top: 1px solid gainsboro;
+  //border-top: 1px solid gainsboro;
 }
 
 .alternate-fund {
-  border: 1px gainsboro solid;
+  /*border: 1px gainsboro solid;
   border-top: transparent;
-  padding: 10px;
+  padding: 10px;*/
 
   a, .a {
     color: black;
@@ -175,6 +242,6 @@
 }
 
 .alternate-funds-header {
-  border: 1px gainsboro solid;
-  border-top: transparent;
+  /*border: 1px gainsboro solid;
+  border-top: transparent;*/
 }

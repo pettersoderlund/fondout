@@ -307,10 +307,13 @@ class FundService
     public function findFundCompanyFunds($fundCompany)
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $criteria = Criteria::create()->orderBy(
+        /*$criteria = Criteria::create()->orderBy(
             array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
               'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
               'gamblingCompanies' => 'ASC')
+        );*/
+        $criteria = Criteria::create()->orderBy(
+            array('name' => 'ASC')
         );
         $criteria->andWhere(Criteria::expr()->eq('fundCompanyId', $fundCompany->id));
         $funds        = new ArrayCollection($repository->findAllFunds());

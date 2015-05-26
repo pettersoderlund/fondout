@@ -14,11 +14,12 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
 <section class="featurette first-section-landing-page">
     <div class="container">
         <div class="row header-row font-smoothing">
-          <h1><?php echo $this->translate('Dags att fondera?') ?></h1>
-          <h3><strong><?php echo $this->translate('Fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare.') ?></strong></h3>
-          <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
+          <div class="col-md-12">
+            <h1><strong><?php echo $this->translate('Fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare.') ?></strong></h1>
+            <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
+          </div>
 
-          <div class="row fund-category-buttons">
+          <div class="col-md-12 fund-category-buttons">
             <p><strong>Eller gå direkt till:</strong></p>
             <a class="" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => 5)))); ?>">
               Sverigefonder
@@ -36,16 +37,9 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
         </div>
     </div>
 </section>
-<section class="container">
+<section class="container featurette">
   <div class="row">
-    <div class="col-md-7 col-md-offset-1">
-      <div id="bananas">
-        <h3>
-          <mark><em><strong>
-            Att välja hållbara fonder borde inte vara svårare  än  att välja ekologiska bananer.
-          </strong></em></mark>
-        </h3>
-      </div>
+    <div class="col-sm-8 col-lg-7 col-lg-offset-1">
 
       <div class="row">
         <div class="col-md-6">
@@ -63,25 +57,46 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
           </div>
           <p>Oavsett vad folk säger så är sanningen -dessvärre- att ingen på förhand kan veta hur börsen kommer att gå. Det finns ingen garanti att en fond som tidigare har gått bra kommer att gå lika bra i framtiden. Det finns inte heller något som visar att en hållbar fond inte kan uppvisa lika hög (eller högre!) avkastning som en mindre hållbar fond. Du behöver alltså inte välja det ena eller det andra. Eller rättare sagt, du kan bara välja det ena. Det andra vet du först i efterhand.</p>
         </div>
-        <div class="col-md-12 centered-column">
-          <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
-        </div>
 
+
+      </div>
+      <div class="featurette" id="bananas">
+        <h3>
+          <mark><em><strong>
+            Att välja hållbara fonder borde inte vara svårare  än  att välja ekologiska bananer.
+          </strong></em></mark>
+        </h3>
+      </div>
+
+      <div id="to-fund-search-button" class="col-md-12 centered-column ">
+        <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
       </div>
 
     </div>
-    <div class="col-md-3">
-      <h3>Hållbara fondbolag</h3>
-      <div>
-        <img class="landing-page-side-ad" src="/img/fund-company/logo/1467.png">
-        <p>Vi tror på en hållbar ekonomi och framtid. Med <strong>dig</strong> i fokus.</p>
-        <a href="/fundcompany/demo-fonder">Gå till DEMO fonders fondbolagssida >></a>
+
+    <div class="col-sm-4 col-lg-3">
+      <p class="learn-more">Lär dig mer</p>
+      <img class="sparahallbart-school" src="/img/sparahallbartskolan.png">
+      <div class="school-link" id="chart">
+        <h3>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('qa', array(), array('fragment' => 'part1'))); ?>">
+            <mark>Vad är fondsparande?</mark>
+          </a>
+        </h3>
       </div>
-      <hr>
-      <div>
-        <h4>DEMO Etisk Globalfond</h4>
-        <p>Fonden för dig som vill spara på ett hållbart vis med god långsiktig avkastning.</p>
-        <a href="/funds/demo-etisk-globalfond">Läs mer om DEMO Etisk Globalfond >></a>
+      <div class="school-link" id="pond">
+        <h3>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('qa', array(), array('fragment' => 'part2'))); ?>">
+            <mark>Vad är hållbart sparande?</mark>
+          </a>
+        </h3>
+      </div>
+      <div class="school-link" id="building">
+        <h3>
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('qa', array(), array('fragment' => 'measures'))); ?>">
+            <mark>Våra mått</mark>
+          </a>
+        </h3>
       </div>
 
     </div>

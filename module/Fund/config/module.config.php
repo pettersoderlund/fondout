@@ -61,7 +61,8 @@ return array(
           'sustainability-categories'              => __DIR__ . '/../view/fund/fund/sustainability-categories.phtml',
           'sustainability-categories-explained'    => __DIR__ . '/../view/fund/fund/sustainability-categories-explained.phtml',
           'example-companies'                      => __DIR__ . '/../view/fund/fund/example-companies.phtml',
-
+          'alternate-funds'                        => __DIR__ . '/../view/fund/fund/alternate-funds.phtml',
+          'how-to-search'                          => __DIR__ . '/../view/fund/fund/how-to-search.phtml',
         ),
 
         'template_path_stack' => array(

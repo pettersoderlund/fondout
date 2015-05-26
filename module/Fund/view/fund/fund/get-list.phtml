@@ -30,102 +30,7 @@ $form->prepare();
 ?>
 <section class="fund-search-intro">
   <div class="container">
-    <div class="intro-section">
-      <h2 class="centered-header">Så här enkelt är det</h2>
-      <div class="row">
-        <div class="col-md-3">
-          <div class="intro-symbol-box">
-            <span class="glyphicon glyphicon-eye-open glyphicon-lg"></span>
-          </div>
-          <h4>1. Välj vad du vill se</h4>
-          <div class="intro-box">
-            <p><strong>Fondkategori</strong> - Välj var fonden
-              primärt investerar. Det går även att se mer än en fondkategori åt gången.
-            </p>
-            <p><strong>Dina fonder</strong> -
-              Lägg till de fonder du har idag eller de fonder du är intresserad
-              av.
-            </p>
-            <p><strong>Fondbolag</strong> -
-              Visa endast fonder från ett specifikt fondbolag.
-            </p>
-            <p><strong>Snabbsök</strong> -
-              Gör en snabbsökning efter en specifik fond.
-            </p>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="intro-symbol-box">
-            <span class="glyphicon-lg intro-symbol-letter">?</span>
-          </div>
-          <h4>2. Välj hur du vill ranka</h4>
-          <div class="intro-box">
-
-            <p>Du kan välja att ranka fonderna efter hur stor del i de investerar i:</p>
-            <ul class="sort-by-explainations">
-              <li>
-                <img class="roundintrosymbols" src="/img/symbols/fossil.png" alt="Fossil symbol">
-                Fossila bränslen
-              </li>
-              <li>
-                <img class="roundintrosymbols" src="/img/symbols/weapon.png" alt="Weapon symbol">
-                Förbjudna Vapen
-              </li>
-              <li>
-                <img class="sqintrosymbols" src="/img/symbols/alcohol.png" alt="Alcohol symbol">
-                Alkohol
-              </li>
-              <li>
-                <img class="sqintrosymbols" src="/img/symbols/tobacco.png" alt="Tobacco symbol">
-                Tobak
-              </li>
-              <li>
-                <img class="sqintrosymbols" src="/img/symbols/gambling.png" alt="Gambling symbol">
-                Spel
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div class="col-md-3">
-          <div class="intro-symbol-box">
-            <span class="glyphicon-lg intro-symbol-letter">!</span>
-          </div>
-          <h4>3. Se resultat & jämför</h4>
-          <div class="intro-box">
-
-            <p>Om du valt att ranka efter exempelvis <em>fossila bränslen</em> är de fonder som visas högst upp i listan de fonder som investerar i minst antal bolag med <em>fossil bränslen</em>.</p>
-            <p>För att ge en överblick visas även fondens resultat gällande de övriga mätten. Du kan när som helst välja att ranka efter ett nytt mått.</p>
-            <div class="row bars-explained">
-              <div class="col-md-2">
-                <div class="centered-column">
-                  <img id="introBar" src="/img/bar/bar10.png" alt="10/10 mätare.">
-                </div>
-
-              </div>
-              <div class="col-md-10">
-                <p><small><em>Inga/väldigt få bolag med fossila bränslen i fonden. </em></small></p>
-              </div>
-
-            </div>
-          </div>
-
-        </div>
-        <div class="col-md-3">
-          <div class="intro-symbol-box">
-
-            <span class="glyphicon glyphicon-search glyphicon-lg"></span>
-          </div>
-          <h4>4. Fördjupa dig</h4>
-          <div class="intro-box">
-            <p>Genom att klicka på en fond kommer du till <em>fondens fördjupningssida</em>. Här hittar du mer information om fonden och dess investeringar i jämförelse med andra fonder.</p>
-            <p>Du kan även få mer information om fondbolagen fenom att gå in på dess respektive <em>fondbolagssida</em>.</p>
-            <span class="better-worse better">Fonden är bättre än snittet för fondkategorin. </span>
-            <br>
-            <span class="better-worse better">Fonden är bättre än snittet för alla fonder. </span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <?php echo $this->partial('how-to-search', array()); ?>
   </div>
 </section>
 <nav class="sort-menu">
@@ -133,21 +38,17 @@ $form->prepare();
     <div class="row">
       <div class="col-md-9">
         <div class="row">
-          <div class="col-md-4">
+          <div class="col-md-4 hidden-xs">
           <p id="fund-header">Fond</p>
           <p id="sort-header"><small>Ranka efter</small></p>
           </div>
-          <div class="col-md-1 centered-column">
+          <div class="col-md-4 centered-column">
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
             </a>
-          </div>
-          <div class="col-md-1 centered-column">
-            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt="Weapon sort button">
             </a>
-          </div>
-          <div class="col-md-2 centered-column">
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt="Alcohol sort button">
             </a>
@@ -159,13 +60,13 @@ $form->prepare();
             </a>
 
           </div>
-          <div class="col-md-4 centered-column">
+          <div class="col-md-4 centered-column hidden-xs">
             <p>Fondinformation</p>
           </div>
           <!--<button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>-->
         </div>
       </div>
-      <div class="col-md-3 centered-column">
+      <div class="col-md-3 centered-column hidden-xs">
         <p>Sökalternativ</p>
       </div>
     </div>
@@ -281,8 +182,8 @@ $form->prepare();
 <ul class="results">
   <?php foreach ($funds as $fund): ?>
     <li>
-      <div class="row">
-        <div class="col-md-4">
+      <div class="row well">
+        <div class="col-sm-4">
           <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
           <h3>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
@@ -290,24 +191,20 @@ $form->prepare();
             </a>
           </h3>
         </div>
-        <div class="col-md-1 centered-column">
-          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
-          <img class="round-symbol" src="/img/symbols/fossil.png">
-        </div>
-        <div class="col-md-1 centered-column">
-          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
-          <img class="round-symbol" src="/img/symbols/weapon.png">
-        </div>
-        <div class="col-md-2 centered-column">
-          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
-          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
-          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10' src='img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
+        <div class="col-sm-4 centered-column">
+          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10. Denna fond fossil: " . $fund->getMeasureScore('fossil') . "/10.' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
+          <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10. Denna fond vapen: " . $fund->getMeasureScore('weapon') . "/10.' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10. Denna fond alkohol: " . $fund->getMeasureScore('alcohol') . "/10.' src='img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10. Denna fond tobak: " . $fund->getMeasureScore('tobacco') . "/10.' src='img/thin-bar/thinbar" . $fund->getMeasureScore('tobacco') . ".png'>"   ?>
+          <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10. Denna fond spel: " . $fund->getMeasureScore('gambling') . "/10.' src='img/thin-bar/thinbar" . $fund->getMeasureScore('gambling'). ".png'>"   ?>
           <br>
-          <img class="thin-symbol" src="/img/symbols/alcohol.png">
-          <img class="thin-symbol" src="/img/symbols/tobacco.png">
-          <img class="thin-symbol" src="/img/symbols/gambling.png">
+          <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png">
+          <img class="round-symbol" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png">
+          <img class="thin-symbol" src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png">
+          <img class="thin-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png">
+          <img class="thin-symbol" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png">
         </div>
-        <div class="col-md-4 centered-column">
+        <div class="col-sm-4 centered-column">
           <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
               <?php echo $this->translate($fund->company->name) ?>
           </a>
@@ -315,7 +212,7 @@ $form->prepare();
           <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
             <?php echo $this->translate($fund->fondoutcategory->longName) ?>
           </a>
-          <?php echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/demo-bank.png' alt='Bank logo' class='bank-logo'></p>" : "" ?>
+          <?php /*echo (in_array('Avanza', $fund->getBankArray())) ? "<p class='bank-availible'>Fonden finns att köpa på <img src='/img/demo-bank.png' alt='Bank logo' class='bank-logo'></p>" : "" */?>
         </div>
       </div>
     </li>

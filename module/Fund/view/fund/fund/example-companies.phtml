@@ -1,6 +1,6 @@
 <div class="example-section">
-  <p><?php echo $this->accCat[$category]->description ?></p>
-  <h4>Exempel på bolag med <?php echo strtolower($accCat[$category]->name) ?> som ingår i fonden</h4>
+  <p class="well"><span class="glyphicon glyphicon-info-sign"></span> <?php echo $this->accCat[$category]->description ?></p>
+  <h4><?php echo (empty($ccompanies)) ? "Fonden har inga investeringar i " . strtolower($accCat[$category]->name) . "." : "Exempel på bolag med " . strtolower($accCat[$category]->name) . " som ingår i fonden:" ?></h4>
 
   <div class="row">
     <div class="col-md-6">
