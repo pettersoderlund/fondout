@@ -1,15 +1,42 @@
 .qa-section {
+  margin-top: 30px;
+  margin-bottom: 30px;
+
+  .h1, h1, .h2, h2, h3, .h3 {
+    border-bottom: 1px @brand-primary solid;
+    padding-bottom: 0.4em;
+    margin-bottom: 0.8em;
+  }
+
+  .category-desc {
+    h3, .h3 {
+      border-bottom: inherit;
+    }
+
+    .category-image {
+      max-width: 410px;
+      width: 100%;
+    }
+  }
+
+  .how-to {
+    margin: 35px 0px;
+  }
 
   #simple-how-to > li {
       padding: 5px 0px;
   }
-  
+
   #fundcategories {
     width: 200px;
   }
 
-  .well > h3, .h3 {
-    margin-top: 0px;
+  .well {
+    h3, .h3, h4, .h4 {
+    /*margin-top: 0px;*/
+    color: @brand-primary;
+    font-weight: bold;
+    }
   }
 
   .symbol {
@@ -66,4 +93,20 @@
       border-bottom-color: @gray-lighter;
     }
   }
+}
+
+.mid-section-image {
+  height: 260px;
+}
+
+.school-qa {
+  background: url('/img/qa/stockholm.jpg'), no-repeat;
+  background-position: 0% 80%;
+  background-size: 100%;
+}
+
+.intro-qa {
+  background: url('/img/qa/oilrig.jpg'), no-repeat;
+  background-position: 50% 30%;
+  background-size: 133%;
 }
