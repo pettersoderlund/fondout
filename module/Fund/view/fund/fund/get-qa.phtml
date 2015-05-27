@@ -11,6 +11,7 @@ $('body').attr('data-target', '#scrollSpy');
           <li><a href="#top">Sparahållbart.se</a>
             <ul class="nav nav-pills nav-stacked">
               <li><a href="#intro">Hur gör man?</a></li>
+              <li><a href="#4-steps">Så här enkelt är det</a></li>
               <li><a href="#measures">Våra mått</a></li>
               <li><a href="#levels">Nivå av hållbarhet</a></li>
             </ul>
@@ -61,7 +62,9 @@ $('body').attr('data-target', '#scrollSpy');
           <li>Ligger dina nuvarande fonder i linje med hur du önskar spara dina pengar?</li>
         </ol>
       </div>
-
+      <div id="4-steps">
+        <?php echo $this->partial('how-to-search', array()); ?>
+      </div>
       <h2 id="measures">Våra mått</h2>
       <p>För att du ska kunna hitta en fond som ligger i linje med dina hållbarhetspreferenser kan du på Sparahållbart.se välja att jämföra dina fonder utifrån fem olika hållbarhetsmått/kategorier.</p>      <?php $rowCount = 0; ?>
       <?php foreach($accCategories as $cname => $category): ?>
@@ -106,15 +109,8 @@ $('body').attr('data-target', '#scrollSpy');
           </ol>
         </div>
       </div>
-      <?php echo $this->partial('how-to-search', array()); ?>
-
-
       <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Gå till fondsök nu</a>
-
       <a href="#school" class="btn btn-primary">Eller gå till Sparahållbart-skolan (rekommenderas)</a>
-
-
-
     </div>
   </div>
 </section>
