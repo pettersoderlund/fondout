@@ -17,20 +17,22 @@ $thincategory = array("alcohol", "tobacco", "gambling")
         <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
       </div>
 
-      <div class="col-md-3 centered-column col-md-push-3 col-sm-4 col-sm-push-4 col-xs-8">
-        <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
+
+      <div class="col-md-3 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-8 button-row">
+        <a class="fundinfo-btn btn btn-md" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
             <?php echo $this->translate($fund->company->name) ?>
         </a>
-        <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+        <br>
+        <a class="fundinfo-btn btn btn-md" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
           <?php echo $this->translate($fund->fondoutcategory->longName) ?>
         </a>
-
       </div>
-      <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-4">
-        <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
+      <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-4 button-row">
+        <a class="btn btn-primary btn-sm pull-right" href="<?php echo $this->backuri; ?>">
           Tillbaka till fondsök
         </a>
       </div>
+
 
       <div class="col-md-3 col-md-pull-5 bar-tabs col-sm-4 col-sm-pull-8 col-xs-12">
         <ul class="nav nav-tabs" role="tablist">

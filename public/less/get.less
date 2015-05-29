@@ -13,6 +13,13 @@
 .fund-page  > div > .info {
   /*border: gainsboro 1px solid;
   border-top: transparent;*/
+  @media screen and (max-width: @screen-sm-min) {
+    .button-row {
+      margin: 10px 0px;
+    }
+  }
+
+
 }
 
 .fund-page  > div > .content {
@@ -202,6 +209,13 @@
     font-size: 13px;
   }
 
+  @media screen and (max-width: @screen-sm-min) {
+    [class*="col-"] {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  }
+
   .bar {
     width: 18px;
     margin: 0px 1px 5px;
@@ -240,18 +254,16 @@
     }
   }
 
-  @media screen and (max-width: @screen-sm-min) {
-    .col-md-6 {
-      padding: 0px;
-    }
-  }
-
-
-
-
   .well {
     margin: 10px 0px;
   }
+
+  @media screen and (max-width: @screen-sm-min) {
+    .well {
+      padding: 12px;
+    }
+  }
+
   .fundinfo-btn {
     //width: 100%;
     color: white;
