@@ -240,13 +240,20 @@
     }
   }
 
+  @media screen and (max-width: @screen-sm-min) {
+    .col-md-6 {
+      padding: 0px;
+    }
+  }
+
+
 
 
   .well {
     margin: 10px 0px;
   }
   .fundinfo-btn {
-    width: 100%;
+    //width: 100%;
     color: white;
   }
 }
@@ -292,10 +299,6 @@
     max-height: 40px;
     margin-top: 10px;
   }
-}
-
-.alternate-fund:nth-child(2n+1) {
-  border-left: transparent;
 }
 
 .alternate-funds-header {
