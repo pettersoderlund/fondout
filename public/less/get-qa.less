@@ -2,17 +2,31 @@
   margin-top: 30px;
   margin-bottom: 30px;
 
-  .h1, h1, .h2, h2, h3, .h3 {
+  /*.h1, h1,*/  h3, .h3 {
     border-bottom: 1px @brand-primary solid;
     padding-bottom: 0.4em;
     margin-bottom: 0.8em;
   }
 
-  .category-desc {
-    h3, .h3 {
-      border-bottom: inherit;
-    }
+  .h2, h2 {
+  font-weight: bold;
+  background-color: green;
+  color: white;
+  padding: 0.5em;
+}
 
+  .h2, h2, h3, .h3, h4, .h4 {
+    margin-top: 2em;
+  }
+
+  h3 + h4 {
+    margin-top: 0em;
+  }
+
+  .category-desc {
+    .h3, h3 {
+      margin-top: 0.5em;
+    }
     .category-image {
       max-width: 410px;
       width: 100%;
@@ -100,17 +114,23 @@
 }
 
 .mid-section-image {
-  height: 260px;
+  .h1, h1 {
+    color: white;
+    font-weight: bold;
+    padding: 3.3em 0em;
+
+  }
+  height: 300px;
 }
 
 .school-qa {
-  background: url('/img/qa/stockholm.jpg') no-repeat;
-  background-position: 0% 80%;
-  background-size: 100%;
+  background: url('/img/qa/field.jpg') no-repeat;
+  background-position: 50% 100%;
+  /*background-size: 100%;*/
 }
 
 .intro-qa {
-  background: url('/img/qa/oilrig.jpg') no-repeat;
-  background-position: 50% 30%;
-  background-size: 133%;
+  background: url('/img/qa/field.jpg') no-repeat;
+  background-position: 55% 0%;
+  /*background-size: 140%;*/
 }

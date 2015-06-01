@@ -2,7 +2,9 @@
 $('body').attr('data-spy', 'scroll');
 $('body').attr('data-target', '#scrollSpy');
 </script>
-<div class="mid-section-image intro-qa"></div>
+<div class="mid-section-image intro-qa">
+  <div class="container"><h1 id="top">Tjänsten sparahållbart.se</h1></div>
+</div>
 <section class="container qa-section">
   <div class="row">
     <div class="col-md-3 hidden-sm hidden-xs col-md-push-9">
@@ -47,7 +49,7 @@ $('body').attr('data-target', '#scrollSpy');
       </nav>
     </div>
     <div class="col-md-9 col-md-pull-3">
-      <h1 id="top">Tjänsten sparahållbart.se</h1>
+
       <p>“Sparahållbart.se - fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare” hjälper dig att på ett enkelt sätt ta reda på hur dina fonder/ de fonder du är intresserad av arbetar med hållbarhet för att sedan kunna jämföra dessa med andra fonder. Fondval och hållbarhetspreferenser är självklart helt upp till dig.</p>
       <p>I första hand rekommenderas tjänsten att användas för att kolla upp de fonder du sparar i idag. Genom att utgå från dina nuvarande fonder och jämföra dessa med alternativa fonder inom förslagsvis samma fondkategori kan du på ett enkelt sätt se hur hållbara dina fonder är i jämförelse med andra fonder. Om du är nöjd med hur dina fonder investerar utifrån en hållbarhetssynpunkt finns det ingen anledning att byta fonder. Om fonderna däremot investerat mycket inom en bransch som du som sparare inte önskar stå bakom kan det vara läge att byta till en fond som passar dig bättre.</p>
       <p>Tjänsten kan även användas för att hitta nya fonder att börja spara dina pengar i.</p>
@@ -116,11 +118,13 @@ $('body').attr('data-target', '#scrollSpy');
     </div>
   </div>
 </section>
-<div class="mid-section-image school-qa"></div>
+<div class="mid-section-image school-qa">
+  <div class="container"><h1 id="school">Spara hållbart-skolan</h1></div>
+</div>
 <section class="container qa-section">
   <div class="row">
     <div class="col-md-9">
-      <h1 id="school">Spara hållbart-skolan</h1>
+
 
       Att förstå sig på det där med sparande och val av hur dina pengar ska investeras är inte alltid helt lätt. Sparahållbart-skolan syftar till att göra det hela lite lättare.
 
@@ -205,7 +209,7 @@ $('body').attr('data-target', '#scrollSpy');
       <p>Detta är dock (som tur är) inget man kan välja på förhand då tyvärr ingen kan veta hur börsen kommer att gå i framtiden.</p>
       <p>En fråga många vill ha svar på är om det lönar sig att investera hållbart? Det kortfattade svaret är att oavsett hur man väljer att investera kan man inte veta om det lönar sig förrän i efterhand.</p>
       <p>Det har gjorts mycket forskning gällande relationen mellan hållbara investeringar och avkastning. Precis som om man skulle ha forskat på relationen mellan icke-hållbara investeringar och avkastning pekar resultaten i olika riktningar.</p>
-      <p>XX har publicerat en överssiktstudie gällande all akademisk forskning som gjorts på ämnet mellan 2008-2010. Den visar att av 21 studier finner en tredjedel att hållbara investeringar inte medför vare sig högre eller lägre avkastning. Nästan lika många studier uppvisar ett blandat resultat: att det varierar över tid, beror på vilken sparprodukt och på vilken marknad. Fem av studierna visar att hållbara investeringar ger en högre avkastning än mindre hållbara medan tre av studierna visar det motsatta.</p>
+      <p>AP7 publicerade en överssiktstudie 2011 av Dr. Emma Sjöström gällande all akademisk forskning som gjorts på ämnet mellan 2008-2010. Den visar att av 21 studier finner en tredjedel att hållbara investeringar inte medför vare sig högre eller lägre avkastning. Nästan lika många studier uppvisar ett blandat resultat: att det varierar över tid, beror på vilken sparprodukt och på vilken marknad. Fem av studierna visar att hållbara investeringar ger en högre avkastning än mindre hållbara medan tre av studierna visar det motsatta.</p>
       <p>För att sammanfatta kan man alltså inte säga att avkastningen är vare sig bättre eller sämre för fonder som investerar hållbart än i andra fonder.</p>
 
       <p><strong>Så du behöver alltså inte välja hållbarhet eller avkastning.
@@ -218,9 +222,11 @@ $('body').attr('data-target', '#scrollSpy');
       <p><em>Hur stor andel –enligt din definition- ohållbara bolag kan du tänka dig?</em></p>
       <p><em>Bryr du dig om avkastningen på dina sparpengar beror på att det går bra för:
       Ett oljebolag? / Ett vapenbolag? / Ett spritföretag? / En cigarettillverkare? / Ett onlinecasino?</em></p>
-      <p><strong>Vi låter dig veta vad. Hållbarhetspreferenser och fondval är helt upp till dig.</strong><p>
-
-      <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Gå till fondsök</a>
+      <p><strong>Vi låter dig veta vad. Hållbarhetspreferenser och fondval är helt upp till dig.</strong></p>
+      <div class="centered-column">
+        <br>
+        <a href="<?php echo $this->url('funds') ?>" class="btn btn-lg btn-primary">Gå till fondsök</a>
+      </div>
     </div>
   </div>
 </section>
