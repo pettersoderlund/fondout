@@ -18,7 +18,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
       </div>
 
 
-      <div class="col-md-3 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-8 button-row">
+      <div class="col-md-3 col-md-push-3 col-sm-4 col-sm-push-4 button-row">
         <a class="fundinfo-btn btn btn-md" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
             <?php echo $this->translate($fund->company->name) ?>
         </a>
@@ -27,7 +27,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
           <?php echo $this->translate($fund->fondoutcategory->longName) ?>
         </a>
       </div>
-      <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 col-xs-4 button-row">
+      <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 hidden-xs button-row">
         <a class="btn btn-primary btn-sm pull-right" href="<?php echo $this->backuri; ?>">
           Tillbaka till fondsök
         </a>
@@ -54,12 +54,12 @@ $thincategory = array("alcohol", "tobacco", "gambling")
               <div class="col-sm-6 centered-column measure-tabs-first-column">
                 <h3>Ditt valda mått är: <strong><?php echo mb_strtoupper($accCat[$category]->name, 'UTF-8') ?></strong></h3>
                 <div class="row">
-                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $fund->getMeasureScore($category) ."/10. " ?>Fonden har investerat i <?php echo (call_user_func(array($this->fund, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
+                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $fund->getMeasureScore($category) ."/10. " . $fund->name ?> har investerat i <?php echo (call_user_func(array($this->fund, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
                     <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $fund->getMeasureScore($category);?>.png" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
                     <br>
                     <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png">
                     <br>
-                    <p><?php echo $this->escapeHtml($fund->name) ?></p>
+                    <p>Denna fond</p>
                   </div>
 
                   <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $avgcategory->getMeasureScore($category) ."/10. " ?>Fondkategorin <?php echo $this->fund->fondoutCategory->longName ?>er har i snitt investerat i <?php echo (call_user_func(array($this->avgcategory, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
