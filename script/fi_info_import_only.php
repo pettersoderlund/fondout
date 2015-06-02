@@ -71,79 +71,13 @@ $shares = array();
 try {
     $db->beginTransaction();
 
-    // Insert shares
-    foreach ($fileIterator as $row) {
-        $row = array_pad($row, 18, '');
-        list (
-            $type,                      // Posttyp
-            $date,                      // Kvartalsslut
-            $fundCompanyInstitutionNbr, //Institutnrfondbolag
-            $fundCompanyName,           // Firma_fondbolag
-            $fundInstitutionNbr,        // Institutnr_fond
-            $fundName,                  // Firma_fond
-            $marketValueTotal,          // Marknadsvarde_tot
-            $capital,                   // Fondformogenhet
-            $nav,                       // Andelsvarde
-            $shareName,                 // Instrumentnamn
-            $isin,                      // ISIN
-            $country,                   // Land
-            $quantity,                  // Antal_instr
-            $interestRate,              // Kurs_ranta
-            $exchangeRate,              // Valutakurs
-            $marketValue,               // Marknadsvarde
-            $unlisted,                  // Onoterad
-            $status                     // Inlanad_Utlanad
-        ) = $row;
-
-        $fundName = utf8_encode($fundName);
-        $fundCompanyName = utf8_encode($fundCompanyName);
-        $shareName = utf8_encode($shareName);
-
-        if (strcasecmp($type, 'data') == 0) {
-            if (trim($isin) == '') {
-                $sql  = "INSERT INTO share (id, name, isin, country_code) ";
-                $sql .= "VALUES (?, ?, NULL, ?) ON DUPLICATE KEY UPDATE name = ?";
-
-                $stmt = $db->prepare($sql);
-                $stmt->execute(
-                    [ 'NULL',
-                      $shareName,
-                      $country,
-                      $shareName ]
-                );
-            } else {
-                $sql  = "INSERT INTO share (id, name, isin, country_code) ";
-                $sql .= "VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE name = ?, isin = ?";
-
-                $stmt = $db->prepare($sql);
-                $stmt->execute(
-                    [ 'NULL',
-                      $shareName,
-                      $isin,
-                      $country,
-                      $shareName,
-                      $isin ]
-                );
-            }
-        } else {
-            $i++;
-
-            if (($i % 10) == 0) {
-                print '.';
-            }
-        }
-    }
-
-    // What is the variable ids??
-    // print count($ids);
-
     // insert fund companies, funds, fund instances & shareholdings
     foreach ($fileIterator as $row) {
         $row = array_pad($row, 18, '');
         list (
             $type,                      // Posttyp
             $date,                      // Kvartalsslut
-            $fundCompanyInstitutionNbr, //Institutnrfondbolag
+            $fundCompanyInstitutionNbr, // Institutnrfondbolag
             $fundCompanyName,           // Firma_fondbolag
             $fundInstitutionNbr,        // Institutnr_fond
             $fundName,                  // Firma_fond
@@ -202,7 +136,7 @@ try {
                   $fundName ]
             );
 
-            $sql  = "INSERT IGNORE INTO fund_instance (id, fund, date, total_market_value, net_asset_value) ";
+            $sql  = "INSERT IGNORE INTO fund_instance (id, fund, date, total_market_value,  net_asset_value) ";
             $sql .= "SELECT ?, id, ?, ?, ? FROM fund WHERE institution_number = ?";
 
             $stmt = $db->prepare($sql);
@@ -228,21 +162,6 @@ try {
             if (($i % 10) == 0) {
                 print '.';
             }
-
-
-        } elseif (strcasecmp(trim($type), 'data') == 0 && !$skip) {
-            $sql  = "INSERT INTO shareholding (id, fund_instance, share, ";
-            $sql .= "market_value) ";
-            $sql .= "SELECT DISTINCT ?, ?, id, ? FROM share ";
-            $sql .= "WHERE " . ((trim($isin) == '') ? 'name = ? AND isin IS NULL' : 'isin = ?') . " LIMIT 1";
-
-            $stmt = $db->prepare($sql);
-            $stmt->execute(
-                [ 'NULL',
-                  $currentFundInstance,
-                  $marketValue,
-                  ((trim($isin) == '') ? $shareName : $isin) ]
-            );
         }
     }
     $db->commit();

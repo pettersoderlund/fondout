@@ -130,6 +130,77 @@ class Fund extends Entity
     private $banks;
 
     /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav;
+
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav1year", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav1year;
+
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav3year", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav3year;
+
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="nav5year", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $nav5year;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="weapon_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $weaponCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="fossil_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $fossilCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="alcohol_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $alcoholCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="tobacco_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $tobaccoCompanies = 0;
+
+    /**
+    * @var integer
+    *
+    * @ORM\Column(name="gambling_companies", type="integer", nullable=true, options={"default":"0"})
+    */
+    private $gamblingCompanies = 0;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="date", nullable=true)
+     */
+    private $date;
+
+
+    /**
      * @var FundInstance[]
      *
      * @ORM\OneToMany(targetEntity="\Fund\Entity\FundInstance", mappedBy="fund")
@@ -140,19 +211,6 @@ class Fund extends Entity
 
     protected $controversialValue;
 
-    protected $co2;
-
-    protected $co2Coverage;
-
-    # Counts of the fund measurements.
-    protected $weaponCompanies   = 0;
-    protected $fossilCompanies   = 0;
-    protected $alcoholCompanies  = 0;
-    protected $tobaccoCompanies  = 0;
-    protected $gamblingCompanies = 0;
-
-    // This is supposed to be a constant.
-    protected $co2CoverageLimit = 0.5;
 
     public function __construct($options = null)
     {
@@ -357,8 +415,8 @@ class Fund extends Entity
     public function setTotalMarketValue()
     {
         // NOTE: ugly hack, breaks if we have more then one fund instance.
-
-        $this->totalMarketValue = current($this->getFundInstances()->toArray())->totalMarketValue;
+        $fund_instances = $this->getFundInstances()->toArray();
+        $this->totalMarketValue = array_pop($fund_instances)->totalMarketValue;
 
         return $this;
     }
@@ -464,32 +522,6 @@ class Fund extends Entity
         $this->fondoutcategory = $category;
 
         return $this;
-    }
-
-    public function getCo2()
-    {
-      return $this->co2;
-    }
-
-    public function setCo2($co2)
-    {
-      $this->co2 = $co2;
-      return $this;
-    }
-
-    public function getCo2Coverage()
-    {
-      return $this->co2Coverage;
-    }
-
-    public function setCo2Coverage($co2Coverage)
-    {
-      $this->co2Coverage = $co2Coverage;
-      return $this;
-    }
-
-    public function getCo2CoverageLimit() {
-      return $this->co2CoverageLimit;
     }
 
     public function fillMeasure($accusationCategoryId, $count) {
@@ -639,4 +671,132 @@ class Fund extends Entity
         };
       return $bankArray;
     }
+
+    public function getCurrentFundInstance()
+    {
+      $mostrecent = new \DateTime('2000-01-01');
+      $fiCurrent = null;
+      foreach($this->fundInstances as $fi) {
+        if($mostrecent < $fi->date) {
+          $mostrecent = $fi->date;
+          $fiCurrent = $fi;
+        }
+      }
+      return $fiCurrent;
+    }
+
+    private function navToPercent($oldNav)
+    {
+      $currNav = $this->nav;
+      if (!is_null($oldNav) && !is_null($currNav)) {
+        $ratio = $currNav/$oldNav;
+        return !is_null($ratio) ? ($ratio-1)*100 : null;
+      } else {
+        return null;
+      }
+    }
+
+    public function getNav()
+    {
+      return $this->nav;
+    }
+
+    public function setNav($nav)
+    {
+      $this->nav = $nav;
+    }
+
+    /**
+     * Set nav1year
+     *
+     * @param string $nav1year
+     * @return Fund
+     */
+    public function setNav1year($nav1year)
+    {
+        $this->nav1year = $this->navToPercent($nav1year);
+
+        return $this;
+    }
+
+    /**
+     * Get nav1year
+     *
+     * @return string
+     */
+    public function getNav1year()
+    {
+        return $this->nav1year;
+    }
+
+    /**
+     * Set nav3year
+     *
+     * @param string $nav3year
+     * @return Fund
+     */
+    public function setNav3year($nav3year)
+    {
+        $this->nav3year = $this->navToPercent($nav3year);
+
+        return $this;
+    }
+
+    /**
+     * Get nav3year
+     *
+     * @return string
+     */
+    public function getNav3year()
+    {
+        return $this->nav3year;
+    }
+
+    /**
+     * Set nav5year
+     *
+     * @param string $nav5year
+     * @return Fund
+     */
+    public function setNav5year($nav5year)
+    {
+        $this->nav5year = $this->navToPercent($nav5year);
+
+        return $this;
+    }
+
+    /**
+     * Get nav5year
+     *
+     * @return string
+     */
+    public function getNav5year()
+    {
+        return $this->nav5year;
+    }
+
+    /**
+     * Set date
+     *
+     * @param \DateTime $date
+     * @return self
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get date
+     *
+     * @return \DateTime
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+
 }

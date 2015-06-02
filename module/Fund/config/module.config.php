@@ -92,6 +92,16 @@ return array(
     'console' => array(
         'router' => array(
             'routes' => array(
+              'update-fund-measures' => array(
+                  'options' => array(
+                      'route'    =>
+                       'update fund-measures',
+                      'defaults' => array(
+                          'controller' => 'Fund\Controller\Console',
+                          'action'     => 'updateFundMeasures'
+                      )
+                  )
+              ),
                 'map-share-companies' => array(
                     'options' => array(
                         'route'    =>

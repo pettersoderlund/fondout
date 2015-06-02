@@ -67,9 +67,8 @@ class FundService
     public function getFund($id)
     {
         $fundRepository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return current(
-            $fundRepository->mapControversialMarketValues($this->getFundById($id))
-        );
+        //return current($fundRepository->mapControversialMarketValues($this->getFundById($id)));
+        return $fundRepository->findOneById($id);
     }
 
     /**
@@ -109,21 +108,42 @@ class FundService
                 ->getRepository('Fund\Entity\AccusationCategory');
 
         // $allControversialCompanies is for counting categories
-        $weaponCompanies = $fundRepository
-          ->findControversialCompanies($fund, $acr
-            ->findOneByName('Förbjudna vapen'));
-        $fossilCompanies = $fundRepository
-          ->findControversialCompanies($fund, $acr
-            ->findOneByName('Fossila bränslen'));
-        $alcoholCompanies = $fundRepository
-          ->findControversialCompanies($fund, $acr
-            ->findOneByName('Alkohol'));
-        $tobaccoCompanies = $fundRepository
-          ->findControversialCompanies($fund, $acr
-            ->findOneByName('Tobak'));
-        $gamblingCompanies = $fundRepository
-          ->findControversialCompanies($fund, $acr
-            ->findOneByName('Spel'));
+
+        if ($fund->weaponCompanies > 0) {
+          $weaponCompanies = $fundRepository
+            ->findControversialCompanies($fund, $acr
+              ->findOneByName('Förbjudna vapen'));
+        } else {
+          $weaponCompanies = array();
+        }
+        if ($fund->fossilCompanies > 0) {
+          $fossilCompanies = $fundRepository
+            ->findControversialCompanies($fund, $acr
+              ->findOneByName('Fossila bränslen'));
+        } else {
+          $fossilCompanies = array();
+        }
+        if ($fund->alcoholCompanies > 0) {
+          $alcoholCompanies = $fundRepository
+            ->findControversialCompanies($fund, $acr
+              ->findOneByName('Alkohol'));
+        } else {
+          $alcoholCompanies = array();
+        }
+        if ($fund->tobaccoCompanies > 0) {
+          $tobaccoCompanies = $fundRepository
+            ->findControversialCompanies($fund, $acr
+              ->findOneByName('Tobak'));
+        } else {
+          $tobaccoCompanies = array();
+        }
+        if ($fund->gamblingCompanies > 0) {
+          $gamblingCompanies = $fundRepository
+            ->findControversialCompanies($fund, $acr
+              ->findOneByName('Spel'));
+        } else {
+          $gamblingCompanies = array();
+        }
 
         return array(
             "weapon"   => $weaponCompanies,
@@ -217,6 +237,15 @@ class FundService
                 $sortOrder['alcoholCompanies'] = $order;
                 $sortOrder['weaponCompanies'] = $order;
                 $sortOrder['fossilCompanies'] = $order;
+                break;
+            case 'nav1year':
+                $sortOrder['nav1year'] = $order;
+                break;
+            case 'nav3year':
+                $sortOrder['nav3year'] = $order;
+                break;
+            case 'nav5year':
+                $sortOrder['nav5year'] = $order;
                 break;
         }
 
