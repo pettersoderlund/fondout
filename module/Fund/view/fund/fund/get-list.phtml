@@ -44,19 +44,19 @@ $form->prepare();
           </div>
           <div class="col-md-4 centered-column">
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' title='Ranka efter fossila bränsen' src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
+              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Ranka efter fossila bränsen' src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
             </a>
           <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' title='Ranka efter förbjudna vapen' src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt="Weapon sort button">
+              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Ranka efter förbjudna vapen' src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt="Weapon sort button">
             </a>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' title='Ranka efter alkohol' src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt="Alcohol sort button">
+              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Ranka efter alkohol' src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt="Alcohol sort button">
             </a>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' title='Ranka efter tobak' src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt="Tobacco sort button">
+              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Ranka efter tobak' src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt="Tobacco sort button">
             </a>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' title='Ranka efter spel' src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt="Gamlbing sort button">
+              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Ranka efter spel' src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt="Gamlbing sort button">
             </a>
 
           </div>
