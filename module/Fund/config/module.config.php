@@ -44,6 +44,17 @@ return array(
                     ),
                 ),
             ),
+            'press' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/pressrelease',
+                    'constraints' => array(),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getPress'
+                    ),
+                ),
+            ),
             'change-sustainability-categories' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

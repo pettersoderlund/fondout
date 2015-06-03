@@ -1,0 +1,87 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+    <head profile="http://www.w3.org/2005/10/profile">
+
+        <meta charset="utf-8">
+        <link rel="icon"
+              type="image/ico"
+              href="/img/favicon.ico" />
+
+        <?php echo $this->headTitle($this->translate('Sparfabriken'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php echo $this->headLink()
+                        ->prependStylesheet($this->basePath() . '/css/style.css') ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/vendor/bootstrap/dist/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/vendor/jquery/jquery.min.js')
+            ->prependFile($this->basePath() . '/vendor/respond/dest/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/vendor/dist/html5shiv.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+        ; ?>
+
+    </head>
+    <body style="margin:0px;">
+      <!-- Google Tag Manager -->
+      <noscript>
+        <iframe src="//www.googletagmanager.com/ns.html?id=GTM-5F39B2" height="0" width="0" style="display:none;visibility:hidden">
+        </iframe>
+      </noscript>
+      <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5F39B2');
+      </script>
+      <!-- End Google Tag Manager -->
+      <section class="press">
+        <div class="container">
+          <div class="row">
+            <div class=" col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+              <h2><em>Att välja hållbara fonder borde inte vara svårare än att välja ekologiska bananer.</em></h2>
+            </div>
+          </div>
+          <hr>
+          <h1><strong>PRESS RELEASE:</strong> <img class="logo" src="/img/sparahallbart.png" alt="sparahållbart.se logo"></h1>
+          <h2>Malmö, Juni 2015</h2>
+          <p id="intro"><strong>Tänk på vad hållbarhet innebär för dig. Vet du om dina sparpengar förvaltas i linje med detta? Sparfabrikens nya fondjämförelsetjänst Sparahållbart.se hjälper dig att se till så att dina sparpengar och värderingar kommer överens.</strong></p>
+
+        <h3>2014 – ett rekordår</h3>
+        <p>Intresset för hållbarhet hos både företag och konsumenter är idag tydligt. Exakt vad som innefattas i begreppet ”hållbarhet” är upp till vem man frågar. Livsmedelsbranschen är ett exempel på en bransch där både kunskapen om och viljan att göra hållbara val ökat kraftigt de senaste åren. 2014 uppvisade Sverige den största försäljningsökningen (38 %) av ekologiska livsmedel I världen.</p>
+        <p>2014 var även året då svenskt fondsparande slog rekord med ett nysparande på hela 153 miljarder kronor. Sannolikheten att just du sparar pengar i fonder är stor – cirka 90 % av Sveriges befolkning gör det i någon form. Sannolikheten att du vet vad du sparar dina pengar i är betydligt lägre. Är du indirekt delägare i ett oljebolag? Tjänar du pengar vid en ökning av cigarettförsäljning? Förvaltas dina sparpengar i linje med just dina hållbarhetspreferenser?</p>
+        <h3>Dina sparpengar – dina preferenser</h3>
+        <p><strong>Sparahållbart.se</strong> låter dig undersöka om dina nuvarande fonder lever upp till dina förväntningar på hållbarhet och hur de står sig i förhållande till andra fonder. För närvarande kan du ranka fonderna utifrån bland annat fondens investeringar inom fossila bränslen, förbjudna vapen och tobak. Tjänsten går även att använda för att hitta nya fonder.</p>
+        <p>Utöver jämförelseverktyget finns även en utbildningsdel som bland annat tar hål på myten om att hållbara fonder skulle uppvisa en lägre avkastning än mindre hållbara alternativ.</p>
+
+
+
+        <p><em>“ Sparfabriken har tidigare utfört rapporter åt bland andra WWF och Fossil Free. Vi upptäckte här att det precis som i de flesta branscher inte finns någon brist på viljan att välja mer hållbara alternativ. Det som fattades var snarare kunskapen om och hur man går till väga. Vår tjänst ämnar leda till ett mer hållbart sparande för alla parter – för dig, för fondbolagen och inte minst för vår gemensamma framtid. “</em></p>
+        <p><strong>- Stefan Carlsson, VD Sparfabriken</strong></p>
+        <p>Sparahållbart.se låter dig veta vad. Fondval och Hållbarhetspreferenser är helt upp till dig. </p>
+        <p>Välkommen att prova tjänsten på: <a href='http://www.sparahållbart.se'>www.sparahållbart.se</a></p>
+
+        <hr>
+        <div class="row">
+          <div class=" col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+            <img src="/img/people/stefan.png" id="stefan-contact" >
+            <h3>Presskontakt:</h3>
+            <address>
+              Stefan Carlsson
+              <br>
+              +46 702 27 12 50
+              <br>
+              <a href="mailto:&#115;&#116;&#101;&#102;&#97;&#110;&#64;&#115;&#112;&#97;&#114;&#102;&#97;&#98;&#114;&#105;&#107;&#101;&#110;&#46;&#115;&#101;">&#115;&#116;&#101;&#102;&#97;&#110;&#64;&#115;&#112;&#97;&#114;&#102;&#97;&#98;&#114;&#105;&#107;&#101;&#110;&#46;&#115;&#101;</a>
+            </address>
+          </div>
+        </div>
+
+        ￼￼￼￼
+        </div>
+      </section>
+        <?php echo $this->inlineScript() ?>
+    </body>
+</html>

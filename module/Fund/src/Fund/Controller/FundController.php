@@ -161,6 +161,15 @@ class FundController extends AbstractRestfulController
       );
     }
 
+    public function getPressAction()
+    {
+      $result = new ViewModel();
+      $result->setTerminal(true);
+      return $result;
+
+    }
+
+
     public function getFundService()
     {
         if (!$this->fundService) {
