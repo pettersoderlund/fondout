@@ -798,5 +798,28 @@ class Fund extends Entity
         return $this->date;
     }
 
+    public function setActive($active)
+    {
+      $this->active = $active;
+      return $this;
+    }
+
+    public function getActive()
+    {
+      return $this->active;
+    }
+
+    public function setPercent1year($percent) {
+      $this->nav1year = $percent;
+    }
+
+    public function setPercent3year($percent) {
+      $this->nav3year = $percent;
+    }
+
+    public function setPercent5year($percent) {
+      $this->nav5year = $percent;
+    }
+
 
 }

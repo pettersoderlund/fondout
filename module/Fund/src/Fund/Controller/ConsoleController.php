@@ -23,6 +23,9 @@ use Fund\Entity\Sector;
 use Fund\Entity\Industry;
 use Fund\Entity\CompanyAlias;
 use Fund\Entity\ShareAlias;
+use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 
 class ConsoleController extends AbstractActionController
@@ -1528,17 +1531,81 @@ class ConsoleController extends AbstractActionController
         throw new \RuntimeException('You can only use this action from a console!');
       }
 
+      /* FUND MEASURES */
       $fr = $em->getRepository('Fund\Entity\Fund');
-
-      $funds = $fr->findAllFunds();
+      $funds        = $fr->findAllFunds();
       $funds = $fr->mapControversialMarketValues($funds);
 
-      echo count($funds);
+      echo "--- Fund measures --- \n";
+      echo "Fund count " . count($funds) . "\n";
       foreach ($funds as $fund) {
         $em->persist($fund);
       }
+
+      /*$em->flush();
+      $em->clear();*/
+
+      /* FONDOUT CATEGORY MEASURES */
+      echo "--- Fund categories --- \n";
+      echo "Fos\tWea\tAlc\tTob\tGam\t1y\t3y\t5y\n";
+      echo "- - - - - - - - - - - - - - - - - - - - - - - - - -" .
+       " - - - - - - - - - - - - - -\n";
+      $funds = new ArrayCollection($funds);
+      $fondoutcategoryRepo = $em->getRepository('Fund\Entity\FondoutCategory');
+      foreach ($fondoutcategoryRepo->findAll() as $fondoutCategory) {
+        $criteria = Criteria::create()->where(
+          Criteria::expr()->eq('fondoutcategoryId', $fondoutCategory->id)
+        );
+        $categoryFunds = $funds->matching($criteria);
+
+        $avgCatFund = $em->getRepository('Fund\Entity\Fund')
+            ->findOneByName($fondoutCategory->title);
+
+        if(is_null($avgCatFund)) {
+          $avgCatFund = new Fund();
+          $avgCatFund->setName($fondoutCategory->title);
+          $avgCatFund->setFondoutCategory($fondoutCategory);
+          $avgCatFund->setUrl("average" . $fondoutCategory->title);
+          $avgCatFund->setActive(0);
+        }
+
+        $avgCatFund = $service->findMeasuredAverages($categoryFunds, $avgCatFund);
+        $avgCatFund = $service->findNavAverages($categoryFunds, $avgCatFund);
+
+        echo "$avgCatFund->fossilCompanies\t$avgCatFund->weaponCompanies\t" .
+          "$avgCatFund->alcoholCompanies\t$avgCatFund->tobaccoCompanies" .
+          "\t$avgCatFund->gamblingCompanies\t";
+        echo "$avgCatFund->nav1year\t$avgCatFund->nav3year\t$avgCatFund->nav5year   ";
+        echo $fondoutCategory->title . "\n";
+        $em->persist($avgCatFund);
+      }
+
+
+      echo "--- All funds average --- \n";
+      $allFundsAvg = $em->getRepository('Fund\Entity\Fund')
+          ->findOneByName('allfunds');
+
+      if(is_null($allFundsAvg)) {
+        $allFundsAvg = new Fund();
+        $allFundsAvg->setName('allfunds');
+        $allFundsAvg->setUrl('allfunds');
+        $allFundsAvg->setActive(0);
+      }
+
+      $allFundsAvg = $service->findMeasuredAverages($funds, $allFundsAvg);
+      $allFundsAvg = $service->findNavAverages($funds, $allFundsAvg);
+
+      echo "$allFundsAvg->fossilCompanies\t$allFundsAvg->weaponCompanies\t" .
+        "$allFundsAvg->alcoholCompanies\t$allFundsAvg->tobaccoCompanies" .
+        "\t$allFundsAvg->gamblingCompanies\t";
+      echo "$allFundsAvg->nav1year\t$allFundsAvg->nav3year\t$allFundsAvg->nav5year   ";
+      echo $allFundsAvg->name . "\n";
+      $em->persist($allFundsAvg);
+
+
       $em->flush();
       $em->clear();
+
     }
 
     //Helper functions
