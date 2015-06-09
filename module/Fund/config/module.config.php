@@ -55,6 +55,17 @@ return array(
                     ),
                 ),
             ),
+            'google' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/google0bbd85b60604e918.html',
+                    'constraints' => array(),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getGoogle'
+                    ),
+                ),
+            ),
             'change-sustainability-categories' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(

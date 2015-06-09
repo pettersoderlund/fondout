@@ -166,6 +166,13 @@ class FundController extends AbstractRestfulController
       $result = new ViewModel();
       $result->setTerminal(true);
       return $result;
+    }
+
+    public function getGoogleAction()
+    {
+      $result = new ViewModel();
+      $result->setTerminal(true);
+      return $result;
 
     }
 
