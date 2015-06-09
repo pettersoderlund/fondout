@@ -220,7 +220,7 @@ try {
                 $currentFundInstance = $lastInsertId;
             } else {
                 $skip = true;
-                echo 'skipping $fundName \n ';
+                echo "skipping $fundName \n ";
             }
 
             $i++;
