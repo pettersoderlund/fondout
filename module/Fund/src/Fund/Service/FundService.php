@@ -370,11 +370,17 @@ class FundService
     * @param
     * @return
     */
-    public function findAveragesAllFunds($avgFund) {
+    public function findAveragesAllFunds() {
       $repository =
         $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-      $funds = new ArrayCollection($repository->findAllFunds());
-      return $this->findMeasuredAverages($funds, $avgFund);
+      $avgAllFunds = $repository->findOneByName('allfunds');
+      return $avgAllFunds;
+    }
+
+    public function findCategoryAverages($fondoutCategory) {
+      $repository =
+        $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        return $repository->findOneByName($fondoutCategory->title);
     }
 
     /**
@@ -396,7 +402,6 @@ class FundService
         $tobacco  += $fund->getTobaccoCompanies();
         $gambling += $fund->getGamblingCompanies();
       }
-
 
       //To remove division by zero risk
       //set all avg to 0 if 0 funds given.

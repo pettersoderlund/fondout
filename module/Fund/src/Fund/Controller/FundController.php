@@ -93,7 +93,7 @@ class FundController extends AbstractRestfulController
 
         // Category
         $categoryFunds = $service->findSameCategoryFunds($fund);
-        $avgCatFund = $service->findMeasuredAverages($categoryFunds, new Fund());
+        $avgCatFund = $service->findCategoryAverages($fund->fondoutCategory);
 
         // Fund Company funds
         // ONly if fund is premium
