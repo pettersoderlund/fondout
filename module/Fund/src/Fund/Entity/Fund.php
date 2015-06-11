@@ -821,5 +821,19 @@ class Fund extends Entity
       $this->nav5year = $percent;
     }
 
+    public function resetMeasures() {
+
+      $this->setPercent1year(null);
+      $this->setPercent3year(null);
+      $this->setPercent5year(null);
+      $this->setWeaponCompanies(0);
+      $this->setAlcoholCompanies(0);
+      $this->setTobaccoCompanies(0);
+      $this->setFossilCompanies(0);
+      $this->setGamblingCompanies(0);
+      //$this->setNav(null);
+      //$this->setDate(null);
+  }
+
 
 }

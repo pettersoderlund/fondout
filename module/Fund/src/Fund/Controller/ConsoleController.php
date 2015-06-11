@@ -1533,7 +1533,18 @@ class ConsoleController extends AbstractActionController
 
       /* FUND MEASURES */
       $fr = $em->getRepository('Fund\Entity\Fund');
-      $funds        = $fr->findAllFunds();
+      $funds = $fr->findAllFunds();
+
+      // Reset all values.
+      foreach ($funds as $fund) {
+        $fund->resetMeasures();
+        //echo \Doctrine\Common\Util\Debug::dump($fund);
+      }
+
+      foreach ($funds as $fund) {
+        $em->persist($fund);
+      }
+
       $funds = $fr->mapControversialMarketValues($funds);
 
       echo "--- Fund measures --- \n";
@@ -1575,7 +1586,7 @@ class ConsoleController extends AbstractActionController
         echo "$avgCatFund->fossilCompanies\t$avgCatFund->weaponCompanies\t" .
           "$avgCatFund->alcoholCompanies\t$avgCatFund->tobaccoCompanies" .
           "\t$avgCatFund->gamblingCompanies\t";
-        echo "$avgCatFund->nav1year\t$avgCatFund->nav3year\t$avgCatFund->nav5year   ";
+        echo "$avgCatFund->nav1year\t$avgCatFund->nav3year\t$avgCatFund->nav5year\t";
         echo $fondoutCategory->title . "\n";
         $em->persist($avgCatFund);
       }

@@ -158,6 +158,28 @@ class FundRepository extends EntityRepository
         */
 
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
+        // query: nav date all active funds
+        $queryBuilder->select(
+            'f.id, ' .
+            'fi.date as date, ' .
+            'fi.netAssetValue as nav'
+        )
+            ->from('Fund\Entity\Fund', 'f')
+            ->join('f.fundInstances', 'fi')
+            ->join('fi.shareholdings', 'sh')
+            ->join('sh.share', 's')
+            ->where($queryBuilder->expr()->in('f.id', array_keys($fundMap)))
+            ->andWhere($queryBuilder->expr()->in('fi.date', $this->getCurrentFIDateSubQ()->getDql()));
+
+        // map the fund values nav date
+        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
+            if (isset($fundMap[$cv['id']])) {
+                $fundMap[$cv['id']]->setNav($cv['nav']);
+                $fundMap[$cv['id']]->setDate($cv['date']);
+            }
+        }
+
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
         // query: Get number of companies per fund per accusation category
         $queryBuilder->select(
             'f.id, ' .
@@ -184,6 +206,7 @@ class FundRepository extends EntityRepository
                 )
             )
             ->andWhere($queryBuilder->expr()->in('fi.date', $this->getCurrentFIDateSubQ()->getDql()))
+            ->andWhere('sh.marketValue > 0')
             ->groupBy('f.id')
             ->addGroupBy('ac.id');
 
@@ -191,9 +214,6 @@ class FundRepository extends EntityRepository
         foreach ($queryBuilder->getQuery()->getResult() as $cv) {
             if (isset($fundMap[$cv['id']])) {
                 $fundMap[$cv['id']]->fillMeasure($cv['ac_id'], $cv['company_count']);
-
-                $fundMap[$cv['id']]->setNav($cv['nav']);
-                $fundMap[$cv['id']]->setDate($cv['date']);
             }
         }
 
