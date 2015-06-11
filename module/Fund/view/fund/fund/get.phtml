@@ -15,6 +15,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
       <div class="col-md-4 col-sm-12">
         <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
         <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
+        <p>Fondens innehav är från <?php echo date_format($fund->date, 'Y-m-d')?>.</p>
       </div>
 
 
