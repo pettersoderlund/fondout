@@ -23,7 +23,7 @@ $thincategory = array("alcohol", "tobacco", "gambling")
             <?php echo $this->translate($fund->company->name) ?>
         </a>
         <br>
-        <a class="fundinfo-btn btn btn-md" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+        <a class="fundinfo-btn btn btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
           <?php echo $this->translate($fund->fondoutcategory->longName) ?>
         </a>
       </div>
