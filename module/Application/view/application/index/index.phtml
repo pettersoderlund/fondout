@@ -1,14 +1,6 @@
 <?php
 $this->headScript()
 ->appendFile($this->basePath() . '/js/index.js');
-
-$form->setAttribute('method', 'POST');
-$form->setAttribute('action', $this->url('change-sustainability-categories', array(), array('query' => array('redirect' => 'funds'))));
-$form->setAttribute('class', 'sustainability-categories form-inline well');
-$form->prepare();
-$submit = $form->get('submit');
-$submit->setValue('Hitta fonder');
-$submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary btn-block btn-lg');
 ?>
 
 <section class="featurette first-section-landing-page">
@@ -16,7 +8,7 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
         <div class="row header-row font-smoothing">
           <div class="col-md-12">
             <h1><strong><?php echo $this->translate('Fondjämförelser ur ett hållbarhetsperspektiv har aldrig varit enklare.') ?></strong></h1>
-            <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
+            <a href="<?php echo $this->url('funds') ?>" class="btn btn-lg btn-primary">Gå till listan med fondjämförelser</a>
           </div>
           <div class="col-md-12 fund-category-buttons">
             <p><strong>Eller gå direkt till:</strong></p>
@@ -65,15 +57,15 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
         </h3>
       </div>
       <div id="to-fund-search-button" class="col-md-12 centered-column ">
-        <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Jämför fonder nu</a>
-      </div>
-
-      <div class="centered-column fb-box">
-        <div class="fb-page" data-href="https://www.facebook.com/sparahallbart" data-width="500" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/sparahallbart"><a href="https://www.facebook.com/sparahallbart">Spara hållbart</a></blockquote></div></div>
+        <a href="<?php echo $this->url('funds') ?>" class="btn btn-lg btn-primary">Gå vidare till att jämföra fonder</a>
       </div>
     </div>
 
-    <div class="col-sm-4 col-lg-3">
+    <div id="right-column-landing-page" class="col-sm-4 col-lg-3">
+
+      <a class="twitter-timeline" href="https://twitter.com/sparahallbart" data-widget-id="608991351414341632">Tweets av @sparahallbart</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+      <hr>
       <p class="learn-more">Lär dig mer</p>
       <img class="sparahallbart-school" src="/img/sparahallbartskolan.png">
       <div class="school-link" id="chart">
@@ -97,37 +89,6 @@ $submit->setAttribute('class', $submit->getAttribute('class') . ' btn-primary bt
           </a>
         </h3>
       </div>
-
-      <a class="twitter-timeline" href="https://twitter.com/sparahallbart" data-widget-id="608991351414341632">Tweets av @sparahallbart</a>
-      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-
-      <!-- Begin MailChimp Signup Form -->
-      <link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
-      <style type="text/css">
-      	#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
-      	/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
-      	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
-      </style>
-      <div id="mc_embed_signup">
-      <form action="//fondout.us8.list-manage.com/subscribe/post?u=0767fce748f978490a18638d8&amp;id=e5626c650c" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-          <div id="mc_embed_signup_scroll">
-      	<h2>Prenumerera på vårt nyhetsbrev</h2>
-      <div class="mc-field-group">
-      	<label for="mce-EMAIL">Email </label>
-      	<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
-      </div>
-      	<div id="mce-responses" class="clear">
-      		<div class="response" id="mce-error-response" style="display:none"></div>
-      		<div class="response" id="mce-success-response" style="display:none"></div>
-      	</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-          <div style="position: absolute; left: -5000px;"><input type="text" name="b_0767fce748f978490a18638d8_e5626c650c" tabindex="-1" value=""></div>
-          <div class="clear"><input type="submit" value="Prenumerera" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
-          </div>
-      </form>
-      </div>
-
-      <!--End mc_embed_signup-->
-
     </div>
   </div>
 </section>

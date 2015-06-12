@@ -20,7 +20,7 @@ html {
 }
 
 body {
-    margin: 0 0 207px; /* bottom = footer height */ /* Footer height + margin?*/
+    margin: 0 0 340px; /* bottom = footer height */ /* Footer height + margin?*/
 }
 
 footer {
@@ -30,13 +30,13 @@ footer {
   padding-bottom: 15px;
   color: @gray-light;
   background-color: @gray-lighter;
-  text-align: center;
+  //text-align: center;
 
 
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 165px; /*  same as body margin - bottom */
+  height: 310px; /*  same as body margin - bottom */
   width: 100%;
 
   .footer-links {
@@ -253,7 +253,11 @@ input[type="submit"] {
 }
 
 #left-column-landing-page {
-  border-right: 1px solid @brand-primary;
+  //border-right: 1px solid @brand-primary;
+}
+
+#right-column-landing-page {
+  border-left: 1px solid @brand-primary;
 }
 
 .glyphicon-lg {
@@ -431,6 +435,7 @@ input[type="submit"] {
 
 #to-fund-search-button {
   margin-top: 3em;
+  margin-bottom: 2em;
 }
 
 .btn {
@@ -446,5 +451,22 @@ input[type="submit"] {
 }
 
 .fb-box {
-  margin: 100px 0 20px;
+  //margin: 100px 0 20px;
+}
+
+#mce-EMAIL {
+  display: block;
+  width: 100%;
+  padding: 8px 0;
+  text-indent: 2%;
+  margin: 0.5em 0em;
+}
+
+#mc-embedded-subscribe {
+  margin: 0.5em 0em;
+}
+
+#mc_embed_signup .mc-field-group label {
+  display: block;
+
 }
