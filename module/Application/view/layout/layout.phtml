@@ -26,7 +26,6 @@
             ->prependFile($this->basePath() . '/vendor/respond/dest/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
             ->prependFile($this->basePath() . '/vendor/dist/html5shiv.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
         ; ?>
-
     </head>
     <body>
       <!-- Google Tag Manager -->
@@ -47,7 +46,6 @@
             fjs.parentNode.insertBefore(js, fjs);
           }(document, 'script', 'facebook-jssdk'));</script>
       <!-- End Facebook -->
-
 
         <header class="navbar " role="navigation">
             <div class="container">
@@ -82,7 +80,7 @@
 
                       <div class="fb-box col-sm-6 col-md-4 col-md-push-4  hidden-xs col-sm-push-6">
                         <h4>Facebook</h4>
-                        <div class="fb-page" data-href="https://www.facebook.com/sparahallbart" data-width="500" data-hide-cover="true" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/sparahallbart"><a href="https://www.facebook.com/sparahallbart">Spara hållbart</a></blockquote></div></div>
+                        <div class="fb-page" data-href="https://www.facebook.com/sparahallbart" data-width="500" data-hide-cover="false" data-show-facepile="true" data-show-posts="false"><div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/sparahallbart"><a href="https://www.facebook.com/sparahallbart">Spara hållbart</a></blockquote></div></div>
                       </div>
 
                       <div class="hidden-sm col-md-4 col-md-push-4">
@@ -105,9 +103,7 @@
                             </div>
                         </form>
                         </div>
-
                         <!--End mc_embed_signup-->
-
                       </div>
 
                       <div class="col-sm-6 col-md-4 col-md-pull-8 col-sm-pull-6">
@@ -116,15 +112,7 @@
                         <img class="hidden-xs" src="/img/sparfabriken.png">
                         <p class="copyright">Sparfabriken AB - Lund, Sverige. Org. nr. 556997-2374.<br>&copy; <!--2012 --> <?php echo date('Y') ?> <a href="/">sparahallbart.se</a></p>
                       </div>
-
-
-
-
                     </div>
-
-
-
-
                 </div>
             </footer>
         <?php echo $this->inlineScript() ?>
