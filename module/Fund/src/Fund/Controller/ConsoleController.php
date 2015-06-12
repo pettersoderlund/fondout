@@ -1619,6 +1619,41 @@ class ConsoleController extends AbstractActionController
 
     }
 
+    public function createSitemapAction() {
+      $service = $this->getConsoleService();
+      $em = $service->getEM();
+      $request = $this->getRequest();
+
+      if (!$request instanceof ConsoleRequest) {
+        throw new \RuntimeException('You can only use this action from a console!');
+      }
+
+      echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
+            "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+
+      echo "  <url>\n";
+      echo "    <loc>http://www.sparahallbart.se/funds</loc>\n";
+      echo "  </url>\n";
+
+      echo "  <url>\n";
+      echo "    <loc>http://www.sparahallbart.se/qa</loc>\n";
+      echo "  </url>\n";
+
+      $fr = $em->getRepository('Fund\Entity\Fund');
+      $funds = $fr->findAllFunds();
+
+      // Reset all values.
+      foreach ($funds as $fund) {
+        echo "  <url>\n";
+        echo "    <loc>http://www.sparahallbart.se/funds/$fund->url</loc>\n";
+        echo "  </url>\n";
+      }
+
+      // add all fundcompany pages.
+
+      echo "</urlset>\n";
+    }
+
     //Helper functions
     private function getCompanySuffix() {
       return array(

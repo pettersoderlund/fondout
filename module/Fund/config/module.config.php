@@ -66,6 +66,17 @@ return array(
                     ),
                 ),
             ),
+            'sitemap' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/sitemap.xml',
+                    'constraints' => array(),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getSitemap'
+                    ),
+                ),
+            ),
             'change-sustainability-categories' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -122,6 +133,17 @@ return array(
                       )
                   )
               ),
+              'create-sitemap' => array(
+                  'options' => array(
+                      'route'    =>
+                       'create sitemap',
+                      'defaults' => array(
+                          'controller' => 'Fund\Controller\Console',
+                          'action'     => 'createSitemap'
+                      )
+                  )
+              ),
+
                 'map-share-companies' => array(
                     'options' => array(
                         'route'    =>
