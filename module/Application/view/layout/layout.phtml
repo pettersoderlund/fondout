@@ -1,19 +1,24 @@
 <?php echo $this->doctype(); ?>
-
 <html lang="en">
     <head profile="http://www.w3.org/2005/10/profile">
+      <?php
+        $this->headMeta()->setCharset('utf-8');
+        $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
+        $this->headMeta()->appendName(
+        'description',
+        $this->translate('Har du koll på hur dina fonder investerar? Sparahållbart.se ger en inblick i vilka fonder som investerar i fossila bränslen, förbjudna vapen, alkohol, tobak och spelbolag.')
+        );
+      ?>
 
-        <meta charset="utf-8">
+      <?php echo $this->headMeta();?>
+
         <link rel="icon"
               type="image/ico"
               href="/img/favicon.ico" />
 
         <?php echo $this->headTitle($this->translate('Sparahållbart.se'))->setSeparator(' - ')->setAutoEscape(false) ?>
-
-        <?php echo $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
 
         <!-- Le styles -->
         <?php echo $this->headLink()
