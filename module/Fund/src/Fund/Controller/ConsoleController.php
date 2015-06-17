@@ -454,6 +454,33 @@ class ConsoleController extends AbstractActionController
 
         echo "Fundcompany step completed.\n";
 
+        // Check date
+        $timezone = "Europe/Stockholm";
+        if (is_null($date)) {
+            $date = \readline(
+                "Please enter date for the fund m/d/Y\n"
+            );
+        }
+
+        do  {
+            $datetimev = \DateTime::createFromFormat(
+                'm/d/Y',
+                $date,
+                new \DateTimeZone($timezone)
+            );
+
+            if(!$datetimev) {
+                $date = \readline(
+                            "Date: $date entered. " .
+                            "Please enter date for the fund m/d/Y\n"
+                            );
+            }
+
+        } while (!$datetimev);
+
+        // Set hours minutes seconds to 0/midnight
+        $datetimev->setTime(0, 0, 0);
+
         $fundInstance = null;
 
         // SEK / EUR?
@@ -478,14 +505,15 @@ class ConsoleController extends AbstractActionController
         if (is_null($fund)) {
             // Create fund
             $fund = new Fund();
-            // Create fund instance
             $fundInstance = new FundInstance();
         } else {
-            // Fund obviously exists, fetch the instance
-            // Does this really work, what if the fundinstances are cleared?
-            $fundInstance = $entityManager
-                ->getRepository('Fund\Entity\FundInstance')
-                ->findOneByFund($fund);
+          $fundInstance = $entityManager
+              ->getRepository('Fund\Entity\FundInstance')
+              ->findOneBy(array('fund' => $fund, 'date' => $datetimev));
+          if(is_null($fundInstance)){
+              // Create fund instance
+              $fundInstance = new FundInstance();
+          }
         }
 
         if ($doubleHoldings) {
@@ -513,32 +541,6 @@ class ConsoleController extends AbstractActionController
         $fundInstance->setTotalMarketValue($fundAuM*$exchangeRate);
         $fundInstance->setFund($fund);
 
-        // Check date
-        $timezone = "Europe/Stockholm";
-        if (is_null($date)) {
-            $date = \readline(
-                "Please enter date for the fund m/d/Y\n"
-            );
-        }
-
-        do  {
-            $datetimev = \DateTime::createFromFormat(
-                'm/d/Y',
-                $date,
-                new \DateTimeZone($timezone)
-            );
-
-            if(!$datetimev) {
-                $date = \readline(
-                            "Date: $date entered. " .
-                            "Please enter date for the fund m/d/Y\n"
-                            );
-            }
-
-        } while (!$datetimev);
-
-        // Set hours minutes seconds to 0/midnight
-        $datetimev->setTime(0, 0, 0);
         $fundInstance->setDate($datetimev);
         $entityManager->persist($fundInstance);
 
