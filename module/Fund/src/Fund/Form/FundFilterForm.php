@@ -50,9 +50,9 @@ class FundFilterForm extends Form
                     'display_empty_item' => true,
                     'empty_item_label'   => 'Välj fonder..',
                     'find_method'    => array(
-                        'name'   => 'findBy',
+                        'name'   => 'findAllFunds',
                         'params' => array(
-                            'criteria' => array('active' => 1),
+                            /*'criteria' => array('active' => 1),*/
                             // Use key 'orderBy' if using ORM
                             // 'orderBy'  => array('lastname' => 'ASC'),
                         ),
