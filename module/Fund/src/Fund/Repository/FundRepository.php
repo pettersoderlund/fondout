@@ -211,4 +211,21 @@ class FundRepository extends EntityRepository
         return $funds;
     }
 
+    public function findActiveFundcompanies()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder();
+
+        $dql = $qb->select('c')
+            ->from('Fund\Entity\FundCompany', 'c')
+            ->join('c.funds', 'f')
+            ->join('f.fundInstances', 'fi')
+            ->where('f.active = 1')
+            ->andWhere($qb->expr()->in('fi.date', $this->getCurrentFIDateSubQ()->getDql()));
+
+        $fundcompanies = $dql->getQuery()->getResult();
+
+        return $fundcompanies;
+    }
+
 }

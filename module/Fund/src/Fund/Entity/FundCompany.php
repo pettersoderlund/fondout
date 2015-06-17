@@ -17,7 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  *         )
  *     }
  * )
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Fund\Repository\FundRepository")
  */
 class FundCompany extends Entity
 {

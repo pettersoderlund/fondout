@@ -74,7 +74,10 @@ class FundFilterForm extends Form
                     'target_class'   => 'Fund\Entity\FundCompany',
                     'property'       => 'name',
                     'display_empty_item' => true,
-                    'empty_item_label'   => 'Välj fondbolag...'
+                    'empty_item_label'   => 'Välj fondbolag...',
+                    'find_method'    => array(
+                      'name'   => 'findActiveFundcompanies'
+                    )
                 ),
                 'attributes' => array(
                     'multiple' => 'multiple',
