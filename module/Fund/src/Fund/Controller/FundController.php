@@ -87,7 +87,6 @@ class FundController extends AbstractRestfulController
         $id = $service->getFundByUrl($url)->id;
         $fund = $service->getFund($id, $sustainability);
         //$sustainabilityNames = $service->getSustainabilityCategories($sustainability);
-        //$sharesCount = $service->getCountShares($fund);
 
         $accusationCategories = $service->findAccusationCategories();
 
