@@ -165,7 +165,7 @@ class FundController extends AbstractRestfulController
             'backuri'     => $backuri
           )
       );
-      $view->setTemplate('fund/fund/get-fund-company');
+      //$view->setTemplate('fund/fund/get-fund-company');
       return $view;
     }
 

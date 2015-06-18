@@ -1,0 +1,99 @@
+<div class="fund-company-page">
+  <div class="fund-company-header">
+    <div class="container">
+      <h1 class="">
+        <strong><?php echo $fundCompany->name ?></strong>
+      </h1>
+      <p>
+        AP-fonderna är ett samlingsnamn för de olika allmänna pensionsfonder som finns i Sverige.
+      </p>
+
+        <p>Första till fjärde AP-fonderna (AP1 – AP4) tillhör inkomstpensionssystemet och är så kallade buffert- fonder. Rollen för dessa AP-fonder är att jämna ut eventuellt underskott mellan inbetalningar av pen- sionsavgifter och utbetalningar av pensioner. Första till fjärde AP-fondernas uppgift är även att bidra till pensionssystemets långsiktiga finansiering.
+</p>
+<p>
+        Sjunde AP-fonden (AP7) är den AP-fond som flest känner till. Denna fond är det statliga alternativet
+i premiepensionssystemet (tidigare kallat PPM). Sjunde AP-fondens tillgångar kommer huvudsak- ligen från sparare som avstått från att aktivt välja fonder. Sjunde AP-fonden fungerar på så sätt likt ett ‘vanligt’ fondbolag men med statlig förvaltning.
+
+</p>
+<p>På denna sida kan du se hur AP-fonderna investerat specifikt i fossila bränslen, förbjudna vapen-, alkohol-, tobak- och spelbolag. <a href="qa#measures">Här kan du läsa mer om de olika måtten.</a>
+</p>
+    </div>
+  </div>
+
+
+<?php if ($this->fundCompany->premium): ?>
+  <section class="fund-company-picture" style="background: url('/img/fund-company/background/<?php echo $this->fundCompany->id ?>.png') 50% 50%;">
+    <div class="container">
+      <table>
+        <tr>
+          <td class="col-thin"></td>
+          <td class="col-middle">
+            <h3 class="cite"><mark><em><?php echo $this->fundCompany->cite ?></em></mark></h3>
+          </td>
+          <td class="col-thin"></td>
+        </tr>
+        <tr>
+          <td>
+            <div class="logo-container">
+              <?php echo "<img class='fund-logo' src='/img/fund-company/logo/" . $this->fundCompany->id . ".png' alt='" . $this->fundCompany->name . " logo'>" ?>
+            </div>
+            </td>
+          <td></td>
+          <td>
+            <div class="organizations">
+              <p><strong><?php echo $fundCompany->name ?></strong></p>
+              <ul>
+                <?php echo $this->fundCompany->bullets ?>
+              </ul>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </section>
+  <section class="fund-company-content">
+    <div class="container">
+
+      <div class="row well">
+        <div class="col-sm-8 col-lg-9">
+          <div class="row">
+            <div class="col-md-12">
+              <p><?php echo $this->fundCompany->section1 ?></p>
+            </div>
+            <div class="col-md-6">
+              <p><?php echo $this->fundCompany->section2 ?></p>
+            </div>
+            <div class="col-md-6">
+              <p><?php echo $this->fundCompany->section3 ?></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-lg-3">
+          <div class="well">
+            <p><?php echo $fundCompany->name ?> är med i följande organisationer...</p>
+            <ul>
+              <?php foreach($fundCompany->organisations as $organisation): ?>
+                <li><?php echo $organisation->name; ?></li>
+              <?php endforeach; ?>
+            </ul>
+          </div>
+          <p>
+            <?php echo $this->fundCompany->contact ?>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+<?php endif; ?>
+
+  <section class="fund-company-funds">
+    <div class="container">
+
+      <div class="row">
+
+        <?php echo $this->partial('alternate-funds', array('funds' => $funds, 'limit' => 999)); ?>
+      </div>
+
+    </div>
+  </section>
+</div>
