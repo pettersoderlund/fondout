@@ -38,11 +38,12 @@ $form->prepare();
     <div class="row">
       <div class="col-md-9">
         <div class="row">
-          <div class="col-md-4 hidden-xs">
+          <div class="col-md-4 hidden-xs hidden-sm">
           <p id="fund-header">Fond</p>
           <p id="sort-header"><small>Sortera efter</small></p>
           </div>
           <div class="col-md-4 centered-column">
+            <p class="visible-xs visible-sm pull-left">Sortera efter:</p>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('fragment' => 'fund-section', 'query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter fossila bränsen' src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
             </a>
@@ -60,13 +61,13 @@ $form->prepare();
             </a>
 
           </div>
-          <div class="col-md-4 centered-column hidden-xs">
+          <div class="col-md-4 centered-column hidden-xs hidden-sm">
             <p>Fondinformation</p>
           </div>
           <!--<button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>-->
         </div>
       </div>
-      <div class="col-md-3 centered-column hidden-xs">
+      <div class="col-md-3 centered-column hidden-xs hidden-sm">
         <p>Sökalternativ</p>
       </div>
     </div>
@@ -81,8 +82,6 @@ $form->prepare();
           <p><?php echo $funds->getPages()->totalItemCount;?> fonder.</p>
         </div>
         <?php echo $this->form()->openTag($form) ?>
-
-
         <div class="panel panel-default">
           <div class="panel-heading">
             <h3 class="panel-title">
@@ -148,8 +147,6 @@ $form->prepare();
             </div>
           </div>
 
-
-
           <div class="panel panel-default">
             <div class="panel-heading">
               <h3 class="panel-title">
@@ -183,7 +180,7 @@ $form->prepare();
   <?php foreach ($funds as $fund): ?>
     <li>
       <div class="row well">
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-xs-12">
           <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
           <h3>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
@@ -191,7 +188,7 @@ $form->prepare();
             </a>
           </h3>
         </div>
-        <div class="col-sm-4 centered-column">
+        <div class="col-sm-4 col-xs-5 centered-column">
           <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10. Denna fond fossil: " . $fund->getMeasureScore('fossil') . "/10.' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png'>"    ?>
           <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10. Denna fond vapen: " . $fund->getMeasureScore('weapon') . "/10.' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png'>"    ?>
           <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10. Denna fond alkohol: " . $fund->getMeasureScore('alcohol') . "/10.' src='img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png'>" ?>
@@ -204,7 +201,7 @@ $form->prepare();
           <img class="thin-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png">
           <img class="thin-symbol" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png">
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-xs-7">
           <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
               <?php echo $this->translate($fund->company->name) ?>
           </a>

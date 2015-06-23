@@ -9,6 +9,31 @@
       font-weight: bold;
     }
   }
+  @media screen and (max-width: @screen-sm-min) {
+    [class*="col-"] {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+    .bar {
+      width: 18px;
+      margin: 0px 1px 5px;
+
+    }
+    .thin-bar {
+      margin: 0px 4px 5px;
+      width: 8px;
+    }
+    .thin-symbol {
+      width: 14px;
+      margin: 1px 1px 0px;
+    }
+
+    .round-symbol {
+      width: 15px;
+      margin: 0px 2px;
+    }
+
+  }
 }
 
 .sortby-header {
