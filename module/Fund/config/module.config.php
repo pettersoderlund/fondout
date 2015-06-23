@@ -44,6 +44,17 @@ return array(
                     ),
                 ),
             ),
+            'ap-funds' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/fundcompany/apfonderna',
+                    'constraints' => array(),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getAP'
+                    ),
+                ),
+            ),
             'press' => array(
                 'type'    => 'Segment',
                 'options' => array(

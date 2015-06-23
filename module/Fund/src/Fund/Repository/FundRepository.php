@@ -59,25 +59,6 @@ class FundRepository extends EntityRepository
             ->getResult();
     }
 
-    public function countShares(Fund $fund)
-    {
-         $qb =  $this->getEntityManager()
-            ->createQueryBuilder();
-
-          $qb->select('COUNT(DISTINCT s.isin)')
-            ->from('Fund\Entity\Fund', 'f')
-            ->join('f.fundInstances', 'fi')
-            ->join('fi.shareholdings', 'sh')
-            ->join('sh.share', 's')
-            ->where('f.name = ?1')
-            ->andWhere($qb->expr()->in('fi.date', $this->getCurrentFIDateSubQ()->getDql()))
-            ->andWhere('sh.marketValue > 0');
-
-
-        $qb->setParameter(1, $fund->name);
-        return $qb->getQuery()->getSingleScalarResult();
-    }
-
     public function findAllFunds()
     {
         $qb = $this->getEntityManager()
@@ -122,40 +103,6 @@ class FundRepository extends EntityRepository
             $fundMap[$fund->id] = $fund;
         }
 
-        /*
-        // subquery: select all distinct accusations that match the category criteria
-        // and the share company ID
-        // NOTE 18/3 2015: Should be DISTINCT a.accusationCategory
-        $subQueryBuilder->select('DISTINCT a.accusation')
-            ->from('Fund\Entity\Accusation', 'a')
-            ->join('a.category', 'c')
-            ->where('a.shareCompany = sc.id');
-
-        if (count($category) > 0) {
-            $subQueryBuilder->andWhere($subQueryBuilder->expr()->in('c.id', $category));
-        }
-
-        // query: aggregate all market values for all controversial shareholdings per fund
-        $queryBuilder->select('f.id, SUM(sh.marketValue) AS score')
-            ->from('Fund\Entity\Fund', 'f')
-            ->join('f.fundInstances', 'fi')
-            ->join('fi.shareholdings', 'sh')
-            ->join('sh.share', 's')
-            ->join('s.shareCompany', 'sc')
-            ->where(
-                $queryBuilder->expr()->andx(
-                    $queryBuilder->expr()->exists($subQueryBuilder->getDql()),
-                    $queryBuilder->expr()->in('f.id', array_keys($fundMap))
-                )
-            )->groupBy('f.id');
-
-        // map the ControversialValue DTO to the related fund
-        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
-            if (isset($fundMap[$cv['id']])) {
-                $fundMap[$cv['id']]->calculateSustainability($cv['score']);
-            }
-        }
-        */
 
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
         // query: nav date all active funds
@@ -217,7 +164,6 @@ class FundRepository extends EntityRepository
             }
         }
 
-
         // NAV calculations
         $queryBuilder = $this->getEntityManager()->createQueryBuilder();
         $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
@@ -260,63 +206,26 @@ class FundRepository extends EntityRepository
             }
         }
 
-
-        /*$conn = $this->getEntityManager()->getConnection();
-        $sql =
-        "select f.id as id, fi.net_asset_value as nav " .
-        "from fund f " .
-        "join fund_instance fi on fi.fund = f.id  " .
-        "where date = (select DATE_ADD(max(date), INTERVAL -1 year) from fund_instance) " .
-        "and fi.net_asset_value != 0";
-        $stmt = $conn->query($sql); // Simple, but has several drawbacks
-
-        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
-            if (isset($fundMap[$cv['id']])) {
-              $fundMap[$cv['id']]->setNav1year($cv['nav']);
-            }
-        }
-        */
-        /*
-        $sql =
-        "select f.id as id, fi.net_asset_value as nav " .
-        "from fund f " .
-        "join fund_instance fi on fi.fund = f.id  " .
-        "where date = (select DATE_ADD(max(date), INTERVAL -3 year) from fund_instance) " .
-        "and fi.net_asset_value != 0";
-        $stmt = $conn->query($sql); // Simple, but has several drawbacks
-
-        $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
-        ->from('Fund\Entity\Fund', 'f')
-        ->join('f.fundInstances', 'fi')
-        ->where($queryBuilder->expr()->in('fi.date', $this->getOldFIDateSubQ(36)->getDql()))
-        ->andWhere($queryBuilder->expr()->neq('fi.netAssetValue', 0));
-
-        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
-            if (isset($fundMap[$cv['id']])) {
-              $fundMap[$cv['id']]->setNav3year($cv['nav']);
-            }
-        }
-
-        $queryBuilder = $this->getEntityManager()->createQueryBuilder();
-
-        $queryBuilder->select('f.id as id, fi.netAssetValue as nav')
-        ->from('Fund\Entity\Fund', 'f')
-        ->join('f.fundInstances', 'fi')
-        ->where($queryBuilder->expr()->in('fi.date', $this->getOldFIDateSubQ(60)->getDql()))
-        ->andWhere($queryBuilder->expr()->neq('fi.netAssetValue', 0));
-
-        foreach ($queryBuilder->getQuery()->getResult() as $cv) {
-            if (isset($fundMap[$cv['id']])) {
-              $fundMap[$cv['id']]->setNav5year($cv['nav']);
-
-            }
-        }
-        */
-
-
         //echo \Doctrine\Common\Util\Debug::dump($this);
 
         return $funds;
+    }
+
+    public function findActiveFundcompanies()
+    {
+        $qb = $this->getEntityManager()
+            ->createQueryBuilder();
+
+        $dql = $qb->select('c')
+            ->from('Fund\Entity\FundCompany', 'c')
+            ->join('c.funds', 'f')
+            ->join('f.fundInstances', 'fi')
+            ->where('f.active = 1')
+            ->andWhere($qb->expr()->in('fi.date', $this->getCurrentFIDateSubQ()->getDql()));
+
+        $fundcompanies = $dql->getQuery()->getResult();
+
+        return $fundcompanies;
     }
 
 }

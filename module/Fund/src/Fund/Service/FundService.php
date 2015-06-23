@@ -351,20 +351,6 @@ class FundService
         return $orderedfunds;
     }
 
-
-    /**
-    * Get the total count of shares w/ marketvalue>0 for the given fund
-    *
-    * @param \Fund\Entity\Fund
-    * @return int numberOfShares
-    */
-    public function getCountShares($fund)
-    {
-        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        return $repository->countShares($fund);
-    }
-
-
     /**
     * Get measure averages for all funds.
     * @param

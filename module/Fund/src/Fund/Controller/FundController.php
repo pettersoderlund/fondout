@@ -7,6 +7,7 @@ use Zend\Session\Container;
 use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Collection as CollectionAdapter;
 use Fund\Entity\Fund;
+use Doctrine\Common\Collections\Criteria;
 
 class FundController extends AbstractRestfulController
 {
@@ -87,7 +88,6 @@ class FundController extends AbstractRestfulController
         $id = $service->getFundByUrl($url)->id;
         $fund = $service->getFund($id, $sustainability);
         //$sustainabilityNames = $service->getSustainabilityCategories($sustainability);
-        //$sharesCount = $service->getCountShares($fund);
 
         $accusationCategories = $service->findAccusationCategories();
 
@@ -101,8 +101,6 @@ class FundController extends AbstractRestfulController
         } else {
           $fundCompanyFunds = null;
         }
-
-
 
         // All funds averages
         $avgAllFund = $service->findAveragesAllFunds(new Fund());
@@ -135,18 +133,40 @@ class FundController extends AbstractRestfulController
     public function getFundCompanyAction()
     {
       $service     = $this->getFundService();
-      $uri         =  $this->params()->fromRoute('name');
-      $fundCopmany = $service->getFundCompanyByUrl($uri);
-      $funds       = $service->findFundCompanyFunds($fundCopmany);
+      $uri         = $this->params()->fromRoute('name');
+      $fundCompany = $service->getFundCompanyByUrl($uri);
+      $funds       = $service->findFundCompanyFunds($fundCompany);
       $backuri     = $this->getBackLink();
 
       return new ViewModel(
           array(
-            'fundCompany' => $fundCopmany,
+            'fundCompany' => $fundCompany,
             'funds'       => $funds,
             'backuri'     => $backuri
           )
       );
+    }
+
+    public function getAPAction()
+    {
+      $service     = $this->getFundService();
+      $fundCompany = $service->getFundCompanyByUrl('apfonderna');
+      $ap7         = $service->getFundByUrl('ap7-aktiefond');
+      $funds = $fundCompany->getFunds();
+
+      $funds->add($ap7);
+      $funds = $funds->matching(Criteria::create()->orderBy(array('name' => 'asc')));
+      $backuri     = $this->getBackLink();
+
+      $view =  new ViewModel(
+          array(
+            'fundCompany' => $fundCompany,
+            'funds'       => $funds,
+            'backuri'     => $backuri
+          )
+      );
+      //$view->setTemplate('fund/fund/get-fund-company');
+      return $view;
     }
 
     public function getQAAction()

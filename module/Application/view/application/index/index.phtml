@@ -18,12 +18,7 @@ $this->headScript()
             <a class="" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => 6)))); ?>">
               Globalfonder
             </a>
-            <a class="" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => 4)))); ?>">
-              Europafonder
-            </a>
-            <a class="" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => 15)))); ?>">
-              Tillväxtmarknadsfonder
-            </a>
+            
           </div>
         </div>
     </div>
@@ -32,7 +27,36 @@ $this->headScript()
 <section class="container featurette">
   <div class="row">
     <div id="left-column-landing-page" class="col-sm-8 col-lg-7 col-lg-offset-1">
-      <div class="row">
+      <div class="">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3>Mest populära fonder</h3>
+              </div>
+              <div class="panel-body">
+                <ol>
+                  <li><a href="/funds/ap7-aktiefond">AP7 Aktiefond</a></li>
+                  <li><a href="/funds/swedbank-robur-allemansfond-komplett">Swedbank Robur Allemansfond Komplett</a></li>
+                  <li><a href="/funds/seb-varldenfond">SEB Världenfond</a></li>
+                  <li><a href="/funds/didner-gerge-aktiefond">Didner & Gerge Aktiefond</a></li>
+                  <li><a href="/funds/swedbank-robur-aktiefond-pension">Swedbank Robur Aktiefond Pension</a></li>
+                  <li><a href="/funds/folksam-lo-sverige">Folksam LO Sverige</a></li>
+                  <li><a href="/funds/amf-aktiefond-varlden">AMF Aktiefond Världen</a></li>
+                  <li><a href="/funds/swedbank-robur-transfer-70">Swedbank Robur Transfer 70</a></li>
+                  <li><a href="/funds/amf-aktiefond-sverige">AMF Aktiefond Sverige</a></li>
+                  <li><a href="/funds/folksam-lo-varlden">Folksam LO Världen</a></li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h3>Statliga pensionsfonderna</h3>
+            <p>AP-fonderna är en samling pensionsfonder som är statligt förvaltade pensionsfonder. Sparahållbart.se har gått igenom AP-fonderna och tagit fram hur de investerar! <a href="/fundcompany/apfonderna">Läs mer om AP-fonderna.</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="row featurette">
         <div class="col-md-6">
           <div class="centered-column">
             <span class="glyphicon glyphicon-piggy-bank glyphicon-lg"></span>
@@ -56,7 +80,7 @@ $this->headScript()
           </strong></em></mark>
         </h3>
       </div>
-      <div id="to-fund-search-button" class="col-md-12 centered-column ">
+      <div id="to-fund-search-button" class="centered-column ">
         <a href="<?php echo $this->url('funds') ?>" class="btn btn-lg btn-primary">Gå vidare till att jämföra fonder</a>
       </div>
     </div>
