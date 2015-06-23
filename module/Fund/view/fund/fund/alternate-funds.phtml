@@ -2,8 +2,9 @@
   <?php $i = 1; ?>
   <?php foreach ($funds as $fund): ?>
     <div class="col-md-6 alternate-fund">
-      <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+
         <div class="row well">
+          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
           <div class="col-sm-4 col-xs-12">
             <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
             <h4>
@@ -25,6 +26,7 @@
             <img class="thin-symbol" src="/img/symbols/tobacco.png">
             <img class="thin-symbol" src="/img/symbols/gambling.png">
           </div>
+          </a>
           <div class="col-sm-4 col-xs-7">
             <a class="fundinfo-btn btn btn-xxs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
                 <?php echo $this->translate($fund->company->name) ?>
@@ -35,7 +37,7 @@
             </a>
           </div>
         </div>
-      </a>
+
     </div>
 
     <?php if ($i++ == $limit) break; ?> <!-- Limit to 8 funds in list -->
