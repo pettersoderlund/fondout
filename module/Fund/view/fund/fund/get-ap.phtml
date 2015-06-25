@@ -5,21 +5,29 @@
         <strong><?php echo $fundCompany->name ?></strong>
       </h1>
       <p>
-        AP-fonderna är ett samlingsnamn för de olika allmänna pensionsfonder som finns i Sverige.
+        AP-fonderna är ett samlingsnamn för de olika allmänna pensionsfonder som finns i Sverige.
+      </p>
+      <p>
+        Första, andra, tredje och fjärde AP-fonden (AP1-AP4) tillhör
+        inkomstpensionssystemet och är så kallade buffertfonder. Rollen för dessa AP-fonder
+        är att jämna ut eventuellt underskott mellan inbetalningar av pensionsavgifter och utbetalningar
+        av pensioner. Första till fjärde AP-fondernas uppgift är även att bidra till pensionssystemets
+        långsiktiga finansiering.
       </p>
 
-        <p>Första till fjärde AP-fonderna (AP1 – AP4) tillhör inkomstpensionssystemet och är så kallade buffertfonder. Rollen för dessa AP-fonder är att jämna ut eventuellt underskott mellan inbetalningar av pen- sionsavgifter och utbetalningar av pensioner. Första till fjärde AP-fondernas uppgift är även att bidra till pensionssystemets långsiktiga finansiering.
-</p>
-<p>
-        Sjunde AP-fonden (AP7) är den AP-fond som flest känner till. Denna fond är det statliga alternativet
-i premiepensionssystemet (tidigare kallat PPM). Sjunde AP-fondens tillgångar kommer huvudsakligen från sparare som avstått från att aktivt välja fonder. Sjunde AP-fonden fungerar på så sätt likt ett ‘vanligt’ fondbolag men med statlig förvaltning.
+      <p>
+        Sjunde AP-fonden (AP7) är den AP-fond som flest känner till. denna fond är det statliga
+        alternativt i premiepensionssystemet (tidigare kallat PPM). Sjunde AP-fondens tillgångar kommer huvudsakligen från sparare som
+        avstått från att aktivt välja fonder. Sjunde AP-fonden fungerar på så sätt lkt ett 'vanligt' fondbolag men med statlig
+        förvaltning.
+      </p>
 
-</p>
-<p>På denna sida kan du se hur AP-fonderna investerat specifikt i fossila bränslen, förbjudna vapen-, alkohol-, tobak- och spelbolag. <a href="/qa#measures">Här kan du läsa mer om de olika måtten.</a>
-</p>
+      <p>
+        På denna sida kan du se hur AP-fonderna investerat specifikt i fossila bränslen, förbjudna vapen, alkohol-, tobak-, och spelbolag.
+        <a href="/qa#measures">Här kan du läsa mer om de olika måtten. </a>
+      </p>
     </div>
   </div>
-
 
 <?php if ($this->fundCompany->premium): ?>
   <section class="fund-company-picture" style="background: url('/img/fund-company/background/<?php echo $this->fundCompany->id ?>.png') 50% 50%;">
@@ -88,12 +96,9 @@ i premiepensionssystemet (tidigare kallat PPM). Sjunde AP-fondens tillgångar k
 
   <section class="fund-company-funds">
     <div class="container">
-
       <div class="row">
-
         <?php echo $this->partial('alternate-funds', array('funds' => $funds, 'limit' => 999)); ?>
       </div>
-
     </div>
   </section>
 </div>

@@ -56,8 +56,8 @@ $('body').attr('data-target', '#scrollSpy');
       <p>Värt att tänka på är att det utöver hållbarhetsbiten finns många parametrar som är viktiga när det kommer till ditt val av fond.</p>
 
       <div class="well how-to">
+        <h4 id="intro">Hur använder jag sparahållbart.se på bästa vis?</h4>
         <ol id="simple-how-to">
-          <h4 id="intro">Hur använder jag sparahållbart.se på bästa vis?</h4>
           <li>Kolla upp vilka fonder du sparar i idag/ Vilka fonder du är intresserad av att börja spara i.</li>
           <li>Hitta fonderna i fondsök på Sparahållbart.se</li>
           <li>Vilka fondkategorier har dina fonder? (Fondkategorin för respektive fond hittas både i fondsök samt på respektive fondsida)</li>
@@ -74,9 +74,9 @@ $('body').attr('data-target', '#scrollSpy');
       <?php foreach($accCategories as $cname => $category): ?>
         <?php if ($rowCount % 2 == 0 ) echo "<div class='row'>"; ?>
           <div class="col-sm-6 category-desc">
-            <img class="category-image" src='/img/qa/<?php echo $cname ?>.jpg'>
+            <img class="category-image" src='/img/qa/<?php echo $cname ?>.jpg' alt="Category image <?php echo $cname ?>">
             <h3>
-              <img class="symbol" src='/img/symbols/<?php echo $cname ?>.png'>
+              <img class="symbol" src='/img/symbols/<?php echo $cname ?>.png' alt="<?php echo $cname ?> symbol">
               <?php echo $category->name ?>
             </h3>
             <p>
@@ -88,13 +88,13 @@ $('body').attr('data-target', '#scrollSpy');
 
       <div class="row">
         <div class="col-sm-9">
-          <h3 id="levels">Nivå av hållbarhet</h2>
-          <img class="qa-bar" src="/img/bar/bar7.png">
-          <img class="qa-bar" src="/img/bar/bar5.png">
-          <img class="qa-bar" src="/img/bar/bar1.png">
-          <img class="qa-bar" src="/img/thin-bar/thinbar10.png">
-          <img class="qa-bar" src="/img/thin-bar/thinbar4.png">
-          <img class="qa-bar" src="/img/thin-bar/thinbar2.png">
+          <h3 id="levels">Nivå av hållbarhet</h3>
+          <img class="qa-bar" src="/img/bar/bar7.png" alt="Nivåmätare 7/10">
+          <img class="qa-bar" src="/img/bar/bar5.png" alt="Nivåmätare 5/10">
+          <img class="qa-bar" src="/img/bar/bar1.png" alt="Nivåmätare 1/10">
+          <img class="qa-bar" src="/img/thin-bar/thinbar10.png" alt="Nivåmätare 10/10">
+          <img class="qa-bar" src="/img/thin-bar/thinbar4.png" alt="Nivåmätare 4/10">
+          <img class="qa-bar" src="/img/thin-bar/thinbar2.png" alt="Nivåmätare 2/10">
 
           <p>Mätaren visar hur respektive fond ligger till gällande ovanstående mått. Nivån i mätaren utgår från hur många antal bolag fonden har investerat i gällande respektive mått och stiger enligt en logaritmisk modell för att du enkelt ska kunna jämföra fonder innehållande både många och få innehav.</p>        </div>
         <div class="col-sm-3 well">
@@ -124,14 +124,15 @@ $('body').attr('data-target', '#scrollSpy');
 <section class="container qa-section">
   <div class="row">
     <div class="col-md-9">
-
-
-      Att förstå sig på det där med sparande och val av hur dina pengar ska investeras är inte alltid helt lätt. Sparahållbart-skolan syftar till att göra det hela lite lättare.
-
-      Skolan kommer att uppdateras efter hand så att du som sparare ska kunna göra ett fondval som ligger i linje med just dina preferenser och mål.
-
-      Hittar du inte svar på det du undrar? Mejla oss på hej@sparfabriken.se
-
+      <p>
+        Att förstå sig på det där med sparande och val av hur dina pengar ska investeras är inte alltid helt lätt. Sparahållbart-skolan syftar till att göra det hela lite lättare.
+      </p>
+      <p>
+        Skolan kommer att uppdateras efter hand så att du som sparare ska kunna göra ett fondval som ligger i linje med just dina preferenser och mål.
+      </p>
+      <p>
+        Hittar du inte svar på det du undrar? Mejla oss på hej@sparfabriken.se
+      </p>
       <h2 id="part1">Del 1: Fondsparande</h2>
       I denna del går vi igenom det som kan vara bra att veta gällande fondsparande. I nästa del riktar vi in oss mer specifikt mot hållbart sparande.
 
