@@ -1512,8 +1512,6 @@ class ConsoleController extends AbstractActionController
         exit("Industry: $industryName not found. \n");
       }
 
-
-
       // Update
       $company->setIndustry($industry);
 
@@ -1541,10 +1539,6 @@ class ConsoleController extends AbstractActionController
       foreach ($funds as $fund) {
         $fund->resetMeasures();
         //echo \Doctrine\Common\Util\Debug::dump($fund);
-      }
-
-      foreach ($funds as $fund) {
-        $em->persist($fund);
       }
 
       $funds = $fr->mapControversialMarketValues($funds);
@@ -1621,6 +1615,9 @@ class ConsoleController extends AbstractActionController
 
     }
 
+    /** TODO:
+    * Include fund company pages
+    */
     public function createSitemapAction() {
       $service = $this->getConsoleService();
       $em = $service->getEM();
@@ -1658,41 +1655,7 @@ class ConsoleController extends AbstractActionController
 
     //Helper functions
     private function getCompanySuffix() {
-      return array(
-
-        ' group',
-        '.',
-        ',',
-        ' corporation',
-        ' group',
-        ' plc',
-        ' limited',
-        ' & co.',
-        ' ab',
-        ' a/s',
-        ' oyj',
-        ' asa',
-        ' hf',
-        ' abp',
-        ' incorporated',
-        ' company',
-        ' & company',
-        ' ag',
-        ' (the)',
-        ' and company',
-        ' holdings',
-        ' financial',
-        'the ',
-        ' corp',
-        ' inc',
-        ' hldgs',
-        ' companies',
-        ' nl',
-        ' se',
-        's.p.a.',
-        ' spa',
-        's.a.',
-        'aktiengesellschaft');
+      return array(' group', '.', ', ', ' corporation', ' group', ' plc', ' limited', ' & co.', ' ab', ' a/s', ' oyj', ' asa', ' hf', ' abp', ' incorporated', ' company', ' & company', ' ag', ' (the)', ' and company', ' holdings', ' financial', 'the ', ' corp', ' inc', ' hldgs', ' companies', ' nl', ' se', 's.p.a.', ' spa', 's.a.', 'aktiengesellschaft');
     }
 
     private function createFundUrl($fundName)
