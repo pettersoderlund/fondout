@@ -98,6 +98,7 @@ class FundController extends AbstractRestfulController
         // Fund Company funds
         // ONly if fund is premium
         if ($fund->fundCompany->premium) {
+          $fundCompanyFunds = $service->findFundCompanyFunds($fund->fundCompany);
         } else {
           $fundCompanyFunds = null;
         }
