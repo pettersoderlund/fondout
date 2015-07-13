@@ -45,7 +45,7 @@ class Shareholding extends Entity
      *
      * @ORM\ManyToOne(targetEntity="Fund\Entity\FundInstance", inversedBy="shareholdings")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fund_instance", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="fund_instance", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     protected $fundInstance;
@@ -55,7 +55,7 @@ class Shareholding extends Entity
      *
      * @ORM\ManyToOne(targetEntity="Fund\Entity\Share", inversedBy="shareholdings")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="share", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="share", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     protected $share;

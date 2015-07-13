@@ -52,7 +52,7 @@ class FundInstance extends Entity
      *
      * @ORM\ManyToOne(targetEntity="Fund\Entity\Fund", inversedBy="fundInstances")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="fund", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="fund", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     protected $fund;
