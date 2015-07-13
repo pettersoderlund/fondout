@@ -1,0 +1,14 @@
+#!/bin/bash
+source ~/Sites/fondout/script/dbconfig.local
+# brew install coreutils -- grealpath
+cd $(dirname `grealpath $0`)
+pwd
+mkdir tempfiles
+mysqldump --opt -u $DB_USER -p$DB_PASS fondout_maxi > tempfiles/fondoutmaxi
+mysql -u $DB_USER -p$DB_PASS -h localhost fondout < tempfiles/fondoutmaxi
+
+mysql -u $DB_USER -p$DB_PASS -h localhost fondout < minimize-database.sql
+
+rm tempfiles/*
+rm -rf tempfiles
+echo "fin. \n"
