@@ -123,8 +123,8 @@ class Fund extends Entity
     /**
      * @ORM\ManyToMany(targetEntity="\Fund\Entity\Bank")
      * @ORM\JoinTable(name="bank_fund_listing",
-     *      joinColumns={@ORM\JoinColumn(name="fund", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="bank", referencedColumnName="id")}
+     *      joinColumns={@ORM\JoinColumn(name="fund", referencedColumnName="id", onDelete="CASCADE")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="bank", referencedColumnName="id", onDelete="CASCADE")}
      *      )
      **/
     private $banks;

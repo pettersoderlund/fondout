@@ -42,7 +42,7 @@ class ShareAlias extends Entity
      *
      * @ORM\ManyToOne(targetEntity="\Fund\Entity\Share", inversedBy="share_alias")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="share", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="share", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     protected $share;
@@ -102,5 +102,5 @@ class ShareAlias extends Entity
     public function getShare()
     {
         return $this->share;
-    }    
+    }
 }

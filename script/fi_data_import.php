@@ -27,8 +27,9 @@ $file->setCsvControl("\t");
 $fileIterator = new LimitIterator($file, 1);
 
 // Create db connection
+$dbname = $argv[2];
 $dsn  = 'mysql:host=' . '127.0.0.1' . ';';
-$dsn .= 'dbname=' . 'fondout' . ';';
+$dsn .= 'dbname=' . $dbname . ';';
 $dsn .= 'charset=' . 'utf8' . ';';
 $db = new \PDO(
     $dsn,

@@ -5,11 +5,11 @@ $helpCommands = array('--help', '-help', '-h', '-?');
 $script = basename($argv[0]);
 
 $helpMessage = <<<EOF
-usage: php $script <filename> [--help]
+usage: php $script <filename> <database> [--help]
 
 EOF;
 
-if ($argc != 2 || in_array($argv[1], $helpCommands)) {
+if ($argc != 3 || in_array($argv[1], $helpCommands)) {
 
     print $helpMessage;
     exit;
