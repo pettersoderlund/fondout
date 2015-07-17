@@ -18,7 +18,9 @@
         <tr>
           <td class="col-thin"></td>
           <td class="col-middle">
+            <!--
             <h3 class="cite"><mark><em><?php echo $this->fundCompany->cite ?></em></mark></h3>
+            -->
           </td>
           <td class="col-thin"></td>
         </tr>
@@ -30,12 +32,14 @@
             </td>
           <td></td>
           <td>
+            <!--
             <div class="organizations">
               <p><strong><?php echo $fundCompany->name ?></strong></p>
               <ul>
                 <?php echo $this->fundCompany->bullets ?>
               </ul>
             </div>
+            -->
           </td>
         </tr>
       </table>
@@ -81,7 +85,13 @@
 
       <div class="row">
         <div class="col-md-12 centered-column header">
-          <h2><mark>Våra fonder</mark></h2>
+          <h2><mark>
+            <?php if ($this->fundCompany->premium): ?>
+              Våra fonder
+            <?php else: ?>
+              <?php echo $this->fundCompany->name ?>
+            <?php endif; ?>
+            </mark></h2>
         </div>
         <?php echo $this->partial('alternate-funds', array('funds' => $funds, 'limit' => 999)); ?>
       </div>
