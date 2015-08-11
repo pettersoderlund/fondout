@@ -1,4 +1,6 @@
 #!/bin/bash
-source ~/Sites/fondout/script/dbconfig.local
+# brew install coreutils -- grealpath
+cd $(dirname `grealpath $0`)
+source dbconfig.local
 mysqldump --opt -u $DB_USER -p$DB_PASS $DB_FONDOUT_MAXI > ~/Google\ Drive/Sparfabriken/Databasdumpar/$DB_FONDOUT_MAXI\_$( date +%Y )_$( date +%m )_$( date +%d ).sql
 mysqldump --opt -u $DB_USER -p$DB_PASS $DB_FONDOUT > ~/Google\ Drive/Sparfabriken/Databasdumpar/$DB_FONDOUT\_mini\_$( date +%Y )_$( date +%m )_$( date +%d ).sql
