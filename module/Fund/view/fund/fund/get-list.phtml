@@ -27,11 +27,26 @@ $form->setAttribute('method', 'GET');
 $form->setAttribute('action', $this->url('funds', array(), array('query' => $query)));
 $form->prepare();
 ?>
-<section class="fund-search-intro">
-  <div class="container">
-    <?php echo $this->partial('how-to-search', array()); ?>
+
+<!-- MODAL -->
+<div class="modal fade" id="howToSearchModal" tabindex="-1" role="dialog" aria-labelledby="HowToSearch">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body fund-search-intro">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+            <?php echo $this->partial('how-to-search', array()); ?>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">OK, ta mig till fondsök!</button>
+      </div>
+    </div>
   </div>
-</section>
+</div>
+<!-- END MODAL -->
+
+
+
 <nav class="sort-menu">
   <div class="container">
     <div class="row">
@@ -171,6 +186,10 @@ $form->prepare();
       <?php echo $this->formHidden($form->get('category')) ?>
       <?php echo $this->form()->closeTag() ?>
         <br />
+        <!-- MODAL BUTTON -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#howToSearchModal">
+          ?
+        </button>
     </div>
     <div class="col-md-9 col-md-pull-3">
       <?php if (count($funds)): ?>

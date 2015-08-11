@@ -15,13 +15,28 @@ $(document).ready(function() {
     html: true,
     trigger: 'hover'
   });
+
   $('[data-toggle=tooltip]').tooltip({
     html: true,
     trigger: 'hover'
   });
+
+  var visited = $.cookie('visited'); // create the cookie
+  if (visited == 'yes') {
+      return false; // second page load, cookie is active so do nothing
+  } else {
+      $('#howToSearchModal').modal();; // first page load, launch modal
+  };
+  // assign cookie's value and expiration time
+  $.cookie('visited', 'yes', {
+      expires: 7 // the number of days the cookie will be effective
+  });
+
+
+
 });
 
-/* Denna funktion för sa sort by baren blir fixed nar man skrollar ner. */
+/* This functions makes the scrollbar fixed to the top as scrolling down */
 $(document).ready(function () {
   var menu = $('.sort-menu');
   var origOffsetY = menu.offset().top;
