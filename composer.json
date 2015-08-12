@@ -1,6 +1,6 @@
 {
     "name": "fondout",
-    "homepage": "http://fondout.se/",
+    "homepage": "http://sparahallbart.se/",
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
@@ -11,7 +11,6 @@
         "zf-commons/zfc-user": "*",
         "aws/aws-sdk-php": "2.*",
         "zendframework/zend-developer-tools": "dev-master"
-
     },
     "require-dev": {
         "zendframework/zftool": "dev-master",
