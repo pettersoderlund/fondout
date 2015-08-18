@@ -29,7 +29,7 @@ $(document).ready(function() {
   };
   // assign cookie's value and expiration time
   $.cookie('visited', 'yes', {
-      expires: 7 // the number of days the cookie will be effective
+      expires: 1 // the number of days the cookie will be effective
   });
 
 
