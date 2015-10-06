@@ -198,9 +198,15 @@ class FundController extends AbstractRestfulController
 
     public function getSitemapAction()
     {
+      $service = $this->getFundService();
+
       $result = new ViewModel();
       $result->setTerminal(true);
-      return $result;
+
+      $sitemap = $service->createSitemap();
+      echo $sitemap;
+
+      return $result();
     }
 
     public function getFundService()
