@@ -429,4 +429,41 @@ class FundService
 
       return $accCat;
     }
+
+
+    /** TODO:
+    * Include fund company pages
+    */
+    public function createSitemap() {
+      $em = $this->getEntityManager();
+
+      $sitemap = "";
+      $sitemap .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+      $sitemap .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
+
+      $sitemap .= "  <url>\n";
+      $sitemap .= "    <loc>http://www.sparahallbart.se/funds</loc>\n";
+      $sitemap .= "  </url>\n";
+
+      $sitemap .= "  <url>\n";
+      $sitemap .= "    <loc>http://www.sparahallbart.se/qa</loc>\n";
+      $sitemap .= "  </url>\n";
+
+      $fr = $em->getRepository('Fund\Entity\Fund');
+      $funds = $fr->findAllFunds();
+
+      // Reset all values.
+      foreach ($funds as $fund) {
+        $sitemap .= "  <url>\n";
+        $sitemap .= "    <loc>http://www.sparahallbart.se/funds/$fund->url</loc>\n";
+        $sitemap .= "  </url>\n";
+      }
+
+      // add all fundcompany pages.
+
+      $sitemap .= "</urlset>\n";
+      return $sitemap;
+    }
+
+
 }

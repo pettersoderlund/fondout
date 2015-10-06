@@ -1615,44 +1615,6 @@ class ConsoleController extends AbstractActionController
 
     }
 
-    /** TODO:
-    * Include fund company pages
-    */
-    public function createSitemapAction() {
-      $service = $this->getConsoleService();
-      $em = $service->getEM();
-      $request = $this->getRequest();
-
-      if (!$request instanceof ConsoleRequest) {
-        throw new \RuntimeException('You can only use this action from a console!');
-      }
-
-      echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" .
-            "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n";
-
-      echo "  <url>\n";
-      echo "    <loc>http://www.sparahallbart.se/funds</loc>\n";
-      echo "  </url>\n";
-
-      echo "  <url>\n";
-      echo "    <loc>http://www.sparahallbart.se/qa</loc>\n";
-      echo "  </url>\n";
-
-      $fr = $em->getRepository('Fund\Entity\Fund');
-      $funds = $fr->findAllFunds();
-
-      // Reset all values.
-      foreach ($funds as $fund) {
-        echo "  <url>\n";
-        echo "    <loc>http://www.sparahallbart.se/funds/$fund->url</loc>\n";
-        echo "  </url>\n";
-      }
-
-      // add all fundcompany pages.
-
-      echo "</urlset>\n";
-    }
-
     //Helper functions
     private function getCompanySuffix() {
       return array(' group', '.', ', ', ' corporation', ' group', ' plc', ' limited', ' & co.', ' ab', ' a/s', ' oyj', ' asa', ' hf', ' abp', ' incorporated', ' company', ' & company', ' ag', ' (the)', ' and company', ' holdings', ' financial', 'the ', ' corp', ' inc', ' hldgs', ' companies', ' nl', ' se', 's.p.a.', ' spa', 's.a.', 'aktiengesellschaft');
