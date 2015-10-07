@@ -33,6 +33,19 @@ return array(
                     ),
                 ),
             ),
+            'organisation' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/organisation/:url',
+                    'constraints' => array(
+                        'url' => '[a-zA-Z0-9_-]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getOrganisation'
+                    ),
+                ),
+            ),
             'qa' => array(
                 'type'    => 'Segment',
                 'options' => array(

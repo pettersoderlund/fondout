@@ -108,7 +108,7 @@
             <p><?php echo $fundCompany->name ?> är med i följande organisationer som arbetar för hållbara investeringar:</p>
             <ul>
               <?php foreach($fundCompany->organisations as $organisation): ?>
-                <li><?php echo $organisation->name; ?></li>
+                <li><a href="/organisation/<?php echo $organisation->url; ?>"><?php echo $organisation->name; ?></a></li>
               <?php endforeach; ?>
             </ul>
             <?php else:?>
