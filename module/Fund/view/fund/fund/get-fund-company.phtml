@@ -1,12 +1,12 @@
 <div class="fund-company-page">
   <div class="fund-company-header">
     <div class="container">
-      <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->backuri; ?>">
+      <a class="btn btn-primary btn pull-right" href="<?php echo $this->backuri; ?>">
         Tillbaka till fondsök
       </a>
-      <h6 class="pull-left">
-        <strong><?php echo $fundCompany->name ?></strong>
-      </h6>
+      <h1 class="pull-left">
+        <?php echo $fundCompany->name ?>
+      </h1>
     </div>
   </div>
 
@@ -78,6 +78,57 @@
       </div>
     </div>
   </section>
+<?php else: ?>
+  <?php if ($this->fundCompany->section1 || sizeof($this->fundCompany->organisations)): ?>
+  <section class="fund-company-content">
+    <div class="container">
+      <div class="row well">
+        <div class="col-sm-8 col-lg-9">
+          <div class="row">
+
+            <?php if ($this->fundCompany->section1) :?>
+              <div class="col-md-12">
+                <h3>Om fondbolaget</h3>
+                <p><?php echo $this->fundCompany->section1 ?></p>
+              </div>
+            <?php endif; ?>
+            <div class="col-md-6">
+              <p><?php echo $this->fundCompany->section2 ?></p>
+            </div>
+            <div class="col-md-6">
+              <p><?php echo $this->fundCompany->section3 ?></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-4 col-lg-3">
+          <h3>Medlemsorganisationer</h3>
+
+
+            <?php if (sizeof($fundCompany->organisations)>0): ?>
+            <p><?php echo $fundCompany->name ?> är med i följande organisationer som arbetar för hållbara investeringar:</p>
+            <ul>
+              <?php foreach($fundCompany->organisations as $organisation): ?>
+                <li><?php echo $organisation->name; ?></li>
+              <?php endforeach; ?>
+            </ul>
+            <?php else:?>
+              <p><?php echo $fundCompany->name ?> är inte medlem i några organisationer kopplat till hållbara investeringar.</p>
+            <?php endif; ?>
+
+
+          <p>
+            <?php if ($this->fundCompany->contact): ?>
+            <h3>Webbplats</h3>
+            <a href="<?php echo $this->fundCompany->contact ?>" target="blank">
+              <?php echo $this->fundCompany->contact ?>
+            </a>
+          <?php endif; ?>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+<?php endif; ?>
 <?php endif; ?>
 
   <section class="fund-company-funds">
@@ -89,7 +140,7 @@
             <?php if ($this->fundCompany->premium): ?>
               Våra fonder
             <?php else: ?>
-              <?php echo $this->fundCompany->name ?>
+              Fondutbud
             <?php endif; ?>
             </mark></h2>
         </div>
