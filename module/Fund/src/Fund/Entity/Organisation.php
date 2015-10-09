@@ -57,7 +57,7 @@ class Organisation extends Entity
     /**
      * @var string
      *
-     * @ORM\Column(name="info", type="string", length=999, nullable=true)
+     * @ORM\Column(name="info", type="string", length=9999, nullable=true)
      */
     protected $info;
 
