@@ -40,6 +40,7 @@ class Organisation extends Entity
 
     /**
      * @ORM\ManyToMany(targetEntity="FundCompany", mappedBy="organisations")
+     * @ORM\OrderBy({"name" = "ASC"})
      **/
     private $fundCompanies;
 

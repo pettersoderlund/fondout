@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Fund\Controller\Fund' => 'Fund\Controller\FundController',
+            'Fund\Controller\Organisation' => 'Fund\Controller\OrganisationController',
             'Fund\Controller\Console' => 'Fund\Controller\ConsoleController',
         ),
     ),
@@ -36,13 +37,12 @@ return array(
             'organisation' => array(
                 'type'    => 'Segment',
                 'options' => array(
-                    'route'    => '/organisation/:url',
+                    'route'    => '/organisation[/:id]',
                     'constraints' => array(
                         'url' => '[a-zA-Z0-9_-]+',
                     ),
                     'defaults' => array(
-                        'controller' => 'Fund\Controller\Fund',
-                        'action'     => 'getOrganisation'
+                        'controller' => 'Fund\Controller\Organisation'
                     ),
                 ),
             ),

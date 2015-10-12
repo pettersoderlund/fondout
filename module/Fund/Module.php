@@ -6,6 +6,7 @@ use Zend\Mvc\ModuleRouteListener;
 use Zend\Mvc\MvcEvent;
 use Fund\Service\FundService;
 use Fund\Service\ConsoleService;
+use Fund\Service\OrganisationService;
 //use Zend\ModuleManager\Feature\ConsoleBannerProviderInterface;
 use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface;
 use Zend\Console\Adapter\AdapterInterface as Console;
@@ -37,6 +38,12 @@ class Module implements AutoloaderProviderInterface,
             'factories' => array(
                 'FundService' => function ($serviceLocator) {
                     $service = new FundService();
+                    $service->setEntityManager($serviceLocator->get('Doctrine\ORM\EntityManager'));
+
+                    return $service;
+                },
+                'OrganisationService' => function ($serviceLocator) {
+                    $service = new OrganisationService();
                     $service->setEntityManager($serviceLocator->get('Doctrine\ORM\EntityManager'));
 
                     return $service;

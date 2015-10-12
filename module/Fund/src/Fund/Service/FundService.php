@@ -172,16 +172,6 @@ class FundService
           );
     }
 
-    public function setEntityManager(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
-
-    public function getEntityManager()
-    {
-        return $this->entityManager;
-    }
-
     public function getSustainabilityCategories($sustainability = array())
     {
         return $this->getEntityManager()
@@ -483,5 +473,13 @@ class FundService
       return $sitemap;
     }
 
+    public function setEntityManager(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
+    }
 
+    public function getEntityManager()
+    {
+        return $this->entityManager;
+    }
 }
