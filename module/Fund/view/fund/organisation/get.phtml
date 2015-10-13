@@ -1,0 +1,25 @@
+<div class="container organisation-page">
+  <div class="row">
+    <div class="col-md-12">
+      <h1><?php echo $this->organisation->name ?></h1>
+    </div>
+    <div class="col-md-8">
+      <h2>Om organisationen</h2>
+      <p><?php echo $this->organisation->info ?><p>
+    </div>
+    <div class="col-md-4">
+      <h2>Webbplats</h2>
+      <p>
+        <a href="<?php echo $this->organisation->website ?>" target="blank"><?php echo $this->organisation->website ?></a>
+      <p>
+      <h2>Fondbolag som är medlemmar</h2>
+      <ul>
+        <?php foreach ($this->organisation->getFundCompanies() as $fundCompany): ?>
+          <li>
+            <a class="btn btn-success" href="/fundcompany/<?php echo $this->translate($fundCompany->url) ?>"><?php echo $fundCompany->name ?></a>
+          </li>
+        <?php endforeach?>
+      </ul>
+    </div>
+  </div>
+</div>

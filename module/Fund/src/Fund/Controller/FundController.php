@@ -148,6 +148,25 @@ class FundController extends AbstractRestfulController
       );
     }
 
+    public function getOrganisationAction()
+    {
+      $service     = $this->getFundService();
+      $uri         = $this->params()->fromRoute('url');
+      $backuri     = $this->getBackLink();
+      $organisation = $service->getOrganisationByUrl($uri);
+
+      //$funds       = $service->findFundCompanyFunds($fundCompany);
+
+
+      return new ViewModel(
+          array(
+            'organisation' => $organisation,
+            'backuri'      => $backuri
+          )
+      );
+    }
+
+
     public function getAPAction()
     {
       $service     = $this->getFundService();

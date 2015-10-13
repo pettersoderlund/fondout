@@ -40,12 +40,34 @@ class Organisation extends Entity
 
     /**
      * @ORM\ManyToMany(targetEntity="FundCompany", mappedBy="organisations")
+     * @ORM\OrderBy({"name" = "ASC"})
      **/
     private $fundCompanies;
 
     public function __construct() {
         $this->fundCompanies = new ArrayCollection();
     }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="url", type="string", length=255, nullable=true)
+     */
+    protected $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="info", type="string", length=9999, nullable=true)
+     */
+    protected $info;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="website", type="string", length=255, nullable=true)
+     */
+    protected $website;
 
     /**
      * Get id
@@ -78,6 +100,37 @@ class Organisation extends Entity
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get url
+     *
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return $this->info;
+    }
+
+
+    /**
+     * Get website
+     *
+     * @return string
+     */
+    public function getWebsite()
+    {
+        return $this->website;
     }
 
     /**

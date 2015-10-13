@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Medlemsorganisationer</h1>
+  <p>För att förändras som företag och få en tredjeparts intyg på att man gör vissa insatser finns det medlemsorganisationer, globala som nationella, som många fondförvaltare väljer att gå med i.
+  Vad man skriver under på skiljer sig brett och kan tex. vara att ta fram och redovisa indirekta koldioxid-utsläpp på sina fonder eller att verka för transparens och hållbarhet i allmänhet i koppling till sin kapitalförvaltning.</p>
+
+  <?php foreach ($this->organisations as $organisation): ?>
+    <a class=' btn btn-success' href='/organisation/<?php echo $organisation->url ?> '>
+      <?php echo $organisation->name ?>
+      <br>
+      <span class="badge"> <?php echo sizeof($organisation->getFundCompanies()) ?> fondbolag </span>
+    </a>
+  <?php endforeach; ?>
+
+</div>
