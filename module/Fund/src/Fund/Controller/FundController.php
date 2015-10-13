@@ -8,6 +8,7 @@ use Zend\Paginator\Paginator;
 use DoctrineModule\Paginator\Adapter\Collection as CollectionAdapter;
 use Fund\Entity\Fund;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class FundController extends AbstractRestfulController
 {
@@ -151,17 +152,19 @@ class FundController extends AbstractRestfulController
     public function getAPAction()
     {
       $service     = $this->getFundService();
-      $fundCompany = $service->getFundCompanyByUrl('apfonderna');
-      $ap7         = $service->getFundByUrl('ap7-aktiefond');
-      $funds = $fundCompany->getFunds();
 
-      $funds->add($ap7);
+      $funds = new ArrayCollection();
+      $funds->add($service->getFundByUrl('ap1'));
+      $funds->add($service->getFundByUrl('ap2'));
+      $funds->add($service->getFundByUrl('ap3'));
+      $funds->add($service->getFundByUrl('ap4'));
+      $funds->add($service->getFundByUrl('ap7-aktiefond'));
+
       $funds = $funds->matching(Criteria::create()->orderBy(array('name' => 'asc')));
       $backuri     = $this->getBackLink();
 
       $view =  new ViewModel(
           array(
-            'fundCompany' => $fundCompany,
             'funds'       => $funds,
             'backuri'     => $backuri
           )
