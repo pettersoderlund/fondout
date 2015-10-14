@@ -14,7 +14,7 @@ from random import randint
 class GoogleIsinSearch:
     def __init__(self, maxsleeptime=15, minsleeptime=3):
         self.minsleeptime   = minsleeptime
-        self.maxsleeptime   = sleeptime
+        self.maxsleeptime   = maxsleeptime
         self.nextsleep      = 0
         self.lastsearch     = datetime.datetime.now()
 
@@ -46,7 +46,7 @@ class GoogleIsinSearch:
         timediff = (datetime.datetime.now() - self.lastsearch).seconds
         if (timediff < self.nextsleep):
             time.sleep(self.nextsleep-timediff)
-        self.nextsleep      = randint(self.minsleeptime, self.sleeptime)
+        self.nextsleep      = randint(self.minsleeptime, self.maxsleeptime)
         self.lastsearch     = datetime.datetime.now()
 
 
