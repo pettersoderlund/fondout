@@ -41,9 +41,9 @@ class FindIsin:
         self.connection.close()
         sys.exit(0)
 
-    def signal_handler(signal, frame):
+    def signal_handler(self, signal, frame):
             print('You pressed Ctrl+C!')
-            exit_procedure()
+            self.exit_procedure()
 
     def _execute_share_search_query(self, query, name):
         cursor = self.connection.cursor(buffered=True)
