@@ -79,7 +79,7 @@ class GoogleIsinSearch:
                 if tried > 4:
                     return
                 time.sleep(30)
-                br = self_get_browser()
+                br = self._get_browser()
                 continue
             except Exception as e:
                 print "Unexpected error:", sys.exc_info()[0], e

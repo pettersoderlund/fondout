@@ -26,12 +26,12 @@ class AddFundSearchFund:
 
         print DB_QUERY
 
+        if (type(total_aum) is str):
+            total_aum = total_aum.replace(" ", "")
+
         cursor.execute(DB_QUERY,
-                (name.strip(" "),
-                currency.strip(" "),
-                date,
-                total_aum.replace(" ", ""))
-            )
+                (name.strip(" "), currency.strip(" "), date, total_aum))
+
         fund_id = cursor.lastrowid
         cursor.close()
         self.cnx.commit()
@@ -47,11 +47,14 @@ class AddFundSearchFund:
         if (type(weight) is str):
             weight = weight.replace(" ", "")
 
+        if (type(market_value) is str):
+            market_value.replace(" ", "")
+
         cursor.execute(DB_QUERY,
             (name.strip(" "),
             fund_id,
             weight,
-            market_value.replace(" ", ""),
+            market_value,
             note
             )
         )
