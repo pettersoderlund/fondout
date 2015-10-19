@@ -225,6 +225,19 @@ class FundCompany extends Entity
     }
 
     /**
+     * Set url
+     *
+     * @param string $url
+     * @return FundCompany
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+
+    /**
      * Get info
      *
      * @return string

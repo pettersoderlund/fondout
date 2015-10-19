@@ -12,7 +12,7 @@ import sys
 from random import randint
 
 class GoogleIsinSearch:
-    def __init__(self, maxsleeptime=15, minsleeptime=3):
+    def __init__(self, maxsleeptime=16, minsleeptime=4):
         self.minsleeptime   = minsleeptime
         self.maxsleeptime   = maxsleeptime
         self.nextsleep      = 0
@@ -93,7 +93,7 @@ class GoogleIsinSearch:
         occurances = {}
 
         for line in br.response().read().split('\n'):
-            isinResult = re.search( r'[A-Z]{2}[0-9]{1}[0-9A-Z]{8}[0-9]{1}', line, flags=0)
+            isinResult = re.search( r'[A-Z]{2}[0-9A-Z]{9}[0-9]{1}', line, flags=0)
             if isinResult:
                 #print company, " : ", isinResult.group()
                 if isinResult.group() in occurances:

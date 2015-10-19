@@ -442,6 +442,7 @@ class ConsoleController extends AbstractActionController
                     //Create new fund Company
                     $fundCompany = new FundCompany();
                     $fundCompany->setName($fundCompanyName);
+                    $fundCompany->setUrl($this->createFundUrl($fundCompanyName));
                     $entityManager->persist($fundCompany);
                     break;
 
@@ -557,7 +558,18 @@ class ConsoleController extends AbstractActionController
         foreach ($shares as $row) {
             $isin = $row[0];
             $market_value = $row[1];
-            $market_value = str_replace(array(" ", ","), "", $market_value);
+            # if one , replace with .
+            # if more than one , replace with ""
+            $market_value = str_replace(" ", "", $market_value);
+
+            if(is_string($market_value)) {
+              if (substr_count($market_value, ",") > 1) {
+                $market_value = str_replace(",", "", $market_value);
+              } elseif (substr_count($market_value, ",") == 1) {
+                $market_value = str_replace(",", ".", $market_value);
+              }
+            }
+
             $name = $row[2];
 
             // Share exists?
