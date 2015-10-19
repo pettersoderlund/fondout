@@ -8,7 +8,10 @@ use Doctrine\ORM\Mapping as ORM;
  * Accusation
  *
  * @ORM\Table(
- *     name="share_company_accusation"
+ *     name="share_company_accusation",
+ *     uniqueConstraints={
+ *         @ORM\UniqueConstraint(name="accat_source_sc", columns={"accusation_category_id", "source_id", "share_company_id"})
+ *     }
  * )
  * @ORM\Entity
  */

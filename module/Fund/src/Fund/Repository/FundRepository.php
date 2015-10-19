@@ -20,7 +20,7 @@ class FundRepository extends EntityRepository
     public function findControversialCompanies(Fund $fund, $accCategory)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('sc.name as name,
+        $qb->select('DISTINCT(sc.name) as name,
               SUM(sh.marketValue)/fi.totalMarketValue as part')
               ->from('Fund\Entity\ShareCompany', 'sc')
               ->join('sc.shares', 's')
@@ -41,6 +41,7 @@ class FundRepository extends EntityRepository
               )
               ->andWhere('accusation_category.name = ?2')
               ->groupBy('sc.name')
+              ->groupBy('accusations.id')
               ->orderBy('part', 'desc')
               ->setParameter(1, $fund->name)
               ->setParameter(2, $accCategory->name);
