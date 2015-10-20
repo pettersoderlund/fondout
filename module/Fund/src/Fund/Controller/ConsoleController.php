@@ -568,6 +568,9 @@ class ConsoleController extends AbstractActionController
               } elseif (substr_count($market_value, ",") == 1) {
                 $market_value = str_replace(",", ".", $market_value);
               }
+              if (substr_count($market_value, ".") > 1) {
+                $market_value = str_replace(".", "", $market_value);
+              }
             }
 
             $name = $row[2];
