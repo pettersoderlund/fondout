@@ -14,33 +14,44 @@ $this->headMeta()->appendName(
     )
 );
 ?>
+
+
+
 <section class="container well fund-page">
   <div role="tabpanel">
     <!-- Nav tabs -->
     <div class="row info">
-      <div class="col-md-4 col-sm-12">
+      <div class="col-md-4 col-sm-9">
         <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
         <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
         <?php if($fund->date): ?>
           <p>Fondens innehav är från <?php echo date_format($fund->date, 'Y-m-d')?>.</p>
         <?php endif; ?>
       </div>
+      <div class="col-md-5 col-md-push-3 col-sm-8 col-sm-push-4 button-row">
+        <table class="table table-condensed">
+          <tr>
+            <td><small>Fondens ISIN:</small></td>
+            <td><?php echo $this->fund->isin; ?></td>
+          </tr>
+          <tr>
+            <td><small>Fondbolag:</small></td>
+            <td><a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
+                <?php echo $this->translate($fund->company->name) ?>
+            </a></td>
+          </tr>
+          <tr>
+            <td><small>Fondkategori:</small></td>
+            <td><a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
+              <?php echo $this->translate($fund->fondoutcategory->longName) ?>
+            </a></td>
+          </tr>
+        </table>
 
+      </div>
+      <!--<div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 hidden-xs button-row">
 
-      <div class="col-md-3 col-md-push-3 col-sm-4 col-sm-push-4 button-row">
-        <a class="fundinfo-btn btn btn-sm" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
-            <?php echo $this->translate($fund->company->name) ?>
-        </a>
-        <br>
-        <a class="fundinfo-btn btn btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
-          <?php echo $this->translate($fund->fondoutcategory->longName) ?>
-        </a>
-      </div>
-      <div class="col-md-2 col-md-push-3 col-sm-4 col-sm-push-4 hidden-xs button-row">
-        <a class="btn btn-primary btn-sm pull-right" href="<?php echo $this->backuri; ?>">
-          Tillbaka till fondsök
-        </a>
-      </div>
+      </div>-->
 
 
       <div class="col-md-3 col-md-pull-5 bar-tabs col-sm-4 col-sm-pull-8 col-xs-12">
