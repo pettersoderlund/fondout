@@ -1,7 +1,11 @@
+<?php
+$this->headMeta()->appendName('description', $this->translate('Vilka fondbolag har gått med i organisationer och inititiv hållbar kapitalförvalning? Här ser du organisationerna samlade och beskrivna.'));
+?>
+
 <div class="container">
   <h1>Medlemsorganisationer</h1>
-  <p>För att förändras som företag och få en tredjeparts intyg på att man gör vissa insatser finns det medlemsorganisationer, globala som nationella, som många fondförvaltare väljer att gå med i.
-  Vad man skriver under på skiljer sig brett och kan tex. vara att ta fram och redovisa indirekta koldioxid-utsläpp på sina fonder eller att verka för transparens och hållbarhet i allmänhet i koppling till sin kapitalförvaltning.</p>
+  <p>För att förändras som företag och få en tredjeparts intyg på att verksamheten genomför särskilda insatser finns det medlemsorganisationer, globala som nationella, som många fondbolag väljer att gå med i.
+  Vad det innebär att gå med i en organisaion eller inititativ skiljer sig brett och kan t.ex. vara att ta fram och redovisa indirekta koldioxid-utsläpp på sina fonder eller att verka för transparens och hållbarhet i allmänhet i koppling till sin kapitalförvaltning.</p>
 
   <?php foreach ($this->organisations as $organisation): ?>
     <a class=' btn btn-success' href='/organisation/<?php echo $organisation->url ?> '>

@@ -1,17 +1,21 @@
 <?php echo $this->doctype(); ?>
 <html lang="en">
       <?php
-        $this->headMeta()->setCharset('utf-8');
         $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge');
+            //->setCharset('utf-8')
+            //->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0');
+
         $this->headMeta()->appendName(
-        'description',
-        $this->translate('Har du koll på hur dina fonder investerar? Sparahållbart.se ger en inblick i vilka fonder som investerar i fossila bränslen, förbjudna vapen, alkohol, tobak och spelbolag.')
+          'description',
+          $this->translate('Spara hållbart är ett SRI-screeningsverkyg för aktiefonder. Med vårt verktyg kan du genomlysa fonder på branscher som vapen och fossila bränslen.')
         );
       ?>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
       <?php echo $this->headMeta();?>
+
 
         <link rel="icon"
               type="image/ico"

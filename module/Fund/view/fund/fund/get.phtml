@@ -5,7 +5,14 @@ $this->headScript()
   '/vendor/selectize/dist/js/standalone/selectize.min.js')
   ->appendFile($this->basePath() . '/js/fundprofile.js');
 
-$thincategory = array("alcohol", "tobacco", "gambling")
+$thincategory = array("alcohol", "tobacco", "gambling");
+$this->headMeta()->appendName(
+    'description',
+    ($this->translate('Se och jämför hur fonden ') .
+      $this->fund->name .
+      $this->translate(' placerar i kol, olja, gas, vapen, tobak m.m! ')
+    )
+);
 ?>
 <section class="container well fund-page">
   <div role="tabpanel">
