@@ -5,6 +5,8 @@ $this->headScript()
   '/vendor/selectize/dist/js/standalone/selectize.min.js')
   ->appendFile($this->basePath() . '/js/fundprofile.js');
 
+$this->headTitle($this->fund->name, 'PREPEND'); 
+
 $thincategory = array("alcohol", "tobacco", "gambling");
 $this->headMeta()->appendName(
     'description',

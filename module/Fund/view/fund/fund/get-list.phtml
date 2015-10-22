@@ -2,6 +2,7 @@
 $this->headScript()
 ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
 ->appendFile($this->basePath() . '/js/funds.js');
+$this->headTitle("Fondsök", 'PREPEND'); 
 
 $this->headMeta()->appendName('description',  $this->translate('Fondsök är ett verktyg för att sortera aktiefonder efter hur de investerar i känsliga branscher som tobak, vapen, fossila bränslen, alkohol och spelbolag. '));
 
