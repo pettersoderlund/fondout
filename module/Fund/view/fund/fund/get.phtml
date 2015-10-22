@@ -5,7 +5,7 @@ $this->headScript()
   '/vendor/selectize/dist/js/standalone/selectize.min.js')
   ->appendFile($this->basePath() . '/js/fundprofile.js');
 
-$this->headTitle($this->fund->name, 'PREPEND'); 
+$this->headTitle($this->fund->name, 'PREPEND');
 
 $thincategory = array("alcohol", "tobacco", "gambling");
 $this->headMeta()->appendName(
@@ -31,7 +31,7 @@ $this->headMeta()->appendName(
       <div class="col-md-5 col-md-push-3 col-sm-8 col-sm-push-4 button-row">
         <table class="table table-condensed">
           <tr>
-            <td><small>Fondens ISIN:</small></td>
+            <td><small>Fondens <span data-toggle="tooltip" data-placement="bottom" title="International Securities Identification Number (ISIN) är en kod som är avsedd att entydigt identifiera ett värdepapper.">ISIN</span>:</small></td>
             <td><?php echo (!is_null($this->fund->isin)) ?  $this->fund->isin : "-" ;?></td>
           </tr>
           <tr>
