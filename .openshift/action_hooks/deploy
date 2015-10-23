@@ -8,3 +8,5 @@ cd $OPENSHIFT_REPO_DIR
 
 # Generate proxies
 vendor/bin/doctrine-module orm:generate-proxies
+#symlink to documents
+ln -s $OPENSHIFT_DATA_DIR public/documents
