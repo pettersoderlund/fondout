@@ -70,6 +70,8 @@ deploy:
       - script:
           name: documents symlink
           code: |
+              pwd
+              cd $OPENSHIFT_REPO_DIR
               ln -s $OPENSHIFT_DATA_DIR public/documents
       - script:
           name: Add authentication to htaccess on the staging server.
