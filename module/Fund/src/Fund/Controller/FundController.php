@@ -204,6 +204,11 @@ class FundController extends AbstractRestfulController
       );
     }
 
+    public function getProductsAction()
+    {
+      return new ViewModel();
+    }
+
     public function getPressAction()
     {
       $result = new ViewModel();

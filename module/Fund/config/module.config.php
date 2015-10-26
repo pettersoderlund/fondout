@@ -57,6 +57,17 @@ return array(
                     ),
                 ),
             ),
+            'products' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/products',
+                    'constraints' => array(),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getProducts'
+                    ),
+                ),
+            ),
             'ap-funds' => array(
                 'type'    => 'Segment',
                 'options' => array(

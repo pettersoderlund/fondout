@@ -80,4 +80,3 @@ deploy:
             channel: "#software"
             username: wercker
             icon_url: https://avatars3.githubusercontent.com/u/1695193?s=140
-            
