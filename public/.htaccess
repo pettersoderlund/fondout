@@ -20,5 +20,13 @@ Redirect 301 /funds/ikc-taktisk-allokering-opportunities http://www.sparahallbar
 Redirect 301 /funds/ikc-world-wide http://www.sparahallbart.se/funds/fbp-pension-variabel
 Redirect 301 /funds/dnb-formogenhetsforvaltning http://www.sparahallbart.se/fundcompany/dnb-norge
 Redirect 301 /funds/handelsbanken-sverige-varlden http://www.sparahallbart.se/funds/handelsbanken-globalfond
+Redirect 301 /funds/folksams-aktiefond-sverige http://sparahallbart.se/funds/swedbank-robur-access-sverige
+Redirect 301 /funds/folksams-aktiefond-europa http://sparahallbart.se/funds/swedbank-robur-access-europa
+Redirect 301 /funds/folksams-aktiefond-usa http://sparahallbart.se/funds/swedbank-robur-access-usa
+Redirect 301 /funds/folksams-aktiefond-asien http://sparahallbart.se/funds/swedbank-robur-access-asien
+Redirect 301 /funds/swedbank-robur-indexfond-asien http://sparahallbart.se/funds/swedbank-robur-access-asien
+Redirect 301 /funds/swedbank-robur-indexfond-europa http://sparahallbart.se/funds/swedbank-robur-access-europa
+Redirect 301 /funds/swedbank-robur-indexfond-sverige http://sparahallbart.se/funds/swedbank-robur-access-sverige
+Redirect 301 /funds/swedbank-robur-indexfond-usa http://sparahallbart.se/funds/swedbank-robur-access-usa
 
 Redirect 301 /organisation/global-compact http://www.sparahallbart.se/organisation
