@@ -28,6 +28,7 @@ Redirect 301 /funds/swedbank-robur-indexfond-asien http://sparahallbart.se/funds
 Redirect 301 /funds/swedbank-robur-indexfond-europa http://sparahallbart.se/funds/swedbank-robur-access-europa
 Redirect 301 /funds/swedbank-robur-indexfond-sverige http://sparahallbart.se/funds/swedbank-robur-access-sverige
 Redirect 301 /funds/swedbank-robur-indexfond-usa http://sparahallbart.se/funds/swedbank-robur-access-usa
+Redirect 301 /funds/cicero-world-wide http://sparahallbart.se/fundcompany/cicero
 
 Redirect 301 /organisation/global-compact http://www.sparahallbart.se/organisation
 Redirect 301 /organisation/cdp http://www.sparahallbart.se/organisation
