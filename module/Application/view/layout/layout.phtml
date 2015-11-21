@@ -30,15 +30,6 @@
         <!-- Le styles -->
         <?php echo $this->headLink()
                         ->prependStylesheet($this->basePath() . '/css/style.css') ?>
-
-        <!-- Scripts -->
-        <?php echo $this->headScript()
-            ->prependFile($this->basePath() . '/vendor/bootstrap/dist/js/bootstrap.min.js')
-            ->prependFile($this->basePath() . '/vendor/jquery/jquery.min.js')
-            ->prependFile($this->basePath() . '/vendor/respond/dest/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->prependFile($this->basePath() . '/vendor/dist/html5shiv.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-            ->appendFile($this->basePath() . '/vendor/jquery-cookie/jquery.cookie.js')
-        ; ?>
     </head>
     <body>
       <!-- Google Tag Manager -->
@@ -104,5 +95,13 @@
                 </div>
             </footer>
         <?php echo $this->inlineScript() ?>
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/vendor/bootstrap/dist/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/vendor/jquery/jquery.min.js')
+            ->prependFile($this->basePath() . '/vendor/respond/dest/respond.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->prependFile($this->basePath() . '/vendor/dist/html5shiv.min.js', 'text/javascript', array('conditional' => 'lt IE 9',))
+            ->appendFile($this->basePath() . '/vendor/jquery-cookie/jquery.cookie.js')
+        ; ?>
     </body>
 </html>
