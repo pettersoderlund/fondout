@@ -15,6 +15,21 @@ RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
 RewriteRule ^(.*) - [E=BASE:%1]
 RewriteRule ^(.*)$ %{ENV:BASE}index.php [NC,L]
 
+# BEGIN EXPIRES
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 10 days"
+    ExpiresByType text/css "access plus 1 week"
+    ExpiresByType text/plain "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType application/x-icon "access plus 1 year"
+</IfModule>
+# END EXPIRES
+
 Redirect 301 /funds/simplicity-nya-europa http://fondout.dev/funds/simplicity-europa
 Redirect 301 /funds/ikc-taktisk-allokering-opportunities http://www.sparahallbart.se/funds/fbp-opportunities-flexible
 Redirect 301 /funds/ikc-world-wide http://www.sparahallbart.se/funds/fbp-pension-variabel
