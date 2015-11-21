@@ -46,11 +46,6 @@ build:
 
 deploy:
     steps:
-#      Crashes with new update, try doing this in the deploy hook on openshift
-#      - script:
-#          name: generate doctrine proxies
-#          code: vendor/bin/doctrine-module orm:generate-proxies
-
       - script:
           name: fix .gitignore to upload a full build to openshift.
           code: |
