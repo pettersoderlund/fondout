@@ -94,6 +94,8 @@ class FundRepository extends EntityRepository
     * - nav and date for the latest, individual, fund instance
     * - controversial company counts
     * - nav performance 1 3 5 years
+    *
+    * TODO : map controversial company percentage shares of fund
     */
     public function mapControversialMarketValues($funds)
     {
@@ -186,6 +188,79 @@ class FundRepository extends EntityRepository
                 $fundMap[$cv['id']]->fillMeasure($cv['ac_id'], $cv['company_count']);
             }
         }
+
+
+
+        // START Percentage calculations -----------------------
+
+                $qb = $this->getEntityManager()->createQueryBuilder();
+                // query: Get percentage of companies per fund per accusation category
+                $qb->select(
+                    'f.id, ' .
+                    'sum(sh.marketValue)/fi.totalMarketValue as percentage, ' .
+                    'ac.id as ac_id'
+                )
+                    ->from('Fund\Entity\Fund', 'f')
+                    ->join('f.fundInstances', 'fi')
+                    ->join('fi.shareholdings', 'sh')
+                    ->join('sh.share', 's')
+                    ->join('s.shareCompany', 'sc')
+                    ->join('sc.accusations', 'sca')
+                    ->join('sca.category', 'ac')
+                    ->where(
+                        $qb->expr()->andx(
+                            $qb->expr()->in('f.id', array_keys($fundMap)),
+                            $qb->expr()->in('ac.name',
+                                array("Fossila bränslen",
+                                 "Förbjudna vapen",
+                                 "Alkohol", "Tobak", "Spel")
+                            )
+                        )
+                    )
+                    // Get all funds individual latest fundinstance
+                    ->andWhere($qb->expr()->eq(
+                      'fi.date',
+                      '(select max(fi2.date) '
+                        . ' from Fund\Entity\FundInstance fi2 where fi2.fund = f.id)'
+                      )
+                    )
+                    ->andWhere('sh.marketValue > 0')
+                    ->groupBy('f.id')
+                    ->addGroupBy('ac.id');
+
+
+                // map the company accusation count to respective fund
+                foreach ($qb->getQuery()->getResult() as $cv) {
+                    if (isset($fundMap[$cv['id']])) {
+                        $fundMap[$cv['id']]->fillMeasurePercent($cv['ac_id'], $cv['percentage']);
+                    }
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        // END Percentage calculations -----------------------
 
         // NAV calculations
         $qb = $this->getEntityManager()->createQueryBuilder();

@@ -193,6 +193,41 @@ class Fund extends Entity
     private $gamblingCompanies = 0;
 
     /**
+    * @var decimal
+    *
+    * @ORM\Column(name="weapon_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $weaponCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="fossil_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $fossilCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="alcohol_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $alcoholCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="tobacco_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $tobaccoCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="gambling_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $gamblingCompaniesPercent = 0;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date", nullable=true)
@@ -554,6 +589,37 @@ class Fund extends Entity
         }
     }
 
+    public function fillMeasurePercent($accusationCategoryId, $percent) {
+        switch ($accusationCategoryId) {
+            # Controversial weapons id = 1
+            case 1:
+                $this->setWeaponCompaniesPercent($percent);
+                break;
+            # Alcohol  id = 14
+            case 14:
+                $this->setAlcoholCompaniesPercent($percent);
+                break;
+            # Tobacco id = 15
+            case 15:
+                $this->setTobaccoCompaniesPercent($percent);
+                break;
+            # Gambling id = 16
+            case 16:
+                $this->setGamblingCompaniesPercent($percent);
+                break;
+            # Fossil fuels id = 11
+            case 11:
+                $this->setFossilCompaniesPercent($percent);
+                break;
+
+            default:
+                break;
+
+            return $this;
+        }
+    }
+
+
     public function setWeaponCompanies($count) {
         $this->weaponCompanies = $count;
     }
@@ -835,5 +901,49 @@ class Fund extends Entity
       //$this->setDate(null);
   }
 
+  public function setWeaponCompaniesPercent($percent) {
+      $this->weaponCompaniesPercent = $percent;
+  }
+
+  public function setAlcoholCompaniesPercent($percent) {
+      $this->alcoholCompaniesPercent = $percent;
+  }
+
+  public function setTobaccoCompaniesPercent($percent) {
+      $this->tobaccoCompaniesPercent = $percent;
+  }
+
+  public function setFossilCompaniesPercent($percent) {
+    $this->fossilCompaniesPercent = $percent;
+  }
+
+  public function setGamblingCompaniesPercent($percent) {
+      $this->gamblingCompaniesPercent = $percent;
+  }
+
+  /**
+   * Get getGamblingCompaniesPercent
+   *
+   * @return string
+   */
+  public function getGamblingCompaniesPercent() {
+      return $this->gamblingCompaniesPercent;
+  }
+
+  public function getWeaponCompaniesPercent() {
+    return $this->weaponCompaniesPercent;
+  }
+
+  public function getFossilCompaniesPercent() {
+    return $this->fossilCompaniesPercent;
+  }
+
+  public function getAlcoholCompaniesPercent() {
+      return $this->alcoholCompaniesPercent;
+  }
+
+  public function getTobaccoCompaniesPercent() {
+      return $this->tobaccoCompaniesPercent;
+  }
 
 }

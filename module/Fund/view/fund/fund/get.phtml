@@ -16,7 +16,6 @@ $this->headMeta()->appendName(
     )
 );
 ?>
-
 <section class="container well fund-page">
   <div role="tabpanel">
     <!-- Nav tabs -->
@@ -52,11 +51,16 @@ $this->headMeta()->appendName(
 
       <div class="col-md-3 col-md-pull-5 bar-tabs col-sm-4 col-sm-pull-8 col-xs-12">
         <ul class="nav nav-tabs" role="tablist">
-          <li class="active" data-toggle='tooltip' title='<?php echo $accCat['fossil']->name ?>'><a href="#fossil" aria-controls="fossil" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('fossil')?>.png" alt='fossil' class="bar"><br><div class="fossil round-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li data-toggle='tooltip' title='<?php echo $accCat['weapon']->name ?>'><a href="#weapon" aria-controls="weapon" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('weapon')?>.png" alt='weapon' class="bar"><br><div class="weapon round-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['alcohol']->name ?>'><a href="#alcohol" aria-controls="alcohol" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('alcohol')?>.png" alt='alcohol' class="thin-bar"><br><div class="alcohol thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" alt='tobacco' class="thin-bar"><br><div class="tobacco thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" alt='gambling' class="thin-bar"><br><div class="gambling thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
+          <li class="active" data-toggle='tooltip' title='<?php echo $accCat['fossil']->name ?>'><a href="#fossil" aria-controls="fossil" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('fossil')?>.png" alt='fossil' class="bar"><br><small><?php echo number_format($fund->fossilCompaniesPercent*100,1) . "%" ?></small><div class="fossil round-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
+
+          <li data-toggle='tooltip' title='<?php echo $accCat['weapon']->name ?>'><a href="#weapon" aria-controls="weapon" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('weapon')?>.png" alt='weapon' class="bar"><br><small><?php echo number_format($fund->weaponCompaniesPercent*100,1) . "%" ?></small><div class="weapon round-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
+
+          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['alcohol']->name ?>'><a href="#alcohol" aria-controls="alcohol" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('alcohol')?>.png" alt='alcohol' class="thin-bar"><br><small><?php echo number_format($fund->alcoholCompaniesPercent*100,1) . "%" ?></small><div class="alcohol thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
+
+          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" alt='tobacco' class="thin-bar"><br><small><?php echo number_format($fund->tobaccoCompaniesPercent*100,1) . "%" ?></small><div class="tobacco thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
+
+          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" alt='gambling' class="thin-bar"><br><small><?php echo number_format($fund->gamblingCompaniesPercent*100,1) . "%" ?></small><div class="gambling thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
+
         </ul>
       </div>
     </div>
