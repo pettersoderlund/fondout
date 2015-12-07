@@ -14,6 +14,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  *         @ORM\UniqueConstraint(
  *             name="institution_number",
  *             columns={"institution_number"}
+ *         ),
+ *         @ORM\UniqueConstraint(
+ *             name="isin",
+ *             columns={"isin"}
  *         )
  *     },
  *     indexes={
@@ -135,6 +139,13 @@ class Fund extends Entity
      * @ORM\Column(name="nav", type="decimal", precision=8, scale=2, nullable=true)
      */
     private $nav;
+
+    /**
+     * @var decimal
+     *
+     * @ORM\Column(name="shp", type="decimal", precision=5, scale=3, nullable=true)
+     */
+    private $shp;
 
     /**
      * @var decimal
@@ -727,6 +738,28 @@ class Fund extends Entity
     public function getNav1year()
     {
         return $this->nav1year;
+    }
+
+    /**
+     * Set shp
+     *
+     * @param string $shp
+     * @return Fund
+     */
+    public function setshp($shp)
+    {
+        $this->shp = $shp;
+        return $this;
+    }
+
+    /**
+     * Get shp
+     *
+     * @return string
+     */
+    public function getshp()
+    {
+        return $this->shp;
     }
 
     /**

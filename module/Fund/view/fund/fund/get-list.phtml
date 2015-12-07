@@ -2,7 +2,7 @@
 $this->headScript()
 ->prependFile($this->basePath() . '/vendor/selectize/dist/js/standalone/selectize.min.js')
 ->appendFile($this->basePath() . '/js/funds.js');
-$this->headTitle("Fondsök", 'PREPEND'); 
+$this->headTitle("Fondsök", 'PREPEND');
 
 $this->headMeta()->appendName('description',  $this->translate('Fondsök är ett verktyg för att sortera aktiefonder efter hur de investerar i känsliga branscher som tobak, vapen, fossila bränslen, alkohol och spelbolag. '));
 
@@ -60,6 +60,9 @@ $form->prepare();
           </div>
           <div class="col-md-4 centered-column">
             <p class="visible-xs visible-sm pull-left">Sortera efter:</p>
+            <a class="btn btn-success" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'shp', 'order' => ($sortby == 'shp' ? $reverseorder : 'ASC'))  + $query))); ?>">
+              SHP
+            </a>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter fossila bränsen' src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
             </a>
@@ -200,13 +203,17 @@ $form->prepare();
           <?php foreach ($funds as $fund): ?>
             <li>
               <div class="row well">
-                <div class="col-sm-4 col-xs-12">
+                <div class="col-sm-3 col-xs-12">
                   <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
                   <h3>
                     <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
                       <?php echo $this->translate($fund->name) ?>
                     </a>
                   </h3>
+                </div>
+                <div class="col-sm-1">
+                  <h3><span class="label label <?php echo $fund->shp == 0 ? "label-success" : ($fund->shp > 2 ? "label-danger" : "label-warning") ?>">SHP
+                  <?php echo $fund->shp ?></span></h3>
                 </div>
                 <div class="col-sm-4 col-xs-5 centered-column">
                   <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10. Denna fond fossil: " . $fund->getMeasureScore('fossil') . "/10.' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
