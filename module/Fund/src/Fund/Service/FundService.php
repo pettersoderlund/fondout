@@ -212,39 +212,19 @@ class FundService
                 }
                 break;
             case 'weapon':
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['weaponCompaniesPercent'] = $order;
                 break;
             case 'fossil':
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['fossilCompaniesPercent'] = $order;
                 break;
             case 'alcohol':
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['alcoholCompaniesPercent'] = $order;
                 break;
             case 'tobacco':
-                $sortOrder['tobaccoCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompaniesPercent'] = $order;
                 break;
             case 'gambling':
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['gamblingCompaniesPercent'] = $order;
                 break;
             case 'nav1year':
                 $sortOrder['nav1year'] = $order;
@@ -298,7 +278,7 @@ class FundService
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(
-            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
+            array('fossilCompanies' => 'ASC', 'weaponCompanies' => 'ASC',
               'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
               'gamblingCompanies' => 'ASC')
         );
@@ -322,7 +302,7 @@ class FundService
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(
-            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
+            array( 'fossilCompanies' => 'ASC', 'weaponCompanies' => 'ASC',
               'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
               'gamblingCompanies' => 'ASC')
         );
@@ -389,6 +369,7 @@ class FundService
       $tobacco  = 0;
       $gambling = 0;
 
+      /*
       foreach ($funds as $fund) {
         $weapon   += $fund->getWeaponCompanies();
         $fossil   += $fund->getFossilCompanies();
@@ -416,7 +397,35 @@ class FundService
       $avgFund->setAlcoholCompanies($avgAlcohol);
       $avgFund->setTobaccoCompanies($avgTobacco);
       $avgFund->setGamblingCompanies($avgGambling);
+*/
 
+      foreach ($funds as $fund) {
+        $weapon   += $fund->getWeaponCompaniesPercent();
+        $fossil   += $fund->getFossilCompaniesPercent();
+        $alcohol  += $fund->getAlcoholCompaniesPercent();
+        $tobacco  += $fund->getTobaccoCompaniesPercent();
+        $gambling += $fund->getGamblingCompaniesPercent();
+      }
+
+      //To remove division by zero risk
+      //set all avg to 0 if 0 funds given.
+      if(sizeof($funds) == 0) {
+        $fundCount = 1;
+      } else {
+        $fundCount = sizeof($funds);
+      }
+
+      $avgWeapon   = (int)($weapon/$fundCount);
+      $avgFossil   = (int)($fossil/$fundCount);
+      $avgAlcohol  = (int)($alcohol/$fundCount);
+      $avgTobacco  = (int)($tobacco/$fundCount);
+      $avgGambling = (int)($gambling/$fundCount);
+
+      $avgFund->setWeaponCompaniesPercent($avgWeapon);
+      $avgFund->setFossilCompaniesPercent($avgFossil);
+      $avgFund->setAlcoholCompaniesPercent($avgAlcohol);
+      $avgFund->setTobaccoCompaniesPercent($avgTobacco);
+      $avgFund->setGamblingCompaniesPercent($avgGambling);
       return $avgFund;
     }
 

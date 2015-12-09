@@ -660,6 +660,7 @@ class Fund extends Entity
       return $this->fossilCompanies;
     }
 
+/*
     public function getMeasureScore($measureType) {
       switch ($measureType) {
         case "weapon":
@@ -703,6 +704,53 @@ class Fund extends Entity
       }
       return $score;
     }
+  */
+
+  public function getMeasureScore($measureType) {
+    switch ($measureType) {
+      case "weapon":
+        $categoryPercent = $this->weaponCompaniesPercent;
+        break;
+      case "fossil":
+        $categoryPercent = $this->fossilCompaniesPercent;
+        break;
+      case "alcohol":
+        $categoryPercent = $this->alcoholCompaniesPercent;
+        break;
+      case "tobacco":
+        $categoryPercent = $this->tobaccoCompaniesPercent;
+        break;
+      case "gambling":
+        $categoryPercent = $this->gamblingCompaniesPercent;
+        break;
+    }
+
+    // Categorypercent is between 0 and 1, convert to 0-100
+    $categoryPercent = $categoryPercent*100;
+
+    if ($categoryPercent == 0) {
+      $score = 10;
+    } elseif ($categoryPercent < 1) {
+      $score = 9;
+    } elseif ($categoryPercent < 2) {
+      $score = 8;
+    } elseif ($categoryPercent < 5) {
+      $score = 7;
+    } elseif ($categoryPercent < 8) {
+      $score = 6;
+    } elseif ($categoryPercent < 13) {
+      $score = 5;
+    } elseif ($categoryPercent < 21) {
+      $score = 4;
+    } elseif ($categoryPercent < 34) {
+      $score = 3;
+    } elseif ($categoryPercent < 55) {
+      $score = 2;
+    } else {
+      $score = 1;
+    }
+    return $score;
+  }
 
     /**
      * Get info
