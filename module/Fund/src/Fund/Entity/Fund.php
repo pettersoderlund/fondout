@@ -228,6 +228,13 @@ class Fund extends Entity
     private $gamblingCompaniesPercent = 0;
 
     /**
+    * @var decimal
+    *
+    * @ORM\Column(name="shp_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $shpPercent = 0;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date", nullable=true)
@@ -723,6 +730,16 @@ class Fund extends Entity
       case "gambling":
         $categoryPercent = $this->gamblingCompaniesPercent;
         break;
+      case "shp":
+        //change this to
+        //$categoryPercent = $this->shpPercent;
+
+        $categoryPercent = ($this->gamblingCompaniesPercent
+                              + $this->weaponCompaniesPercent
+                              + $this->fossilCompaniesPercent
+                              + $this->alcoholCompaniesPercent
+                              + $this->tobaccoCompaniesPercent);
+        break;
     }
 
     // Categorypercent is between 0 and 1, convert to 0-100
@@ -945,6 +962,12 @@ class Fund extends Entity
       $this->setTobaccoCompanies(0);
       $this->setFossilCompanies(0);
       $this->setGamblingCompanies(0);
+      $this->setWeaponCompaniesPercent(0);
+      $this->setAlcoholCompaniesPercent(0);
+      $this->setTobaccoCompaniesPercent(0);
+      $this->setFossilCompaniesPercent(0);
+      $this->setGamblingCompaniesPercent(0);
+      $this->setShpPercent(0);
       //$this->setNav(null);
       //$this->setDate(null);
   }
@@ -993,5 +1016,14 @@ class Fund extends Entity
   public function getTobaccoCompaniesPercent() {
       return $this->tobaccoCompaniesPercent;
   }
+
+  public function setShpPercent($percent) {
+      $this->shpPercent = $percent;
+  }
+
+  public function getShpPercent() {
+      return $this->shpPercent;
+  }
+
 
 }

@@ -208,7 +208,13 @@ $form->prepare();
                     </a>
                   </h3>
                 </div>
-                <div class="col-sm-6 col-xs-5 centered-column">
+                <div class="col-sm-1 col-xs-5">
+                  <?php echo "<img class='main-bar'  src='img/bar/bar" . $fund->getMeasureScore('shp') . ".png'>"?>
+                  <br>
+                  <p>SHP Hållbarhetspoäng</p>
+                </div>
+                <div class="col-sm-3 col-xs-7 centered-column">
+
                   <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10. Denna fond fossil: " . $fund->getMeasureScore('fossil') . "/10.' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
                   <?php echo "<img class='bar' data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10. Denna fond vapen: " . $fund->getMeasureScore('weapon') . "/10.' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
                   <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10. Denna fond alkohol: " . $fund->getMeasureScore('alcohol') . "/10.' src='img/thin-bar/thinbar" . $fund->getMeasureScore('alcohol') . ".png' alt='Alkohol " . $fund->getMeasureScore('alcohol') . "/10'>" ?>
@@ -216,17 +222,17 @@ $form->prepare();
                   <?php echo "<img class='thin-bar' data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10. Denna fond spel: " . $fund->getMeasureScore('gambling') . "/10.' src='img/thin-bar/thinbar" . $fund->getMeasureScore('gambling') . ".png' alt='Spel " . $fund->getMeasureScore('gambling') . "/10'>"   ?>
                   <br>
                   <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt='Fossila bränslen symbol'>
-                  <small><?php echo number_format($fund->fossilCompaniesPercent*100,1) . "%" ?></small>
+                  <!--<small><?php echo number_format($fund->fossilCompaniesPercent*100,1) . "%" ?></small>-->
                   <img class="round-symbol" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt='Vapen symbol'>
-                  <small><?php echo number_format($fund->weaponCompaniesPercent*100,1) . "%" ?></small>
+                  <!--<small><?php echo number_format($fund->weaponCompaniesPercent*100,1) . "%" ?></small>-->
                   <img class="thin-symbol" src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt='Alkohol symbol'>
-                  <small><?php echo number_format($fund->alcoholCompaniesPercent*100,1) . "%" ?></small>
+                  <!--<small><?php echo number_format($fund->alcoholCompaniesPercent*100,1) . "%" ?></small>-->
                   <img class="thin-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt='Tobak symbol'>
-                  <small><?php echo number_format($fund->tobaccoCompaniesPercent*100,1) . "%" ?></small>
+                  <!--<small><?php echo number_format($fund->tobaccoCompaniesPercent*100,1) . "%" ?></small>-->
                   <img class="thin-symbol" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt='Spel symbol'>
-                  <small><?php echo number_format($fund->gamblingCompaniesPercent*100,1) . "%" ?></small>
+                  <!--<small><?php echo number_format($fund->gamblingCompaniesPercent*100,1) . "%" ?></small>-->
                 </div>
-                <div class="col-sm-2 col-xs-7">
+                <div class="col-sm-2 hidden-xs">
                   <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
                       <?php echo $this->translate($fund->company->name) ?>
                   </a>
