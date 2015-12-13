@@ -235,6 +235,10 @@ class FundService
             case 'nav5year':
                 $sortOrder['nav5year'] = $order;
                 break;
+            case 'shp':
+                $sortOrder['shpPercent'] = $order;
+                break;
+
         }
 
 

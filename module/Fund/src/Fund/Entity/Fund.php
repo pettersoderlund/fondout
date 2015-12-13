@@ -14,6 +14,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  *         @ORM\UniqueConstraint(
  *             name="institution_number",
  *             columns={"institution_number"}
+ *         ),
+ *         @ORM\UniqueConstraint(
+ *             name="isin",
+ *             columns={"isin"}
  *         )
  *     },
  *     indexes={
@@ -22,6 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * )
  * @ORM\Entity(repositoryClass="Fund\Repository\FundRepository")
  */
+
 class Fund extends Entity
 {
 
