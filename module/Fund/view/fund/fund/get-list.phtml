@@ -221,11 +221,11 @@ $form->prepare();
                 <div class="col-sm-4 col-xs-7 centered-column">
                   <div class="shp-categories-box">
                     <h6>Hållbarhetspoäng uppdelat</h6>
-                    <?php echo "<img class='bar' <!--data-toggle='tooltip' title='Snitt urvalet fossil: " . $avgfund->getMeasureScore('fossil') .  "/10. Denna fond fossil: " . $fund->getMeasureScore('fossil') . "/10.-->' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
-                    <?php echo "<img class='bar' <!--data-toggle='tooltip' title='Snitt urvalet vapen: " . $avgfund->getMeasureScore('weapon') .  "/10. Denna fond vapen: " . $fund->getMeasureScore('weapon') . "/10.-->' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
-                    <?php echo "<img class='bar' <!--data-toggle='tooltip' title='Snitt urvalet alkohol: " . $avgfund->getMeasureScore('alcohol') .  "/10. Denna fond alkohol: " . $fund->getMeasureScore('alcohol') . "/10.-->' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png' alt='Alkohol " . $fund->getMeasureScore('alcohol') . "/10'>" ?>
-                    <?php echo "<img class='bar' <!--data-toggle='tooltip' title='Snitt urvalet tobak: " . $avgfund->getMeasureScore('tobacco') .  "/10. Denna fond tobak: " . $fund->getMeasureScore('tobacco') . "/10.-->' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png' alt='Tobak " . $fund->getMeasureScore('tobacco') . "/10'>"   ?>
-                    <?php echo "<img class='bar' <!--data-toggle='tooltip' title='Snitt urvalet spel: " . $avgfund->getMeasureScore('gambling') .  "/10. Denna fond spel: " . $fund->getMeasureScore('gambling') . "/10.-->' src='img/bar/bar" . $fund->getMeasureScore('gambling') . ".png' alt='Spel " . $fund->getMeasureScore('gambling') . "/10'>"   ?>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png' alt='Alkohol " . $fund->getMeasureScore('alcohol') . "/10'>" ?>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png' alt='Tobak " . $fund->getMeasureScore('tobacco') . "/10'>"   ?>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('gambling') . ".png' alt='Spel " . $fund->getMeasureScore('gambling') . "/10'>"   ?>
                     <br>
                     <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt='Fossila bränslen symbol'>
                     <!--<small><?php echo number_format($fund->fossilCompaniesPercent*100,1) . "%" ?></small>-->
@@ -241,7 +241,7 @@ $form->prepare();
                 </div>
                 <div class="col-sm-3 col-xs-5 centered-column">
                   <div class="shp-box">
-                    <?php echo "<img class='main-bar'  src='img/bar/bar" . $fund->getMeasureScore('shp') . ".png'>"?>
+                    <span class="shp-number-score <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>"><?php echo $fund->getMeasureScore('shp') ?></span>
                     <br>
                     <h5>Hållbarhetspoäng</h5>
                   </div>

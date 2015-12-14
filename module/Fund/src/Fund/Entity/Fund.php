@@ -163,6 +163,13 @@ class Fund extends Entity
     private $nav5year;
 
     /**
+     * @var decimal
+     *
+     * @ORM\Column(name="annual_fee", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $annualFee;
+
+    /**
     * @var integer
     *
     * @ORM\Column(name="weapon_companies", type="integer", nullable=true, options={"default":"0"})
@@ -245,6 +252,13 @@ class Fund extends Entity
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="pm_date", type="date", nullable=true)
+     */
+    private $pmDate;
 
 
     /**
@@ -736,14 +750,7 @@ class Fund extends Entity
         $categoryPercent = $this->gamblingCompaniesPercent;
         break;
       case "shp":
-        //change this to
-        //$categoryPercent = $this->shpPercent;
-
-        $categoryPercent = ($this->gamblingCompaniesPercent
-                              + $this->weaponCompaniesPercent
-                              + $this->fossilCompaniesPercent
-                              + $this->alcoholCompaniesPercent
-                              + $this->tobaccoCompaniesPercent);
+        $categoryPercent = $this->shpPercent;
         break;
     }
 
@@ -843,6 +850,28 @@ class Fund extends Entity
     }
 
     /**
+     * Set annualFee
+     *
+     * @param string $annualFee
+     * @return Fund
+     */
+    public function setAnnualFee($annualFee)
+    {
+        $this->annualFee = $annualFee;
+        return $this;
+    }
+
+    /**
+     * Get annualFee
+     *
+     * @return string
+     */
+    public function getAnnualFee()
+    {
+        return $this->annualFee;
+    }
+
+    /**
      * Set nav1year
      *
      * @param string $nav1year
@@ -934,6 +963,25 @@ class Fund extends Entity
         return $this->date;
     }
 
+
+    public function setPmDate($date)
+    {
+        $this->pmDate = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get pmDate
+     *
+     * @return \DateTime
+     */
+    public function getPmDate()
+    {
+        return $this->pmDate;
+    }
+
+
     public function setActive($active)
     {
       $this->active = $active;
@@ -959,9 +1007,9 @@ class Fund extends Entity
 
     public function resetMeasures() {
 
-      $this->setPercent1year(null);
-      $this->setPercent3year(null);
-      $this->setPercent5year(null);
+      /*$this->setPercent1year(0);
+      $this->setPercent3year(0);
+      $this->setPercent5year(0);*/
       $this->setWeaponCompanies(0);
       $this->setAlcoholCompanies(0);
       $this->setTobaccoCompanies(0);
