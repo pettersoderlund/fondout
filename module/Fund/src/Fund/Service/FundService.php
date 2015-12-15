@@ -238,6 +238,10 @@ class FundService
             case 'shp':
                 $sortOrder['shpPercent'] = $order;
                 break;
+            case 'fee':
+                $sortOrder['annualFee'] = $order;
+                break;
+
 
         }
 

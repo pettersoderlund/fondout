@@ -54,12 +54,21 @@ $form->prepare();
     <div class="row">
       <div class="col-md-9">
         <div class="row">
-          <div class="col-md-4 hidden-xs hidden-sm">
+          <div class="col-md-2 hidden-xs hidden-sm">
 
           <p id="sort-header"><small>Sortera efter</small></p>
           </div>
-          <div class="col-md-5 centered-column">
+          <div class="col-md-7 centered-column">
             <p class="visible-xs visible-sm pull-left">Sortera efter:</p>
+            <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fee', 'order' => ($sortby == 'fee' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                Avgift <span class="glyphicon glyphicon-sort"></span>
+            </a>
+            <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav1year', 'order' => ($sortby == 'nav1year' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                1 år <span class="glyphicon glyphicon-sort"></span>
+            </a>
+            <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav3year', 'order' => ($sortby == 'nav3year' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                3 år <span class="glyphicon glyphicon-sort"></span>
+            </a>
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter fossila bränsen' src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
             </a>
@@ -209,13 +218,60 @@ $form->prepare();
                       <?php echo $this->translate($fund->name) ?>
                     </a>
                   </h3>
-                  <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
+                  <div class="shp-categories-box" style="
+                  color: gray;
+    float: left;
+    width: 25%px;
+    margin: 0px;
+    padding: 7px 12px;
+">
+                    <h6 style="
+    margin: 2px;
+    margin-left: 4px;
+">Årlig avgift</h6>
+                                                                                                                        <span style="
+    font-size: 29px;
+"><?php echo ($fund->annualFee != 0) ? number_format($fund->annualFee, 1) . '%' : "-" ?></span>
+
+                  </div>
+                  <div class="shp-categories-box" style="
+    width: 65%;
+    float: right;
+    color: gray;
+    padding: 7px 12px;
+">
+                    <h6 style="
+    margin: 2px;
+    margin-left: 4px;
+">Avkastning 1 år --------- 3 år</h6>
+                                                                                                                        <span style="
+    font-size: 29px;
+    margin-left:61px;
+">
+
+<?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?>
+
+<?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?>
+
+</span>
+
+
+
+
+
+
+
+
+
+                    <!--<small>0.0%</small>-->
+                  </div>
+                  <!--<a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
                       <?php echo $this->translate($fund->company->name) ?>
                   </a>
                   <br>
                   <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
                     <?php echo $this->translate($fund->fondoutcategory->longName) ?>
-                  </a>
+                  </a>-->
                 </div>
 
                 <div class="col-sm-4 col-xs-7 centered-column">
