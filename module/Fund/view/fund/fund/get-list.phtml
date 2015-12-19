@@ -75,15 +75,15 @@ $form->prepare();
           <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter förbjudna vapen' src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt="Weapon sort button">
             </a>
-            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">
+            <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter alkohol' src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt="Alcohol sort button">
-            </a>
+            </a>-->
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter tobak' src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt="Tobacco sort button">
             </a>
-            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">
+            <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter spel' src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt="Gamlbing sort button">
-            </a>
+            </a>-->
           </div>
           <div class="col-md-3">
             <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'shp', 'order' => ($sortby == 'shp' ? $reverseorder : 'ASC'))  + $query))); ?>">
@@ -224,13 +224,14 @@ $form->prepare();
     width: 25%px;
     margin: 0px;
     padding: 7px 12px;
+    text-align: right;
 ">
                     <h6 style="
     margin: 2px;
     margin-left: 4px;
 ">Årlig avgift</h6>
                                                                                                                         <span style="
-    font-size: 29px;
+    font-size: 24px;
 "><?php echo ($fund->annualFee != 0) ? number_format($fund->annualFee, 1) . '%' : "-" ?></span>
 
                   </div>
@@ -239,14 +240,15 @@ $form->prepare();
     float: right;
     color: gray;
     padding: 7px 12px;
+    text-align: right;
 ">
                     <h6 style="
     margin: 2px;
     margin-left: 4px;
-">Avkastning 1 år --------- 3 år</h6>
+">Avkastning &nbsp &nbsp 1 år  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  3 år</h6>
                                                                                                                         <span style="
-    font-size: 29px;
-    margin-left:61px;
+    font-size: 24px;
+    margin-left:30px;
 ">
 
 <?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?>
@@ -279,19 +281,19 @@ $form->prepare();
                     <h6>Hållbarhetspoäng uppdelat</h6>
                     <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
                     <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
-                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png' alt='Alkohol " . $fund->getMeasureScore('alcohol') . "/10'>" ?>
+                    <!--<?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png' alt='Alkohol " . $fund->getMeasureScore('alcohol') . "/10'>" ?>-->
                     <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png' alt='Tobak " . $fund->getMeasureScore('tobacco') . "/10'>"   ?>
-                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('gambling') . ".png' alt='Spel " . $fund->getMeasureScore('gambling') . "/10'>"   ?>
+                    <!--<?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('gambling') . ".png' alt='Spel " . $fund->getMeasureScore('gambling') . "/10'>"   ?>-->
                     <br>
                     <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt='Fossila bränslen symbol'>
                     <!--<small><?php echo number_format($fund->fossilCompaniesPercent*100,1) . "%" ?></small>-->
                     <img class="round-symbol" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt='Vapen symbol'>
                     <!--<small><?php echo number_format($fund->weaponCompaniesPercent*100,1) . "%" ?></small>-->
-                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt='Alkohol symbol'>
+                    <!--<img class="round-symbol" src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt='Alkohol symbol'>-->
                     <!--<small><?php echo number_format($fund->alcoholCompaniesPercent*100,1) . "%" ?></small>-->
                     <img class="round-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt='Tobak symbol'>
                     <!--<small><?php echo number_format($fund->tobaccoCompaniesPercent*100,1) . "%" ?></small>-->
-                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt='Spel symbol'>
+                    <!--<img class="round-symbol" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt='Spel symbol'>-->
                     <!--<small><?php echo number_format($fund->gamblingCompaniesPercent*100,1) . "%" ?></small>-->
                   </div>
                 </div>

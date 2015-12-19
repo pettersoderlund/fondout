@@ -258,7 +258,7 @@ class FundRepository extends EntityRepository
                     $qb->expr()->in('ac.name',
                         array("Fossila bränslen",
                          "Förbjudna vapen",
-                         "Alkohol", "Tobak", "Spel")
+                          "Tobak")
                     )
                 )
             )
