@@ -1,6 +1,6 @@
 // Fund list
 
-.results {
+.results, .sort-menu {
   h3 {
       a {
       //color: black;
@@ -95,7 +95,7 @@
       margin-top: 4px;
       margin-bottom: 4px;
   }
-  padding-top: 20px;
+  //padding-top: 20px;
 }
 
 .results {
@@ -114,8 +114,11 @@
   }
 }
 
+//depends on the height of the sorting menu?
 .menu-padding {
-    padding-top:80px;
+    //padding-top:80px;
+    padding-top:42px; // For mobile? btn-sm sort menu, 46px for normal btn-size
+
 }
 
 .fund-search-intro {
@@ -243,6 +246,18 @@
   border: 1px gainsboro solid;
   padding: 5px;
 
+  .left {
+    text-align: left;
+  }
+
+  .middle {
+    text-align: center;
+  }
+
+  .right {
+    text-align: right;
+  }
+
   p {
     margin-top: 9px;
     margin-bottom: 9px;
@@ -311,9 +326,17 @@
   }
 }
 
+/*
+.shp-number-score-container {
+  h3, .h3 {
+    //margin-top: 15px;
+  }
+}*/
+
 .shp-number-score {
-  font-size: 51px;
-  font-weight: 900;
+  font-size: 24px;
+  //font-weight: 900;
+  font-weight: 400;
 }
 
 .green {
@@ -326,17 +349,73 @@
   color: @brand-danger;
 }
 
+.round-button {
+    display:block;
+    @circle-diameter:100px;
+    width:@circle-diameter;
+    height:@circle-diameter;
+    line-height:@circle-diameter;
+    border: 2px solid #f5f5f5;
+    border-radius: 50%;
+    color:#f5f5f5;
+    text-align:center;
+    text-decoration:none;
+    background: #464646;
+    box-shadow: 0 0 3px gray;
+    font-size:20px;
+    font-weight:bold;
+}
+.round-button:hover {
+    background: #262626;
+}
+
+
+.results {
+  li {
+    .row {
+      padding: 4px 4px 8px;
+    }
+  }
+
+
+  li:nth-child(2n+2) {
+    .row {
+
+      background-color: lightgrey;
+    }
+  }
+}
+
+// Shows the currently chosen fund category selection / filter
+.fund-category-top-display {
+  margin-top: 10px;
+  font-size: 26px;
+  color: black;
+}
+
+
+.sort-by {
+  font-weight: 600;
+}
+
+
 
 /*     MOBILE SETTINGS     */
 /*     EXTRA SMALL DEVICES */
 @media (max-width: @screen-sm-min) {
 
   .results h3, .h3 {
-    font-size: 18px;
-    margin-top: 10px;
+    font-size: 14px;
+    margin: 10px 0px 10px;
   }
 
   .fund-list {
-    font-size: 13px;
+    font-size: 12px;
+  }
+
+  .shp-number-score-container {
+    h3, .h3 {
+      margin-top: 15px;
+    }
   }
 }

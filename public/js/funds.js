@@ -21,6 +21,7 @@ $(document).ready(function() {
     trigger: 'hover'
   });
 
+  /*
   var visited = $.cookie('visited'); // create the cookie
   if (visited == 'yes') {
       return false; // second page load, cookie is active so do nothing
@@ -31,7 +32,7 @@ $(document).ready(function() {
   $.cookie('visited', 'yes', {
       expires: 1 // the number of days the cookie will be effective
   });
-
+  */
 
 
 });

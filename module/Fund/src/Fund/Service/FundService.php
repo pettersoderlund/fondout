@@ -199,6 +199,8 @@ class FundService
         //Filter category
         $fondoutcategory = $params['fondoutcategory'];
 
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        $criteria = Criteria::create();
 
         $sortOrder = array();
         switch ($sort) {
@@ -207,7 +209,7 @@ class FundService
                 # Sorting depending on uppercase letters,
                 # Fixed by default sorting in the original query in fundrepo
 
-                if ($order == 'DESC') {
+                if ($order == Criteria::DESC) {
                   $sortOrder['name'] = $order;
                 }
                 break;
@@ -228,6 +230,10 @@ class FundService
                 break;
             case 'nav1year':
                 $sortOrder['nav1year'] = $order;
+                $sortOrder['shpPercent'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
+                // remove results without the number were sorting on from the results
+                $criteria->andWhere(Criteria::expr()->neq('nav1year', null));
                 break;
             case 'nav3year':
                 $sortOrder['nav3year'] = $order;
@@ -237,18 +243,21 @@ class FundService
                 break;
             case 'shp':
                 $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $order;
                 break;
             case 'fee':
                 $sortOrder['annualFee'] = $order;
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                // remove results without the number were sorting on from the results
+                $criteria->andWhere(Criteria::expr()->neq('annualFee', null));
                 break;
-
-
         }
 
 
-        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $criteria = Criteria::create()->orderBy($sortOrder);
-
+        $criteria->orderBy($sortOrder);
+        //echo var_dump($criteria->getOrderings());
         if (count($company) > 0) {
             $criteria->andWhere(Criteria::expr()->in('companyId', $company));
         }
@@ -256,6 +265,8 @@ class FundService
         if (count($fund) > 0) {
             $criteria->andWhere(Criteria::expr()->in('id', $fund));
         }
+
+
 
         if (count($fondoutcategory) > 0) {
             $criteria->andWhere(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
@@ -498,5 +509,15 @@ class FundService
     public function getEntityManager()
     {
         return $this->entityManager;
+    }
+
+    private function reverseOrder($order)
+    {
+      if ($order == Criteria::DESC) {
+        return Criteria::ASC;
+      } else {
+        return Criteria::DESC;
+      }
+
     }
 }

@@ -30,281 +30,124 @@ $form->setAttribute('action', $this->url('funds', array(), array('query' => $que
 $form->prepare();
 ?>
 
-<!-- MODAL -->
-<div class="modal fade" id="howToSearchModal" tabindex="-1" role="dialog" aria-labelledby="HowToSearch">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-body fund-search-intro">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<div class="centered-column">
+  <a class="accordion-toggle" data-toggle="collapse" data-parent="#fund-type-accordion" href="#fund-type-selector-options">
+      <h2 class="fund-category-top-display"><?php echo current($funds->getItemsByPage(1))->fondoutcategory->longName ?>er<span class="glyphicon glyphicon-option-vertical"></span></h2>
+  </a>
 
-            <?php echo $this->partial('how-to-search', array()); ?>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">OK, ta mig till fondsök!</button>
+  <div class="accordion" id="fund-type-accordion">
+    <div class="accordion-group">
+
+      <div id="fund-type-selector-options" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <?php $fund_categories = array('5'=>'Sverige', '6' => 'Global'); ?>
+          <div class="row">
+            <?php foreach ($fund_categories as $fc_index => $categoryName): ?>
+              <a class="btn btn-info" 
+              href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fc_index)))) ?> " >
+                <?php echo $categoryName; ?>
+              </a>
+            <?php endforeach; ?>
+          </div>
+
+
+        </div>
       </div>
     </div>
   </div>
-</div>
-<!-- END MODAL -->
 
+</div>
 
 
 <nav class="sort-menu">
   <div class="container">
     <div class="row">
-      <div class="col-md-9">
-        <div class="row">
-          <div class="col-md-2 hidden-xs hidden-sm">
-
-          <p id="sort-header"><small>Sortera efter</small></p>
-          </div>
-          <div class="col-md-7 centered-column">
-            <p class="visible-xs visible-sm pull-left">Sortera efter:</p>
-            <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fee', 'order' => ($sortby == 'fee' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                Avgift <span class="glyphicon glyphicon-sort"></span>
-            </a>
-            <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav1year', 'order' => ($sortby == 'nav1year' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                1 år <span class="glyphicon glyphicon-sort"></span>
-            </a>
-            <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav3year', 'order' => ($sortby == 'nav3year' ? $reverseorder : 'ASC'))  + $query))); ?>">
+          <div class="">
+            <div class="col-xs-4 left">
+              <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fee', 'order' => ($sortby == 'fee' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                  Avgift <span class="glyphicon glyphicon-sort"></span>
+              </a>
+            </div>
+            <div class="col-xs-3 middle">
+              <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav1year', 'order' => ($sortby == 'nav1year' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                  1 år <span class="glyphicon glyphicon-sort"></span>
+              </a>
+            </div>
+            <!-- <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav3year', 'order' => ($sortby == 'nav3year' ? $reverseorder : 'ASC'))  + $query))); ?>">
                 3 år <span class="glyphicon glyphicon-sort"></span>
-            </a>
-            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
+            </a> -->
+            <!-- <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter fossila bränsen' src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
             </a>
-          <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
+            <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter förbjudna vapen' src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt="Weapon sort button">
             </a>
-            <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'alcohol', 'order' => ($sortby == 'alcohol' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter alkohol' src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt="Alcohol sort button">
-            </a>-->
             <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">
               <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter tobak' src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt="Tobacco sort button">
             </a>
-            <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'gambling', 'order' => ($sortby == 'gambling' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter spel' src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt="Gamlbing sort button">
-            </a>-->
-          </div>
-          <div class="col-md-3">
-            <a class="btn btn-default" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'shp', 'order' => ($sortby == 'shp' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                Hållbarhetspoäng <span class="glyphicon glyphicon-sort"></span>
-            </a>
+          </div> -->
+            <div class="col-xs-5 right">
+              <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'shp', 'order' => ($sortby == 'shp' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                  Hållbarhetsp. <span class="glyphicon glyphicon-sort"></span>
+              </a>
+            </div>
           </div>
 
-          <!--<button class="btn"><a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'name', 'order' => ($sortby == 'name' ? $reverseorder : 'ASC'))  + $query))); ?>">A-Z</a></button>-->
-        </div>
-      </div>
-      <div class="col-md-3 centered-column hidden-xs hidden-sm">
-        <p>Sökalternativ</p>
-      </div>
     </div>
   </div>
 </nav>
 
 <section id="fund-section" class="container fund-list content">
   <div class="row">
-    <div id="fund-filters" class="col-md-3 col-md-push-9 panel-group panel-box clearfix">
-      <div class="filter-header">
-        <h3>Begränsa sökresultaten: </h3>
-        <p><?php echo $funds->getPages()->totalItemCount;?> fonder.</p>
-      </div>
-      <?php echo $this->form()->openTag($form) ?>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFondoutCategory">
-              <?php echo $this->translate('Fondkategori') ?>
-            </a>
-          </h3>
-        </div>
-
-        <div id="collapseFondoutCategory" class="panel-collapse collapse in"><!--class="panel-collapse collapse <?php if ($form->get('fondoutcategory')->getValue()) {echo " in ";} ?>">-->
-          <div class="panel-body">
-            <p><?php echo $this->translate('Välj var i världen fonden äger sin majoritet av företag.') ?></p>
-            <div class="checkbox">
-              <?php
-              $this->formMultiCheckbox()->setSeparator('</div><div class="checkbox">');
-                echo $this->formMultiCheckbox($form->get('fondoutcategory'));
-                ?>
-            </div>
-            <div class="search-fund-button pull-right">
-              <?php echo $this->formSubmit($form->get('submit')->setValue('Uppdatera fondsökning')) ?>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseFund">
-              <?php echo $this->translate('Jämför mina fonder') ?>
-            </a>
-          </h3>
-        </div>
-        <div id="collapseFund" class="panel-collapse collapse <?php if ($form->get('fund')->getValue()) {echo " in ";} ?>">
-          <div class="panel-body">
-            <p><?php echo $this->translate('Välj vilka fonder du vill se.') ?></p>
-            <?php echo $this->formSelect($form->get('fund')) ?>
-            <div class="search-fund-button pull-right">
-              <?php echo $this->formSubmit($form->get('submit')->setValue('Jämför mina fonder')) ?>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseCompany">
-              <?php echo $this->translate('Fondbolag') ?>
-            </a>
-          </h3>
-        </div>
-        <div id="collapseCompany" class="panel-collapse collapse <?php if ($form->get('company')->getValue()) {echo " in ";} ?>">
-          <div class="panel-body">
-            <p><?php echo $this->translate(' Välj vilken bank eller fondbolags fonder du vill se.') ?></p>
-            <?php echo $this->formSelect($form->get('company')) ?>
-            <div class="search-fund-button pull-right">
-              <?php echo $this->formSubmit($form->get('submit')->setValue('Uppdatera fondsökning')) ?>
-            </div>
-          </div>
-
-        </div>
-      </div>
-
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            <a data-toggle="collapse" data-parent="#accordion" href="#collapseQ">
-              <?php echo $this->translate('Snabbsök') ?>
-            </a>
-          </h3>
-        </div>
-
-        <div id="collapseQ" class="panel-collapse collapse <?php if ($form->get('q')->getValue()) {echo " in ";}?>">
-          <div class="panel-body">
-            <p><?php echo $this->translate('Sök på hela eller delar av fondnamnet.') ?></p>
-            <div class="input-group">
-              <?php echo $this->formRow($form->get('q')); ?>
-            </div><!-- /input-group -->
-            <div class="search-fund-button pull-right">
-              <?php echo $this->formSubmit($form->get('submit')->setValue('Sök fonder')) ?>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <?php echo $this->formHidden($form->get('category')) ?>
-      <?php echo $this->form()->closeTag() ?>
-        <br />
-        <!-- MODAL BUTTON -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#howToSearchModal">
-          ?
-        </button>
-    </div>
-    <div class="col-md-9 col-md-pull-3">
+  <div class="col-xs-12">
       <?php if (count($funds)): ?>
-
         <ul class="results">
           <?php foreach ($funds as $fund): ?>
             <li>
-              <div class="row well">
-                <div class="col-sm-5 col-xs-12">
-                  <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
+              <div class="row">
+                <div class="col-xs-10">
                   <h3>
                     <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
                       <?php echo $this->translate($fund->name) ?>
                     </a>
                   </h3>
-                  <div class="shp-categories-box" style="
-                  color: gray;
-    float: left;
-    width: 25%px;
-    margin: 0px;
-    padding: 7px 12px;
-    text-align: right;
-">
-                    <h6 style="
-    margin: 2px;
-    margin-left: 4px;
-">Årlig avgift</h6>
-                                                                                                                        <span style="
-    font-size: 24px;
-"><?php echo ($fund->annualFee != 0) ? number_format($fund->annualFee, 1) . '%' : "-" ?></span>
-
+                  <div class="col-xs-6">
+                    <span class="<?php echo $sortby == 'fee' ? 'sort-by' : '' ?>">
+                        <?php echo ($sortby != 'fee' && $fund->annualFee == 0) ? "-" : number_format($fund->annualFee, 2) . '%'  ?>
+                      </span>
                   </div>
-                  <div class="shp-categories-box" style="
-    width: 65%;
-    float: right;
-    color: gray;
-    padding: 7px 12px;
-    text-align: right;
-">
-                    <h6 style="
-    margin: 2px;
-    margin-left: 4px;
-">Avkastning &nbsp &nbsp 1 år  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  3 år</h6>
-                                                                                                                        <span style="
-    font-size: 24px;
-    margin-left:30px;
-">
-
-<?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?>
-
-<?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?>
-
-</span>
-
-
-
-
-
-
-
-
-
-                    <!--<small>0.0%</small>-->
+                  <div class="col-xs-6">
+                    <span class="<?php echo $sortby == 'nav1year' ? 'sort-by' : '' ?>">
+                        <?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?>
+                      </span>
                   </div>
-                  <!--<a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
-                      <?php echo $this->translate($fund->company->name) ?>
-                  </a>
-                  <br>
-                  <a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
-                    <?php echo $this->translate($fund->fondoutcategory->longName) ?>
-                  </a>-->
+                  <!-- <?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?> -->
+                </div>
+                <div class="col-xs-2 shp-number-score-container">
+                  <h3>
+                    <span class="shp-number-score <?php echo $sortby == 'shp' ? 'sort-by' : '' ?> <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>"><?php echo $fund->getMeasureScore('shp') ?></span>
+                  </h3>
                 </div>
 
-                <div class="col-sm-4 col-xs-7 centered-column">
-                  <div class="shp-categories-box">
-                    <h6>Hållbarhetspoäng uppdelat</h6>
-                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
-                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
-                    <!--<?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('alcohol') . ".png' alt='Alkohol " . $fund->getMeasureScore('alcohol') . "/10'>" ?>-->
-                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png' alt='Tobak " . $fund->getMeasureScore('tobacco') . "/10'>"   ?>
-                    <!--<?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('gambling') . ".png' alt='Spel " . $fund->getMeasureScore('gambling') . "/10'>"   ?>-->
-                    <br>
-                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt='Fossila bränslen symbol'>
-                    <!--<small><?php echo number_format($fund->fossilCompaniesPercent*100,1) . "%" ?></small>-->
-                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt='Vapen symbol'>
-                    <!--<small><?php echo number_format($fund->weaponCompaniesPercent*100,1) . "%" ?></small>-->
-                    <!--<img class="round-symbol" src="/img/<?php echo ($sortby == 'alcohol') ? "symbols/" : "gray-symbols/"?>alcohol.png" alt='Alkohol symbol'>-->
-                    <!--<small><?php echo number_format($fund->alcoholCompaniesPercent*100,1) . "%" ?></small>-->
-                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt='Tobak symbol'>
-                    <!--<small><?php echo number_format($fund->tobaccoCompaniesPercent*100,1) . "%" ?></small>-->
-                    <!--<img class="round-symbol" src="/img/<?php echo ($sortby == 'gambling') ? "symbols/" : "gray-symbols/"?>gambling.png" alt='Spel symbol'>-->
-                    <!--<small><?php echo number_format($fund->gamblingCompaniesPercent*100,1) . "%" ?></small>-->
+
+
+
+
+                  <div class="col-sm-5 centered-column hidden">
+                    <div class="shp-categories-box">
+                      <h6>Hållbarhetspoäng uppdelat</h6>
+                      <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
+                      <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
+                      <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png' alt='Tobak " . $fund->getMeasureScore('tobacco') . "/10'>"   ?>
+                      <br>
+                      <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt='Fossila bränslen symbol'>
+                      <img class="round-symbol" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt='Vapen symbol'>
+                      <img class="round-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt='Tobak symbol'>
+
+                    </div>
                   </div>
+
                 </div>
-                <div class="col-sm-3 col-xs-5 centered-column">
-                  <div class="shp-box">
-                    <span class="shp-number-score <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>"><?php echo $fund->getMeasureScore('shp') ?></span>
-                    <br>
-                    <h5>Hållbarhetspoäng</h5>
-                  </div>
-                </div>
-              </div>
             </li>
           <?php endforeach; ?>
         </ul>
