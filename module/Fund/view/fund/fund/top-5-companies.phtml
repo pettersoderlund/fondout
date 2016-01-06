@@ -1,0 +1,30 @@
+<div>
+  <h3>
+    <?php echo $name ?> <span><small>Topp 5 bolag</small></span>
+    <span class="percent-and-symbol-shp-lists">
+      <img
+        class="symbol-image-shp-section"
+        src="/img/<?php echo ($percentage == 0) ? 'green-' : '' ; ?>symbols/<?php echo $short_name ?>.png">
+      <?php echo number_format(($percentage*100),2) ?>%
+    </span>
+  </h3>
+  <?php if(sizeof($ccompanies) > 0): ?>
+    <table class="table table-striped">
+      <?php foreach (array_slice($ccompanies, 0, 5) as $company): ?>
+        <tr>
+          <td>
+            <?php echo $company['name'] ?>
+          </td>
+          <td>
+            <?php echo number_format($company['part']*100, 2)?> %
+          </td>
+        </tr>
+      <?php endforeach; ?>
+    </table>
+  <?php else: ?>
+    <div class="empty-table-replacement-box">
+      <img class="table-replacement-shp-ten" src="/img/green-symbols/<?php echo $short_name ?>.png">
+      <p>Fonden har inga bolag i denna kategori.</p>
+    </div>
+  <?php endif; ?>
+</div>
