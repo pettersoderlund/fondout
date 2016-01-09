@@ -22,108 +22,117 @@ $this->headMeta()->appendName(
 <section class="container fund-page">
   <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
 
+
+
+  <hr>
   <div class="row">
-    <div class="col-xs-6">
-      <h3>Årlig Avgift</h3>
-      <?php echo (is_null($fund->pmDate)) ? "-" : number_format($fund->annualFee, 2) . '%'  ?>
+    <div class="col-lg-6">
+    <h2>
+      Hållbarhetspoäng
+      <span class="
+        shp-score
+        <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>
+        "><?php echo $fund->getMeasureScore('shp') ?></span>
+    </h2>
+    <div class="row shp-status-box">
+      <div class="col-xs-4">
+        <img class="symbol-image-shp-section" alt="fossil symbol" src="/img/<?php echo ($fund->getMeasureScore('fossil') == 10) ? 'green-' : '' ; ?>symbols/fossil.png">
+        <p><?php echo number_format($fund->fossilCompaniesPercent*100, 2) + 0 ?>% Fossila bränslen</p>
+      </div>
+      <div class="col-xs-4">
+        <img class="symbol-image-shp-section"  alt="tobacco symbol" src="/img/<?php echo ($fund->getMeasureScore('tobacco') == 10) ? 'green-' : '' ; ?>symbols/tobacco.png">
+        <p><?php echo number_format($fund->tobaccoCompaniesPercent*100, 2) + 0 ?>% Tobak</p>
+      </div>
+      <div class="col-xs-4">
+        <img class="symbol-image-shp-section" alt="weapon symbol" src="/img/<?php echo ($fund->getMeasureScore('weapon') == 10) ? 'green-' : '' ; ?>symbols/weapon.png">
+        <p><?php echo number_format($fund->weaponCompaniesPercent*100, 2) + 0 ?>% Förbjudna vapen</p>
+      </div>
     </div>
-    <div class="col-xs-6">
-      <h3>Avkastning 1 år</h3>
-      <?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?>
+
+    <hr>
+    <?php echo $this->partial(
+          'top-5-companies',
+          array(
+            'name'           => 'Fossila bränslen'
+            , 'ccompanies'  => $companies['fossil']
+            , 'percentage'   => $fund->fossilCompaniesPercent
+            , 'short_name'   => 'fossil'
+          )); ?>
+    <?php echo $this->partial(
+          'top-5-companies',
+          array(
+            'name'           => 'Tobak'
+            , 'ccompanies'  => $companies['tobacco']
+            , 'percentage'   => $fund->tobaccoCompaniesPercent
+            , 'short_name'   => 'tobacco'
+          )); ?>
+    <?php echo $this->partial(
+          'top-5-companies',
+          array(
+            'name'           => 'Förbjudna vapen'
+            , 'ccompanies'  => $companies['weapon']
+            , 'percentage'   => $fund->weaponCompaniesPercent
+            , 'short_name'   => 'weapon'
+          )); ?>
+
+    <hr>
     </div>
-    <div class="col-xs-6">
-      <h3>Avkastning 3 år</h3>
-      <?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?>
-    </div>
-    <div class="col-xs-6">
-      <h3>Avkastning 5 år</h3>
-      <?php echo ($fund->nav5year != 0) ? number_format($fund->nav5year, 0) . '%' : "-" ?>
+    <div class="col-lg-5 col-lg-offset-1">
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>Årlig Avgift</h3>
+          <p><?php echo (is_null($fund->pmDate)) ? "-" : number_format($fund->annualFee, 2) . '%'  ?></p>
+        </div>
+        <div class="col-xs-12">
+          <h3>Avkastning</h3>
+        </div>
+        <div class="col-xs-4">
+          <h5>1 år</h5>
+          <p><?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?></p>
+        </div>
+        <div class="col-xs-4">
+          <h5>3 år</h5>
+          <p><?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?></p>
+        </div>
+        <div class="col-xs-4">
+          <h5>5 år</h5>
+          <p><?php echo ($fund->nav5year != 0) ? number_format($fund->nav5year, 0) . '%' : "-" ?></p>
+        </div>
+      </div>
+
+      <h3>Fondens <span data-toggle="tooltip"
+       data-placement="bottom"
+       title="International Securities Identification Number (ISIN) är en kod som är
+       avsedd att entydigt identifiera ett värdepapper.">
+       ISIN
+      </span></h3>
+      <p><?php echo (!is_null($this->fund->isin)) ?  $this->fund->isin : "-" ;?></p>
+
+
+      <?php if($fund->date): ?>
+        <h3>Fondens innehav är från </h3>
+        <p><?php echo date_format($fund->date, 'Y-m-d')?></p>
+      <?php endif; ?>
+
+
+      <h3>Fondbolag</h3>
+      <a class="fundinfo-btn btn " href="/fundcompany/<?php
+      echo $this->translate($fund->company->url) ?>">
+          <?php echo $this->translate($fund->company->name) ?>
+      </a>
+
+
+      <h3>Fondkategori</h3>
+      <a class="fundinfo-btn btn " href="<?php
+        echo $this->escapeHtmlAttr($this->url(
+          'funds',
+          array(),
+          array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id
+          ))));
+      ?>
+      ">
+        <?php echo $this->translate($fund->fondoutcategory->longName) ?>
+      </a>
     </div>
   </div>
-
-  <hr>
-
-  <h2>
-    Hållbarhetspoäng
-    <span class="
-      shp-score
-      <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>
-      "><?php echo $fund->getMeasureScore('shp') ?></span>
-  </h2>
-  <div class="row shp-status-box">
-    <div class="col-xs-4">
-      <img class="symbol-image-shp-section" alt="fossil symbol" src="/img/<?php echo ($fund->getMeasureScore('fossil') == 10) ? 'green-' : '' ; ?>symbols/fossil.png">
-      <p><?php echo number_format($fund->fossilCompaniesPercent*100, 2) + 0 ?>% Fossila bränslen</p>
-    </div>
-    <div class="col-xs-4">
-      <img class="symbol-image-shp-section"  alt="tobacco symbol" src="/img/<?php echo ($fund->getMeasureScore('tobacco') == 10) ? 'green-' : '' ; ?>symbols/tobacco.png">
-      <p><?php echo number_format($fund->tobaccoCompaniesPercent*100, 2) + 0 ?>% Tobak</p>
-    </div>
-    <div class="col-xs-4">
-      <img class="symbol-image-shp-section" alt="weapon symbol" src="/img/<?php echo ($fund->getMeasureScore('weapon') == 10) ? 'green-' : '' ; ?>symbols/weapon.png">
-      <p><?php echo number_format($fund->weaponCompaniesPercent*100, 2) + 0 ?>% Förbjudna vapen</p>
-    </div>
-  </div>
-
-  <hr>
-  <?php echo $this->partial(
-        'top-5-companies',
-        array(
-          'name'           => 'Fossila bränslen'
-          , 'ccompanies'  => $companies['fossil']
-          , 'percentage'   => $fund->fossilCompaniesPercent
-          , 'short_name'   => 'fossil'
-        )); ?>
-  <?php echo $this->partial(
-        'top-5-companies',
-        array(
-          'name'           => 'Tobak'
-          , 'ccompanies'  => $companies['tobacco']
-          , 'percentage'   => $fund->tobaccoCompaniesPercent
-          , 'short_name'   => 'tobacco'
-        )); ?>
-  <?php echo $this->partial(
-        'top-5-companies',
-        array(
-          'name'           => 'Förbjudna vapen'
-          , 'ccompanies'  => $companies['weapon']
-          , 'percentage'   => $fund->weaponCompaniesPercent
-          , 'short_name'   => 'weapon'
-        )); ?>
-
-  <hr>
-
-  <h3>Fondens <span data-toggle="tooltip"
-   data-placement="bottom"
-   title="International Securities Identification Number (ISIN) är en kod som är
-   avsedd att entydigt identifiera ett värdepapper.">
-   ISIN
-  </span></h3>
-  <p><?php echo (!is_null($this->fund->isin)) ?  $this->fund->isin : "-" ;?></p>
-
-
-  <?php if($fund->date): ?>
-    <h3>Fondens innehav är från </h3>
-    <p><?php echo date_format($fund->date, 'Y-m-d')?></p>
-  <?php endif; ?>
-
-
-  <h3>Fondbolag</h3>
-  <a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php
-  echo $this->translate($fund->company->url) ?>">
-      <?php echo $this->translate($fund->company->name) ?>
-  </a>
-
-
-  <h3>Fondkategori</h3>
-  <a class="fundinfo-btn btn btn-xs" href="<?php
-    echo $this->escapeHtmlAttr($this->url(
-      'funds',
-      array(),
-      array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id
-      ))));
-  ?>
-  ">
-    <?php echo $this->translate($fund->fondoutcategory->longName) ?>
-  </a>
 </section>
