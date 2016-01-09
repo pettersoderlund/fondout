@@ -4,6 +4,7 @@
     <span class="percent-and-symbol-shp-lists">
       <img
         class="symbol-image-shp-section"
+        alt="<?php echo $name ?>-symbol"
         src="/img/<?php echo ($percentage == 0) ? 'green-' : '' ; ?>symbols/<?php echo $short_name ?>.png">
       <?php echo number_format(($percentage*100),2) + 0 ?>%
     </span>
@@ -15,7 +16,7 @@
           <td>
             <?php echo $company['name'] ?>
           </td>
-          <td>
+          <td class="second-col">
             <?php echo number_format($company['part']*100, 2) + 0?> %
           </td>
         </tr>
@@ -23,7 +24,7 @@
     </table>
   <?php else: ?>
     <div class="empty-table-replacement-box">
-      <img class="table-replacement-shp-ten" src="/img/green-symbols/<?php echo $short_name ?>.png">
+      <img class="table-replacement-shp-ten" alt="Grön <?php echo $name ?>-symbol"  src="/img/green-symbols/<?php echo $short_name ?>.png">
       <p>Fonden har inga bolag i denna kategori.</p>
     </div>
   <?php endif; ?>

@@ -52,15 +52,15 @@ $this->headMeta()->appendName(
   </h2>
   <div class="row shp-status-box">
     <div class="col-xs-4">
-      <img class="symbol-image-shp-section" src="/img/<?php echo ($fund->getMeasureScore('fossil') == 10) ? 'green-' : '' ; ?>symbols/fossil.png">
+      <img class="symbol-image-shp-section" alt="fossil symbol" src="/img/<?php echo ($fund->getMeasureScore('fossil') == 10) ? 'green-' : '' ; ?>symbols/fossil.png">
       <p><?php echo number_format($fund->fossilCompaniesPercent*100, 2) + 0 ?>% Fossila bränslen</p>
     </div>
     <div class="col-xs-4">
-      <img class="symbol-image-shp-section" src="/img/<?php echo ($fund->getMeasureScore('tobacco') == 10) ? 'green-' : '' ; ?>symbols/tobacco.png">
+      <img class="symbol-image-shp-section"  alt="tobacco symbol" src="/img/<?php echo ($fund->getMeasureScore('tobacco') == 10) ? 'green-' : '' ; ?>symbols/tobacco.png">
       <p><?php echo number_format($fund->tobaccoCompaniesPercent*100, 2) + 0 ?>% Tobak</p>
     </div>
     <div class="col-xs-4">
-      <img class="symbol-image-shp-section" src="/img/<?php echo ($fund->getMeasureScore('weapon') == 10) ? 'green-' : '' ; ?>symbols/weapon.png">
+      <img class="symbol-image-shp-section" alt="weapon symbol" src="/img/<?php echo ($fund->getMeasureScore('weapon') == 10) ? 'green-' : '' ; ?>symbols/weapon.png">
       <p><?php echo number_format($fund->weaponCompaniesPercent*100, 2) + 0 ?>% Förbjudna vapen</p>
     </div>
   </div>
