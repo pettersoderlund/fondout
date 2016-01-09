@@ -2,6 +2,7 @@
 
 .results, .sort-menu {
   h3 {
+      font-size: 2rem;
       a {
       //color: black;
       color: @brand-blue;
@@ -59,30 +60,6 @@
   }
 }
 
-.filter-header {
-  h3 {
-    font-size: 20px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-  }
-  margin-left: 10px;
-  margin-bottom: 15px;
-
-}
-
-.sustainability-desc .sust-header{
-    margin-left: 7px;
-
-}
-
-.sustainability-desc .sustainability-number {
-      font-size: 16px;
-      line-height: ceil(@font-size-base*2.9);
-      margin-right: 7px;
-      margin-left: 7px;
-
-}
-
 
 @media screen and (min-width: 768px) {
   .sortby-buttons {
@@ -110,7 +87,7 @@
 
   h3, .h3 {
     margin-top: 0px;
-    font-size: 18px;
+    //font-size: 18px;
   }
 }
 
@@ -118,128 +95,8 @@
 .menu-padding {
     //padding-top:80px;
     padding-top:42px; // For mobile? btn-sm sort menu, 46px for normal btn-size
-
 }
 
-.fund-search-intro {
-  background: @gray-lighter;
-  margin: 20px;
-  font-size: 80%;
-
-}
-
-.centered-header {
-  text-align:center;
-}
-
-.intro-section {
-
-  .h4, h4 {
-      text-align: center;
-  }
-
-  .better-worse {
-    font-size: 70%;
-  }
-
-  .h2, h2 {
-    margin-top: 40px;
-  }
-
-  .col-md-2 {
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-  .bars-explained {
-    .col-md-4 {
-      padding-left: 4px;
-      padding-right: 4px;
-    }
-    .bar-explanation-text {
-      margin: 10px 0px;
-    }
-
-  }
-
-  .intro-symbol {
-    max-width: 100px;
-    max-height: 90px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .intro-box {
-    background-color: white;
-    padding: 15px;
-    position: relative;
-    margin: 40px 0px 15px;
-  }
-
-  .intro-symbol-box {
-    min-height: 110px;
-    white-space: nowrap;
-    text-align: center; margin: 1em 0;
-
-  .glyphicon-lg {
-      color: @brand-primary;
-      margin: 15px;
-    }
-
-
-  }
-
-  .intro-box:after {
-  	bottom: 100%;
-  	left: 50%;
-  	border: solid transparent;
-  	content: " ";
-  	height: 0;
-  	width: 0;
-  	position: absolute;
-  	pointer-events: none;
-  	border-color: rgba(255, 255, 255, 0);
-  	border-bottom-color: #ffffff;
-  	border-width: 25px;
-  	margin-left: -25px;
-  }
-
-  .intro-symbol-helper {
-    display: inline-block;
-    height: 100%;
-    vertical-align: middle;
-  }
-
-  .intro-symbol-letter {
-    font-weight: bold;
-  }
-}
-
-.introBar {
-  max-width: 20px;
-  margin: 5px;
-}
-
-.roundintrosymbols {
-  max-width: 30px;
-}
-.sqintrosymbols {
-  max-width: 30px;
-}
-
-.sort-by-explainations {
-  list-style: none;
-  padding-left: 0px;
-  line-height: 35px;
-}
-
-#fund-header {
-  float:left;
-}
-
-#sort-header {
-  float:right;
-}
 
 .sort-menu {
   background-color: white;
@@ -334,8 +191,7 @@
 }*/
 
 .shp-number-score {
-  font-size: 24px;
-  //font-weight: 900;
+  font-size: 3rem;
   font-weight: 400;
 }
 
@@ -362,7 +218,7 @@
     text-decoration:none;
     background: #464646;
     box-shadow: 0 0 3px gray;
-    font-size:20px;
+    font-size:2rem;
     font-weight:bold;
 }
 .round-button:hover {
@@ -377,10 +233,8 @@
     }
   }
 
-
   li:nth-child(2n+2) {
     .row {
-
       background-color: lightgrey;
     }
   }
@@ -389,7 +243,7 @@
 // Shows the currently chosen fund category selection / filter
 .fund-category-top-display {
   margin-top: 10px;
-  font-size: 26px;
+  font-size: 3.4rem;
   color: black;
 }
 
@@ -405,12 +259,11 @@
 @media (max-width: @screen-sm-min) {
 
   .results h3, .h3 {
-    font-size: 14px;
     margin: 10px 0px 10px;
   }
 
   .fund-list {
-    font-size: 12px;
+    font-size: 1.5rem;
   }
 
   .shp-number-score-container {

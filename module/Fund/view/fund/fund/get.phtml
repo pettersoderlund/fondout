@@ -22,18 +22,20 @@ $this->headMeta()->appendName(
 <section class="container fund-page">
   <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
 
-  <hr>
-
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-6">
       <h3>Årlig Avgift</h3>
-      <?php echo ($fund->annualFee == 0) ? "-" : number_format($fund->annualFee, 2) . '%'  ?>
+      <?php echo (is_null($fund->pmDate)) ? "-" : number_format($fund->annualFee, 2) . '%'  ?>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6">
       <h3>Avkastning 1 år</h3>
       <?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?>
     </div>
-    <div class="col-xs-4">
+    <div class="col-xs-6">
+      <h3>Avkastning 3 år</h3>
+      <?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?>
+    </div>
+    <div class="col-xs-6">
       <h3>Avkastning 5 år</h3>
       <?php echo ($fund->nav5year != 0) ? number_format($fund->nav5year, 0) . '%' : "-" ?>
     </div>
@@ -48,18 +50,18 @@ $this->headMeta()->appendName(
       <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>
       "><?php echo $fund->getMeasureScore('shp') ?></span>
   </h2>
-  <div class="row">
+  <div class="row shp-status-box">
     <div class="col-xs-4">
       <img class="symbol-image-shp-section" src="/img/<?php echo ($fund->getMeasureScore('fossil') == 10) ? 'green-' : '' ; ?>symbols/fossil.png">
-      <h3>Fossila bränslen</h3>
+      <p><?php echo number_format($fund->fossilCompaniesPercent*100, 2) + 0 ?>% Fossila bränslen</p>
     </div>
     <div class="col-xs-4">
       <img class="symbol-image-shp-section" src="/img/<?php echo ($fund->getMeasureScore('tobacco') == 10) ? 'green-' : '' ; ?>symbols/tobacco.png">
-      <h3>Tobak</h3>
+      <p><?php echo number_format($fund->tobaccoCompaniesPercent*100, 2) + 0 ?>% Tobak</p>
     </div>
     <div class="col-xs-4">
       <img class="symbol-image-shp-section" src="/img/<?php echo ($fund->getMeasureScore('weapon') == 10) ? 'green-' : '' ; ?>symbols/weapon.png">
-      <h3>Förbjudna vapen</h3>
+      <p><?php echo number_format($fund->weaponCompaniesPercent*100, 2) + 0 ?>% Förbjudna vapen</p>
     </div>
   </div>
 

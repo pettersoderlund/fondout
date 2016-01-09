@@ -5,7 +5,7 @@
       <img
         class="symbol-image-shp-section"
         src="/img/<?php echo ($percentage == 0) ? 'green-' : '' ; ?>symbols/<?php echo $short_name ?>.png">
-      <?php echo number_format(($percentage*100),2) ?>%
+      <?php echo number_format(($percentage*100),2) + 0 ?>%
     </span>
   </h3>
   <?php if(sizeof($ccompanies) > 0): ?>
@@ -16,7 +16,7 @@
             <?php echo $company['name'] ?>
           </td>
           <td>
-            <?php echo number_format($company['part']*100, 2)?> %
+            <?php echo number_format($company['part']*100, 2) + 0?> %
           </td>
         </tr>
       <?php endforeach; ?>
