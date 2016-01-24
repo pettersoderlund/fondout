@@ -459,9 +459,9 @@ class FundService
         ->getRepository('Fund\Entity\AccusationCategory');
       $accCat['fossil'] = $repository->findOneByName('Fossila bränslen');
       $accCat['weapon'] = $repository->findOneByName('Förbjudna vapen');
-      $accCat['alcohol'] = $repository->findOneByName('Alkohol');
+      //$accCat['alcohol'] = $repository->findOneByName('Alkohol');
       $accCat['tobacco'] = $repository->findOneByName('Tobak');
-      $accCat['gambling'] = $repository->findOneByName('Spel');
+      //$accCat['gambling'] = $repository->findOneByName('Spel');
 
       return $accCat;
     }

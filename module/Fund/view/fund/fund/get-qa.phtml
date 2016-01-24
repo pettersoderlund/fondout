@@ -68,14 +68,12 @@ $('body').attr('data-target', '#scrollSpy');
           <li>Kolla upp vilka fonder du sparar i idag/ Vilka fonder du är intresserad av att börja spara i.</li>
           <li>Hitta fonderna i fondsök på Sparahållbart.se</li>
           <li>Vilka fondkategorier har dina fonder? (Fondkategorin för respektive fond hittas både i fondsök samt på respektive fondsida)</li>
-          <li>Vad innehåller dina fonder? ( fossila bränslen / vapen / alkohol / tobak / spel )</li>
+          <li>Vad innehåller dina fonder? ( fossila bränslen / vapen / tobak)</li>
           <li>Jämför dina fonder med andra fonder i samma fondkategori - Vad innehåller dessa fonder?</li>
           <li>Ligger dina nuvarande fonder i linje med hur du önskar spara dina pengar?</li>
         </ol>
       </div>
-      <div id="4-steps">
-        <?php echo $this->partial('how-to-search', array()); ?>
-      </div>
+
       <h2 id="measures">Våra mått</h2>
       <p>För att du ska kunna hitta en fond som ligger i linje med dina hållbarhetspreferenser kan du på Sparahållbart.se välja att jämföra dina fonder utifrån fem olika hållbarhetsmått/kategorier.</p>      <?php $rowCount = 0; ?>
       <?php foreach($accCategories as $cname => $category): ?>
@@ -92,7 +90,7 @@ $('body').attr('data-target', '#scrollSpy');
         <?php if ($rowCount++ % 2 == 1 ) echo "</div>"; ?>
       <?php endforeach; ?>
       <?php if ($rowCount % 2 == 1 ) echo "</div>"; ?>
-
+<!--
       <div class="row">
         <div class="col-sm-9">
           <h3 id="levels">Nivå av hållbarhet</h3>
@@ -120,6 +118,7 @@ $('body').attr('data-target', '#scrollSpy');
           </ol>
         </div>
       </div>
+    -->
       <a href="<?php echo $this->url('funds') ?>" class="btn btn-primary">Gå till fondsök nu</a>
       <a href="#school" class="btn btn-primary">Eller gå till Sparahållbart-skolan (rekommenderas)</a>
     </div>
