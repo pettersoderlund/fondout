@@ -1,0 +1,139 @@
+
+
+<div class="row">
+<div class="col-xs-12">
+    <?php if (count($funds)): ?>
+      <ul class="results">
+        <?php foreach ($funds as $fund): ?>
+          <li>
+            <div class="row">
+              <div class="col-xs-10">
+                <h3>
+                  <a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array('id' => $fund->url))) ?>" title="" target="_blank">
+                    <?php echo $this->translate($fund->name) ?>
+                  </a>
+                </h3>
+                <div class="col-xs-6">
+                  <span class="<?php echo $sortby == 'fee' ? 'sort-by' : '' ?>">
+                      <?php echo (is_null($fund->pmDate)) ? "-" : number_format($fund->annualFee, 2) . '%'  ?>
+                    </span>
+                </div>
+                <div class="col-xs-6">
+                  <span class="<?php echo $sortby == 'nav1year' ? 'sort-by' : '' ?>">
+                      <?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?>
+                    </span>
+                </div>
+                <!-- <?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?> -->
+              </div>
+              <div class="col-xs-2 shp-number-score-container">
+                <h3>
+                  <span class="shp-number-score <?php echo $sortby == 'shp' ? 'sort-by' : '' ?> <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>"><?php echo $fund->getMeasureScore('shp') ?></span>
+                </h3>
+              </div>
+
+
+
+
+
+                <div class="col-sm-5 centered-column hidden">
+                  <div class="shp-categories-box">
+                    <h6>Hållbarhetspoäng uppdelat</h6>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
+                    <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png' alt='Tobak " . $fund->getMeasureScore('tobacco') . "/10'>"   ?>
+                    <br>
+                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt='Fossila bränslen symbol'>
+                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt='Vapen symbol'>
+                    <img class="round-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt='Tobak symbol'>
+
+                  </div>
+                </div>
+
+              </div>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+
+    <?php else: ?>
+      <h3>
+        <?php echo $this->translate(
+          'Vi kunde inte hitta några resultat med dina söktermer.') ?>
+      </h3>
+      <br>
+      <h4><?php echo $this->translate('Förslag') ?>:</h4>
+      <ul>
+        <li><?php echo $this->translate('Dubbelkolla din stavning') ?>        </li>
+        <li><?php echo $this->translate('Använd mer generella söktermer') ?>  </li>
+        <li><a href="/funds" class="btn btn-primary" role="button">
+          Återställ sökning
+        </a></li>
+      </ul>
+
+    <?php endif; ?>
+
+    <?php if ($funds->getPages()->pageCount > 1): ?>
+      <ul class="pagination pagination-centered">
+        <!-- Previous page link -->
+        <?php if (isset($funds->getPages()->previous)): ?>
+          <li>
+            <a href="<?php echo $this->escapeHtmlAttr(
+            $this->url(
+            'funds',
+            array(),
+            array('query' => array('page' => $funds->getPages()->previous) + $query
+            ))); ?>">
+              &laquo;
+            </a>
+          </li>
+          <?php
+          else: ?>
+          <li class="disabled">
+            <a href="#">
+              &laquo;
+            </a>
+          </li>
+        <?php endif; ?>
+        <!-- Numbered page links -->
+        <?php foreach ($funds->getPages()->pagesInRange as $page): ?>
+          <?php if ($page != $funds->getPages()->current): ?>
+            <li>
+              <a href="<?php echo $this->escapeHtmlAttr(
+                $this->url(
+                  'funds',
+                  array(),
+                  array('query' => array('page' => $page)  + $query
+                )
+              )); ?>">
+                <?php echo $page; ?>
+              </a>
+            </li>
+          <?php else: ?>
+            <li class="active">
+              <a href="#"><?php echo $page; ?></a>
+            </li>
+          <?php endif; ?>
+        <?php endforeach; ?>
+
+        <!-- Next page link -->
+        <?php if (isset($funds->getPages()->next)): ?>
+          <li>
+            <a href="<?php echo $this->escapeHtmlAttr(
+            $this->url(
+            'funds',
+            array(),
+            array('query' => array('page' => $funds->getPages()->next) + $query
+            ))); ?>">
+              &raquo;
+            </a>
+          </li>
+        <?php else: ?>
+          <li class="disabled">
+            <a href="#">
+              &raquo;
+            </a>
+          </li>
+        <?php endif; ?>
+      </ul>
+    <?php endif; ?>
+  </div>
+</div>
