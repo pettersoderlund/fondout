@@ -28,7 +28,7 @@ $this->headMeta()->appendName('description', $this->translate('Se hur de statlig
       </p>
 
       <p>
-        På denna sida kan du se hur AP-fonderna investerat specifikt i fossila bränslen, förbjudna vapen, alkohol-, tobak-, och spelbolag.
+        På denna sida kan du se hur AP-fonderna investerat specifikt i fossila bränslen, förbjudna vapen och tobaklbolag.
         <a href="/qa#measures">Här kan du läsa mer om de olika måtten. </a>
       </p>
     </div>
@@ -36,9 +36,14 @@ $this->headMeta()->appendName('description', $this->translate('Se hur de statlig
 
   <section class="fund-company-funds">
     <div class="container">
-      <div class="row">
-        <?php echo $this->partial('alternate-funds', array('funds' => $funds, 'limit' => 999)); ?>
-      </div>
+      <?php
+        echo $this->partial(
+            'fund-list',
+              array(
+                'funds'        => $funds,
+                'paginated'    => 'false'
+            ));
+      ?>
     </div>
   </section>
 </div>

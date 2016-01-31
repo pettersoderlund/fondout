@@ -98,21 +98,15 @@ $form->prepare();
 </nav>
 
 <section id="fund-section" class="container fund-list content">
-
-
-
   <?php
-
     echo $this->partial(
         'fund-list',
-        array(
-          'funds'         => $funds,
-           'paginated'   => 'true',
-           'sortby'     => $sortby,
-           'query'     => $query
+          array(
+            'funds'        => $funds,
+            'paginated'    => 'true',
+            'sortby'       => $sortby,
+            'query'        => $query,
+            'fundSearch'   => 'true'
         ));
-         ?>
-
-
-
+  ?>
 </section>

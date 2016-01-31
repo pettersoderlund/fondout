@@ -149,7 +149,15 @@ $this->headMeta()->appendName('description',  $this->translate('Aktiefonder frå
             <?php endif; ?>
             </mark></h2>
         </div>
-        <?php echo $this->partial('alternate-funds', array('funds' => $funds, 'limit' => 999)); ?>
+        <?php
+          echo $this->partial(
+              'fund-list',
+                array(
+                  'funds'        => $funds,
+                  'paginated'    => 'false'
+              ));
+        ?>
+
       </div>
 
     </div>
