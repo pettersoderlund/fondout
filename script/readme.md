@@ -32,9 +32,7 @@ RÄkna ut nyckeltal
 Exportera och backup
 9. sh script/export_minimize_db && sh script/database_backup
 
-10. I vissa fall (WWF grön 100) där tex ABB är med bör man "klumpa" ABB-
-aktierna alternativt länka ALLA abb-aktier (även de utan isin) till
-sharecompany ABB.
+10. Kolla så att alla fondbolag har fått URL om det kommit in nya har de inte det. s
 
 
 Om felet
