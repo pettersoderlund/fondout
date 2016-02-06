@@ -467,6 +467,13 @@ class FundService
     }
 
 
+    public function findFundCategories() {
+      return $this->getEntityManager()
+        ->getRepository('Fund\Entity\FondoutCategory')->findAll();
+    }
+
+
+
     /** TODO:
     * Include fund company pages
     */

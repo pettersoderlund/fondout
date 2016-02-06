@@ -65,13 +65,17 @@ class FundController extends AbstractRestfulController
         $value = isset($container->sustainability) ? $container->sustainability : true;
         $sform->get('sustainability')->setValue($value);
 
+        //$fundCategories = array('5'=>'Sverige', '6' => 'Global');
+        $fundCategories = $service->findFundCategories();
+
         return new ViewModel(
             array(
                 'query'   => $parameters,
                 'funds'   => $fundsPaginator,
                 'form'    => $form,
                 'sform'   => $sform,
-                'avgfund' => $avgFund
+                'avgfund' => $avgFund,
+                'fund_categories' => $fundCategories
             )
         );
     }

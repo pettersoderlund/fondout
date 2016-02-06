@@ -37,20 +37,18 @@ $form->prepare();
 
   <div class="accordion" id="fund-type-accordion">
     <div class="accordion-group">
-
       <div id="fund-type-selector-options" class="accordion-body collapse">
-        <div class="accordion-inner">
-          <?php $fund_categories = array('5'=>'Sverige', '6' => 'Global'); ?>
+        <div class="accordion-inner container">
           <div class="row">
-            <?php foreach ($fund_categories as $fc_index => $categoryName): ?>
-              <a class="btn btn-info"
-              href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fc_index)))) ?> " >
-                <?php echo $categoryName; ?>
-              </a>
-            <?php endforeach; ?>
+            <div class="col-xs-12">
+              <?php foreach ($fund_categories as $fundcategory): ?>
+                <a class="btn btn-info"
+                href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fundcategory->id)))) ?> " >
+                  <?php echo $fundcategory->title; ?>
+                </a>
+              <?php endforeach; ?>
+            </div>
           </div>
-
-
         </div>
       </div>
     </div>
