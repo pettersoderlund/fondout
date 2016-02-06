@@ -20,14 +20,55 @@ html {
     min-height: 100%;
 }
 
+@media (min-width: 858px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media (min-width: 780px) {
+    html {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 702px) {
+    html {
+        font-size: 12px;
+    }
+}
+
+@media (min-width: 724px) {
+    html {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 623px) {
+    html {
+        font-size: 8px;
+    }
+}
+
+
+//html { font-size: 62.5%; }
+body { font-size: 1.4rem; }
+
+h1   { font-size: 2.6rem; }
+h2   { font-size: 2.2rem; }
+h3   { font-size: 1.8rem; }
+h4,
+h5   { font-size: 1.4rem; }
+
+
 body {
-    margin: 0 0 340px; /* bottom = footer height */ /* Footer height + margin?*/
+    margin: 0px 0px 340px; /* bottom = footer height */ /* Footer height + margin?*/
 }
 
 footer {
   .center-block();
   padding-top: 20px;
-  margin-top: 3em;
+  margin-top: 3rem;
   padding-bottom: 15px;
   color: @gray-light;
   background-color: @gray-lighter;
@@ -194,15 +235,15 @@ input[type="submit"] {
     .fund-category-buttons {
       text-align: center;
       a {
-        font-size: 1em;
+        font-size: 1rem;
         font-weight: 700;
         margin: 0px 1px;
         background-color: rgba(255, 255, 255, 0.8);
         color: @gray-dark;
-        padding: 0.4em;
-        line-height: 2.4em;
+        padding: 0.4rem;
+        line-height: 2.4rem;
         @media screen and (min-width: @screen-sm-min) {
-          padding: 0.8em;
+          padding: 0.8rem;
           margin: 0px 20px;
 
         }
@@ -216,7 +257,7 @@ input[type="submit"] {
 
     margin-top: 125px;
     p, .p {
-      margin-bottom: 2em;
+      margin-bottom: 2rem;
     }
   }
 
@@ -326,12 +367,12 @@ input[type="submit"] {
   background-position: 50% 100%;
   text-align: center;
   min-height: 300px;
-  margin-top: 3em;
+  margin-top: 3rem;
 
   mark, .mark {
     background-color: rgba(255, 255, 255, 0.8);
     color: @gray;
-    line-height: 2em;
+    line-height: 2rem;
   }
   .h3, h3 {
     padding: 100px 0px;
@@ -358,7 +399,7 @@ input[type="submit"] {
 
 .learn-more {
   font-size: 80%;
-  margin: 3em 0px 0.5em;
+  margin: 3em 0px 0.5rem;
 }
 
 .sparahallbart-school {
@@ -379,8 +420,8 @@ input[type="submit"] {
   mark, .mark {
     background-color: rgba(255,255,255, 0.8);
     color: @gray-dark;
-    line-height: 2em;
-    padding: 0.5em;
+    line-height: 2rem;
+    padding: 0.5rem;
   }
 }
 
@@ -397,8 +438,8 @@ input[type="submit"] {
 }
 
 #to-fund-search-button {
-  margin-top: 3em;
-  margin-bottom: 2em;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
 }
 
 .btn {
@@ -422,11 +463,11 @@ input[type="submit"] {
   width: 100%;
   padding: 8px 0;
   text-indent: 2%;
-  margin: 0.5em 0em;
+  margin: 0.5em 0rem;
 }
 
 #mc-embedded-subscribe {
-  margin: 0.5em 0em;
+  margin: 0.5em 0rem;
 }
 
 #mc_embed_signup .mc-field-group label {
@@ -435,7 +476,7 @@ input[type="submit"] {
 
 .file-button {
   min-width: 235px;
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
   text-align: left;
   color: none;
 }

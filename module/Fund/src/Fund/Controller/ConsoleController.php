@@ -1569,7 +1569,7 @@ class ConsoleController extends AbstractActionController
 
       /* FONDOUT CATEGORY MEASURES */
       echo "--- Fund categories --- \n";
-      echo "Fos\tWea\tAlc\tTob\tGam\t1y\t3y\t5y\n";
+      echo "Fos\tWea\tAlc\tTob\tGam\t"; //1y\t3y\t5y\n";
       echo "- - - - - - - - - - - - - - - - - - - - - - - - - -" .
        " - - - - - - - - - - - - - -\n";
       $funds = new ArrayCollection($funds);
@@ -1594,10 +1594,10 @@ class ConsoleController extends AbstractActionController
         $avgCatFund = $service->findMeasuredAverages($categoryFunds, $avgCatFund);
         $avgCatFund = $service->findNavAverages($categoryFunds, $avgCatFund);
 
-        echo "$avgCatFund->fossilCompanies\t$avgCatFund->weaponCompanies\t" .
-          "$avgCatFund->alcoholCompanies\t$avgCatFund->tobaccoCompanies" .
-          "\t$avgCatFund->gamblingCompanies\t";
-        echo "$avgCatFund->nav1year\t$avgCatFund->nav3year\t$avgCatFund->nav5year\t";
+        echo "$avgCatFund->fossilCompaniesPercent\t$avgCatFund->weaponCompaniesPercent\t" .
+          "$avgCatFund->alcoholCompaniesPercent\t$avgCatFund->tobaccoCompaniesPercent" .
+          "\t$avgCatFund->gamblingCompaniesPercent\t";
+        //echo "$avgCatFund->nav1year\t$avgCatFund->nav3year\t$avgCatFund->nav5year\t";
         echo $fondoutCategory->title . "\n";
         $em->persist($avgCatFund);
       }
@@ -1617,10 +1617,10 @@ class ConsoleController extends AbstractActionController
       $allFundsAvg = $service->findMeasuredAverages($funds, $allFundsAvg);
       $allFundsAvg = $service->findNavAverages($funds, $allFundsAvg);
 
-      echo "$allFundsAvg->fossilCompanies\t$allFundsAvg->weaponCompanies\t" .
-        "$allFundsAvg->alcoholCompanies\t$allFundsAvg->tobaccoCompanies" .
-        "\t$allFundsAvg->gamblingCompanies\t";
-      echo "$allFundsAvg->nav1year\t$allFundsAvg->nav3year\t$allFundsAvg->nav5year   ";
+      echo "$allFundsAvg->fossilCompaniesPercent\t$allFundsAvg->weaponCompaniesPercent\t" .
+        "$allFundsAvg->alcoholCompaniesPercent\t$allFundsAvg->tobaccoCompaniesPercent" .
+        "\t$allFundsAvg->gamblingCompaniesPercent\t";
+      //echo "$allFundsAvg->nav1year\t$allFundsAvg->nav3year\t$allFundsAvg->nav5year   ";
       echo $allFundsAvg->name . "\n";
       $em->persist($allFundsAvg);
 

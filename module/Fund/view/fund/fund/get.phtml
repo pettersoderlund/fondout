@@ -7,144 +7,132 @@ $this->headScript()
 
 $this->headTitle($this->fund->name, 'PREPEND');
 
-$thincategory = array("alcohol", "tobacco", "gambling");
 $this->headMeta()->appendName(
     'description',
-    ($this->translate('Se och jämför hur fonden ') .
+    ($this->translate('Fonden ') .
       $this->fund->name .
-      $this->translate(' placerar i kol, olja, gas, vapen, tobak m.m! ')
+      $this->translate(
+        ' hållbarhetsbetyg är '
+        . $fund->getMeasureScore('shp')
+        . ', läs mer om hållbarhetsbetyget för fonden här'
+      )
     )
 );
 ?>
-
-<section class="container well fund-page">
-  <div role="tabpanel">
-    <!-- Nav tabs -->
-    <div class="row info">
-      <div class="col-md-4 col-sm-9">
-        <?php echo  ($fund->fundCompany->premium) ? "<img class='fund-logo' src='/img/fund-company/logo/" . $fund->fundCompany->id . ".png' alt='" . $fund->fundCompany->name . " logo'>" : "" ?>
-        <h2><?php echo $this->escapeHtml($fund->name) ?></h2>
-        <?php if($fund->date): ?>
-          <p>Fondens innehav är från <?php echo date_format($fund->date, 'Y-m-d')?>.</p>
-        <?php endif; ?>
-      </div>
-      <div class="col-md-5 col-md-push-3 col-sm-8 col-sm-push-4 button-row">
-        <table class="table table-condensed">
-          <tr>
-            <td><small>Fondens <span data-toggle="tooltip" data-placement="bottom" title="International Securities Identification Number (ISIN) är en kod som är avsedd att entydigt identifiera ett värdepapper.">ISIN</span>:</small></td>
-            <td><?php echo (!is_null($this->fund->isin)) ?  $this->fund->isin : "-" ;?></td>
-          </tr>
-          <tr>
-            <td><small>Fondbolag:</small></td>
-            <td><a class="fundinfo-btn btn btn-xs" href="/fundcompany/<?php echo $this->translate($fund->company->url) ?>">
-                <?php echo $this->translate($fund->company->name) ?>
-            </a></td>
-          </tr>
-          <tr>
-            <td><small>Fondkategori:</small></td>
-            <td><a class="fundinfo-btn btn btn-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id)))); ?>">
-              <?php echo $this->translate($fund->fondoutcategory->longName) ?>
-            </a></td>
-          </tr>
-        </table>
-
-      </div>
-
-      <div class="col-md-3 col-md-pull-5 bar-tabs col-sm-4 col-sm-pull-8 col-xs-12">
-        <ul class="nav nav-tabs" role="tablist">
-          <li class="active" data-toggle='tooltip' title='<?php echo $accCat['fossil']->name ?>'><a href="#fossil" aria-controls="fossil" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('fossil')?>.png" alt='fossil' class="bar"><br><div class="fossil round-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li data-toggle='tooltip' title='<?php echo $accCat['weapon']->name ?>'><a href="#weapon" aria-controls="weapon" role="tab" data-toggle="tab"><img src="/img/bar/bar<?php echo $fund->getMeasureScore('weapon')?>.png" alt='weapon' class="bar"><br><div class="weapon round-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['alcohol']->name ?>'><a href="#alcohol" aria-controls="alcohol" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('alcohol')?>.png" alt='alcohol' class="thin-bar"><br><div class="alcohol thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['tobacco']->name ?>'><a href="#tobacco" aria-controls="tobacco" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('tobacco')?>.png" alt='tobacco' class="thin-bar"><br><div class="tobacco thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-          <li class="thintab"  data-toggle='tooltip' title='<?php echo $accCat['gambling']->name ?>'><a href="#gambling" aria-controls="gambling" role="tab" data-toggle="tab"><img src="/img/thin-bar/thinbar<?php echo $fund->getMeasureScore('gambling')?>.png" alt='gambling' class="thin-bar"><br><div class="gambling thin-symbol"></div></a><div class="arrow-up arrow-box"></div></li>
-        </ul>
-      </div>
-    </div>
-
-    <!-- Tab panes -->
-    <div class="row content">
-      <div class="tab-content measure-tabs">
-        <?php foreach ($companies as $category => $ccompanies): ?>
-          <div role="tabpanel" class="tab-pane <?php echo ($category == 'fossil') ? 'active' : '' ?>" id="<?php echo $category ?>">
-            <div class="row">
-              <div class="col-sm-6 col-md-5 col-lg-6 centered-column measure-tabs-first-column">
-                <h3>Ditt valda mått är: <strong><?php echo mb_strtoupper($accCat[$category]->name, 'UTF-8') ?></strong></h3>
-                <div class="row">
-                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $fund->getMeasureScore($category) ."/10. " . $fund->name ?> har investerat i <?php echo (call_user_func(array($this->fund, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
-                    <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $fund->getMeasureScore($category);?>.png" alt="<?php echo $fund->getMeasureScore($category);?>/10" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
-                    <br>
-                    <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png" alt="<?php echo $category ?>">
-                    <br>
-                    <p>Denna fond</p>
-                  </div>
-
-                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $avgcategory->getMeasureScore($category) ."/10. " ?>Fondkategorin <?php echo $this->fund->fondoutCategory->longName ?>er har i snitt investerat i <?php echo (call_user_func(array($this->avgcategory, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
-                    <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $avgcategory->getMeasureScore($category)?>.png" alt="<?php echo $avgcategory->getMeasureScore($category);?>/10" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
-                    <br>
-                    <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png" alt="<?php echo $category ?>">
-                    <br>
-                    <p>Snitt <?php echo $this->translate($fund->fondoutcategory->longName) ?>er</p>
-                  </div>
-                  <div class="col-xs-4 centered-column" data-toggle='tooltip' title='<?php echo $avgallfunds->getMeasureScore($category) ."/10. " ?>Snittet för alla fonder är att ha investerat i <?php echo (call_user_func(array($this->avgallfunds, 'get' . $category . 'Companies'))) ?> bolag med <?php echo strtolower($accCat[$category]->name) ?>.'>
-                    <img src="/img/<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar/<?php echo (in_array($category, $thincategory) ? "thin" : "" )?>bar<?php echo $avgallfunds->getMeasureScore($category)?>.png" alt="<?php echo $avgallfunds->getMeasureScore($category);?>/10" class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>bar">
-                    <br>
-                    <img class="<?php echo (in_array($category, $thincategory) ? "thin-" : "" )?>symbol" src="/img/symbols/<?php echo $category ?>.png" alt="<?php echo $category ?>">
-                    <p>Snitt alla fonder</p>
-                  </div>
-                </div>
-                <div class="row better-worse-row">
-                  <span class='better-worse <?php if($fund->getMeasureScore($category) > $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för fondkategorin."; } elseif ($fund->getMeasureScore($category) == $avgcategory->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för fondkategorin."; } else { echo "worse'>" . "Fonden är sämre än snittet för fondkategorin."; }?></span>
-                  <br>
-                  <span class='better-worse <?php if($fund->getMeasureScore($category) > $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är bättre än snittet för alla fonder."; } elseif ($fund->getMeasureScore($category) == $avgallfunds->getMeasureScore($category)) { echo "better'>" . "Fonden är samma som snittet för alla fonder."; } else { echo "worse'>" . "Fonden är sämre än snittet för alla fonder."; }?></span>
-                </div>
-              </div>
-              <div class="col-sm-6 col-md-7 col-lg-6 measure-tabs-second-column">
-                <?php echo $this->partial('example-companies', array('category' => $category, 'accCat' => $accCat, 'ccompanies' => $ccompanies)); ?>
-              </div>
-            </div>
-          </div>
-        <?php endforeach; ?>
-      </div>
-    </div>
-  </div>
-</section>
-<?php if ($fund->fundCompany->premium): ?>
-<section id="fund-company-message" class="container fund-page">
-  <div class="row">
-    <div class="col-md-12 premium-fund-info">
-
-        <h3>Om fonden </h3>
-        <p>
-          <?php echo $fund->info ?>
-        </p>
-        <h3>Om fondbolaget </h3>
-        <p>
-          <?php echo $fund->company->info ?>
-        </p>
-        <h3>Fondbolaget är med i följande organisationer</h3>
-        <ul>
-          <?php foreach($this->fund->fundCompany->organisations as $organisation): ?>
-            <li><?php echo $organisation->name; ?></li>
-          <?php endforeach; ?>
-        </ul>
-
-    </div>
-  </div>
-</section>
-<?php endif;?>
 <section class="container fund-page">
-  <?php if($fund->fundCompany->premium): ?>
-    <div class="row">
-      <div class="alternate-funds-header col-md-12">
-        <h3 class="centered-column"><?php echo "Andra fonder från " . $fund->fundCompany->name  ?></h3>
-      </div>
-      <?php echo $this->partial('alternate-funds', array('funds' => $fCompanyFunds, 'limit' => 8)); ?>
-    </div>
-  <?php endif; ?>
+  <h1><?php echo $this->escapeHtml($fund->name) ?></h1>
+
+
+
+  <hr>
   <div class="row">
-    <div class="alternate-funds-header col-md-12">
-      <h3 class="centered-column"><?php echo "Andra " . mb_strtolower($fund->fondoutCategory->longName, 'UTF-8') . "er"  ?></h3>
+    <div class="col-lg-6">
+    <h2>
+      Hållbarhetspoäng
+      <span class="
+        shp-score
+        <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>
+        "><?php echo $fund->getMeasureScore('shp') ?></span>
+    </h2>
+    <div class="row shp-status-box">
+      <div class="col-xs-4">
+        <img class="symbol-image-shp-section" alt="fossil symbol" src="/img/<?php echo ($fund->getMeasureScore('fossil') == 10) ? 'green-' : '' ; ?>symbols/fossil.png">
+        <p><?php echo number_format($fund->fossilCompaniesPercent*100, 2) + 0 ?>% Fossila bränslen</p>
+      </div>
+      <div class="col-xs-4">
+        <img class="symbol-image-shp-section"  alt="tobacco symbol" src="/img/<?php echo ($fund->getMeasureScore('tobacco') == 10) ? 'green-' : '' ; ?>symbols/tobacco.png">
+        <p><?php echo number_format($fund->tobaccoCompaniesPercent*100, 2) + 0 ?>% Tobak</p>
+      </div>
+      <div class="col-xs-4">
+        <img class="symbol-image-shp-section" alt="weapon symbol" src="/img/<?php echo ($fund->getMeasureScore('weapon') == 10) ? 'green-' : '' ; ?>symbols/weapon.png">
+        <p><?php echo number_format($fund->weaponCompaniesPercent*100, 2) + 0 ?>% Förbjudna vapen</p>
+      </div>
     </div>
-    <?php echo $this->partial('alternate-funds', array('funds' => $categoryFunds, 'limit' => 8)); ?>
+
+    <hr>
+    <?php echo $this->partial(
+          'top-5-companies',
+          array(
+            'name'           => 'Fossila bränslen'
+            , 'ccompanies'  => $companies['fossil']
+            , 'percentage'   => $fund->fossilCompaniesPercent
+            , 'short_name'   => 'fossil'
+          )); ?>
+    <?php echo $this->partial(
+          'top-5-companies',
+          array(
+            'name'           => 'Tobak'
+            , 'ccompanies'  => $companies['tobacco']
+            , 'percentage'   => $fund->tobaccoCompaniesPercent
+            , 'short_name'   => 'tobacco'
+          )); ?>
+    <?php echo $this->partial(
+          'top-5-companies',
+          array(
+            'name'           => 'Förbjudna vapen'
+            , 'ccompanies'  => $companies['weapon']
+            , 'percentage'   => $fund->weaponCompaniesPercent
+            , 'short_name'   => 'weapon'
+          )); ?>
+
+    <hr>
+    </div>
+    <div class="col-lg-5 col-lg-offset-1">
+      <div class="row">
+        <div class="col-xs-12">
+          <h3>Årlig Avgift</h3>
+          <p><?php echo (is_null($fund->pmDate)) ? "-" : number_format($fund->annualFee, 2) . '%'  ?></p>
+        </div>
+        <div class="col-xs-12">
+          <h3>Avkastning</h3>
+        </div>
+        <div class="col-xs-4">
+          <h5>1 år</h5>
+          <p><?php echo ($fund->nav1year != 0) ? number_format($fund->nav1year, 0) . '%' : "-" ?></p>
+        </div>
+        <div class="col-xs-4">
+          <h5>3 år</h5>
+          <p><?php echo ($fund->nav3year != 0) ? number_format($fund->nav3year, 0) . '%' : "-" ?></p>
+        </div>
+        <div class="col-xs-4">
+          <h5>5 år</h5>
+          <p><?php echo ($fund->nav5year != 0) ? number_format($fund->nav5year, 0) . '%' : "-" ?></p>
+        </div>
+      </div>
+
+      <h3>Fondens <span data-toggle="tooltip"
+       data-placement="bottom"
+       title="International Securities Identification Number (ISIN) är en kod som är
+       avsedd att entydigt identifiera ett värdepapper.">
+       ISIN
+      </span></h3>
+      <p><?php echo (!is_null($this->fund->isin)) ?  $this->fund->isin : "-" ;?></p>
+
+
+      <?php if($fund->date): ?>
+        <h3>Fondens innehav är från </h3>
+        <p><?php echo date_format($fund->date, 'Y-m-d')?></p>
+      <?php endif; ?>
+
+
+      <h3>Fondbolag</h3>
+      <a class="fundinfo-btn btn " href="/fundcompany/<?php
+      echo $this->translate($fund->company->url) ?>">
+          <?php echo $this->translate($fund->company->name) ?>
+      </a>
+
+
+      <h3>Fondkategori</h3>
+      <a class="fundinfo-btn btn " href="<?php
+        echo $this->escapeHtmlAttr($this->url(
+          'funds',
+          array(),
+          array('query' => array('fondoutcategory[]' => $fund->fondoutcategory->id
+          ))));
+      ?>
+      ">
+        <?php echo $this->translate($fund->fondoutcategory->longName) ?>
+      </a>
+    </div>
   </div>
 </section>

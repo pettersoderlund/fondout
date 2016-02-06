@@ -16,9 +16,10 @@ class FundController extends AbstractRestfulController
 
     public function getList()
     {
-        $container      = new Container('fund');
-        $service        = $this->getFundService();
-        $params         = $this->params();
+        $container             = new Container('fund');
+        $service               = $this->getFundService();
+        $params                = $this->params();
+        $default_fund_category = 6; // 6 is global funds category
 
         $parameters = array(
           'sort'            => $params->fromQuery('sort', 'name'),
@@ -31,7 +32,9 @@ class FundController extends AbstractRestfulController
           //Filter textsearch
           'q'               => $params->fromQuery('q', ""),
           //Filter category
-          'fondoutcategory' => $params->fromQuery('fondoutcategory', array())
+          'fondoutcategory' => $params->fromQuery(
+            'fondoutcategory', array($default_fund_category)
+          )
         );
 
         $sustainability = $container->sustainability;

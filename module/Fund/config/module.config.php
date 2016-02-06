@@ -126,9 +126,11 @@ return array(
     ),
     'view_manager' => array(
         'template_map' => array(
-          'example-companies'                      => __DIR__ . '/../view/fund/fund/example-companies.phtml',
-          'alternate-funds'                        => __DIR__ . '/../view/fund/fund/alternate-funds.phtml',
-          'how-to-search'                          => __DIR__ . '/../view/fund/fund/how-to-search.phtml',
+          'example-companies'                       => __DIR__ . '/../view/fund/fund/example-companies.phtml',
+          'top-5-companies'                         => __DIR__ . '/../view/fund/fund/top-5-companies.phtml',
+          'alternate-funds'                         => __DIR__ . '/../view/fund/fund/alternate-funds.phtml',
+          'how-to-search'                           => __DIR__ . '/../view/fund/fund/how-to-search.phtml',
+          'fund-list'                               => __DIR__ . '/../view/fund/fund/fund-list.phtml',
         ),
 
         'template_path_stack' => array(

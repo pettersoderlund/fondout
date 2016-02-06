@@ -3,6 +3,39 @@ $this->headScript()
 ->appendFile($this->basePath() . '/js/index.js');
 ?>
 
+<section>
+  <div class="container">
+    <h1>
+      Välkommen till sparahållbart.se
+    </h1>
+    <p>
+      Vi vill göra det lättare för dig att hitta fonder som passar dig. Vi tror att det finns många som vill välja bort vissa typer av bolag i sina fondinvesteringar. Därför har vi har vi tagit fram
+      <strong>hållbarhetspoäng</strong> på fonder. Poängen bygger på fondernas innehav i bolag som sysslar med
+      <strong>fossila bränslen, förbjudna vapen och tobak. </strong>
+      Fonder med få eller inga innehav i denna typ av bolag för ett högt betyg (<span class="green">10</span>). Fonder stor andel av denna typ av bolag får ett lågt betyg (<span class="red">1</span>).
+
+I fondsök kan du även se fondernas årliga avgift (%) och fondernas historiska avkastning. Vi delar upp fonder på fondkategori som bygger på deras huvudsakliga investeringsområde.
+    </p>
+    <h2>
+      Vilka är vi?
+    </h2>
+    <p>
+
+      Vi är två sparintresserade individer som tycker att det är svårt för den som vill jämföra fonder och särskilt jämföra fonder på hållbarhetsnivå. Vi har under ett flertal år jobbat med att utveckla verktyg för att hjälpa den breda massan hitta rätt i fonddjungeln.
+      Vi gör inte bara detta. Stefan jobbar på Hilti och Petter på Avanza. Kontakta gärna oss om du har några frågor eller funderingar kring hållbara investeringar.
+    </p>
+    <p>
+      <img class="img-circle" src="/img/people/stefan.png" alt="Stefan Carlsson">
+      Stefan Carlsson
+
+      <img class="img-circle" src="/img/people/petter.png" alt="Petter Söderlund">
+      Petter Söderlund
+    </p>
+    <a class="btn btn-lg btn-success" href="<?php echo $this->url('funds') ?>"> Till fondsök </a>
+  </div>
+</section>
+
+<!--
 <section class="featurette first-section-landing-page">
     <div class="container">
         <div class="row header-row font-smoothing">
@@ -30,25 +63,6 @@ $this->headScript()
       <div class="">
         <div class="row">
           <div class="col-md-6">
-            <!--<div class="panel panel-default">
-              <div class="panel-heading">
-                <h3>Mest populära fonder</h3>
-              </div>
-              <div class="panel-body">
-                <ol>
-                  <li><a href="/funds/ap7-aktiefond">AP7 Aktiefond</a></li>
-                  <li><a href="/funds/swedbank-robur-allemansfond-komplett">Swedbank Robur Allemansfond Komplett</a></li>
-                  <li><a href="/funds/seb-varldenfond">SEB Världenfond</a></li>
-                  <li><a href="/funds/didner-gerge-aktiefond">Didner & Gerge Aktiefond</a></li>
-                  <li><a href="/funds/swedbank-robur-aktiefond-pension">Swedbank Robur Aktiefond Pension</a></li>
-                  <li><a href="/funds/folksam-lo-sverige">Folksam LO Sverige</a></li>
-                  <li><a href="/funds/amf-aktiefond-varlden">AMF Aktiefond Världen</a></li>
-                  <li><a href="/funds/swedbank-robur-transfer-70">Swedbank Robur Transfer 70</a></li>
-                  <li><a href="/funds/amf-aktiefond-sverige">AMF Aktiefond Sverige</a></li>
-                  <li><a href="/funds/folksam-lo-varlden">Folksam LO Världen</a></li>
-                </ol>
-              </div>
-            </div>-->
             <h3>Medlemsorganisationer</h3>
             <p>Tillsammans kan man göra mer! Med nationella och globala initiativ tar fondbolag och investerare fram principer och regler att följa tillsammans för ett mer hållbart sparande. Vi har samlat information om tre av dem: UNPRI, SWESIF och Montreal Carbon Pledge samt räknat in vilka fondbolag som är med i vilken organisation. Så nu kan du se på fondbolagssidorna om fondbolaget är med i några medlemsorganisationer! Om du tycker vi missat någon organisation kontakta gärna oss på Spara hållbart så lägger vi kanske till den!</p>
             <a class="btn btn-info btn-lg" href="/organisation">Medlemsorganisationer</a>
@@ -121,3 +135,4 @@ $this->headScript()
     </div>
   </div>
 </section>
+-->

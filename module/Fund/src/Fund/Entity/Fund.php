@@ -14,6 +14,10 @@ use Doctrine\Common\Collections\ArrayCollection;
  *         @ORM\UniqueConstraint(
  *             name="institution_number",
  *             columns={"institution_number"}
+ *         ),
+ *         @ORM\UniqueConstraint(
+ *             name="isin",
+ *             columns={"isin"}
  *         )
  *     },
  *     indexes={
@@ -22,6 +26,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * )
  * @ORM\Entity(repositoryClass="Fund\Repository\FundRepository")
  */
+
 class Fund extends Entity
 {
 
@@ -158,6 +163,13 @@ class Fund extends Entity
     private $nav5year;
 
     /**
+     * @var decimal
+     *
+     * @ORM\Column(name="annual_fee", type="decimal", precision=8, scale=2, nullable=true)
+     */
+    private $annualFee;
+
+    /**
     * @var integer
     *
     * @ORM\Column(name="weapon_companies", type="integer", nullable=true, options={"default":"0"})
@@ -193,11 +205,60 @@ class Fund extends Entity
     private $gamblingCompanies = 0;
 
     /**
+    * @var decimal
+    *
+    * @ORM\Column(name="weapon_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $weaponCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="fossil_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $fossilCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="alcohol_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $alcoholCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="tobacco_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $tobaccoCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="gambling_companies_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $gamblingCompaniesPercent = 0;
+
+    /**
+    * @var decimal
+    *
+    * @ORM\Column(name="shp_percent", type="decimal", precision=8, scale=3, nullable=true, options={"default":"0"})
+    */
+    private $shpPercent = 0;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="date", nullable=true)
      */
     private $date;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="pm_date", type="date", nullable=true)
+     */
+    private $pmDate;
 
 
     /**
@@ -554,6 +615,37 @@ class Fund extends Entity
         }
     }
 
+    public function fillMeasurePercent($accusationCategoryId, $percent) {
+        switch ($accusationCategoryId) {
+            # Controversial weapons id = 1
+            case 1:
+                $this->setWeaponCompaniesPercent($percent);
+                break;
+            # Alcohol  id = 14
+            case 14:
+                $this->setAlcoholCompaniesPercent($percent);
+                break;
+            # Tobacco id = 15
+            case 15:
+                $this->setTobaccoCompaniesPercent($percent);
+                break;
+            # Gambling id = 16
+            case 16:
+                $this->setGamblingCompaniesPercent($percent);
+                break;
+            # Fossil fuels id = 11
+            case 11:
+                $this->setFossilCompaniesPercent($percent);
+                break;
+
+            default:
+                break;
+
+            return $this;
+        }
+    }
+
+
     public function setWeaponCompanies($count) {
         $this->weaponCompanies = $count;
     }
@@ -594,6 +686,7 @@ class Fund extends Entity
       return $this->fossilCompanies;
     }
 
+/*
     public function getMeasureScore($measureType) {
       switch ($measureType) {
         case "weapon":
@@ -637,6 +730,56 @@ class Fund extends Entity
       }
       return $score;
     }
+  */
+
+  public function getMeasureScore($measureType) {
+    switch ($measureType) {
+      case "weapon":
+        $categoryPercent = $this->weaponCompaniesPercent;
+        break;
+      case "fossil":
+        $categoryPercent = $this->fossilCompaniesPercent;
+        break;
+      case "alcohol":
+        $categoryPercent = $this->alcoholCompaniesPercent;
+        break;
+      case "tobacco":
+        $categoryPercent = $this->tobaccoCompaniesPercent;
+        break;
+      case "gambling":
+        $categoryPercent = $this->gamblingCompaniesPercent;
+        break;
+      case "shp":
+        $categoryPercent = $this->shpPercent;
+        break;
+    }
+
+    // Categorypercent is between 0 and 1, convert to 0-100
+    $categoryPercent = $categoryPercent*100;
+
+    if ($categoryPercent == 0) {
+      $score = 10;
+    } elseif ($categoryPercent < 1) {
+      $score = 9;
+    } elseif ($categoryPercent < 2) {
+      $score = 8;
+    } elseif ($categoryPercent < 5) {
+      $score = 7;
+    } elseif ($categoryPercent < 8) {
+      $score = 6;
+    } elseif ($categoryPercent < 13) {
+      $score = 5;
+    } elseif ($categoryPercent < 21) {
+      $score = 4;
+    } elseif ($categoryPercent < 34) {
+      $score = 3;
+    } elseif ($categoryPercent < 55) {
+      $score = 2;
+    } else {
+      $score = 1;
+    }
+    return $score;
+  }
 
     /**
      * Get info
@@ -704,6 +847,28 @@ class Fund extends Entity
     public function setNav($nav)
     {
       $this->nav = $nav;
+    }
+
+    /**
+     * Set annualFee
+     *
+     * @param string $annualFee
+     * @return Fund
+     */
+    public function setAnnualFee($annualFee)
+    {
+        $this->annualFee = $annualFee;
+        return $this;
+    }
+
+    /**
+     * Get annualFee
+     *
+     * @return string
+     */
+    public function getAnnualFee()
+    {
+        return $this->annualFee;
     }
 
     /**
@@ -798,6 +963,25 @@ class Fund extends Entity
         return $this->date;
     }
 
+
+    public function setPmDate($date)
+    {
+        $this->pmDate = $date;
+
+        return $this;
+    }
+
+    /**
+     * Get pmDate
+     *
+     * @return \DateTime
+     */
+    public function getPmDate()
+    {
+        return $this->pmDate;
+    }
+
+
     public function setActive($active)
     {
       $this->active = $active;
@@ -823,16 +1007,75 @@ class Fund extends Entity
 
     public function resetMeasures() {
 
-      $this->setPercent1year(null);
-      $this->setPercent3year(null);
-      $this->setPercent5year(null);
+      /*$this->setPercent1year(0);
+      $this->setPercent3year(0);
+      $this->setPercent5year(0);*/
       $this->setWeaponCompanies(0);
       $this->setAlcoholCompanies(0);
       $this->setTobaccoCompanies(0);
       $this->setFossilCompanies(0);
       $this->setGamblingCompanies(0);
+      $this->setWeaponCompaniesPercent(0);
+      $this->setAlcoholCompaniesPercent(0);
+      $this->setTobaccoCompaniesPercent(0);
+      $this->setFossilCompaniesPercent(0);
+      $this->setGamblingCompaniesPercent(0);
+      $this->setShpPercent(0);
       //$this->setNav(null);
       //$this->setDate(null);
+  }
+
+  public function setWeaponCompaniesPercent($percent) {
+      $this->weaponCompaniesPercent = $percent;
+  }
+
+  public function setAlcoholCompaniesPercent($percent) {
+      $this->alcoholCompaniesPercent = $percent;
+  }
+
+  public function setTobaccoCompaniesPercent($percent) {
+      $this->tobaccoCompaniesPercent = $percent;
+  }
+
+  public function setFossilCompaniesPercent($percent) {
+    $this->fossilCompaniesPercent = $percent;
+  }
+
+  public function setGamblingCompaniesPercent($percent) {
+      $this->gamblingCompaniesPercent = $percent;
+  }
+
+  /**
+   * Get getGamblingCompaniesPercent
+   *
+   * @return string
+   */
+  public function getGamblingCompaniesPercent() {
+      return $this->gamblingCompaniesPercent;
+  }
+
+  public function getWeaponCompaniesPercent() {
+    return $this->weaponCompaniesPercent;
+  }
+
+  public function getFossilCompaniesPercent() {
+    return $this->fossilCompaniesPercent;
+  }
+
+  public function getAlcoholCompaniesPercent() {
+      return $this->alcoholCompaniesPercent;
+  }
+
+  public function getTobaccoCompaniesPercent() {
+      return $this->tobaccoCompaniesPercent;
+  }
+
+  public function setShpPercent($percent) {
+      $this->shpPercent = $percent;
+  }
+
+  public function getShpPercent() {
+      return $this->shpPercent;
   }
 
 

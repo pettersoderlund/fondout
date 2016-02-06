@@ -199,6 +199,8 @@ class FundService
         //Filter category
         $fondoutcategory = $params['fondoutcategory'];
 
+        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
+        $criteria = Criteria::create();
 
         $sortOrder = array();
         switch ($sort) {
@@ -207,47 +209,31 @@ class FundService
                 # Sorting depending on uppercase letters,
                 # Fixed by default sorting in the original query in fundrepo
 
-                if ($order == 'DESC') {
+                if ($order == Criteria::DESC) {
                   $sortOrder['name'] = $order;
                 }
                 break;
             case 'weapon':
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['weaponCompaniesPercent'] = $order;
                 break;
             case 'fossil':
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['fossilCompaniesPercent'] = $order;
                 break;
             case 'alcohol':
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
+                $sortOrder['alcoholCompaniesPercent'] = $order;
                 break;
             case 'tobacco':
-                $sortOrder['tobaccoCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
-                $sortOrder['gamblingCompanies'] = $order;
+                $sortOrder['tobaccoCompaniesPercent'] = $order;
                 break;
             case 'gambling':
-                $sortOrder['gamblingCompanies'] = $order;
-                $sortOrder['tobaccoCompanies'] = $order;
-                $sortOrder['alcoholCompanies'] = $order;
-                $sortOrder['weaponCompanies'] = $order;
-                $sortOrder['fossilCompanies'] = $order;
+                $sortOrder['gamblingCompaniesPercent'] = $order;
                 break;
             case 'nav1year':
                 $sortOrder['nav1year'] = $order;
+                $sortOrder['shpPercent'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
+                // remove results without the number were sorting on from the results
+                $criteria->andWhere(Criteria::expr()->neq('nav1year', null));
                 break;
             case 'nav3year':
                 $sortOrder['nav3year'] = $order;
@@ -255,12 +241,23 @@ class FundService
             case 'nav5year':
                 $sortOrder['nav5year'] = $order;
                 break;
+            case 'shp':
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $order;
+                break;
+            case 'fee':
+                $sortOrder['annualFee'] = $order;
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                // remove results without the number were sorting on from the results
+                $criteria->andWhere(Criteria::expr()->neq('annualFee', null));
+                break;
         }
 
 
-        $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
-        $criteria = Criteria::create()->orderBy($sortOrder);
-
+        $criteria->orderBy($sortOrder);
+        //echo var_dump($criteria->getOrderings());
         if (count($company) > 0) {
             $criteria->andWhere(Criteria::expr()->in('companyId', $company));
         }
@@ -268,6 +265,8 @@ class FundService
         if (count($fund) > 0) {
             $criteria->andWhere(Criteria::expr()->in('id', $fund));
         }
+
+
 
         if (count($fondoutcategory) > 0) {
             $criteria->andWhere(Criteria::expr()->in('fondoutcategoryId', $fondoutcategory));
@@ -298,7 +297,7 @@ class FundService
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(
-            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
+            array('fossilCompanies' => 'ASC', 'weaponCompanies' => 'ASC',
               'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
               'gamblingCompanies' => 'ASC')
         );
@@ -322,7 +321,7 @@ class FundService
     {
         $repository = $this->getEntityManager()->getRepository('Fund\Entity\Fund');
         $criteria = Criteria::create()->orderBy(
-            array('weaponCompanies' => 'ASC', 'fossilCompanies' => 'ASC',
+            array( 'fossilCompanies' => 'ASC', 'weaponCompanies' => 'ASC',
               'alcoholCompanies' => 'ASC', 'tobaccoCompanies' => 'ASC',
               'gamblingCompanies' => 'ASC')
         );
@@ -389,6 +388,7 @@ class FundService
       $tobacco  = 0;
       $gambling = 0;
 
+      /*
       foreach ($funds as $fund) {
         $weapon   += $fund->getWeaponCompanies();
         $fossil   += $fund->getFossilCompanies();
@@ -416,7 +416,35 @@ class FundService
       $avgFund->setAlcoholCompanies($avgAlcohol);
       $avgFund->setTobaccoCompanies($avgTobacco);
       $avgFund->setGamblingCompanies($avgGambling);
+*/
 
+      foreach ($funds as $fund) {
+        $weapon   += $fund->getWeaponCompaniesPercent();
+        $fossil   += $fund->getFossilCompaniesPercent();
+        $alcohol  += $fund->getAlcoholCompaniesPercent();
+        $tobacco  += $fund->getTobaccoCompaniesPercent();
+        $gambling += $fund->getGamblingCompaniesPercent();
+      }
+
+      //To remove division by zero risk
+      //set all avg to 0 if 0 funds given.
+      if(sizeof($funds) == 0) {
+        $fundCount = 1;
+      } else {
+        $fundCount = sizeof($funds);
+      }
+
+      $avgWeapon   = (int)($weapon/$fundCount);
+      $avgFossil   = (int)($fossil/$fundCount);
+      $avgAlcohol  = (int)($alcohol/$fundCount);
+      $avgTobacco  = (int)($tobacco/$fundCount);
+      $avgGambling = (int)($gambling/$fundCount);
+
+      $avgFund->setWeaponCompaniesPercent($avgWeapon);
+      $avgFund->setFossilCompaniesPercent($avgFossil);
+      $avgFund->setAlcoholCompaniesPercent($avgAlcohol);
+      $avgFund->setTobaccoCompaniesPercent($avgTobacco);
+      $avgFund->setGamblingCompaniesPercent($avgGambling);
       return $avgFund;
     }
 
@@ -431,9 +459,9 @@ class FundService
         ->getRepository('Fund\Entity\AccusationCategory');
       $accCat['fossil'] = $repository->findOneByName('Fossila bränslen');
       $accCat['weapon'] = $repository->findOneByName('Förbjudna vapen');
-      $accCat['alcohol'] = $repository->findOneByName('Alkohol');
+      //$accCat['alcohol'] = $repository->findOneByName('Alkohol');
       $accCat['tobacco'] = $repository->findOneByName('Tobak');
-      $accCat['gambling'] = $repository->findOneByName('Spel');
+      //$accCat['gambling'] = $repository->findOneByName('Spel');
 
       return $accCat;
     }
@@ -481,5 +509,15 @@ class FundService
     public function getEntityManager()
     {
         return $this->entityManager;
+    }
+
+    private function reverseOrder($order)
+    {
+      if ($order == Criteria::DESC) {
+        return Criteria::ASC;
+      } else {
+        return Criteria::DESC;
+      }
+
     }
 }
