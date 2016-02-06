@@ -3,39 +3,7 @@ $this->headScript()
 ->appendFile($this->basePath() . '/js/index.js');
 ?>
 
-<section>
-  <div class="container">
-    <h1>
-      Välkommen till sparahållbart.se
-    </h1>
-    <p>
-      Vi vill göra det lättare för dig att hitta fonder som passar dig. Vi tror att det finns många som vill välja bort vissa typer av bolag i sina fondinvesteringar. Därför har vi har vi tagit fram
-      <strong>hållbarhetspoäng</strong> på fonder. Poängen bygger på fondernas innehav i bolag som sysslar med
-      <strong>fossila bränslen, förbjudna vapen och tobak. </strong>
-      Fonder med få eller inga innehav i denna typ av bolag för ett högt betyg (<span class="green">10</span>). Fonder stor andel av denna typ av bolag får ett lågt betyg (<span class="red">1</span>).
 
-I fondsök kan du även se fondernas årliga avgift (%) och fondernas historiska avkastning. Vi delar upp fonder på fondkategori som bygger på deras huvudsakliga investeringsområde.
-    </p>
-    <h2>
-      Vilka är vi?
-    </h2>
-    <p>
-
-      Vi är två sparintresserade individer som tycker att det är svårt för den som vill jämföra fonder och särskilt jämföra fonder på hållbarhetsnivå. Vi har under ett flertal år jobbat med att utveckla verktyg för att hjälpa den breda massan hitta rätt i fonddjungeln.
-      Vi gör inte bara detta. Stefan jobbar på Hilti och Petter på Avanza. Kontakta gärna oss om du har några frågor eller funderingar kring hållbara investeringar.
-    </p>
-    <p>
-      <img class="img-circle" src="/img/people/stefan.png" alt="Stefan Carlsson">
-      Stefan Carlsson
-
-      <img class="img-circle" src="/img/people/petter.png" alt="Petter Söderlund">
-      Petter Söderlund
-    </p>
-    <a class="btn btn-lg btn-success" href="<?php echo $this->url('funds') ?>"> Till fondsök </a>
-  </div>
-</section>
-
-<!--
 <section class="featurette first-section-landing-page">
     <div class="container">
         <div class="row header-row font-smoothing">
@@ -61,46 +29,42 @@ I fondsök kan du även se fondernas årliga avgift (%) och fondernas historiska
   <div class="row">
     <div id="left-column-landing-page" class="col-sm-8 col-lg-7 col-lg-offset-1">
       <div class="">
-        <div class="row">
-          <div class="col-md-6">
-            <h3>Medlemsorganisationer</h3>
-            <p>Tillsammans kan man göra mer! Med nationella och globala initiativ tar fondbolag och investerare fram principer och regler att följa tillsammans för ett mer hållbart sparande. Vi har samlat information om tre av dem: UNPRI, SWESIF och Montreal Carbon Pledge samt räknat in vilka fondbolag som är med i vilken organisation. Så nu kan du se på fondbolagssidorna om fondbolaget är med i några medlemsorganisationer! Om du tycker vi missat någon organisation kontakta gärna oss på Spara hållbart så lägger vi kanske till den!</p>
-            <a class="btn btn-info btn-lg" href="/organisation">Medlemsorganisationer</a>
-          </div>
-          <div class="col-md-6">
-            <h3>För fondbolag</h3>
-            <p>Alla fondbolag har möjlighet att lista sina fonder på sparahållbart.se. Läs mer om vad som gäller om ni vill visa era fonder på siten. </p> <a class="btn btn-info btn-lg" href="/products">För fondbolag</a>
-            <h3>Statliga pensionsfonderna</h3>
-            <p>AP-fonderna är en samling pensionsfonder som är statligt förvaltade pensionsfonder. Sparahållbart.se har gått igenom AP-fonderna och tagit fram hur de investerar! </p><a class="btn btn-info btn-lg" href="/fundcompany/apfonderna">AP-fonderna</a>
-          </div>
-        </div>
-      </div>
-      <div class="row featurette">
-        <div class="col-md-6">
-          <div class="centered-column">
-            <span class="glyphicon glyphicon-piggy-bank glyphicon-lg"></span>
-            <h3>Vet du vad?</h3>
-          </div>
-          <p>Sannolikheten att du har pengar i fonder är väldigt hög – cirka 90 % av Sveriges befolkning har det i någon form. Även om du inte är en aktiv fondsparare så äger du fonder exempelvis genom ditt pensionssparande. Som du kanske redan vet, innebär fondsparande att du indirekt äger andelar i de bolag som ingår i fonden. Men vet du vad du sparar i? Vilka bolag du äger? Vad de pysslar med?
-            Vet du om dina pengar förvaltas i linje med dina förväntningar på en hållbar framtid?</p>
-        </div>
-        <div class="col-md-6">
-          <div class="centered-column">
-            <span class=" glyphicon glyphicon-question-sign glyphicon-lg"></span>
-            <h3>Hållbarhet eller avkastning?</h3>
-          </div>
-          <p>Oavsett vad folk säger så är sanningen -dessvärre- att ingen på förhand kan veta hur börsen kommer att gå. Det finns ingen garanti att en fond som tidigare har gått bra kommer att gå lika bra i framtiden. Det finns inte heller något som visar att en hållbar fond inte kan uppvisa lika hög (eller högre!) avkastning som en mindre hållbar fond. Du behöver alltså inte välja det ena eller det andra. Eller rättare sagt, du kan bara välja det ena. Det andra vet du först i efterhand.</p>
-        </div>
-      </div>
-      <div class="featurette" id="bananas">
-        <h3>
-          <mark><em><strong>
-            Att välja hållbara fonder borde inte vara svårare  än  att välja ekologiska bananer.
-          </strong></em></mark>
-        </h3>
-      </div>
-      <div id="to-fund-search-button" class="centered-column ">
-        <a href="<?php echo $this->url('funds') ?>" class="btn btn-lg btn-primary">Gå vidare till att jämföra fonder</a>
+
+            <h2>
+              Välkommen till Sparahållbart.se
+            </h2>
+            <p>
+              Vi vill göra det lättare för dig att hitta fonder som passar dig. Vi tror att det finns många som vill välja bort vissa typer av bolag i sina fondinvesteringar. Därför har vi har vi tagit fram
+              <strong>hållbarhetspoäng</strong> på fonder. Poängen bygger på fondernas innehav i bolag som sysslar med
+              <strong>fossila bränslen, förbjudna vapen och tobak. </strong>
+              Fonder med få eller inga innehav i denna typ av bolag för ett högt betyg (<span class="green">10</span>). Fonder stor andel av denna typ av bolag får ett lågt betyg (<span class="red">1</span>).
+
+        I fondsök kan du även se fondernas årliga avgift (%) och fondernas historiska avkastning. Vi delar upp fonder på fondkategori som bygger på deras huvudsakliga investeringsområde.
+            </p>
+            <h2>
+              Vilka är vi?
+            </h2>
+            <p>
+
+              Vi är två sparintresserade individer som tycker att det är svårt för den som vill jämföra fonder och särskilt jämföra fonder på hållbarhetsnivå. Vi har under ett flertal år jobbat med att utveckla verktyg för att hjälpa den breda massan hitta rätt i fonddjungeln.
+              Vi gör inte bara detta. Stefan jobbar på Hilti och Petter på Avanza. Kontakta gärna oss om du har några frågor eller funderingar kring hållbara investeringar.
+            </p>
+            <p>
+              <img class="img-circle" src="/img/people/stefan.png" alt="Stefan Carlsson">
+              Stefan Carlsson
+
+              <img class="img-circle" src="/img/people/petter.png" alt="Petter Söderlund">
+              Petter Söderlund
+            </p>
+            <div id="to-fund-search-button" class="centered-column ">
+              <a href="<?php echo $this->url('funds') ?>" class="btn btn-lg btn-primary">Gå vidare till att jämföra fonder</a>
+            </div>
+
+            <h2>
+              Var kommer informationen från?
+            </h2>
+            <p>Fonddatan som visas upp har hämtats från finansinspektionen och</p>
+
       </div>
     </div>
 
@@ -135,4 +99,3 @@ I fondsök kan du även se fondernas årliga avgift (%) och fondernas historiska
     </div>
   </div>
 </section>
--->
