@@ -114,6 +114,11 @@ $this->headMeta()->appendName(
         <p><?php echo date_format($fund->date, 'Y-m-d')?></p>
       <?php endif; ?>
 
+      <?php if($fund->pmDate): ?>
+        <h3>Fondens utveckling (1, 3, 5 år) och avgift är daterade </h3>
+        <p><?php echo date_format($fund->pmDate, 'Y-m-d')?></p>
+      <?php endif; ?>
+
 
       <h3>Fondbolag</h3>
       <a class="fundinfo-btn btn " href="/fundcompany/<?php
