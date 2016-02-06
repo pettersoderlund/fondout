@@ -70,7 +70,6 @@ $form->prepare();
             </div>
 
             <div class="col-xs-3 middle col-md-5">
-              Historisk avkastning:
               <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav1year', 'order' => ($sortby == 'nav1year' ? $reverseorder : 'ASC'))  + $query))); ?>">
                   1 år <span class="glyphicon glyphicon-sort"></span>
               </a>
@@ -81,7 +80,6 @@ $form->prepare();
                 <a class="btn btn-default btn-sm hidden-sm hidden-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav5year', 'order' => ($sortby == 'nav5year' ? $reverseorder : 'ASC'))  + $query))); ?>">
                     5 år <span class="glyphicon glyphicon-sort"></span>
                 </a>
-
             </div>
 
               <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
