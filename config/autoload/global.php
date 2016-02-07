@@ -46,7 +46,8 @@ return array(
                     'port'     => getenv('OPENSHIFT_MYSQL_DB_PORT'),
                     'user'     => getenv('OPENSHIFT_MYSQL_DB_USERNAME'),
                     'password' => getenv('OPENSHIFT_MYSQL_DB_PASSWORD'),
-                    'dbname'   => getenv('OPENSHIFT_GEAR_NAME')
+                    'dbname'   => getenv('OPENSHIFT_GEAR_NAME'),
+                    'unix_socket' => getenv('OPENSHIFT_MYSQL_DB_SOCKET')
                 )
             )
         )
