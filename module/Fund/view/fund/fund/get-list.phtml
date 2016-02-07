@@ -60,44 +60,56 @@ $form->prepare();
 <nav class="sort-menu">
   <div class="container">
     <div class="row">
-          <div class="">
-            <div class="col-xs-4 left col-md-2">
-              <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fee', 'order' => ($sortby == 'fee' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                  Avgift <span class="glyphicon glyphicon-sort"></span>
-              </a>
-            </div>
-
-            <div class="col-xs-3 middle col-md-5">
-              <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav1year', 'order' => ($sortby == 'nav1year' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                  1 år <span class="glyphicon glyphicon-sort"></span>
-              </a>
-
-                <a class="btn btn-default btn-sm hidden-sm hidden-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav3year', 'order' => ($sortby == 'nav3year' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                    3 år <span class="glyphicon glyphicon-sort"></span>
+          <div class="col-xs-8 col-md-10">
+            <div class="">
+              <div class="col-xs-5 left col-md-3">
+                <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fee', 'order' => ($sortby == 'fee' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                    Avgift <span class="glyphicon glyphicon-sort"></span>
                 </a>
-                <a class="btn btn-default btn-sm hidden-sm hidden-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav5year', 'order' => ($sortby == 'nav5year' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                    5 år <span class="glyphicon glyphicon-sort"></span>
+              </div>
+
+              <div class="col-xs-6 middle col-md-1 col-md-offset-1">
+                <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav1year', 'order' => ($sortby == 'nav1year' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                    Avkastning<br> 1 år <span class="glyphicon glyphicon-sort"></span>
                 </a>
-            </div>
+              </div>
+              <div class="hidden-xs hidden-sm col-md-1">
+                  <a class="btn btn-default btn-sm hidden-sm hidden-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav3year', 'order' => ($sortby == 'nav3year' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                      Avkastning<br> 3 år <span class="glyphicon glyphicon-sort"></span>
+                  </a>
+              </div>
+              <div class="hidden-xs hidden-sm col-md-1">
+                  <a class="btn btn-default btn-sm hidden-sm hidden-xs" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'nav5year', 'order' => ($sortby == 'nav5year' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                      Avkastning<br> 5 år <span class="glyphicon glyphicon-sort"></span>
+                  </a>
+              </div>
 
-              <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter fossila bränsen' src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt="Fossil sort button">
-              </a>-->
-              <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter förbjudna vapen' src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt="Weapon sort button">
-              </a>-->
+              <div class="hidden-xs hidden-sm col-md-2 right">
+                <a class="btn btn-default btn-sm disabled" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'fossil', 'order' => ($sortby == 'fossil' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                  <!--<img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter fossila bränsen' src="/img/gray-symbols/fossil.png" alt="Fossil sort button">-->
+                  Fossila <br>bränslen <!--<span class="glyphicon glyphicon-sort"></span>-->
+                </a>
+              </div>
+              <div class="hidden-xs hidden-sm col-md-1">
+                <a class="btn btn-default btn-sm disabled" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                  <!--<img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter tobak' src="/img/gray-symbols/tobacco.png" alt="Tobacco sort button"> -->
+                  Tobak <!--<span class="glyphicon glyphicon-sort"></span>-->
+                </a>
+              </div>
+              <div class="hidden-xs hidden-sm col-md-1">
+                <a class="btn btn-default btn-sm disabled" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'weapon', 'order' => ($sortby == 'weapon' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                  <!-- <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter förbjudna vapen' src="/img/gray-symbols/weapon.png" alt="Weapon sort button"> -->
+                  Förbjudna vapen <!--<span class="glyphicon glyphicon-sort"></span>-->
+                </a>
+              </div>
 
-            <!--<a href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'tobacco', 'order' => ($sortby == 'tobacco' ? $reverseorder : 'ASC'))  + $query))); ?>">
-              <img class="sort-button" data-toggle='tooltip' data-placement='bottom' title='Sortera efter tobak' src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt="Tobacco sort button">
-            </a>-->
-
-            <div class="col-xs-5 right col-md-5">
-              <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'shp', 'order' => ($sortby == 'shp' ? $reverseorder : 'ASC'))  + $query))); ?>">
-                  Hållbarhetsp. <span class="glyphicon glyphicon-sort"></span>
-              </a>
             </div>
           </div>
-
+          <div class="col-xs-4 col-md-2 right">
+            <a class="btn btn-default btn-sm" href="<?php echo $this->escapeHtmlAttr($this->url('funds', array(), array('query' => array('sort' => 'shp', 'order' => ($sortby == 'shp' ? $reverseorder : 'ASC'))  + $query))); ?>">
+                Hållbarhetspoäng <span class="glyphicon glyphicon-sort"></span>
+            </a>
+          </div>
     </div>
   </div>
 </nav>

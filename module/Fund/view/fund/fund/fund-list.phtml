@@ -9,20 +9,20 @@
   <?php if(!isset($fundSearch)): ?>
     <div class="col-xs-7 col-md-10">
       <div class="col-xs-6 col-md-3">
-        <h3>Avgift</h3>
+        <h5>Avgift</h5>
       </div>
       <div class="col-xs-6 col-md-1 col-md-offset-1">
-        <h3>1 år</h3>
+        <h5>Avkastning 1 år</h5>
       </div>
       <div class="col-md-1 hidden-xs hidden-sm">
-        <h3>3 år</h3>
+        <h5>Avkastning 3 år</h5>
       </div>
       <div class="col-md-1 hidden-xs hidden-sm">
-        <h3>5 år</h3>
+        <h5>Avkastning 5 år</h5>
       </div>
     </div>
-    <div class="col-xs-5 col-md-2">
-      <h3>Hållbarhetspoäng</h3>
+    <div class="col-xs-5 col-md-2 centered-column">
+      <h5>Hållbarhetspoäng</h5>
     </div>
   <?php endif; ?>
 
@@ -69,22 +69,11 @@
                   <img class="fund-list-category-indicator" src="/img/<?php echo ($fund->weaponCompaniesPercent == 0) ? 'green-' : '' ; ?>symbols/weapon.png" alt="weapon symbol">
                 </div>
               </div>
-              <div class="col-xs-2 shp-number-score-container">
+              <div class="col-xs-2 shp-number-score-container centered-column">
                 <h3>
                   <span class="shp-number-score <?php echo $sortby == 'shp' ? 'sort-by' : '' ?> <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>"><?php echo $fund->getMeasureScore('shp') ?></span>
+                  <a href="#" data-toggle="popover" title="Hållbarhetspoäng" data-content="Hållbarhetspoängen är en sammanställning av hur fonden investerar i fossila bränslen, tobaksbolag och förbjudna vapen. 10 innebär att fonden inte har några bolag alls i kategorierna och 1 betyder att fonden har många investeringar i dessa typer av bolag."><span class="shp-help glyphicon glyphicon-question-sign"></span></a>
                 </h3>
-              </div>
-              <div class="col-sm-5 centered-column hidden">
-                <div class="shp-categories-box">
-                  <h6>Hållbarhetspoäng uppdelat</h6>
-                  <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('fossil') . ".png' alt='Fossila bränslen " . $fund->getMeasureScore('fossil') . "/10'>"    ?>
-                  <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('weapon') . ".png' alt='Vapen " . $fund->getMeasureScore('weapon') . "/10'>"    ?>
-                  <?php echo "<img class='bar' src='img/bar/bar" . $fund->getMeasureScore('tobacco') . ".png' alt='Tobak " . $fund->getMeasureScore('tobacco') . "/10'>"   ?>
-                  <br>
-                  <img class="round-symbol" src="/img/<?php echo ($sortby == 'fossil') ? "symbols/" : "gray-symbols/"?>fossil.png" alt='Fossila bränslen symbol'>
-                  <img class="round-symbol" src="/img/<?php echo ($sortby == 'weapon') ? "symbols/" : "gray-symbols/"?>weapon.png" alt='Vapen symbol'>
-                  <img class="round-symbol" src="/img/<?php echo ($sortby == 'tobacco') ? "symbols/" : "gray-symbols/"?>tobacco.png" alt='Tobak symbol'>
-                </div>
               </div>
             </div>
           </li>
