@@ -33,6 +33,7 @@ $this->headMeta()->appendName(
         shp-score
         <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>
         "><?php echo $fund->getMeasureScore('shp') ?></span>
+        <a href="#" data-toggle="popover" title="Hållbarhetspoäng" data-content="Hållbarhetspoängen är en sammanställning av hur fonden investerar i fossila bränslen, tobaksbolag och förbjudna vapen. 10 innebär att fonden inte har några bolag alls i kategorierna och 1 betyder att fonden har många investeringar i dessa typer av bolag."><span class="shp-help glyphicon glyphicon-question-sign"></span></a>
     </h2>
     <div class="row shp-status-box">
       <div class="col-xs-4">
