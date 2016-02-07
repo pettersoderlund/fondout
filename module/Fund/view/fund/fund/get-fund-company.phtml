@@ -140,15 +140,14 @@ $this->headMeta()->appendName('description',  $this->translate('Aktiefonder frå
     <div class="container">
 
       <div class="row">
-        <div class="col-md-12 centered-column header">
-          <h2><mark>
+        <div class="col-md-12 header">
+          <h2 class="centered-column"><mark>
             <?php if ($this->fundCompany->premium): ?>
               Våra fonder
             <?php else: ?>
               Fondutbud
             <?php endif; ?>
             </mark></h2>
-        </div>
         <?php
           echo $this->partial(
               'fund-list',
@@ -157,9 +156,8 @@ $this->headMeta()->appendName('description',  $this->translate('Aktiefonder frå
                   'paginated'    => 'false'
               ));
         ?>
-
+        </div>
       </div>
-
     </div>
   </section>
 </div>
