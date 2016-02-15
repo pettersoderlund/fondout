@@ -1,8 +1,13 @@
 <?php $no_results_type = 0; if ($paginated): $no_results_type = 1; endif; ?>
-<?php if(!isset($sortby))
+<?php
+    if(!isset($sortby))
       {
         $sortby = 'name';
       }
+
+    $this->headScript()->appendFile($this->basePath() . '/js/fund-list.js');
+
+
  ?>
 
 <div class="row">
@@ -60,19 +65,19 @@
                 </div>
 
                 <div class="col-md-1 hidden-sm hidden-xs col-md-offset-1">
-                  <img class="fund-list-category-indicator" src="/img/<?php echo ($fund->fossilCompaniesPercent == 0) ? 'green-' : '' ; ?>symbols/fossil.png" alt="fossil symbol">
+                  <img class="fund-list-category-indicator" data-toggle="tooltip" title="Fond <?php echo ($fund->fossilCompaniesPercent == 0) ? 'utan' : 'med' ; ?> fossila bränslen" src="/img/<?php echo ($fund->fossilCompaniesPercent == 0) ? 'green-' : '' ; ?>symbols/fossil.png" alt="fossil symbol">
                 </div>
                 <div class="col-md-1 hidden-sm hidden-xs">
-                  <img class="fund-list-category-indicator" src="/img/<?php echo ($fund->tobaccoCompaniesPercent == 0) ? 'green-' : '' ; ?>symbols/tobacco.png" alt="tobacco symbol">
+                  <img class="fund-list-category-indicator" data-toggle="tooltip" title="Fond <?php echo ($fund->tobaccoCompaniesPercent == 0) ? 'utan' : 'med' ; ?> tobak" src="/img/<?php echo ($fund->tobaccoCompaniesPercent == 0) ? 'green-' : '' ; ?>symbols/tobacco.png" alt="tobacco symbol">
                 </div>
                 <div class="col-md-1 hidden-sm hidden-xs">
-                  <img class="fund-list-category-indicator" src="/img/<?php echo ($fund->weaponCompaniesPercent == 0) ? 'green-' : '' ; ?>symbols/weapon.png" alt="weapon symbol">
+                  <img class="fund-list-category-indicator" data-toggle="tooltip" title="Fond <?php echo ($fund->weaponCompaniesPercent == 0) ? 'utan' : 'med' ; ?> förbjudna vapen" src="/img/<?php echo ($fund->weaponCompaniesPercent == 0) ? 'green-' : '' ; ?>symbols/weapon.png" alt="weapon symbol">
                 </div>
               </div>
               <div class="col-xs-2 shp-number-score-container centered-column">
                 <h3>
                   <span class="shp-number-score <?php echo $sortby == 'shp' ? 'sort-by' : '' ?> <?php echo $fund->getMeasureScore('shp') > 8 ? 'green' : ($fund->getMeasureScore('shp') > 4 ? 'yellow' : 'red')  ?>"><?php echo $fund->getMeasureScore('shp') ?></span>
-                  <a href="#" data-toggle="popover" title="Hållbarhetspoäng" data-content="Hållbarhetspoängen är en sammanställning av hur fonden investerar i fossila bränslen, tobaksbolag och förbjudna vapen. 10 innebär att fonden inte har några bolag alls i kategorierna och 1 betyder att fonden har många investeringar i dessa typer av bolag."><span class="shp-help glyphicon glyphicon-question-sign"></span></a>
+                  <a href="#" data-toggle="popover" data-placement="bottom" title="Hållbarhetspoäng" data-content="Hållbarhetspoängen är en sammanställning av hur fonden investerar i fossila bränslen, tobaksbolag och förbjudna vapen. 10 innebär att fonden inte har några bolag alls i kategorierna och 1 betyder att fonden har många investeringar i dessa typer av bolag."><span class="shp-help glyphicon glyphicon-question-sign"></span></a>
                 </h3>
               </div>
             </div>

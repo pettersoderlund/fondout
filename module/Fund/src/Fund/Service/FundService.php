@@ -215,19 +215,42 @@ class FundService
                 break;
             case 'weapon':
                 $sortOrder['weaponCompaniesPercent'] = $order;
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
                 break;
+
             case 'fossil':
                 $sortOrder['fossilCompaniesPercent'] = $order;
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
                 break;
-            case 'alcohol':
-                $sortOrder['alcoholCompaniesPercent'] = $order;
-                break;
+
             case 'tobacco':
                 $sortOrder['tobaccoCompaniesPercent'] = $order;
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
                 break;
+
+                /*
+
+            case 'alcohol':
+                $sortOrder['alcoholCompaniesPercent'] = $order;
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
+                break;
+
             case 'gambling':
                 $sortOrder['gamblingCompaniesPercent'] = $order;
+                $sortOrder['shpPercent'] = $order;
+                $sortOrder['nav1year'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
                 break;
+                */
+
             case 'nav1year':
                 $sortOrder['nav1year'] = $order;
                 $sortOrder['shpPercent'] = $this->reverseOrder($order);
@@ -237,9 +260,13 @@ class FundService
                 break;
             case 'nav3year':
                 $sortOrder['nav3year'] = $order;
+                $sortOrder['shpPercent'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
                 break;
             case 'nav5year':
                 $sortOrder['nav5year'] = $order;
+                $sortOrder['shpPercent'] = $this->reverseOrder($order);
+                $sortOrder['annualFee'] = $this->reverseOrder($order);
                 break;
             case 'shp':
                 $sortOrder['shpPercent'] = $order;
