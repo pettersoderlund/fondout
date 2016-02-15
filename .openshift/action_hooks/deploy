@@ -10,3 +10,8 @@ cd $OPENSHIFT_REPO_DIR
 vendor/bin/doctrine-module orm:generate-proxies
 #symlink to documents
 ln -s $OPENSHIFT_DATA_DIR public/documents
+
+# temp solution for overriding arraycollection in doctrine before they fix the sort bug
+rm vendor/doctrine/collections/lib/Doctrine/Common/Collections/ArrayCollection.php
+cp $OPENSHIFT_DATA_DIR/ArrayCollection.php vendor/doctrine/collections/lib/Doctrine/Common/Collections/ArrayCollection.php
+# end temp sol
