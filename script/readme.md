@@ -12,7 +12,7 @@ use fondout; set_foreign_key_checks=0; truncate shareholding; truncate fund_inst
 
 nya sättet:
 
-1. php script php-data-import [fi-listan.txt] [databas=fondout_maxi]
+1. php script/fi-data-import [fi-listan.txt] [databas=fondout_maxi]
 
 
 -------- Post import procedures --------
