@@ -223,6 +223,11 @@ class FundController extends AbstractRestfulController
       return $result;
     }
 
+		public function getPensionAction()
+		{
+			return new ViewModel();
+		}
+
     public function getGoogleAction()
     {
       $result = new ViewModel();

@@ -101,6 +101,17 @@ return array(
                     ),
                 ),
             ),
+            'pension' => array(
+                'type'    => 'Segment',
+                'options' => array(
+                    'route'    => '/pension',
+                    'constraints' => array(),
+                    'defaults' => array(
+                        'controller' => 'Fund\Controller\Fund',
+                        'action'     => 'getPension'
+                    ),
+                ),
+            ),
             'sitemap' => array(
                 'type'    => 'Segment',
                 'options' => array(

@@ -46,6 +46,14 @@ class Fund extends Entity
      */
     protected $institutionNumber;
 
+		/**
+		 * @var integer
+		 *
+		 * @ORM\Column(name="ppm_id", type="integer", nullable=true)
+		 */
+		protected $ppmId;
+
+
     /**
      * @var string
      *
@@ -259,6 +267,13 @@ class Fund extends Entity
      * @ORM\Column(name="pm_date", type="date", nullable=true)
      */
     private $pmDate;
+
+		/**
+		 * @var boolean
+		 *
+		 * @ORM\Column(name="swesif", type="boolean", nullable=false, options={"default":"0"})
+		 */
+		protected $swesif = 0;
 
 
     /**
