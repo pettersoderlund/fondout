@@ -228,6 +228,11 @@ class FundController extends AbstractRestfulController
 			return new ViewModel();
 		}
 
+		public function getSchoolAction()
+		{
+			return new ViewModel();
+		}
+
     public function getGoogleAction()
     {
       $result = new ViewModel();

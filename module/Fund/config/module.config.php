@@ -112,6 +112,17 @@ return array(
                     ),
                 ),
             ),
+						'school' => array(
+								'type'    => 'Segment',
+								'options' => array(
+										'route'    => '/sparahallbart-skolan',
+										'constraints' => array(),
+										'defaults' => array(
+												'controller' => 'Fund\Controller\Fund',
+												'action'     => 'getSchool'
+										),
+								),
+						),
             'sitemap' => array(
                 'type'    => 'Segment',
                 'options' => array(
