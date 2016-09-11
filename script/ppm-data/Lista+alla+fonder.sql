@@ -5,15 +5,17 @@
 - Sätt rätt datum
 - Importera v v v
 */
-USE fondout_maxi;
-SET @date = '2016-03-31';
 
 DROP TABLE temporary_table_lista_alla_fonder;
+SELECT * FROM temporary_table_lista_alla_fonder WHERE active <> 1;
+
+
+USE fondout_maxi;
+SET @date = '2016-08-31';
+
 CREATE TEMPORARY TABLE temporary_table_lista_alla_fonder LIKE fund;
 
-SELECT * FROM temporary_table_lista_alla_fonder;
-
-LOAD DATA INFILE '/users/petter/Sites/fondout/script/ppm-data/Lista+alla+fonder.txt' 
+LOAD DATA INFILE '/users/petter/Sites/fondout/script/ppm-data/Lista+alla+fonder+ (2).txt' 
 IGNORE # will skip duplicate ISIN
 INTO TABLE temporary_table_lista_alla_fonder 
 CHARACTER SET latin1
@@ -45,7 +47,10 @@ SET
     fof		 	= IF (@fof = 'J', 1, 0),
     annual_fee	= REPLACE(@BRUTTO_AVG, ',', '.'), #CAST(@BRUTTO_AVG AS DECIMAL(8,2)), #
     url 		= '',  # set to suppress warnings, dummy value
-    active 		= 0    # set to suppress warnings, dummy value
+    active 		= IF(@FONDSTATUS <> 1, -1, 1)    # Används för att skilja ut vilka vi ska importera, status 1 aktiva fonder. 
+													# 1.     Valbara fonder
+													# 4, 8.  Ej valbara fonder
+													# 5.      Avregistrerade
 ;
 
 UPDATE 
@@ -58,7 +63,7 @@ SET
     dest.pm_date = src.pm_date,
     dest.annual_fee = src.annual_fee
 WHERE 
-	dest.isin = src.isin;
+	dest.isin = src.isin AND src.active = 1;
 /*
 SELECT * FROM temporary_table_lista_alla_fonder where swesif = 1;
 SELECT * FROM fund where swesif = 1;
