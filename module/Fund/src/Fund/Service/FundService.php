@@ -519,6 +519,14 @@ class FundService
       $sitemap .= "    <loc>http://www.sparahallbart.se/qa</loc>\n";
       $sitemap .= "  </url>\n";
 
+			$sitemap .= "  <url>\n";
+			$sitemap .= "    <loc>http://www.sparahallbart.se/sparahallbart-skolan</loc>\n";
+			$sitemap .= "  </url>\n";
+
+			$sitemap .= "  <url>\n";
+			$sitemap .= "    <loc>http://www.sparahallbart.se/pension</loc>\n";
+			$sitemap .= "  </url>\n";
+
       $fr = $em->getRepository('Fund\Entity\Fund');
       $funds = $fr->findAllFunds();
 
@@ -530,6 +538,21 @@ class FundService
       }
 
       // add all fundcompany pages.
+			$fcomp= $this->getEntityManager()
+				->getRepository('Fund\Entity\FundCompany')->findAll();
+
+				// Reset all values.
+	      foreach ($fcomp as $fc) {
+					if (!is_null($fc->url) && sizeof($fc->funds) > 0) {
+						$sitemap .= "  <url>\n";
+		        $sitemap .= "    <loc>http://www.sparahallbart.se/fundcompany/$fc->url</loc>\n";
+		        $sitemap .= "  </url>\n";
+					}
+
+	      }
+
+
+
 
       $sitemap .= "</urlset>\n";
       return $sitemap;
