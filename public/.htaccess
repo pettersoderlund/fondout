@@ -50,3 +50,6 @@ Redirect 301 /fundcompany/dnb-sverige http://www.sparahallbart.se/fundcompany/dn
 
 Redirect 301 /organisation/global-compact http://www.sparahallbart.se/organisation
 Redirect 301 /organisation/cdp http://www.sparahallbart.se/organisation
+
+Redirect 301 /funds/solidar-stiftelsefond http://fondout.dev/fundcompany/solidar
+Redirect 301 /funds/fondvaljaren-trend http://fondout.dev/fundcompany/solidar
