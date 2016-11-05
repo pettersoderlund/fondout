@@ -1,6 +1,6 @@
 /* 
 - https://secure.pensionsmyndigheten.se/NuvarandeOchTidigareFonder.html
-- Hämta från filen Lista+alla+fonder
+- Hämta från filen Lista+alla+fonder 
 - Exportera till tab separated values
 - Sätt rätt datum
 - Importera v v v
