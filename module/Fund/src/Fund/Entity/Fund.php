@@ -1093,5 +1093,9 @@ class Fund extends Entity
       return $this->shpPercent;
   }
 
+	public function getSwesif() {
+			return $this->swesif;
+	}
+
 
 }

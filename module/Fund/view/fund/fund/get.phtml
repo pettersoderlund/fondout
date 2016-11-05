@@ -120,13 +120,19 @@ $this->headMeta()->appendName(
         <p><?php echo date_format($fund->pmDate, 'Y-m-d')?></p>
       <?php endif; ?>
 
+			<?php if($fund->swesif): ?>
+			<h3>SWESIF - Hållbarhetsprofilen</h3>
+			<p>
+				Hållbarhetsprofilen är en enkät fonder kan fylla i för att på ett standardiserat sätt visa hur de jobbar med hållbarhet. Hållbarhetsprofilen drivs av branschorganisationen SWESIF.
+			</p>
+			<?php echo $this->translate($fund->swesif) ? "<a href='http://hallbarhetsprofilen.se/index.php/fonder?id=$fund->isin' target='_blank'>" . $fund->name . " hållbarhetsprofil <span class='glyphicon glyphicon-new-window' aria-hidden='true'></span></a>" : "Denna fond har inte en hållbarhetsprofil." ?>
+			<?php endif; ?>
 
       <h3>Fondbolag</h3>
       <a class="fundinfo-btn btn " href="/fundcompany/<?php
       echo $this->translate($fund->company->url) ?>">
           <?php echo $this->translate($fund->company->name) ?>
       </a>
-
 
       <h3>Fondkategori</h3>
       <a class="fundinfo-btn btn " href="<?php
