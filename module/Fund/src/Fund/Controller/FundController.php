@@ -22,7 +22,7 @@ class FundController extends AbstractRestfulController
         $default_fund_category = 6; // 6 is global funds category
 
         $parameters = array(
-          'sort'            => $params->fromQuery('sort', 'name'),
+          'sort'            => $params->fromQuery('sort', 'shp'),
           'order'           => $params->fromQuery('order', 'ASC'),
           'page'     => $params->fromQuery('page', 1),
           //Filter fundcompany

@@ -270,8 +270,9 @@ class FundService
                 break;
             case 'shp':
                 $sortOrder['shpPercent'] = $order;
-                $sortOrder['nav1year'] = $this->reverseOrder($order);
                 $sortOrder['annualFee'] = $order;
+								$sortOrder['nav1year'] = $this->reverseOrder($order);
+								$criteria->andWhere(Criteria::expr()->neq('annualFee', null));
                 break;
             case 'fee':
                 $sortOrder['annualFee'] = $order;
