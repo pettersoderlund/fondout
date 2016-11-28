@@ -3,20 +3,6 @@ no-response-timeout: 10
 build:
     # The steps that will be executed on build
     steps:
-      # Frontend pipeline
-      - script:
-          name: install node
-          code: |
-              echo '\n' | sudo add-apt-repository ppa:chris-lea/node.js
-              sudo apt-get update
-              sudo apt-get install nodejs
-      - script:
-          name: install npm
-          code: |
-              curl -L http://www.npmjs.org/install.sh -o /home/ubuntu/tmp/npm.sh
-              sudo clean=y sh /home/ubuntu/tmp/npm.sh
-              sudo rm -rf /home/ubuntu/tmp/
-              mkdir -p /home/ubuntu/tmp/
       - npm-install
       - script:
           name: install bower
