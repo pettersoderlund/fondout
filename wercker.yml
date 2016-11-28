@@ -1,4 +1,4 @@
-box: wercker/php
+box: astonish/astonish-wercker-box@0.2.23
 no-response-timeout: 10
 build:
     # The steps that will be executed on build
